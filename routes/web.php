@@ -21,3 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// TODO: move to controller
+Route::get('/print', function () {
+    return view('print.app');
+});
