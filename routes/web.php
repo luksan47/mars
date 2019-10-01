@@ -17,12 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-// TODO: move to controller
-Route::get('/print', function () {
-    return view('print.app');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/print', 'PrintController@index')->name('print');
+    Route::post('/print/modify_balance', 'PrintController@modify_balance');
 });
