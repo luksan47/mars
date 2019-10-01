@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     <div class="alert alert-info">
-                        <strong>@lang('general.note'):</strong> @lang('print.available_money'): {{ 12 }} HUF
+                        <strong>@lang('general.note'):</strong> @lang('print.available_money'): {{ Auth::user()->printAccount->balance }} HUF
                     </div>
                     @include("print.print")
                     @include("print.modify")
