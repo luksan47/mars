@@ -20,5 +20,5 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/print', 'PrintController@index')->name('print');
-    Route::post('/print/modify_balance', 'PrintController@modify_balance');
+    Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify');
 });
