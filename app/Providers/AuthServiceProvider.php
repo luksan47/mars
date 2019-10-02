@@ -25,6 +25,24 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // If the before callback returns a non-null result
+        // that result will be considered the result of the check.
+        // Otherwise (for null) goes through the other gates.
+        Gate::before(function ($user, $ability) {
+            if ($user->isAdmin()) {
+                return true;
+            }
+        });
+        
+        Gate::define('print.print', function ($user) {
+            return true;
+        });
+        Gate::define('print.modify', function ($user) {
+            return false;
+        });
+        Gate::define('print.free_pages', function ($user) {
+            return false;
+        });
+
     }
 }

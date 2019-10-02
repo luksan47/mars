@@ -38,8 +38,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function printAccount()
-    {
+    public function printAccount() {
         return $this->hasOne('App\PrintAccount');
+    }
+
+    public function isAdmin() {
+        return $this->permission == 1;
     }
 }
