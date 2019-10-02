@@ -13,10 +13,9 @@ class PrintController extends Controller
     }
 
     public function modify_balance(Request $request) {
-        $printAccount = User::find($request->user_id)->printAccount;
-        $printAccount->balance += $request->balance;
-        $printAccount->save();
-
+        User::findOrFail($request->user_id)
+            ->printAccount
+            ->increment('balance', $request->balance);
         return redirect()->route('print');
     }
 }
