@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">@lang('print.printing_account')</div>
     <div class="card-body">
-        <form class="form-horizontal" role="form" method="POST" action="{{ route('print.modify') }}" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" method="POST" action="{{ route('print') }}" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="PUT">
             {!! csrf_field() !!}
             <div class="row">
