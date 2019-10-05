@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'log'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/print', 'PrintController@index')->name('print')->middleware('can:print.print');
     Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify');
