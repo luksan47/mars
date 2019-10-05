@@ -13,7 +13,9 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('index');
+
+Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
 
 Auth::routes();
 

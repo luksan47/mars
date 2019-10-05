@@ -59,6 +59,13 @@
                         </div>
                     </li>
                 @endguest
+                <li>
+                @if (App::isLocale('en'))
+                    <a class="nav-link" href="{{ route('setlocale', 'hu') }}">{{ __('HU') }}</a>
+                @else
+                    <a class="nav-link" href="{{ route('setlocale', 'en') }}">{{ __('EN') }}</a>
+                @endif
+                </li>
             </ul>
         </div>
     </div>
