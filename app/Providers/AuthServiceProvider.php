@@ -44,5 +44,9 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('admin.handle_registrations', function ($user) {
+            return false;
+        });
+
     }
 }
