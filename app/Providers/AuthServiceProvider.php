@@ -44,6 +44,13 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('internet.activate', function ($user) {
+            return false;
+        });
+        Gate::define('internet.set_date', function ($user) {
+            return false;
+        });
+
         Gate::define('admin.handle_registrations', function ($user) {
             return false;
         });

@@ -28,6 +28,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/print', 'PrintController@index')->name('print')->middleware('can:print.print');
     Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify')->middleware('can:print.modify');;
 
+    Route::get('/internet', function () {
+        return view('internet.app');
+    })->name('internet');
+
     Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
     Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
