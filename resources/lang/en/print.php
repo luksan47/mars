@@ -10,7 +10,7 @@ return [
 
     "available_money" => "Available money",
     "printing_account" => "Printing account"
-    "document" => "Print document"
+    "document" => "Document"
     "modify" => "Modify"
     "add_free_pages" => "Add free pages"
     "history" => "History"
