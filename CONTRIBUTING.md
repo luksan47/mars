@@ -8,7 +8,9 @@ thanks to Laravel.
 
 ## Development
 
-The project has an example [Laravel Homestead](https://laravel.com/docs/homestead) configuration which can be used for local development.
+For OS X, [Valet](https://laravel.com/docs/6.x/valet) gives a pretty smooth experience. Easy to download, easy to configure.
+
+For Windows and Linux the project has an example [Laravel Homestead](https://laravel.com/docs/homestead) configuration which can be used for local development.
 
 With these steps you should be able to run Mars on your machine:
 1. Install [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/). (Or other virtualization platforms supported by Vagrant.)
