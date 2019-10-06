@@ -15,23 +15,26 @@ class PrintController extends Controller
 
     public function modify_balance(Request $request) {
         $balance = $request->balance;
+        $print_account = User::findOrFail($request->user_id)->printAccount; 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'balance' => 'required|integer',
         ]);
         $validator->validate();
 
-        if ($balance < 0 && User::findOrFail($request->user_id)->printAccount->balance < abs($balance)) {
-            $validator->errors()->add('balance', __('print.nobalance'));
-            return back()
-                    ->withErrors($validator)
-                    ->withInput();
+        if ($balance < 0) {
+            $balance = abs($balance);
+            if ($print_account->balance < $balance) {
+                $validator->errors()->add('balance', __('print.nobalance'));
+                return back()
+                        ->withErrors($validator)
+                        ->withInput();
+            } else {
+                $print_account->decrement('balance', $balance);
+            }
+        } else {
+            $print_account->increment('balance', $balance);
         }
-        
-        User::findOrFail($request->user_id)
-            ->printAccount
-            ->where('balance', '>=', abs(min($request->balance, 0)))
-            ->increment('balance', $request->balance);
         return redirect()->route('print');
     }
 }
