@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily_error', 'daily_warning', 'daily_info', 'daily_debug'],
+            'channels' => ['daily_error', 'daily_info', 'daily_debug'],
             'ignore_exceptions' => false,
         ],
 
@@ -46,15 +46,6 @@ return [
             'path' => storage_path('logs/laravel.ERROR.log'),
             'level' => 'error',
             'days' => 31,
-            'bubble' => false
-        ],
-
-        'daily_warning' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/laravel.WARNING.log'),
-            'level' => 'notice',
-            'days' => 31,
-            'bubble' => false
         ],
 
         'daily_info' => [
@@ -62,7 +53,6 @@ return [
             'path' => storage_path('logs/laravel.INFO.log'),
             'level' => 'info',
             'days' => 14,
-            'bubble' => false
         ],
 
         'daily_debug' => [
@@ -70,7 +60,6 @@ return [
             'path' => storage_path('logs/laravel.DEBUG.log'),
             'level' => 'debug',
             'days' => 14,
-            'bubble' => false
         ],
 
         'single' => [
