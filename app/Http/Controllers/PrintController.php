@@ -37,4 +37,24 @@ class PrintController extends Controller
         }
         return redirect()->route('print');
     }
+
+    public function modify_free_pages(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|integer|exists:users,id',
+            'free_pages' => 'required|integer',
+        ]);
+        $validator->validate();
+
+        $free_pages = $request->free_pages;
+        $print_account = User::find($request->user_id)->printAccount;
+
+        if ($print_account->free_pages + $free_pages < 0) {
+            $validator->errors()->add('$free_pages', __('print.no_free_pages_left'));
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $print_account->increment('free_pages', $free_pages);
+        return redirect()->route('print');
+    }
 }

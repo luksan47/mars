@@ -9,6 +9,7 @@ return [
     */
 
     "available_money" => "Rendelkezésre álló összeg",
+    "available_free_pages" => "Ezen felül ingyenesen nyomtatható :number_of_free_pages oldal",
     "printing_account" => "Nyomtatószámla",
     "document" => "Dokumentum",
     "modify" => "Módosítás",
@@ -19,7 +20,6 @@ return [
     "pdf_description" => "Csak .pdf fájl nyomtatható.",
     "print" => "Nyomtatás",
     "free" => "Ingyenes oldalak",
-
+    "no_free_pages_left" => "Nincs annyi ingyenesen nyomtatható oldal",
 ];
-  
- 
+
