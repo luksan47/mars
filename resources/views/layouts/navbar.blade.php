@@ -11,22 +11,24 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 @auth
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('print') }}">{{ __('print.print') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">{{ __('internet.internet') }}</a>
-                    </li>
-                    @if (Auth::user()->isAdmin())
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ __('admin.admin') }} <span class="caret"></span>
-                        </a>
+                    @if (Auth::user()->verified)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('print') }}">{{ __('print.print') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">{{ __('internet.internet') }}</a>
+                        </li>
+                        @if (Auth::user()->isAdmin())
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('admin.admin') }} <span class="caret"></span>
+                            </a>
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('home') }}"> {{ __('admin.accept_registration') }} </a>
-                        </div>
-                    </li>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('admin.registrations') }}"> {{ __('admin.handle_registrations') }} </a>
+                            </div>
+                        </li>
+                        @endif
                     @endif
                 @endauth
             </ul>
