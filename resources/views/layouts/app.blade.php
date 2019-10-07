@@ -11,6 +11,16 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        })});
+    </script>
+    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
+    <script src="{{ asset('js/site.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,6 +28,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/tabulator_bootstrap4.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">

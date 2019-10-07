@@ -42,6 +42,10 @@ class User extends Authenticatable
         return $this->hasOne('App\PrintAccount');
     }
 
+    public function macAddresses() {
+        return $this->hasMany('App\MacAddress');
+    }
+
     public function isAdmin() {
         return $this->permission == 1;
     }
