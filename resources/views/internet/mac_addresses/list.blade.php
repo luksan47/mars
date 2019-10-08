@@ -14,15 +14,16 @@
             <div class="form-row align-items-center">
                 @csrf
                 <div class="col-auto">
-                    <label class="sr-only" for="inlineFormInput">@lang('internet.mac_address')</label>
+                    <label for="inlineFormInput">@lang('internet.mac_address')</label>
                     <input type="text" class="form-control mb-2" name="mac_address" placeholder="00:00:00:00:00:00">
                 </div>
                 <div class="col-auto">
-                    <label class="sr-only" for="inlineFormInput">@lang('internet.comment')</label>
+                    <label for="inlineFormInput">@lang('internet.comment')</label>
                     <input type="text" class="form-control mb-2" name="comment" placeholder="Laptop">
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary mb-2">@lang('internet.add')</button>
+                    <label>&nbsp;</label>
+                    <button type="submit" class="form-control btn btn-primary mb-2">@lang('internet.add')</button>
                 </div>
             </div>
         </form>
@@ -55,9 +56,6 @@
                     ajaxURL: "{{ route('internet.mac_addresses.users') }}", //set url for ajax request
                     ajaxSorting: true,
                     ajaxFiltering: true,
-                    ajaxParams: {
-                        token: "ABC123"
-                    }, //set any standard parameters to pass with the request
                     layout: "fitColumns",
                     placeholder: "No Data Set",
                     columns: [

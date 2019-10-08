@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('index');
@@ -33,7 +35,13 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
         Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');
         Route::post('/internet/mac_addresses/{id}/delete', 'InternetController@deleteMacAddress')->name('internet.mac_addresses.delete');
         Route::post('/internet/mac_addresses/add', 'InternetController@addMacAddress')->name('internet.mac_addresses.add');
+
+        Route::get('/internet/admin/mac_addresses/all', 'InternetController@getusersMacAddressesAdmin')->name('internet.admin.mac_addresses.all');
+        Route::get('/internet/admin', 'InternetController@admin')->name('internet.admin');
+        Route::post('/internet/mac_addresses/{id}/edit', 'InternetController@editMacAddress')->name('internet.mac_addresses.edit');
     });
+
+
 
     Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');

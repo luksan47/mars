@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TabulatorPaginator
 {
@@ -15,11 +15,11 @@ class TabulatorPaginator
         $this->queryBase = $base;
     }
 
-    static function from($base) {
+    static function from($base) : TabulatorPaginator {
         return new TabulatorPaginator($base);
     }
 
-    function filterable($fields)
+    function filterable($fields) : self
     {
         if (gettype($fields) === 'string') {
             $fields = [$fields];
@@ -28,7 +28,7 @@ class TabulatorPaginator
         return $this;
     }
 
-    function sortable($fields)
+    function sortable($fields) : self
     {
         if (gettype($fields) === 'string') {
             $fields = [$fields];
@@ -37,7 +37,7 @@ class TabulatorPaginator
         return $this;
     }
 
-    function paginate()
+    function paginate() : LengthAwarePaginator
     {
         $result = $this->queryBase;
         foreach (request('sorters') ?? [] as $sorter) {
