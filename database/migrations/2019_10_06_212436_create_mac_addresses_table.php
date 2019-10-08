@@ -21,6 +21,9 @@ class CreateMacAddressesTable extends Migration
             $table->text('comment');
             $table->enum('state', [MacAddress::APPROVED, MacAddress::REJECTED, MacAddress::REQUESTED])->default("REQUESTED");
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users');
         });
     }
 
