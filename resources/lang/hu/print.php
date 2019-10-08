@@ -27,6 +27,6 @@ return [
     "print" => "Nyomtatás",
     "free" => "Ingyenes oldalak",
     "no_free_pages_left" => "Nincs annyi ingyenesen nyomtatható oldal",
-    "no_balance" => "Nincs elég pénz a számlán",
+    "no_balance" => "Nincs elegendő pénz a számlán",
 ];
 

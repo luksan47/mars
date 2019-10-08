@@ -27,6 +27,6 @@ return [
     "print" => "Print",
     "free" => "Free pages",
     "no_free_pages_left" => "Not enough free pages",
-    "no_balance" => "Not enough balance",
+    "no_balance" => "Not enough money on the account",
 ];
 

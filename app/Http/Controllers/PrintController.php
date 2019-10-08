@@ -48,24 +48,20 @@ class PrintController extends Controller
     }
 
     public function modify_balance(Request $request) {
-        $balance = $request->balance;
-        $print_account = User::findOrFail($request->user_id)->printAccount; 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'balance' => 'required|integer',
         ]);
         $validator->validate();
 
-        if ($balance < 0) {
-            $balance = abs($balance);
-            if (!$print_account->hasEnoughMoney($balance)) {
-                return $this->handle_no_balance($validator);
-            } else {
-                $print_account->decrement('balance', $balance);
-            }
-        } else {
-            $print_account->increment('balance', $balance);
+        $balance = $request->balance;
+        $print_account = User::find($request->user_id)->printAccount;
+
+        if ($print_account->balance + $balance < 0) {
+            return $this->handle_no_balance($validator);
         }
+
+        $print_account->increment('balance', $balance);
         return redirect()->route('print');
     }
   
