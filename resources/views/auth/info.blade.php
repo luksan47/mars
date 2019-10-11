@@ -12,7 +12,7 @@
                                     @lang('user.personal_information'):
                                 </h4>
                             </div>
-                            <div class="inputField">
+                            <div class="inputField" >
                                 <label for="name">@lang('user.name')</label>
                                 <input type="text" name="name" id="name" required>
                             </div>
