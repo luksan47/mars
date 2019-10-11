@@ -16,6 +16,9 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
+Route::get('/info', function () {
+    return view('auth/info');
+});
 
 Auth::routes();
 Route::get('/verification', function () {
