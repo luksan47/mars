@@ -25,26 +25,25 @@ class PrintController extends Controller
         $validator->validate();
         
         $print_account = Auth::user()->printAccount;
-        $two_sided = $request->has('two_sided');
+        $is_two_sided = $request->has('two_sided');
         $file = $request->file_to_upload;
-        $pages = exec("pdfinfo " . $file->getPathName() . " | grep '^Pages' | awk '{print $2}' 2>&1");
+        $pages = $this->get_pages($validator);
 
-        if($pages == "" || !is_numeric($pages) || $pages == 0){
-            Log::error("Cannot get number of pages for uploaded file!" . print_r($pages, true));
-            $validator->errors()->add('file_to_upload', __('internet.invalid_pdf'));
-            return back()->withErrors($validator);
+        if ($validator->fails()) {
+            return back()-withErros($validator)->withInput();
         }
-        $cost = PrintAccount::getCost($pages, $two_sided);
+
+        $cost = PrintAccount::getCost($pages, $is_two_sided);
 
         if (!$print_account->hasEnoughMoney($cost)) {
             return $this->handle_no_balance($validator);
         }
 
-        if ($this->print_file($file, $cost, $two_sided, $request->number_of_copies)) {
+        if ($this->print_file($file, $cost, $is_two_sided, $request->number_of_copies)) {
             $print_account->decrement('balance', $cost);
-            return redirect()->back()->with('print.status', __('print.success'));
+            return back()->with('print.status', __('print.success'));
         } else {
-            return redirect()->back()->withErrors(['print' => __('print.error_printing')]);
+            return back()->withErrors(['print' => __('print.error_printing')]);
         }
     }
 
@@ -70,22 +69,22 @@ class PrintController extends Controller
         return redirect()->route('print');
     }
 
-    private function print_file($file, $cost, $two_sided, $number_of_copies) {
+    private function print_file($file, $cost, $is_two_sided, $number_of_copies) {
         $printer_name = config('app.printer_name');
         $state = "QUEUED";
         try {
             $path = $file->storeAs('', md5(rand(0, 100000) . date('c')) . '.pdf', 'printing');
             $path = Storage::disk('printing')->getDriver()->getAdapter()->applyPathPrefix($path);
             $result = exec("lp -d " . $printer_name
-                        . ($two_sided ? " -o sides=two-sided-long-edge " : " ") 
-                        . "-n " . $number_of_copies
+                        . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ") 
+                        . "-n " . $number_of_copies . " "
                         . $path . " 2>&1");
-            if (!preg_match("/^request id is ([^\s]*) \\(1 file\\(s\\)\\)$/", $result, $job_id)) {
+            if (!preg_match("/^request id is ([^\s]*) \\(?<id> file\\(s\\)\\)$/", $result, $job)) {
                 Log::error("Printing error at line: ".__FILE__.":".__LINE__." (in function ".__FUNCTION__."). result:"
                     . print_r($result, true));
                 $state = "ERROR";
             }
-            $job_id = $job_id[1];
+            $job_id = $job['id'];
         }
         catch (\Exception $e){
             Log::error("Printing error at line: ".__FILE__.":".__LINE__." (in function ".__FUNCTION__."). ". $e->getMessage());
@@ -110,5 +109,15 @@ class PrintController extends Controller
         return back()
                 ->withErrors($validator)
                 ->withInput();
+    }
+
+    private function get_pages($validator) {
+        $pages = exec("pdfinfo " . $file->getPathName() . " | grep '^Pages' | awk '{print $2}' 2>&1");
+
+        if ($pages == "" || !is_numeric($pages) || $pages <= 0) {
+            Log::error("Cannot get number of pages for uploaded file!" . print_r($pages, true));
+            $validator->errors()->add('file_to_upload', __('internet.invalid_pdf'));
+        }
+        return $pages;
     }
 }

@@ -11,10 +11,7 @@ class PrintAccount extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    const COST = [
-        'twosided' => 12,
-        'onesided' => 8,
-    ];
+    public static $COST;
 
     protected $fillable = [
         'user_id', 'balance', 'free_pages',
@@ -36,17 +33,18 @@ class PrintAccount extends Model
         return $this->balance >= abs($balance);
     }
 
-    public static function getCost($pages, $twosided, $number_of_copies = 1) {
-        if ($twosided) {
-            $cost;
-            if ($pages % 2 == 0) {
-                $cost = $pages / 2 * PrintAccount::COST['twosided'];
-            } else {
-                $cost = ($pages  - 1) / 2 * PrintAccount::COST['twosided'] + $pages * PrintAccount::COST['onesided'];
-            }
-            return $cost * $number_of_copies;
-        } else {
-            return $pages * PrintAccount::COST['onesided'] * $number_of_copies;
-        }
+    public static function getCost($pages, $is_two_sided, $number_of_copies = 1) {
+        if (!$is_two_sided)
+            return $pages * self::$COST['one_sided'] * $number_of_copies;
+    
+        $orphan_ending = $pages % 2;
+        $one_copy_cost = floor($pages / 2) * self::$COST['two_sided']
+            + $orphan_ending * self::$COST['one_sided'];
+        return $one_copy_cost * $number_of_copies;
     }
 }
+
+PrintAccount::$COST = [
+    'one_sided' => env('PRINT_COST_ONESIDED'),
+    'two_sided' => env('PRINT_COST_TWOSIDED'),
+];
