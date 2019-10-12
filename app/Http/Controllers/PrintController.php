@@ -27,7 +27,7 @@ class PrintController extends Controller
         $print_account = Auth::user()->printAccount;
         $is_two_sided = $request->has('two_sided');
         $file = $request->file_to_upload;
-        $pages = $this->get_pages($validator);
+        $pages = $this->get_pages($validator, $file->getPathName());
 
         if ($validator->fails()) {
             return back()-withErros($validator)->withInput();
@@ -131,12 +131,12 @@ class PrintController extends Controller
                 ->withInput();
     }
 
-    private function get_pages($validator) {
-        $pages = exec("pdfinfo " . $file->getPathName() . " | grep '^Pages' | awk '{print $2}' 2>&1");
+    private function get_pages($validator, $path) {
+        $pages = exec("pdfinfo " . $path . " | grep '^Pages' | awk '{print $2}' 2>&1");
 
         if ($pages == "" || !is_numeric($pages) || $pages <= 0) {
             Log::error("Cannot get number of pages for uploaded file!" . print_r($pages, true));
-            $validator->errors()->add('file_to_upload', __('internet.invalid_pdf'));
+            $validator->errors()->add('file_to_upload', __('print.invalid_pdf'));
         }
         return $pages;
     }
