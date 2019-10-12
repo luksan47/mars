@@ -22,6 +22,13 @@
     <!-- for live search-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+        $('.selectpicker').selectpicker();
+    });
+    </script>
+
     
 
 </head>
