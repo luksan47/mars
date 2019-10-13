@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cookieconsent.min.css') }}" />
 </head>
 <body>
     <div id="app">
@@ -26,5 +27,7 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
+    <script src="{{ asset('js/cookieconsent-initialize.js') }}"></script>
 </body>
 </html>
