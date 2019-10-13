@@ -27,6 +27,16 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        var cookieMessages = {
+            'dismiss' : "{{ __('cookie.dismiss') }}",
+            'allow' : "{{ __('cookie.allow') }}",
+            'deny' : "{{ __('cookie.deny') }}",
+            'link' : "{{ __('cookie.link') }}",
+            'cookie' : "{{ __('cookie.message') }}",
+            'header' : "{{ __('cookie.header') }}",
+        };
+    </script>
     <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
     <script src="{{ asset('js/cookieconsent-initialize.js') }}"></script>
 </body>
