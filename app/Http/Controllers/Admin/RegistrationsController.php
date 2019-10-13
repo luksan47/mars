@@ -9,7 +9,7 @@ use App\User;
 class RegistrationsController extends Controller {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('can:admin.handle_registrations');
+        $this->middleware('can:registration.handle');
     }
 
     public function index() {

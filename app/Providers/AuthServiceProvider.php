@@ -13,7 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        \App\MacAddress::class => MacAddressPolicy::class,
+        \App\InternetAccess::class => InternetAccessPolicy::class,
     ];
 
     /**
@@ -24,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $this->registerPrintPolicies();
+        $this->registerWorkshopPolicies();
 
         // If the before callback returns a non-null result
         // that result will be considered the result of the check.
@@ -33,20 +36,29 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
         });
-        
+
+        Gate::define('internet.internet', function ($user) {
+            return $user->inRole(['collegist', 'tenant']);
+        });
+    }
+
+    public function registerPrintPolicies()
+    {
         Gate::define('print.print', function ($user) {
-            return true;
+            return $user->inRole(['collegist', 'tenant']);
         });
         Gate::define('print.modify', function ($user) {
-            return false;
+            return $user->inRole([]);
         });
         Gate::define('print.free_pages', function ($user) {
-            return false;
+            return $user->inRole([]);
         });
+    }
 
-        Gate::define('admin.handle_registrations', function ($user) {
-            return false;
+    public function registerWorkshopPolicies()
+    {
+        Gate::define('workshop.access', function ($user, $workshopId) {
+            return $workshopId !== null && $user->inRole(['workshop_administrator'], $workshopId);
         });
-
     }
 }

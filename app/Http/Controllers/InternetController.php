@@ -42,9 +42,7 @@ class InternetController extends Controller
 
     public function getUsersMacAddressesAdmin(Request $request)
     {
-        if (!Auth::user()->isAdmin()) { // TODO: use gate
-            throw new AuthorizationException();
-        }
+        $this->authorize('viewAny', MacAddress::class);
 
         $paginator = TabulatorPaginator::from(MacAddress::join('users as user', 'user.id', '=', 'user_id')->select('mac_addresses.*')->with('user'))
             ->sortable(['mac_address', 'comment', 'state', 'user.name', 'created_at'])
@@ -57,9 +55,7 @@ class InternetController extends Controller
     }
 
     public function getInternetAccessesAdmin() {
-        if (!Auth::user()->isAdmin()) { // TODO: use gate
-            throw new AuthorizationException();
-        }
+        $this->authorize('viewAny', InternetAccess::class);
 
         $paginator = TabulatorPaginator::from(InternetAccess::join('users as user', 'user.id', '=', 'user_id')->select('internet_accesses.*')->with('user'))
             ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
@@ -73,9 +69,7 @@ class InternetController extends Controller
     {
         $macAddress = MacAddress::findOrFail($id);
 
-        if (!Auth::user()->isAdmin() && $macAddress->user->id != Auth::user()->id) { // TODO: use gate
-            throw new AuthorizationException();
-        }
+        $this->authorize('delete', MacAddress::class);
 
         $macAddress->delete();
 
@@ -96,11 +90,10 @@ class InternetController extends Controller
 
     public function editMacAddress(Request $request, $id)
     {
-        if (!Auth::user()->isAdmin()) { // TODO: use gate
-            throw new AuthorizationException();
-        }
-
         $macAddress = MacAddress::findOrFail($id);
+
+        $this->authorize('update', $macAddress);
+
         if ($request->has('state')) {
             $macAddress->state = $request->input('state');
         }
@@ -125,7 +118,7 @@ class InternetController extends Controller
 
         $macAddress = new MacAddress();
         $macAddress->user_id = Auth::user()->id;
-        if (Auth::user()->isAdmin() && $request->has('user_id')) { // TODO: use gate
+        if (Auth::user()->can('accept', $macAddress) && $request->has('user_id')) {
             $request->validate([
                 'user_id' => 'integer|exists:users,id',
             ]);

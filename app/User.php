@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -59,7 +60,21 @@ class User extends Authenticatable
         return $this->hasMany('App\PrintJob');
     }
 
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'role_users');
+    }
+
+    public function inRole(array $roleNames, $objectId = null)
+    {
+        return DB::table('role_users')
+                ->join('roles', 'roles.id', '=', 'role_users.role_id')
+                ->where('role_users.user_id', '=', $this->id)
+                ->whereIn('roles.name', $roleNames)
+                ->where('role_users.object_id', '=', $objectId)
+                ->count() > 0;
+    }
+
     public function isAdmin() {
-        return $this->permission == 1;
+        return $this->inRole(['admin']);
     }
 }
