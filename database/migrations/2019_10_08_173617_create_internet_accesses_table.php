@@ -1,11 +1,10 @@
 <?php
 
-use App\MacAddress;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMacAddressesTable extends Migration
+class CreateInternetAccessesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +13,11 @@ class CreateMacAddressesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mac_addresses', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('mac_address', 17);
-            $table->text('comment');
-            $table->enum('state', MacAddress::STATES)->default(MacAddress::REQUESTED);
+        Schema::create('internet_accesses', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->unique();
+            $table->integer('auto_approved_mac_slots')->default(3);
+            $table->dateTime('has_internet_until')->nullable();
+            $table->string('wifi_password', 64)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
@@ -34,6 +32,6 @@ class CreateMacAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mac_addresses');
+        Schema::dropIfExists('internet_accesses');
     }
 }

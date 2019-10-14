@@ -42,6 +42,14 @@ class User extends Authenticatable
         return $this->hasOne('App\PrintAccount');
     }
 
+    public function internetAccess() {
+        $relation = $this->hasOne('App\InternetAccess');
+        if($relation->count() < 1) {
+            InternetAccess::create([ 'user_id' => $this->id ]);
+        }
+        return $relation;
+    }
+
     public function macAddresses() {
         return $this->hasMany('App\MacAddress');
     }

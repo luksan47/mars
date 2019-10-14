@@ -18,7 +18,8 @@ class UsersTableSeeder extends Seeder
             'permission' => 1,
             'verified' => true
         ]);
-        factory(App\MacAddress::class, 34)->create(['user_id' => 1]);
+        //factory(App\MacAddress::class, 34)->create(['user_id' => 1]);
+        //factory(App\InternetAccess::class, 1)->create(['user_id' => 1]);
         DB::table('print_accounts')->insert([
             'user_id' => '1',
             'balance' => 100,

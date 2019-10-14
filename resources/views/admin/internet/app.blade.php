@@ -4,8 +4,10 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @include('admin.internet.mac_addresses.list')
+            @include('admin.internet.internet_access.internet_access')
         </div>
-    </div>
+        <div class="col-md-8">
+            @include('admin.internet.mac_addresses.mac_addresses')
+        </div>
     </div>
 @endsection

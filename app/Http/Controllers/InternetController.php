@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\InternetAccess;
 use App\MacAddress;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Utils\TabulatorPaginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class InternetController extends Controller
 {
     public function index()
     {
-        return view('internet.app');
+        $internetAccess = Auth::user()->internetAccess;
+        return view('internet.app', ['internet_access' => $internetAccess]);
     }
 
 
@@ -33,12 +37,29 @@ class InternetController extends Controller
 
     public function getUsersMacAddressesAdmin(Request $request)
     {
+        if (!Auth::user()->isAdmin()) { // TODO: use gate
+            throw new AuthorizationException();
+        }
+
         $paginator = TabulatorPaginator::from(MacAddress::join('users as user', 'user.id', '=', 'user_id')->select('mac_addresses.*')->with('user'))
-            ->sortable(['mac_address', 'comment', 'state', 'user.name'])
-            ->filterable(['mac_address', 'comment', 'user.name', 'state'])
+            ->sortable(['mac_address', 'comment', 'state', 'user.name', 'created_at'])
+            ->filterable(['mac_address', 'comment', 'user.name', 'state', 'created_at'])
             ->paginate();
 
         $paginator->getCollection()->transform($this->translateStates());
+
+        return $paginator;
+    }
+
+    public function getInternetAccessesAdmin() {
+        if (!Auth::user()->isAdmin()) { // TODO: use gate
+            throw new AuthorizationException();
+        }
+
+        $paginator = TabulatorPaginator::from(InternetAccess::join('users as user', 'user.id', '=', 'user_id')->select('internet_accesses.*')->with('user'))
+            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
+            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
+            ->paginate();
 
         return $paginator;
     }
@@ -52,6 +73,20 @@ class InternetController extends Controller
         }
 
         $macAddress->delete();
+
+        $this->autoApproveMacAddresses($macAddress->user);
+    }
+
+    public function resetWifiPassword(Request $request) {
+        $request->validate([
+            'confirm' => 'accepted'
+        ]);
+
+        $internetAccess = Auth::user()->internetAccess;
+        $internetAccess->wifi_password = Str::random(8);
+        $internetAccess->save();
+
+        return redirect()->back();
     }
 
     public function editMacAddress(Request $request, $id)
@@ -61,11 +96,15 @@ class InternetController extends Controller
         }
 
         $macAddress = MacAddress::findOrFail($id);
-        if($request->has('state')) {
+        if ($request->has('state')) {
             $macAddress->state = $request->input('state');
         }
 
         $macAddress->save();
+
+        $this->autoApproveMacAddresses($macAddress->user);
+
+        $macAddress = $macAddress->refresh(); // auto approve maybe modified this
 
         return $this->translateStates()($macAddress);
     }
@@ -75,7 +114,7 @@ class InternetController extends Controller
         $request->validate(
             [
                 'comment' => 'required|max:1000',
-                'mac_address' => ['required', 'regex:/((([a-zA-z0-9]{2}[-:]){5}([a-zA-z0-9]{2}))|(([a-zA-z0-9]{2}:){5}([a-zA-z0-9]{2})))/i'],
+                'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
             ]
         );
 
@@ -92,24 +131,28 @@ class InternetController extends Controller
         $macAddress->mac_address = str_replace('-', ':', strtoupper($request->input('mac_address')));
         $macAddress->save();
 
+        $this->autoApproveMacAddresses(Auth::user());
+
         return redirect()->back();
+    }
+
+    private function autoApproveMacAddresses($user) {
+        DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
     }
 
     public function translateStates(): \Closure
     {
         return function ($data) {
             $data->state = strtoupper($data->state);
+            $data->_state = $data->state;
             switch ($data->state) {
                 case MacAddress::APPROVED:
-                    $data->_state = $data->state;
                     $data->state = __('internet.approved');
                     break;
                 case MacAddress::REJECTED:
-                    $data->_state = $data->state;
                     $data->state = __('internet.rejected');
                     break;
                 case MacAddress::REQUESTED:
-                    $data->_state = $data->state;
                     $data->state = __('internet.requested');
                     break;
             }

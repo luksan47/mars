@@ -9,6 +9,7 @@ class MacAddress extends Model
     const REQUESTED = "REQUESTED";
     const APPROVED = "APPROVED";
     const REJECTED = "REJECTED";
+    const STATES = [self::APPROVED, self::REJECTED, self::REQUESTED];
 
     protected $table = 'mac_addresses';
 
@@ -18,7 +19,7 @@ class MacAddress extends Model
 
     protected $attributes = [
         'comment' => "",
-        'state' => "REQUESTED"
+        'state' => self::REQUESTED
     ];
 
     function getState($value) {
