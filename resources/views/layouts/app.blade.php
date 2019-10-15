@@ -10,8 +10,10 @@
     <title>{{ config('app.name', 'Urán') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -29,13 +31,5 @@
             @yield('content')
         </main>
     </div>
-    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
-    
-    <script>
-    $.fn.selectpicker.Constructor.BootstrapVersion = '4';
-    $(document).ready(function() {
-        $('.selectpicker').selectpicker();
-    });
-    </script>
 </body>
 </html>
