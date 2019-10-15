@@ -23,14 +23,14 @@ class PrintController extends Controller
             'number_of_copies' => 'required|integer|min:1'
         ]);
         $validator->validate();
-        
+
         $print_account = Auth::user()->printAccount;
         $is_two_sided = $request->has('two_sided');
         $file = $request->file_to_upload;
         $pages = $this->get_pages($validator, $file->getPathName());
 
         if ($validator->fails()) {
-            return back()-withErros($validator)->withInput();
+            return back()->withErros($validator)->withInput();
         }
 
         $cost = PrintAccount::getCost($pages, $is_two_sided);
@@ -48,27 +48,23 @@ class PrintController extends Controller
     }
 
     public function modify_balance(Request $request) {
-        $balance = $request->balance;
-        $print_account = User::findOrFail($request->user_id)->printAccount; 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'balance' => 'required|integer',
         ]);
         $validator->validate();
 
-        if ($balance < 0) {
-            $balance = abs($balance);
-            if (!$print_account->hasEnoughMoney($balance)) {
-                return $this->handle_no_balance($validator);
-            } else {
-                $print_account->decrement('balance', $balance);
-            }
-        } else {
-            $print_account->increment('balance', $balance);
+        $balance = $request->balance;
+        $print_account = User::find($request->user_id)->printAccount;
+
+        if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
+            return $this->handle_no_balance($validator);
         }
+
+        $print_account->increment('balance', $balance);
         return redirect()->route('print');
     }
-  
+
     public function modify_free_pages(Request $request) {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
@@ -96,18 +92,17 @@ class PrintController extends Controller
             $path = $file->storeAs('', md5(rand(0, 100000) . date('c')) . '.pdf', 'printing');
             $path = Storage::disk('printing')->getDriver()->getAdapter()->applyPathPrefix($path);
             $result = exec("lp -d " . $printer_name
-                        . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ") 
-                        . "-n " . $number_of_copies . " "
-                        . $path . " 2>&1");
+                . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ")
+                . "-n " . $number_of_copies . " "
+                . $path . " 2>&1");
             if (!preg_match("/^request id is ([^\s]*) \\(?<id> file\\(s\\)\\)$/", $result, $job)) {
-                Log::error("Printing error at line: ".__FILE__.":".__LINE__." (in function ".__FUNCTION__."). result:"
+                Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). result:"
                     . print_r($result, true));
                 $state = "ERROR";
             }
             $job_id = $job['id'];
-        }
-        catch (\Exception $e){
-            Log::error("Printing error at line: ".__FILE__.":".__LINE__." (in function ".__FUNCTION__."). ". $e->getMessage());
+        } catch (\Exception $e) {
+            Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). " . $e->getMessage());
             $state = "ERROR";
             $job_id = "";
             $path = "";
@@ -127,8 +122,8 @@ class PrintController extends Controller
     private function handle_no_balance($validator) {
         $validator->errors()->add('balance', __('print.nobalance'));
         return back()
-                ->withErrors($validator)
-                ->withInput();
+            ->withErrors($validator)
+            ->withInput();
     }
 
     private function get_pages($validator, $path) {
