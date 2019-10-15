@@ -57,7 +57,7 @@ class PrintController extends Controller
         $balance = $request->balance;
         $print_account = User::find($request->user_id)->printAccount;
 
-        if ($print_account->balance + $balance < 0) {
+        if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
             return $this->handle_no_balance($validator);
         }
 
