@@ -56,7 +56,7 @@ return [
     'image' => 'Egy képnek kell lennie: :attribute.',
     'in' => 'A kiválasztott :attribute érvénytelen.',
     'in_array' => 'A(z) :attribute nem létezik itt: :other.',
-    'integer' => 'A(z) :attribute értéknek számnak kell lennie.',
+    'integer' => 'A(z) :attribute értéknek egész számnak kell lennie.',
     'ip' => 'A(z) :attribute értéknek egy érvényes IP címnek kell lennie.',
     'ipv4' => 'A(z) :attribute értéknek egy érvényes IPv4 címnek kell lennie.',
     'ipv6' => 'A(z) :attribute értéknek egy érvényes IPv6 címnek kell lennie.',
