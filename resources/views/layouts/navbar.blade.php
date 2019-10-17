@@ -16,7 +16,7 @@
                             <a class="nav-link" href="{{ route('print') }}">{{ __('print.print') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('internet.internet') }}</a>
+                            <a class="nav-link" href="{{ route('internet') }}">{{ __('internet.internet') }}</a>
                         </li>
                         @if (Auth::user()->isAdmin())
                         <li class="nav-item dropdown">
@@ -26,6 +26,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('admin.registrations') }}"> {{ __('admin.handle_registrations') }} </a>
+                                <a class="dropdown-item" href="{{ route('internet.admin') }}">{{ __('internet.internet') }} </a>
                             </div>
                         </li>
                         @endif
