@@ -4,7 +4,7 @@
         <div class="card-body">
             <form method="POST" action="{{ route('print.modify') }}">
                 @csrf
-                <input id="user_id" name="user_id" type="number">
+                @include("search-user")
                 <input id="balance" name="balance" type="number">
                 <button type="submit" class="btn btn-primary">@lang('print.add')</button>
             </form>

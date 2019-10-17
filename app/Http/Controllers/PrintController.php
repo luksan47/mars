@@ -14,7 +14,7 @@ use App\PrintJob;
 class PrintController extends Controller
 {
     public function index() {
-        return view('print.app');
+        return view('print.app', ["users" => User::all()]);
     }
 
     public function print(Request $request) {
