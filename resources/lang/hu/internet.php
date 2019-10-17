@@ -21,7 +21,7 @@ return [
     'reject' => 'Elutasít',
     'request' => 'Visszavon',
     'user_id' => 'Felhasználó id',
-    'admin' => 'Internet',
+    'internet' => 'Internet',
     'auto_approved_mac_slots_long' => 'Automatikusan engedélyezett eszközök: :count db',
     'registered_devices_info' => 'A vezetékes internet használatához előbb regisztrálnod kell az eszközödet. Egy bizonyos számú eszközt automatikusan tudsz engedélyezni. Ha ennél többre lenne szükséged, akkor a regisztrálás után az adminisztrátoroknak el kell fogadniuk azt, ehhez a megjegyzés mezőbe tudsz indoklást írni.',
     'edit_warning_auto_approve' => 'Szerkesztés után lefut az automatikus elfogadás az adott felhasználónál, emiatt lehetséges, hogy nem változik az állapot.',

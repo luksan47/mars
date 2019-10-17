@@ -13,6 +13,11 @@ use Illuminate\Support\Str;
 
 class InternetController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:internet.internet');
+    }
+
     public function index()
     {
         $internetAccess = Auth::user()->internetAccess;

@@ -26,7 +26,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('admin.registrations') }}"> {{ __('admin.handle_registrations') }} </a>
-                                <a class="dropdown-item" href="{{ route('internet.admin') }}">{{ __('internet.admin') }} </a>
+                                <a class="dropdown-item" href="{{ route('internet.admin') }}">{{ __('internet.internet') }} </a>
                             </div>
                         </li>
                         @endif
