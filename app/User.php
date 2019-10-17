@@ -53,6 +53,11 @@ class User extends Authenticatable
     public function macAddresses() {
         return $this->hasMany('App\MacAddress');
     }
+  
+    public function printJobs()
+    {
+        return $this->hasMany('App\PrintJob');
+    }
 
     public function isAdmin() {
         return $this->permission == 1;
