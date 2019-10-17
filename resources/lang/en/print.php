@@ -20,6 +20,6 @@ return [
     "print" => "Print",
     "free" => "Free pages"
 
-]
+];
   
  
