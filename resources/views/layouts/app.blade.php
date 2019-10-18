@@ -10,8 +10,13 @@
     <title>{{ config('app.name', 'Urán') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+
+    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
+    <script src="{{ asset('js/site.js') }}" defer></script>
     <script type="text/javascript">
         $(document).ready(function() {$.ajaxSetup({
             headers: {
@@ -19,21 +24,15 @@
             }
         })});
     </script>
-    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
-    <script src="{{ asset('js/site.js') }}" defer></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/tabulator_bootstrap4.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/site.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -54,5 +53,6 @@
     </script>
     <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
     <script src="{{ asset('js/cookieconsent-initialize.js') }}"></script>
+
 </body>
 </html>
