@@ -53,9 +53,16 @@ class User extends Authenticatable
     public function macAddresses() {
         return $this->hasMany('App\MacAddress');
     }
+    
+    public function workshops() {
+        return $this->belongsToMany(Workshop::class, 'workshop_users');
+    }
+
+    public function faculties() {
+        return $this->belongsToMany(Faculty::class, 'faculty_users');
+    }
   
-    public function printJobs()
-    {
+    public function printJobs() {
         return $this->hasMany('App\PrintJob');
     }
 

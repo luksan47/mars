@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\PrintAccount;
+use App\Faculty;
+use App\Workshop;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -41,6 +43,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    
+    public function showRegistrationForm()
+    {
+        return view('auth.register', ['faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -53,6 +61,21 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'place_of_birth' => ['required', 'string', 'max:255'],
+            'date_of_birth' => ['required', 'string', 'max:255'],
+            'mothers_name' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'county' => ['required', 'string', 'max:255'],
+            'zip_code' => ['required', 'string', 'max:31'],
+            'city' => ['required', 'string', 'max:255'],
+            'street_and_number' => ['required', 'string', 'max:255'],
+            'year_of_graduation' => ['required', 'string', 'max:255'],
+            'high_school' => ['required', 'string', 'max:255'],
+            'neptun' => ['required', 'string', 'max:255'],
+            'year_of_acceptance' => ['required', 'string', 'max:255'],
+            'faculty' => ['required', 'string', 'max:255'],
+            'workshop' => ['required', 'string', 'max:255'],
         ]);
     }
 
