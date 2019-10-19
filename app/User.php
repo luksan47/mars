@@ -61,20 +61,26 @@ class User extends Authenticatable
     }
 
     public function roles() {
-        return $this->belongsToMany(Role::class, 'role_users');
+        return $this->belongsToMany(Role::class, 'role_users')->withPivot('object_id');;
     }
 
-    public function inRole(array $roleNames, $objectId = null)
+    public function hasAnyRole(array $roleNames, $objectId = null)
     {
-        return DB::table('role_users')
-                ->join('roles', 'roles.id', '=', 'role_users.role_id')
-                ->where('role_users.user_id', '=', $this->id)
-                ->whereIn('roles.name', $roleNames)
-                ->where('role_users.object_id', '=', $objectId)
-                ->count() > 0;
+        return $this->roles->contains(function($value, $key) use($roleNames, $objectId) {
+            return in_array($value->name, $roleNames) && $value->pivot->object_id == $objectId;
+        });
     }
 
+    public function hasRole(string $roleName, $objectId = null)
+    {
+        return $this->hasAnyRole([$roleName], $objectId);
+    }
+
+    /**
+     * @deprecated use hasRole instead
+     */
     public function isAdmin() {
-        return $this->inRole(['admin']);
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+        return $this->hasRole(['admin']);
     }
 }

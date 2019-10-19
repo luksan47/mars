@@ -25,6 +25,10 @@ class AlterUsersTable extends Migration
      */
     public function down()
     {
-        //
+        if (Schema::hasTable('users') && Schema::hasColumn('users', 'permission')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('permission');
+            });
+        }
     }
 }

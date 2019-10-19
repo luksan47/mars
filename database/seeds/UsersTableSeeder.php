@@ -33,9 +33,8 @@ class UsersTableSeeder extends Seeder
         factory(App\InternetAccess::class, 1)->create(['user_id' => 1]);
 
         $user->printAccount()->save($this->createPrintAccount($user->id));
-        $user->roles()->attach(
-            Role::where('name', 'admin')->first()->id
-        );
+        $user->roles()->attach($this->getRoleId(Role::PRINT_ADMIN));
+        $user->roles()->attach($this->getRoleId(Role::INTERNET_ADMIN));
     }
 
     private function createCollegist() {
@@ -46,9 +45,9 @@ class UsersTableSeeder extends Seeder
             'verified' => true
         ]);
         $user->printAccount()->save($this->createPrintAccount($user->id));
-        $user->roles()->attach(
-            Role::where('name', 'collegist')->first()->id
-        );
+        $user->roles()->attach($this->getRoleId(Role::COLLEGIST));
+        $user->roles()->attach($this->getRoleId(Role::PRINTER));
+        $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
     }
 
     private function createTenant() {
@@ -59,9 +58,8 @@ class UsersTableSeeder extends Seeder
             'verified' => true
         ]);
         $user->printAccount()->save($this->createPrintAccount($user->id));
-        $user->roles()->attach(
-            Role::where('name', 'tenant')->first()->id
-        );
+        $user->roles()->attach($this->getRoleId(Role::TENANT));
+        $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
     }
 
     private function createPrintAccount($userId) {
@@ -71,5 +69,9 @@ class UsersTableSeeder extends Seeder
             'free_pages' => 10,
             'free_page_deadline' => null //TODO: add valid date
         ]);
+    }
+
+    private function getRoleId(string $roleName) {
+        return Role::where('name', $roleName)->first()->id;
     }
 }

@@ -4,11 +4,22 @@ namespace App\Policies;
 
 use App\MacAddress;
 use App\User;
+use App\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MacAddressPolicy
 {
     use HandlesAuthorization;
+
+    public function before($user, $ability)
+    {
+        if ($user->hasRole(Role::INTERNET_ADMIN)) {
+            return true;
+        }
+        if (!$user->hasRole(Role::INTERNET_USER)){
+            return false;
+        }
+    }
 
     /**
      * Determine whether the user can view any mac addresses (in general).
@@ -41,7 +52,7 @@ class MacAddressPolicy
      */
     public function create(User $user)
     {
-        return $user->inRole(['collegist', 'tenant']);
+        return true;
     }
 
     /**
@@ -68,6 +79,13 @@ class MacAddressPolicy
         return $user->id === $macAddress->user_id;
     }
 
+    /**
+     * Determine whether the user can accept the mac address request.
+     *
+     * @param  \App\User  $user
+     * @param  \App\MacAddress  $macAddress
+     * @return mixed
+     */
     public function accept(User $user, MacAddress $macAddress) 
     {
         return false;

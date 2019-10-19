@@ -4,11 +4,22 @@ namespace App\Policies;
 
 use App\InternetAccess;
 use App\User;
+use App\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class InternetAccessPolicy
 {
     use HandlesAuthorization;
+
+    public function before($user, $ability)
+    {
+        if ($user->hasRole(Role::INTERNET_ADMIN)) {
+            return true;
+        }
+        if (!$user->hasRole(Role::INTERNET_USER)){
+            return false;
+        }
+    }
 
     /**
      * Determine whether the user can view any internet accesses.

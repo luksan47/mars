@@ -1,4 +1,4 @@
-@if (Gate::allows('print.modify'))
+@can('print.modify')
     <div class="card">
         <div class="card-header">@lang('print.modify')</div>
         <div class="card-body">

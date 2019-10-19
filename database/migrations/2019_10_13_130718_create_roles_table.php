@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+use App\Role;
 
 class CreateRolesTable extends Migration
 {
@@ -18,6 +20,11 @@ class CreateRolesTable extends Migration
             $table->string('name')->unique();
             $table->timestamps();
         });
+
+        // Adding roles
+        foreach (Role::ALL as $key => $role) {
+            DB::table('roles')->insert(['name' => $role]);
+        }
     }
 
     /**

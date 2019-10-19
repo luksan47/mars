@@ -13,6 +13,11 @@ use App\PrintJob;
 
 class PrintController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:print.print');
+    }
+
     public function index() {
         return view('print.app', ["users" => User::all()]);
     }
