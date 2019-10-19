@@ -8,7 +8,6 @@ use App\User;
 
 class RegistrationsController extends Controller {
     public function __construct() {
-        $this->middleware('auth');
         $this->middleware('can:registration.handle');
     }
 

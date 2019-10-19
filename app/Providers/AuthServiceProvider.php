@@ -33,13 +33,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerWorkshopPolicies();
     }
 
-    public function registerInternetPolicies()
-    {
-        Gate::define('internet.internet', function ($user) {
-            return $user->hasAnyRole([Role::INTERNET_ADMIN, Role::INTERNET_USER]);
-        });
-    }
-
     public function registerPrintPolicies()
     {
         Gate::define('print.print', function ($user) {
@@ -50,6 +43,20 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('print.modify-free', function ($user) {
             return $user->hasRole(Role::PRINT_ADMIN);
+        });
+    }
+
+    public function registerInternetPolicies()
+    {
+        Gate::define('internet.internet', function ($user) {
+            return $user->hasAnyRole([Role::INTERNET_ADMIN, Role::INTERNET_USER]);
+        });
+    }
+
+    public function registerVerificationPolicies() 
+    {
+        Gate::define('registration.handle', function ($user) {
+            return $user->hasRole(Role::INTERNET_ADMIN);
         });
     }
 
