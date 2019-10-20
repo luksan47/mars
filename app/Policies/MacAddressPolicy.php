@@ -11,7 +11,7 @@ class MacAddressPolicy
 {
     use HandlesAuthorization;
 
-    public function before($user, $ability)
+    public function before(User $user)
     {
         if ($user->hasRole(Role::INTERNET_ADMIN)) {
             return true;
@@ -29,7 +29,7 @@ class MacAddressPolicy
      */
     public function viewAny(User $user)
     {
-        return false;
+        return true;
     }
 
     /**

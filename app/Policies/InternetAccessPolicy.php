@@ -11,7 +11,7 @@ class InternetAccessPolicy
 {
     use HandlesAuthorization;
 
-    public function before($user, $ability)
+    public function before(User $user, $ability)
     {
         if ($user->hasRole(Role::INTERNET_ADMIN)) {
             return true;

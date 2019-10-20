@@ -14,8 +14,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \App\MacAddress::class => MacAddressPolicy::class,
-        \App\InternetAccess::class => InternetAccessPolicy::class,
+        \App\MacAddress::class => \App\Policies\MacAddressPolicy::class,
+        \App\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
     ];
 
     /**
@@ -30,6 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         // General policies without models
         $this->registerPrintPolicies();
         $this->registerInternetPolicies();
+        $this->registerVerificationPolicies();
         $this->registerWorkshopPolicies();
     }
 
@@ -56,7 +57,7 @@ class AuthServiceProvider extends ServiceProvider
     public function registerVerificationPolicies() 
     {
         Gate::define('registration.handle', function ($user) {
-            return $user->hasRole(Role::INTERNET_ADMIN);
+            return  $user->hasRole(Role::INTERNET_ADMIN);
         });
     }
 
