@@ -18,7 +18,9 @@ class UsersTableSeeder extends Seeder
         $this->createTenant();
         
         factory(App\User::class, 10)->create()->each(function ($user) {
-            $user->printAccount()->save(factory(PrintAccount::class)->make(['user_id' => $user->id]));
+            factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
+            $user->roles()->attach($this->getRoleId(Role::COLLEGIST));
+            $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
         });
     }
 
@@ -29,10 +31,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
-        factory(App\MacAddress::class, 3)->create(['user_id' => 1]);
-        factory(App\InternetAccess::class, 1)->create(['user_id' => 1]);
-
-        $user->printAccount()->save($this->createPrintAccount($user->id));
+        factory(App\MacAddress::class, 3)->create(['user_id' => $user->id]);
         $user->roles()->attach($this->getRoleId(Role::PRINT_ADMIN));
         $user->roles()->attach($this->getRoleId(Role::INTERNET_ADMIN));
     }
@@ -44,7 +43,6 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
-        $user->printAccount()->save($this->createPrintAccount($user->id));
         $user->roles()->attach($this->getRoleId(Role::COLLEGIST));
         $user->roles()->attach($this->getRoleId(Role::PRINTER));
         $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
@@ -57,18 +55,8 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
-        $user->printAccount()->save($this->createPrintAccount($user->id));
         $user->roles()->attach($this->getRoleId(Role::TENANT));
         $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
-    }
-
-    private function createPrintAccount($userId) {
-        return PrintAccount::create([
-            'user_id' => $userId,
-            'balance' => 100,
-            'free_pages' => 10,
-            'free_page_deadline' => null //TODO: add valid date
-        ]);
     }
 
     private function getRoleId(string $roleName) {
