@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Ezek az adatok nem egyeznek meg a feljegyzett adatainkkal.',
+    'failed' => 'Nem megfelelő adat(ok).',
     'throttle' => 'Túl sok próbálkozás. Próbáld újra :seconds másodperc múlva.',
 
 ];
