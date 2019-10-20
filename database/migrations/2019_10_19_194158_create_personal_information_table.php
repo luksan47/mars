@@ -17,7 +17,7 @@ class CreatePersonalInformationTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->text('place_of_birth');
-            $table->timestamp('date_of_birth');
+            $table->date('date_of_birth');
             $table->text('mothers_name');
             $table->text('phone_number');
             $table->text('country');

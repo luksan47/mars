@@ -7,9 +7,11 @@ use App\User;
 use App\PrintAccount;
 use App\Faculty;
 use App\Workshop;
+use App\PersonalInformation;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -57,25 +59,26 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+    //    echo implode($data); die();
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'place_of_birth' => ['required', 'string', 'max:255'],
-            'date_of_birth' => ['required', 'string', 'max:255'],
+            'date_of_birth' => ['required', 'date_format:Y-m-d'],
             'mothers_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:15'],
             'country' => ['required', 'string', 'max:255'],
             'county' => ['required', 'string', 'max:255'],
             'zip_code' => ['required', 'string', 'max:31'],
             'city' => ['required', 'string', 'max:255'],
             'street_and_number' => ['required', 'string', 'max:255'],
-            'year_of_graduation' => ['required', 'string', 'max:255'],
+            'year_of_graduation' => ['required', 'integer', 'between:1895,'. date("Y")],
             'high_school' => ['required', 'string', 'max:255'],
-            'neptun' => ['required', 'string', 'max:255'],
-            'year_of_acceptance' => ['required', 'string', 'max:255'],
-            'faculty' => ['required', 'string', 'max:255'],
-            'workshop' => ['required', 'string', 'max:255'],
+            'neptun' => ['required', 'string', 'size:6'],
+            'year_of_acceptance' => ['required', 'integer', 'between:1895,'. date("Y")],
+            'faculty' => ['required', 'array', 'exists:faculties,id',],
+            'workshop' => ['required', 'array', 'exists:workshops,id',],
         ]);
     }
 
@@ -92,6 +95,25 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        PersonalInformation::create([
+            'user_id' => $user->id,
+            'place_of_birth' => $data['place_of_birth'],
+            'date_of_birth' => $data['date_of_birth'],
+            'mothers_name' => $data['mothers_name'],
+            'phone_number' => $data['phone_number'],
+            'country' => $data['country'],
+            'county' => $data['county'],
+            'zip_code' => $data['zip_code'],
+            'city' => $data['city'],
+            'street_and_number' => $data['street_and_number'],
+            'year_of_graduation' => $data['year_of_graduation'],
+            'high_school' => $data['high_school'],
+            'neptun' => $data['neptun'],
+            'year_of_acceptance' => $data['year_of_acceptance'],
+            'faculty' => $data['faculty'],
+            'workshop' => $data['workshop'],
+        ]);
+
         PrintAccount::create([
             'user_id' => $user->id
         ]);

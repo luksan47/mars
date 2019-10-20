@@ -51,6 +51,20 @@
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
+        @error('faculty')
+            <span class="invalid-feedback" role="alert">
+                <strong>
+                    @lang('info.faculty_must_be_filled')
+                </strong>
+            </span>
+        @enderror
+        @error('workshop')
+            <span class="invalid-feedback" role="alert">
+                <strong>
+                    @lang('info.workshop_must_be_filled')
+                </strong>
+            </span>
+        @enderror
     </div>
 </div>
 
@@ -60,13 +74,17 @@
     <div class="col-md-6">
         @foreach($faculties as $faculty)
             <div class="checkbox">
-                <label><input type="checkbox" name="faculty[]" value="{{ $faculty->id }}" {{ old('faculty') !== null && in_array($faculty->id, old('faculty')) ? 'checked' : '' }}> {{ $faculty->name }}</label>
+                <label><input type="checkbox" name="faculty[]" value="{{ $faculty->id }}"
+                    @if(old('faculty') !== null && in_array($faculty->id, old('faculty'))) checked @endif >
+                     {{ $faculty->name }}
+                </label>
             </div>
         @endforeach
-
-        @error('faculty')
+        @error('workshop')
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
+                <strong>
+                    @lang('info.workshop_must_be_filled')
+                </strong>
             </span>
         @enderror
     </div>
@@ -78,13 +96,18 @@
     <div class="col-md-8">
         @foreach($workshops as $workshop)
             <div class="checkbox">
-                <label><input type="checkbox" name="workshop[]" value="{{ $workshop->id }}" {{ old('workshop') !== null && in_array($workshop->id, old('workshop')) ? 'checked' : '' }}> {{ $workshop->name }}</label>
+                <label><input type="checkbox" name="workshop[]" value="{{ $workshop->id }}" 
+                    @if(old('workshop') !== null && in_array($workshop->id, old('workshop'))) checked @endif >
+                     {{ $workshop->name }}
+                </label>
             </div>
         @endforeach
 
         @error('workshop')
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
+                <strong>
+                    @lang('info.faculty_must_be_filled')
+                </strong>
             </span>
         @enderror
     </div>
