@@ -40,11 +40,36 @@ class CreateTrigger extends Migration
             FOR EACH ROW
             INSERT INTO internet_accesses(user_id) VALUES (NEW.id);
         ');
+
+        Schema::table('mac_addresses', function($table){
+            $table->dropForeign('mac_addresses_user_id_foreign');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
+        Schema::table('internet_accesses', function($table){
+            $table->dropForeign('internet_accesses_user_id_foreign');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
     }
 
     public function down()
     {
         DB::unprepared('DROP TRIGGER trigger_create_print_account_for_user');
         DB::unprepared('DROP TRIGGER trigger_create_internet_access_for_user');
+        Schema::table('mac_addresses', function($table){
+            $table->dropForeign('mac_addresses_user_id_foreign');
+            $table->foreign('user_id')
+                ->references('id')->on('users');
+        });
+        Schema::table('internet_accesses', function($table){
+            $table->dropForeign('internet_accesses_user_id_foreign');
+            $table->foreign('user_id')
+                ->references('id')->on('users');
+        });
     }
 }
