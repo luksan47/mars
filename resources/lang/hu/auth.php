@@ -15,5 +15,7 @@ return [
 
     'failed' => 'Nem megfelelő adat(ok).',
     'throttle' => 'Túl sok próbálkozás. Próbáld újra :seconds másodperc múlva.',
+    'wait_for_verification' => 'Kérlek légy türelemmel amíg egy adminisztrátor elfogadja a regisztrációdat.',
+    'successful_registration' => 'Sikeres regisztráció'
 
 ];
