@@ -67,7 +67,7 @@ class User extends Authenticatable
     public function hasAnyRole(array $roleNames, $objectId = null)
     {
         return $this->roles->contains(function($value, $key) use($roleNames, $objectId) {
-            return in_array($value->name, $roleNames) && $value->pivot->object_id == $objectId;
+            return in_array($value->name, $roleNames) && $value->pivot->object_id === $objectId;
         });
     }
 

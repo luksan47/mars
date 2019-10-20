@@ -65,7 +65,7 @@ class AuthServiceProvider extends ServiceProvider
     public function registerWorkshopPolicies()
     {
         Gate::define('workshop.access', function ($user, $workshopId) {
-            return $workshopId !== null && $user->hasRole(Role::WORKSHOP_ADMINISTRATOR, $workshopId);
+            return $user->hasRole(Role::WORKSHOP_ADMINISTRATOR, $workshopId);
         });
     }
 }
