@@ -2,7 +2,7 @@
     <label for="year_of_graduation" class="col-md-4 col-form-label text-md-right">@lang('info.year_of_graduation')</label>
 
     <div class="col-md-6">
-        <input id="year_of_graduation" type="number" class="form-control @error('year_of_graduation') is-invalid @enderror" name="year_of_graduation" value="{{ old('year_of_graduation') }}" required>
+        <input id="year_of_graduation" type="number" min="1895" max="{{ date('Y') }}" class="form-control @error('year_of_graduation') is-invalid @enderror" name="year_of_graduation" value="{{ old('year_of_graduation') }}" required>
 
         @error('year_of_graduation')
             <span class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
     <label for="year_of_acceptance" class="col-md-4 col-form-label text-md-right">@lang('info.year_of_acceptance')</label>
 
     <div class="col-md-6">
-        <input id="year_of_acceptance" type="text" class="form-control @error('year_of_acceptance') is-invalid @enderror" name="year_of_acceptance" value="{{ old('year_of_acceptance') }}" required>
+        <input id="year_of_acceptance" type="number" min="1895" max="{{ date('Y') }}" class="form-control @error('year_of_acceptance') is-invalid @enderror" name="year_of_acceptance" value="{{ old('year_of_acceptance') }}" required>
 
         @error('year_of_acceptance')
             <span class="invalid-feedback" role="alert">

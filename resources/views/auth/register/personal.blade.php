@@ -58,7 +58,7 @@
     <label for="phone_number" class="col-md-4 col-form-label text-md-right">@lang('info.phone_number')</label>
 
     <div class="col-md-6">
-        <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number') }}" required>
+        <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" placeholder="+36 (30) 123-4567" value="{{ old('phone_number') }}" required>
 
         @error('phone_number')
             <span class="invalid-feedback" role="alert">
