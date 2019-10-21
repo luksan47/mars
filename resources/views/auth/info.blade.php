@@ -9,17 +9,18 @@
                     <div class="card-body">
                         <form method="post" action="">
                             @csrf
-                            <div class="form-group">
-                                <label class="col-sm-4 control" class="col-sm-4 control" for="name">@lang('user.name')</label>
-                                <div class="col-sm-8">
-                                <input class="form-control" type="text" name="name" id="name" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label class="col-sm-4 control" for="first_name">@lang('user.name')</label>
+                                    <div class="col-sm-12">
+                                    <input class="form-control" type="text" name="first_name" id="first_name" required>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-4 control" for="surname">@lang('user.surname')</label>
-                                <div class="col-sm-8">
-                                <input class="form-control" type="text" name="surname" id="surname" required>
+                                <div class="form-group col-md-4">
+                                    <label class="col-sm-4 control" for="last_surname">@lang('user.surname')</label>
+                                    <div class="col-sm-12">
+                                    <input class="form-control" type="text" name="last_surname" id="last_surname" required>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -44,7 +45,7 @@
                             <div class="form-group">
                                 <label class="col-sm-4 control" for="phone_number">@lang('user.phone_number')</label>
                                 <div class="col-sm-8">
-                                <input class="form-control" type="text" name="phone_number" id="phone_number" required>
+                                    <input class="form-control" type="text" name="phone_number" id="phone_number" placeholder="+36 12 345 6789" required>
                                 </div>
                             </div>
                             <div class="col-sm-8">
@@ -58,19 +59,22 @@
                             <form method="post" action="">
                                 @csrf
 
-                                <div class="form-group">
-                                    <label class="col-sm-4 control" for="zip_code">@lang('user.zip_code')</label>
-                                    <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="zip_code" id="zip_code" required>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label class="col-sm-4 control" for="zip_code">@lang('user.zip_code')</label>
+                                        <div class="col-sm-12">
+                                            <input class="form-control" type="text" name="zip_code" id="zip_code" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="col-sm-4 control" for="city">@lang('user.city')</label>
+                                        <div class="col-sm-12">
+                                            <input class="form-control" type="text" name="city" id="city" required>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-sm-4 control" for="city">@lang('user.city')</label>
-                                    <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="city" id="city" required>
-                                    </div>
-                                </div>
+
                                 <div class="form-group">
                                     <label class="col-sm-4 control" for="address">@lang('user.address')</label>
                                     <div class="col-sm-8">
@@ -91,9 +95,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control" for="year_of_the_leaving_exam">@lang('user.year_of_the_leaving_exam')</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="year_of_the_leaving_exam"
-                                           id="year_of_the_leaving_exam"
-                                           required>
+
+                                        <input class="form-control" type="number" min="1900" max="2099" step="1" value="2016" required/>
+
                                     </div>
                                 </div>
                                 <div class="form-group">
