@@ -110,8 +110,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control" for="year_of_enrollment">@lang('user.year_of_enrollment')</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="year_of_enrollment"
-                                           id="year_of_enrollment" required>
+                                    <input class="form-control" type="text" name="year_of_enrollment" id="year_of_enrollment" required>
                                     </div>
                                 </div>
                                 <label class="col-sm-4 control" for="faculty">@lang('user.faculty')</label>
