@@ -33,6 +33,12 @@
                             </div>
                         </div>
 
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="gdpr" value="gdpr" required>
+                                @lang('auth.i_agree_to') <a href="{{ route('privacy_policy') }}" target="_blank">@lang('auth.privacy_policy')</a>
+                            </label>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

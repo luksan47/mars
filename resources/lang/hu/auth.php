@@ -15,5 +15,6 @@ return [
 
     'failed' => 'Ezek az adatok nem egyeznek meg a feljegyzett adatainkkal.',
     'throttle' => 'Túl sok próbálkozás. Próbáld újra :seconds másodperc múlva.',
-
+    'i_agree_to' => 'Kijelentem, hogy elolvastam és elfogadom az',
+    'privacy_policy' => 'adatkezelési irányelveket',
 ];
