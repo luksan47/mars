@@ -7,17 +7,17 @@
                 <div class="card card-default">
                     <div class="card-header">@lang('user.personal_information'):</div>
                     <div class="card-body">
-                        <form method="post" action="">
+                        <form method="post" action="/safe_basic_data">
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label class="col-sm-4 control" for="first_name">@lang('user.name')</label>
+                                    <label class="col-sm-12 control" for="first_name">@lang('user.first_name')</label>
                                     <div class="col-sm-12">
                                     <input class="form-control" type="text" name="first_name" id="first_name" required>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label class="col-sm-4 control" for="last_surname">@lang('user.surname')</label>
+                                    <label class="col-sm-12 control" for="last_surname">@lang('user.surname')</label>
                                     <div class="col-sm-12">
                                     <input class="form-control" type="text" name="last_surname" id="last_surname" required>
                                     </div>
@@ -56,18 +56,18 @@
                     <div class="card card-default">
                         <div class="card-header">@lang('user.address_information'):</div>
                         <div class="card-body">
-                            <form method="post" action="">
+                            <form method="post" action="safe_address">
                                 @csrf
 
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label class="col-sm-4 control" for="zip_code">@lang('user.zip_code')</label>
+                                        <label class="col-sm-12 control" for="zip_code">@lang('user.zip_code')</label>
                                         <div class="col-sm-12">
                                             <input class="form-control" type="text" name="zip_code" id="zip_code" required>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="col-sm-4 control" for="city">@lang('user.city')</label>
+                                        <label class="col-sm-12 control" for="city">@lang('user.city')</label>
                                         <div class="col-sm-12">
                                             <input class="form-control" type="text" name="city" id="city" required>
                                         </div>
@@ -90,7 +90,7 @@
                     <div class="card card-default">
                         <div class="card-header">@lang('user.information_of_studies'):</div>
                         <div class="card-body">
-                            <form method="post" action="">
+                            <form method="post" action="safe_studium">
                                 @csrf
                                 <div class="form-group">
                                     <label class="col-sm-4 control" for="year_of_the_leaving_exam">@lang('user.year_of_the_leaving_exam')</label>
@@ -110,7 +110,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control" for="year_of_enrollment">@lang('user.year_of_enrollment')</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" type="text" name="year_of_enrollment" id="year_of_enrollment" required>
+                                    <input class="form-control" type="number" name="year_of_enrollment" id="year_of_enrollment" required>
                                     </div>
                                 </div>
                                 <label class="col-sm-4 control" for="faculty">@lang('user.faculty')</label>
