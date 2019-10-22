@@ -30,7 +30,12 @@
     <label for="date_of_birth" class="col-md-4 col-form-label text-md-right">@lang('info.date_of_birth')</label>
 
     <div class="col-md-6">
-        <input id="date_of_birth" type="text" class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
+        <div class="input-group date" data-provide="datepicker">
+          <input type="text" class="form-control @error('date_of_birth') is-invalid @enderror" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" required>
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+          </div>
+        </div>
 
         @error('date_of_birth')
             <span class="invalid-feedback" role="alert">
@@ -58,8 +63,7 @@
     <label for="phone_number" class="col-md-4 col-form-label text-md-right">@lang('info.phone_number')</label>
 
     <div class="col-md-6">
-        <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" placeholder="+36 (30) 123-4567" value="{{ old('phone_number') }}" required>
-
+        <input id="phone_number" name="phone_number" type="text" class="form-control bfh-phone @error('phone_number') is-invalid @enderror" data-format="+dd (dd) ddd-dddd" value="{{ old('phone_number') ?? 36 }}" required>
         @error('phone_number')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

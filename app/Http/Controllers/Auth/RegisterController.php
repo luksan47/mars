@@ -67,7 +67,7 @@ class RegisterController extends Controller
             'place_of_birth' => ['required', 'string', 'max:255'],
             'date_of_birth' => ['required', 'date_format:Y-m-d'],
             'mothers_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'max:15'],
+            'phone_number' => ['required', 'string', 'min:16', 'max:18'],
             'country' => ['required', 'string', 'max:255'],
             'county' => ['required', 'string', 'max:255'],
             'zip_code' => ['required', 'string', 'max:31'],

@@ -2,7 +2,7 @@
     <label for="country" class="col-md-4 col-form-label text-md-right">@lang('info.country')</label>
 
     <div class="col-md-6">
-        <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required>
+        <select id="country" class="form-control @error('country') is-invalid @enderror bfh-countries"  name="country" data-country="HU" data-blank="false"></select>
 
         @error('country')
             <span class="invalid-feedback" role="alert">
