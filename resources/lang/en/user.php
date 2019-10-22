@@ -3,13 +3,13 @@
 return [
 
     'admin' => 'Admin',
-    'handle_registrations' => 'Regisztrációk kezelése',
-    'accept' => 'Elfogad',
-    'reject' => 'Elutasít',
-    'show' => 'Mutat',
+    'handle_registrations' => 'Arrange registrations',
+    'accept' => 'Accept',
+    'reject' => 'Reject',
+    'show' => 'Show',
     'status' => 'Status',
     'personal_information' => 'Personal information',
-    'name' => 'Name',
+    'first_name' => 'Name',
     'email' => 'E-mail',
     'address' => 'Address',
     'surname' => 'Surname',

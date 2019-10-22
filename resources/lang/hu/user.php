@@ -9,7 +9,7 @@ return [
     'show' => 'Mutat',
     'status' => 'Status',
     'personal_information' => 'Personal information',
-    'name' => 'Name',
+    'first_name' => 'Name',
     'email' => 'E-mail',
     'address' => 'Address',
     'surname' => 'Surname',
