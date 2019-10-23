@@ -72,12 +72,18 @@
                         <a href="{{ url('/info') }}">Info </a>
 
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">@lang('general.login')</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">@lang('general.register')</a>
                         @endif
                     @endauth
+                    
+                     @if (App::isLocale('en'))
+                        <a class="nav-link" href="{{ route('setlocale', 'hu') }}">{{ __('HU') }}</a>
+                    @else
+                        <a class="nav-link" href="{{ route('setlocale', 'en') }}">{{ __('EN') }}</a>
+                    @endif
                 </div>
             @endif
 

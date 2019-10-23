@@ -22,6 +22,10 @@ Route::get('/info', function () {
     return view('auth/info');
 });
 
+Route::get('/privacy_policy', function() {
+    return Storage::download('public/Adatvédelmi tájékoztató.pdf');
+})->name('privacy_policy');
+
 Auth::routes();
 Route::get('/verification', function () {
     return view('auth.verification');
