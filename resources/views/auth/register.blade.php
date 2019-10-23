@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">@lang('general.register')</div>
+                <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -25,13 +25,15 @@
                                 @include("auth.register.contact")
                             </div>
                         </div>
-
-						<div class="card">
-							<div class="card-header">@lang('info.information_of_studies')</div>
-							<div class="card-body">
-                                @include("auth.register.information_of_studies")
+                        
+                        @if(!($isTenant ?? false))
+                            <div class="card">
+                                <div class="card-header">@lang('info.information_of_studies')</div>
+                                <div class="card-body">
+                                    @include("auth.register.information_of_studies")
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         <div class="checkbox">
                             <label><input type="checkbox" name="gdpr" value="gdpr" required>
@@ -42,7 +44,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    @lang('general.register')
+                                    {{ __('Register') }}
                                 </button>
                             </div>
                         </div>

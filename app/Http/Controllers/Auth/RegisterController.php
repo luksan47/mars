@@ -44,11 +44,15 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
     
     public function showRegistrationForm()
     {
         return view('auth.register', ['faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
+    }
+
+    public function showTenantRegistrationForm()
+    {
+        return view('auth.register', ['isTenant' => True, 'faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
     }
 
     /**
