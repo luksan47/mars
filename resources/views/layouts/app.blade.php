@@ -10,17 +10,26 @@
     <title>{{ config('app.name', 'Urán') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 
+    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
+    <script src="{{ asset('js/site.js') }}" defer></script>
+    <script type="text/javascript">
+        $(document).ready(function() {$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        })});
+    </script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.css') }}" rel="bootstrap">
-    <link rel="stylesheet" href="{{asset('css/bootstrap-select.css')}}">
-
 </head>
 <body>
     <div id="app">
@@ -29,5 +38,18 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        var cookieMessages = {
+            'dismiss' : "{{ __('cookie.dismiss') }}",
+            'allow' : "{{ __('cookie.allow') }}",
+            'deny' : "{{ __('cookie.deny') }}",
+            'link' : "{{ __('cookie.link') }}",
+            'cookie' : "{{ __('cookie.message') }}",
+            'header' : "{{ __('cookie.header') }}",
+        };
+    </script>
+    <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
+    <script src="{{ asset('js/cookieconsent-initialize.js') }}"></script>
+
 </body>
 </html>
