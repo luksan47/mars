@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('index');
@@ -28,9 +30,21 @@ Route::get('/verification', function () {
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/print', 'PrintController@index')->name('print')->middleware('can:print.print');
-    Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify')->middleware('can:print.modify');;
-    Route::post('/print/modify_free_pages', 'PrintController@modify_free_pages')->name('print.free_pages')->middleware('can:print.modify');
+    Route::get('/print', 'PrintController@index')->name('print');
+    Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify')->middleware('can:print.modify');
+    Route::post('/print/modify_free_pages', 'PrintController@modify_free_pages')->name('print.free_pages')->middleware('can:print.modify-free');
+    Route::put('/print/print', 'PrintController@print')->name('print.print');
+
+    Route::get('/internet', 'InternetController@index')->name('internet');
+    Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');
+    Route::post('/internet/mac_addresses/{id}/delete', 'InternetController@deleteMacAddress')->name('internet.mac_addresses.delete');
+    Route::post('/internet/mac_addresses/add', 'InternetController@addMacAddress')->name('internet.mac_addresses.add');
+    Route::post('/internet/wifi_password/reset', 'InternetController@resetWifiPassword')->name('internet.wifi_password.reset');
+
+    Route::get('/internet/admin/mac_addresses/all', 'InternetController@getUsersMacAddressesAdmin')->name('internet.admin.mac_addresses.all');
+    Route::get('/internet/admin/internet_accesses/all', 'InternetController@getInternetAccessesAdmin')->name('internet.admin.internet_accesses.all');
+    Route::get('/internet/admin', 'InternetController@admin')->name('internet.admin');
+    Route::post('/internet/mac_addresses/{id}/edit', 'InternetController@editMacAddress')->name('internet.mac_addresses.edit');
 
     Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
