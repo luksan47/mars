@@ -25,7 +25,7 @@ return [
     'auto_approved_mac_slots_long' => 'Automatically approved devices: :count pcs',
     'registered_devices_info' => 'You must register your device to use wired connection. You can approve a certain number of devices automatically. If you need more, then the administrators must approve it after your registration; you can provide a reason in the comment field.',
     'edit_warning_auto_approve' => 'Due to automatic approvement after editing, the state might remain unchanged.',
-    'wifi_password_info' => 'You can connecnt to ejc_wifi with the credentials listed below. You can change your password to a randomly generated one, The administrators will do this regularly, but you will be notified in advance.',
+    'wifi_password_info' => 'You can connect to ejc_wifi with the credentials listed below. You can change your password to a randomly generated one. The administrators will do this regularly, but you will be notified in advance.',
     'wifi_user' => 'Wifi username',
     'wifi_password' => 'Wifi password',
     'show' => 'Show!',
