@@ -9,7 +9,7 @@ return [
     'show' => 'Show',
     'status' => 'Status',
     'personal_information' => 'Personal information',
-    'first_name' => 'Name',
+    'first_name' => 'First name',
     'email' => 'E-mail',
     'address' => 'Address',
     'surname' => 'Surname',
