@@ -18,7 +18,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('internet') }}">{{ __('internet.internet') }}</a>
                         </li>
-                        @if (Auth::user()->isAdmin())
+                        @if (Auth::user()->hasRole(\App\Role::INTERNET_ADMIN))
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ __('admin.admin') }} <span class="caret"></span>
@@ -39,10 +39,10 @@
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="nav-link" href="{{ route('login') }}">@lang('general.login')</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="nav-link" href="{{ route('register') }}">@lang('general.register')</a>
                     </li>
                 @else
                     <li class="nav-item dropdown">
@@ -53,7 +53,7 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                @lang('general.logout')
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

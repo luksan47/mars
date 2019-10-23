@@ -13,10 +13,8 @@ return [
     |
     */
 
-    'failed' => 'Nem megfelelő adat(ok).',
-    'throttle' => 'Túl sok próbálkozás. Próbáld újra :seconds másodperc múlva.',
-    'i_agree_to' => 'Kijelentem, hogy elolvastam és elfogadom az',
-    'privacy_policy' => 'adatkezelési irányelveket',
-    'wait_for_verification' => 'Kérlek légy türelemmel amíg egy adminisztrátor elfogadja a regisztrációdat.',
-    'successful_registration' => 'Sikeres regisztráció',
+    'failed' => 'Queste credenziali non non sono corrette.',
+    'throttle' => 'Troppi tentativi di accesso. Riprova fra :seconds secondi.',
+    'wait_for_verification' => 'Per favore attendi fin quando un amministratore approverà la tua registrazione. Ricorda che potrebbe richiedere un po\'.',
+    'successful_registration' => 'Registrato correttamente!'
 ];

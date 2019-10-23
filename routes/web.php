@@ -31,11 +31,10 @@ Route::get('/verification', function () {
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/print', 'PrintController@index')->name('print')->middleware('can:print.print');
+    Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify')->middleware('can:print.modify');
-    Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify')->middleware('can:print.modify');;
-    Route::post('/print/modify_free_pages', 'PrintController@modify_free_pages')->name('print.free_pages')->middleware('can:print.modify');
-    Route::put('/print/print', 'PrintController@print')->name('print.print')->middleware('can:print.print');;
+    Route::post('/print/modify_free_pages', 'PrintController@modify_free_pages')->name('print.free_pages')->middleware('can:print.modify-free');
+    Route::put('/print/print', 'PrintController@print')->name('print.print');
 
     Route::get('/internet', 'InternetController@index')->name('internet');
     Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');

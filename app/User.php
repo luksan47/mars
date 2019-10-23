@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -66,7 +67,27 @@ class User extends Authenticatable
         return $this->hasMany('App\PrintJob');
     }
 
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'role_users')->withPivot('object_id');;
+    }
+
+    public function hasAnyRole(array $roleNames, $objectId = null)
+    {
+        return $this->roles->contains(function($value, $key) use($roleNames, $objectId) {
+            return in_array($value->name, $roleNames) && $value->pivot->object_id === $objectId;
+        });
+    }
+
+    public function hasRole(string $roleName, $objectId = null)
+    {
+        return $this->hasAnyRole([$roleName], $objectId);
+    }
+
+    /**
+     * @deprecated use hasRole instead
+     */
     public function isAdmin() {
-        return $this->permission == 1;
+        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+        return $this->hasRole(['admin']);
     }
 }
