@@ -9,12 +9,21 @@
 
     <title>{{ config('app.name', 'Urán') }}</title>
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-formhelpers.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tabulator_bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
-
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-formhelpers.min.js') }}"></script>
     <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
     <script src="{{ asset('js/site.js') }}" defer></script>
     <script type="text/javascript">
@@ -28,11 +37,6 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/tabulator_bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/site.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
