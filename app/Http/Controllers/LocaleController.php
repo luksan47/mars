@@ -9,6 +9,6 @@ class LocaleController extends Controller
 {
     public function set(Request $request, $locale) {
         App::setLocale($locale);
-        return redirect()->back()->cookie('locale', $locale, 9600);
+        return redirect()->back()->cookie('locale', $locale, config('locale_cookie_lifespan'));
     }
 }
