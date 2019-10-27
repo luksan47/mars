@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
 
+Route::get('/rooms','RoomController@getRoomFloor');
+Route::post('/add_user_for_room','RoomController@createUserReservation');
+Route::get('/delete_user_reservation','RoomController@deleteUseReservation');
+
 Auth::routes();
 Route::get('/verification', function () {
     return view('auth.verification');
@@ -33,5 +37,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
     Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
     Route::post('/admin/registrations/show', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
+
 
 });
