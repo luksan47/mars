@@ -11,7 +11,8 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         @include("auth.register.basic")
- 
+
+                        <input type="text" name="user_type" id="user_type" value="{{ $user_type }}" readonly hidden>
 						<div class="card">
 							<div class="card-header">@lang('info.user_data')</div>
 							<div class="card-body">
@@ -26,7 +27,7 @@
                             </div>
                         </div>
                         
-                        @if(!($isTenant ?? false))
+                        @if($user_type == \App\Role::COLLEGIST)
                             <div class="card">
                                 <div class="card-header">@lang('info.information_of_studies')</div>
                                 <div class="card-body">
@@ -34,7 +35,6 @@
                                 </div>
                             </div>
                         @endif
-
                         <div class="checkbox">
                             <label><input type="checkbox" name="gdpr" value="gdpr" required>
                                 @lang('auth.i_agree_to') <a href="{{ route('privacy_policy') }}" target="_blank">@lang('auth.privacy_policy')</a>
