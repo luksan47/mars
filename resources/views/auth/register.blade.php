@@ -8,6 +8,16 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>@lang('general.note'):</strong> 
+                        @if($user_type == \App\Role::COLLEGIST)
+                            <a href="{{ route('register.guest') }}">
+                            @lang('registration.collegist_to_tenant')</a>
+                        @else
+                            <a href="{{ route('register') }}">
+                            @lang('registration.tenant_to_collegist')</a>
+                        @endif
+                    </div>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         @include("auth.register.basic")
