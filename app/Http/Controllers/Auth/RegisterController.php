@@ -130,14 +130,14 @@ class RegisterController extends Controller
         //TODO change collegist and tenant role into role group
         switch ($data['user_type']) {
             case Role::TENANT:
-                $user->roles()->attach(Role::getRoleId(Role::TENANT));
-                $user->roles()->attach(Role::getRoleId(Role::PRINTER));
-                $user->roles()->attach(Role::getRoleId(Role::INTERNET_USER));
+                $user->roles()->attach(Role::getId(Role::TENANT));
+                $user->roles()->attach(Role::getId(Role::PRINTER));
+                $user->roles()->attach(Role::getId(Role::INTERNET_USER));
                 break;
             case Role::COLLEGIST:
-                $user->roles()->attach(Role::getRoleId(Role::COLLEGIST));
-                $user->roles()->attach(Role::getRoleId(Role::PRINTER));
-                $user->roles()->attach(Role::getRoleId(Role::INTERNET_USER));
+                $user->roles()->attach(Role::getId(Role::COLLEGIST));
+                $user->roles()->attach(Role::getId(Role::PRINTER));
+                $user->roles()->attach(Role::getId(Role::INTERNET_USER));
                 foreach ($data['faculty'] as $key => $faculty) {
                     $user->faculties()->attach($faculty);
                 }
