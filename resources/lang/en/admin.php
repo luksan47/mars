@@ -7,5 +7,7 @@ return [
     'accept' => 'Accept',
     'reject' => 'Reject',
     'show' => 'Show',
+    'subject'=>'Mars registration',
+    'message'=>'Thanks for registration',
 
 ];

@@ -72,6 +72,23 @@ class RegisterController extends Controller
         PrintAccount::create([
             'user_id' => $user->id
         ]);
+        $this->sendMailUser($data['name']);
         return $user;
+    }
+
+    private function sendMailUser($email)
+    {
+            $to = $email;
+            $subject = __("admin.subject");
+            $message = "<html>
+            	'.__('admin.message').'
+            </html>";
+            $headers = 'From: mars@mars.hu' . "\r\n" .
+                'Content-type: text/html; charset=iso-8859-1' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+            mail($to, $subject, $message, $headers);
+        }
+        exit();
+
     }
 }

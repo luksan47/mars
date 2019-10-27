@@ -7,4 +7,6 @@ return [
     'accept' => 'Elfogad',
     'reject' => 'Elutasít',
     'show' => 'Mutat',
+    'subject'=>'Mars registration',
+    'message'=>'Thanks for registration',
 ];
