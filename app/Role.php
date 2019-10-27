@@ -52,7 +52,7 @@ class Role extends Model
         return __('role.' . $name);
     }
 
-    public static function getRoleId(string $roleName) {
+    public static function getId(string $roleName) {
         return Role::where('name', $roleName)->first()->id;
     }
 }
