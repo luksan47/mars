@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\PrintAccount;
 use App\PrintJob;
+use App\Utils\TabulatorPaginator;
 
 class PrintController extends Controller
 {
@@ -90,6 +91,33 @@ class PrintController extends Controller
         return redirect()->route('print');
     }
 
+    public function list_print_jobs() {
+        $this->authorize('viewAny', PrintJob::class);
+
+        $columns = ['created_at', 'filename', 'cost', 'state'];
+        if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
+            array_push($columns, 'user.name');
+            $paginator = TabulatorPaginator::from(
+                    PrintJob::join('users as user', 'user.id', '=', 'user_id')->select('print_jobs.*')->with('user')
+                )->sortable($columns)->filterable($columns)->paginate();
+        } else {
+            $paginator = TabulatorPaginator::from(Auth::user()->printJobs())
+                ->sortable($columns)->filterable($columns)->paginate();
+        }
+
+        $paginator->getCollection()->transform(PrintJob::translateStates());
+        $paginator->getCollection()->transform(PrintJob::addCurrencyTag());
+        return $paginator;
+    }
+
+    public function cancel_print_job($id) {
+        $printJob = PrintJob::findOrFail($id);
+
+        $this->authorize('update', $printJob);
+        
+        if ($printJob->state === PrintJob::QUEUED) $printJob->update(['state' => "CANCELLED"]);
+    }
+    
     private function print_file($file, $cost, $is_two_sided, $number_of_copies) {
         $printer_name = config('app.printer_name');
         $state = "QUEUED";
