@@ -45,7 +45,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    
+
     public function showRegistrationForm()
     {
         return view('auth.register', ['faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
@@ -112,10 +112,6 @@ class RegisterController extends Controller
             'year_of_acceptance' => $data['year_of_acceptance'],
             'faculty' => $data['faculty'],
             'workshop' => $data['workshop'],
-        ]);
-
-        PrintAccount::create([
-            'user_id' => $user->id
         ]);
         return $user;
     }
