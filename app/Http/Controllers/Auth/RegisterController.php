@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\PrintAccount;
+use App\Role;
 use App\Faculty;
 use App\Workshop;
 use App\PersonalInformation;
@@ -44,11 +45,15 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
     
     public function showRegistrationForm()
     {
-        return view('auth.register', ['faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
+        return view('auth.register', ['user_type' => Role::COLLEGIST, 'faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
+    }
+
+    public function showTenantRegistrationForm()
+    {
+        return view('auth.register', ['user_type' => Role::TENANT, 'faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
     }
 
     /**
@@ -59,8 +64,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-    //    echo implode($data); die();
-        return Validator::make($data, [
+        $common = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -73,13 +77,24 @@ class RegisterController extends Controller
             'zip_code' => ['required', 'string', 'max:31'],
             'city' => ['required', 'string', 'max:255'],
             'street_and_number' => ['required', 'string', 'max:255'],
+            'user_type' => ['required', 'exists:roles,name']
+        ];
+        $informationOfStudies = [
             'year_of_graduation' => ['required', 'integer', 'between:1895,'. date("Y")],
             'high_school' => ['required', 'string', 'max:255'],
             'neptun' => ['required', 'string', 'size:6'],
             'year_of_acceptance' => ['required', 'integer', 'between:1895,'. date("Y")],
             'faculty' => ['required', 'array', 'exists:faculties,id',],
             'workshop' => ['required', 'array', 'exists:workshops,id',],
-        ]);
+        ];
+        switch ($data['user_type']) {
+            case Role::TENANT:
+                return Validator::make($data, $common);
+            case Role::COLLEGIST:
+                return Validator::make($data, array_merge($common, $informationOfStudies));
+            default:
+                throw new AuthorizationException();
+        }
     }
 
     /**
@@ -106,17 +121,33 @@ class RegisterController extends Controller
             'zip_code' => $data['zip_code'],
             'city' => $data['city'],
             'street_and_number' => $data['street_and_number'],
-            'year_of_graduation' => $data['year_of_graduation'],
-            'high_school' => $data['high_school'],
-            'neptun' => $data['neptun'],
-            'year_of_acceptance' => $data['year_of_acceptance'],
-            'faculty' => $data['faculty'],
-            'workshop' => $data['workshop'],
+            'year_of_graduation' => $data['year_of_graduation'] ?? null,
+            'high_school' => $data['high_school'] ?? null,
+            'neptun' => $data['neptun'] ?? null,
+            'year_of_acceptance' => $data['year_of_acceptance'] ?? null
         ]);
 
-        PrintAccount::create([
-            'user_id' => $user->id
-        ]);
+        //TODO change collegist and tenant role into role group
+        switch ($data['user_type']) {
+            case Role::TENANT:
+                $user->roles()->attach(Role::getId(Role::TENANT));
+                $user->roles()->attach(Role::getId(Role::PRINTER));
+                $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+                break;
+            case Role::COLLEGIST:
+                $user->roles()->attach(Role::getId(Role::COLLEGIST));
+                $user->roles()->attach(Role::getId(Role::PRINTER));
+                $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+                foreach ($data['faculty'] as $key => $faculty) {
+                    $user->faculties()->attach($faculty);
+                }
+                foreach ($data['workshop'] as $key => $workshop) {
+                    $user->workshops()->attach($workshop);
+                }
+                break;
+            default:
+                throw new AuthorizationException();
+        }
         return $user;
     }
 }

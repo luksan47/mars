@@ -24,6 +24,9 @@ Route::get('/privacy_policy', function() {
 })->name('privacy_policy');
 
 Auth::routes();
+
+Route::get('/register/guest', 'Auth\RegisterController@showTenantRegistrationForm')->name('register.guest');
+
 Route::get('/verification', function () {
     return view('auth.verification');
 })->name('verification');

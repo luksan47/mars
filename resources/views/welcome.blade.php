@@ -73,7 +73,8 @@
                         <a href="{{ route('login') }}">@lang('general.login')</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">@lang('general.register')</a>
+                            <a href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
+                            <a href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
                         @endif
                     @endauth
                     
