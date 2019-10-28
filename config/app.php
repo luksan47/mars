@@ -81,6 +81,12 @@ return [
     */
 
     'locale' => 'hu',
+    'locales' => [
+    	'en' => 'English',
+    	'hu' => 'Magyar',
+    	'it' => 'Italiano',
+    ],
+    
     'locale_cookie_lifespan' => 9600,
 
     /*
