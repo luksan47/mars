@@ -18,15 +18,18 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
+Route::get('/info', function () {
+    return view('auth/info');
+});
+
+    Route::get('/pokus', 'RegisterController@sendConfirmationLink');
+    Route::get('/finish_registration/{key}', 'RegisterController@verificationRegistration');
 
 Route::get('/privacy_policy', function() {
     return Storage::download('public/Adatvédelmi tájékoztató.pdf');
 })->name('privacy_policy');
 
 Auth::routes();
-
-Route::get('/register/guest', 'Auth\RegisterController@showTenantRegistrationForm')->name('register.guest');
-
 Route::get('/verification', function () {
     return view('auth.verification');
 })->name('verification');
