@@ -51,8 +51,4 @@ class Role extends Model
     public function name() {
         return __('role.' . $name);
     }
-
-    public static function getId(string $roleName) {
-        return Role::where('name', $roleName)->first()->id;
-    }
 }

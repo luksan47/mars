@@ -25,10 +25,10 @@ class CreatePersonalInformationTable extends Migration
             $table->text('zip_code');
             $table->text('city');
             $table->text('street_and_number');
-            $table->unsignedInteger('year_of_graduation')->nullable();
-            $table->text('high_school')->nullable();
-            $table->char('neptun', 6)->nullable();
-            $table->unsignedInteger('year_of_acceptance')->nullable();
+            $table->unsignedInteger('year_of_graduation');
+            $table->text('high_school');
+            $table->char('neptun', 6);
+            $table->unsignedInteger('year_of_acceptance');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
