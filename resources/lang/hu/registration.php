@@ -5,6 +5,7 @@ return [
     'name' => 'Név',
     'email' => 'E-mail cím',
     'password' => 'Jelszó',
+    'old_password' => 'Régi jelszó',
     'confirmpwd' => 'Jelszó megerősítése',
     'remember' => 'Emlékezz rám',
     'forgotpwd'=> 'Elfelejtetted a jelszót?',

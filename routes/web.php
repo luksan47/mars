@@ -27,6 +27,10 @@ Auth::routes();
 
 Route::get('/register/guest', 'Auth\RegisterController@showTenantRegistrationForm')->name('register.guest');
 
+Route::get('userdata', 'UserController@showData')->name('userdata');
+Route::post('userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
+Route::post('userdata/update_password', 'UserController@updatePassword')->name('userdata.update_password');
+
 Route::get('/verification', function () {
     return view('auth.verification');
 })->name('verification');
