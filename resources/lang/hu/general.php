@@ -10,5 +10,8 @@ return [
     'dashboard' => 'Irányítópult',
     'register_guest' => 'Vendégeknek',
     'register_collegist' => 'Collegistáknak',
+    'user_data' => 'Adatok',
+    'change_email' => 'Email megváltoztatása',
+    'change_password' => 'Jelszó megváltoztatása'
 
 ];
