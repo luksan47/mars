@@ -91,9 +91,9 @@ class PrintController extends Controller
         return redirect()->route('print');
     }
 
-    public function list_print_jobs() {
+    public function listPrintJobs() {
         $this->authorize('viewAny', PrintJob::class);
-        $this->update_completed_printing_jobs();
+        $this->updateCompletedPrintingJobs();
 
         $columns = ['created_at', 'filename', 'cost', 'state'];
         if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
@@ -111,7 +111,7 @@ class PrintController extends Controller
         return $paginator;
     }
 
-    public function cancel_print_job($id) {
+    public function cancelPrintJob($id) {
         //TODO: actually cancel
         $printJob = PrintJob::findOrFail($id);
 
@@ -120,7 +120,7 @@ class PrintController extends Controller
         if ($printJob->state === PrintJob::QUEUED) $printJob->update(['state' => "CANCELLED"]);
     }
     
-    private function update_completed_printing_jobs() {
+    private function updateCompletedPrintingJobs() {
         if (!config('app.debug')) {
             exec("lpstat -W completed -o " . env('PRINTER_NAME') . " | awk '{print $1}'", $result);
             PrintJob::whereIn('job_id', $result)->update(['state' => "CANCELLED"]);
