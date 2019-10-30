@@ -37,6 +37,8 @@ return [
     'auto_approved_mac_slots' => 'Default MAC slot',
     'laptop' => 'Laptop',
     'created_at' => 'Created',
+    'extend' => 'Extend',
+    'deactivate' => 'Deactivate',
 ];
 
 
