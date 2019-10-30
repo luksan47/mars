@@ -10,24 +10,24 @@
                     @foreach ($users as $user)
                         <div class="list-group-item">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                         {{ $user->name }}
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <form class="d-inline" method="POST" action="{{ route('admin.registrations.show') }}">
                                         @csrf
                                         <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                        <button type="submit" class="btn btn-primary">{{ __('admin.show') }}</button>
+                                        <button type="submit" class="btn btn-primary">@lang('admin.show')</button>
                                     </form>
                                     <form class="d-inline" method="POST" action="{{ route('admin.registrations.accept') }}">
                                         @csrf
                                         <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                        <button type="submit" class="btn btn-success">{{ __('admin.accept') }}</button>
+                                        <button type="submit" class="btn btn-success">@lang('admin.accept')</button>
                                     </form>
                                     <form class="d-inline" method="POST" action="{{ route('admin.registrations.reject') }}">
                                         @csrf
                                         <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                        <button type="submit" class="btn btn-danger">{{ __('admin.reject') }}</button>
+                                        <button type="submit" class="btn btn-danger">@lang('admin.reject')</button>
                                     </form>
                                 </div>
                             </div>

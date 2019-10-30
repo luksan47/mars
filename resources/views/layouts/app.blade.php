@@ -51,12 +51,12 @@
     </div>
     <script>
         var cookieMessages = {
-            'dismiss' : "{{ __('cookie.dismiss') }}",
-            'allow' : "{{ __('cookie.allow') }}",
-            'deny' : "{{ __('cookie.deny') }}",
-            'link' : "{{ __('cookie.link') }}",
-            'cookie' : "{{ __('cookie.message') }}",
-            'header' : "{{ __('cookie.header') }}",
+            'dismiss' : "@lang('cookie.dismiss')",
+            'allow' : "@lang('cookie.allow')",
+            'deny' : "@lang('cookie.deny')",
+            'link' : "@lang('cookie.link')",
+            'cookie' : "@lang('cookie.message')",
+            'header' : "@lang('cookie.header')",
         };
     </script>
 </body>
