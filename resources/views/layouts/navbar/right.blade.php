@@ -27,7 +27,9 @@
     
     <!-- language selector -->
     <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ config('app.locales')[App::getLocale()] }} <span class="caret"></span></a>
+        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" 
+            aria-expanded="false" v-pre>Language <!-- Left it constant on purpose, so everyone can find the button -->
+            <span class="caret"></span></a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             @foreach (config('app.locales') as $code => $name) 
                 @if ($code != App::getLocale())
