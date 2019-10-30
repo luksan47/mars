@@ -67,7 +67,7 @@
                         @endforeach
                     }
                 },
-                {title: "", field: "id", headerSort: false, formatter: deleteButton},
+               /* {title: "", field: "id", headerSort: false, formatter: deleteButton}, */
             ],
         });
     });
