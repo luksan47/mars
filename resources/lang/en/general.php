@@ -18,5 +18,6 @@ return [
     'user_data' => 'User data',
     'change_email' => 'Change email',
     'change_password' => 'Change password',
+    'settings' => 'Settings',
 
 ];

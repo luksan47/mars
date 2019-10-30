@@ -18,5 +18,6 @@ return [
     'user_data' => 'Adatok',
     'change_email' => 'Email megváltoztatása',
     'change_password' => 'Jelszó megváltoztatása',
+    'settings' => 'Beállítások',
 
 ];
