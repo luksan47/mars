@@ -45,7 +45,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-    
+  
     public function showRegistrationForm()
     {
         return view('auth.register', ['user_type' => Role::COLLEGIST, 'faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
@@ -126,7 +126,7 @@ class RegisterController extends Controller
             'neptun' => $data['neptun'] ?? null,
             'year_of_acceptance' => $data['year_of_acceptance'] ?? null
         ]);
-
+      
         //TODO change collegist and tenant role into role group
         switch ($data['user_type']) {
             case Role::TENANT:

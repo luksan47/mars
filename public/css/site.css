@@ -15,3 +15,12 @@
         opacity: 1;
     }
 }
+
+.tabulator-row {
+    border-left: 5px solid transparent;
+}
+
+.tabulator-unsaved {
+    border-left: 5px solid red;
+    box-sizing: border-box;
+}
