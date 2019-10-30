@@ -96,7 +96,7 @@
                     @lang('main.essential')</a>
                     <a href="">
                     @lang('main.modern')</a>
-                    <a href="">
+                    <a href="https://github.com/luksan47/mars">
                     @lang('main.open')</a>
                 </div>
             </div>
