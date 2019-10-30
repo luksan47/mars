@@ -45,23 +45,19 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
-        $user->roles()->attach($this->getRoleId(Role::COLLEGIST));
-        $user->roles()->attach($this->getRoleId(Role::PRINTER));
-        $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
+        $user->roles()->attach(Role::getId(Role::COLLEGIST));
+        $user->roles()->attach(Role::getId(Role::PRINTER));
+        $user->roles()->attach(Role::getId(Role::INTERNET_USER));
     }
 
     private function createTenant() {
         $user = User::create([
-            'name' => 'A külföldi srác',
+            'name' => 'David Tenant',
             'email' => 'tenant@eotvos.elte.hu',
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
-        $user->roles()->attach($this->getRoleId(Role::TENANT));
-        $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
-    }
-
-    private function getRoleId(string $roleName) {
-        return Role::where('name', $roleName)->first()->id;
+        $user->roles()->attach(Role::getId(Role::TENANT));
+        $user->roles()->attach(Role::getId(Role::INTERNET_USER));
     }
 }
