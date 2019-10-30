@@ -39,14 +39,14 @@
                     sorter: "datetime",
                     headerFilter: 'input'
                 },
-                @can('viewAny', \App\PrintJob::class)
+                @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN))
                 {
                     title: "@lang('print.user')",
                     field: "user.name",
                     sorter: "string",
                     headerFilter: 'input'
                 },
-                @endcan
+                @endif
                 {
                     title: "@lang('print.document')",
                     field: "filename",
