@@ -38,6 +38,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify')->middleware('can:print.modify');
     Route::post('/print/modify_free_pages', 'PrintController@modify_free_pages')->name('print.free_pages')->middleware('can:print.modify-free');
     Route::put('/print/print', 'PrintController@print')->name('print.print');
+    Route::get('/print/print_jobs/all', 'PrintController@list_print_jobs')->name('print.print_jobs.all');
+    Route::post('/print/print_jobs/{id}/cancel', 'PrintController@cancel_print_job')->name('print.print_jobs.cancel');
 
     Route::get('/internet', 'InternetController@index')->name('internet');
     Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');
