@@ -12,6 +12,7 @@ return [
     'register_collegist' => 'Collegistáknak',
     'user_data' => 'Adatok',
     'change_email' => 'Email megváltoztatása',
-    'change_password' => 'Jelszó megváltoztatása'
+    'change_password' => 'Jelszó megváltoztatása',
+    'settings' => 'Beállítások',
 
 ];

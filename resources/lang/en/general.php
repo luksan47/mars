@@ -12,6 +12,7 @@ return [
     'register_collegist' => 'For collegists',
     'user_data' => 'User data',
     'change_email' => 'Change email',
-    'change_password' => 'Change password'
+    'change_password' => 'Change password',
+    'settings' => 'Settings',
 
 ];
