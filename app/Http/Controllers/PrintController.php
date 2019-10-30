@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\PrintAccount;
 use App\PrintJob;
+use App\Utils\TabulatorPaginator;
 
 class PrintController extends Controller
 {
@@ -88,6 +89,42 @@ class PrintController extends Controller
         }
         $print_account->increment('free_pages', $free_pages);
         return redirect()->route('print');
+    }
+
+    public function list_print_jobs() {
+        $this->authorize('viewAny', PrintJob::class);
+        $this->update_completed_printing_jobs();
+
+        $columns = ['created_at', 'filename', 'cost', 'state'];
+        if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
+            array_push($columns, 'user.name');
+            $paginator = TabulatorPaginator::from(
+                    PrintJob::join('users as user', 'user.id', '=', 'user_id')->select('print_jobs.*')->with('user')
+                )->sortable($columns)->filterable($columns)->paginate();
+        } else {
+            $paginator = TabulatorPaginator::from(Auth::user()->printJobs())
+                ->sortable($columns)->filterable($columns)->paginate();
+        }
+
+        $paginator->getCollection()->transform(PrintJob::translateStates());
+        $paginator->getCollection()->transform(PrintJob::addCurrencyTag());
+        return $paginator;
+    }
+
+    public function cancel_print_job($id) {
+        //TODO: actually cancel
+        $printJob = PrintJob::findOrFail($id);
+
+        $this->authorize('update', $printJob);
+        
+        if ($printJob->state === PrintJob::QUEUED) $printJob->update(['state' => "CANCELLED"]);
+    }
+    
+    private function update_completed_printing_jobs() {
+        if (!config('app.debug')) {
+            exec("lpstat -W completed -o " . env('PRINTER_NAME') . " | awk '{print $1}'", $result);
+            PrintJob::whereIn('job_id', $result)->update(['state' => "CANCELLED"]);
+        }
     }
 
     private function printFile($file, $cost, $is_two_sided, $number_of_copies) {

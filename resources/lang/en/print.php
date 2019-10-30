@@ -29,5 +29,15 @@ return [
     "no_free_pages_left" => "Not enough free pages",
     "user" => "User",
     "no_balance" => "Not enough money on the account",
+    "user" => "User",
+    "cost" => "Cost",
+    "state" => "State",
+    "CANCELLED" => "Cancelled",
+    "ERROR" => "Error",
+    "QUEUED" => "Queued",
+    "SUCCESS" => "Done",
+    "cancel" => "Cancel",
+    "cancel_job" => "Abort",
+    "confirm_cancel" => "Are you sure you wish to abort printing this document?",
 ];
 

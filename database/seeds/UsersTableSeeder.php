@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
         
         factory(App\User::class, 10)->create()->each(function ($user) {
             factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
+            factory(App\PrintJob::class, $user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::COLLEGIST));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         });
@@ -32,6 +33,7 @@ class UsersTableSeeder extends Seeder
             'verified' => true
         ]);
         factory(App\MacAddress::class, 3)->create(['user_id' => $user->id]);
+        factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
         $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
         $user->roles()->attach(Role::getId(Role::INTERNET_ADMIN));
     }
@@ -43,6 +45,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
+        factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
         $user->roles()->attach(Role::getId(Role::COLLEGIST));
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
