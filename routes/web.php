@@ -48,4 +48,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
     Route::post('/admin/registrations/show', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
 
+    Route::get('/faults', 'FaultsController@index')->name('faults');
+    Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
+    Route::post('/faults/add', 'FaultsController@addRecord')->name('faults.add');
+    Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 });
