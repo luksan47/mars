@@ -80,7 +80,6 @@
                 response.data = response.data.map(record => {
                     return {...record, id: record.user_id}
                 });
-                console.log(response);
                 return response;
             },
         });
