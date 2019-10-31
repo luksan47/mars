@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
-
+@section('headextra')
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
@@ -62,50 +57,33 @@
                 margin-bottom: 30px;
             }
         </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">@lang('general.login')</a>
+@endsection
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
-                            <a href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
-                        @endif
-                    @endauth
-                    
-                     @if (App::isLocale('en'))
-                        <a class="nav-link" href="{{ route('setlocale', 'hu') }}">{{ __('HU') }}</a>
-                    @else
-                        <a class="nav-link" href="{{ route('setlocale', 'en') }}">{{ __('EN') }}</a>
-                    @endif
-                </div>
-            @endif
-
-            <div class="content">
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+        <div class="content">
                 <div class="title m-b-md">
                     Urán 2.0
                 </div>
 
                 <div class="links">
                     <a href="">
-                    @lang('main.better')</a>
+                    @lang('main.better')</a><br/>
                     <a href="">
-                    @lang('main.faster')</a>
+                    @lang('main.faster')</a><br/>
                     <a href="">
-                    @lang('main.brilliant')</a>
+                    @lang('main.brilliant')</a><br/>
                     <a href="">
-                    @lang('main.essential')</a>
+                    @lang('main.essential')</a><br/>
                     <a href="">
-                    @lang('main.modern')</a>
+                    @lang('main.modern')</a><br/>
                     <a href="">
-                    @lang('main.open')</a>
+                    @lang('main.open')</a><br/>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+@endsection
