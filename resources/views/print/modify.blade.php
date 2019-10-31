@@ -1,6 +1,6 @@
 @can('print.modify')
     <div class="card">
-        <div class="card-header text-white bg-dark">@lang('print.modify')</div>
+        <div class="admin-card-header">@lang('print.modify')</div>
         <div class="card-body">
             <form method="POST" action="{{ route('print.modify') }}">
                 @csrf

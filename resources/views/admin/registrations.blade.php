@@ -5,7 +5,7 @@
 <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-white bg-dark">@lang('admin.handle_registrations')</div>
+                <div class="admin-card-header">@lang('admin.handle_registrations')</div>
                 <div class="card-body">
                     @foreach ($users as $user)
                         <div class="list-group-item">

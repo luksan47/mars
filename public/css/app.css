@@ -4798,6 +4798,14 @@ input[type=button].btn-block {
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+.admin-card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  color: #fff !important;
+  background-color: #343a40 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
 .card-header:first-child {
   border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
 }

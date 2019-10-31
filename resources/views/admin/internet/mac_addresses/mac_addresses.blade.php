@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header text-white bg-dark">@lang('internet.admin.manage_registered_devices')</div>
+    <div class="admin-card-header">@lang('internet.admin.manage_registered_devices')</div>
     <div class="card-body">
         @include('admin.internet.mac_addresses.add')
         <br/>
