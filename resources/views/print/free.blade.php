@@ -6,6 +6,7 @@
                 @csrf
                 @include("search-user")
                 <input id="free_pages" name="free_pages" type="number" value="0">
+                <input id="deadline" name="deadline" data-provide="datepicker">
                 <button type="submit" class="btn btn-primary">@lang('print.add')</button>
             </form>
         </div>

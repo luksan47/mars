@@ -75,6 +75,7 @@ class PrintController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'free_pages' => 'required|integer',
+            'deadline' => 'required|date',
         ]);
         $validator->validate();
 
@@ -88,6 +89,8 @@ class PrintController extends Controller
                 ->withInput();
         }
         $print_account->increment('free_pages', $free_pages);
+        $print_account->free_page_deadline = date( 'Y-m-d H:i:s', strtotime($request->deadline) );
+        $print_account->save();
         return redirect()->route('print');
     }
 
