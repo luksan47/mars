@@ -14,16 +14,16 @@ class PrintJob extends Model
     const QUEUED = "QUEUED";
     const ERROR = "ERROR";
     const CANCELLED = "CANCELLED";
-    const SUCCESS = "SUCCESS";
+    const COMPLETED = "COMPLETED";
     const STATES = [
         self::QUEUED,
         self::ERROR,
         self::CANCELLED,
-        self::SUCCESS,
+        self::COMPLETED,
     ];
 
     protected $fillable = [
-        'filename', 'filepath', 'user', 'state', 'job_id', 'cost'
+        'filename', 'filepath', 'user_id', 'state', 'job_id', 'cost'
     ];
     
     public function user()

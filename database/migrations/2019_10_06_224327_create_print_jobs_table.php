@@ -1,5 +1,7 @@
 <?php
 
+use App\PrintJob;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,8 +20,8 @@ class CreatePrintJobsTable extends Migration
             $table->text('filename');
             $table->text('filepath');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->set('state', ['QUEUED', 'ERROR', 'CANCELLED', 'SUCCESS']);
-            $table->unsignedBigInteger('job_id');
+            $table->set('state', PrintJob::STATES);
+            $table->char('job_id', 64);
             $table->unsignedInteger('cost');
             $table->timestamps();
 
