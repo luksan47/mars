@@ -15,7 +15,7 @@ return [
     "select_document" => "Seleziona documento",
     "number_of_copies" => "Numero di copie",
     "invalid_pdf" => "File caricato non valido. Solo i file .pdf sono accettati.",
-    "success" => "Successo",
+    "successfully_queued" => "Successo",
     "error_printing" => "Stampa fallita",
     "document" => "Documento",
     "modify" => "Modifica",

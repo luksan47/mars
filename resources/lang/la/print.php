@@ -15,7 +15,7 @@ return [
     "select_document" => "Chartam legere",
     "number_of_copies" => "Numerus speciminis",
     "invalid_pdf" => "Facies fili non idonea est impleta. Sola .pdf propagatio est adjuta.",
-    "success" => "Extritus secundus",
+    "successfully_queued" => "Extritus secundus",
     "error_printing" => "Extritus incassus",
     "document" => "Charta",
     "modify" => "Reformare",

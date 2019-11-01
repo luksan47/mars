@@ -15,7 +15,7 @@ return [
     "select_document" => "Select document",
     "number_of_copies" => "Number of copies",
     "invalid_pdf" => "Invalid file uploaded. Only .pdf is allowed.",
-    "success" => "Success",
+    "successfully_queued" => "The file has been successfully queued for printing",
     "error_printing" => "Printing failed",
     "document" => "Document",
     "modify" => "Modify",
@@ -35,9 +35,10 @@ return [
     "CANCELLED" => "Cancelled",
     "ERROR" => "Error",
     "QUEUED" => "Queued",
-    "SUCCESS" => "Done",
+    "COMPLETED" => "Completed",
     "cancel" => "Cancel",
     "cancel_job" => "Abort",
     "confirm_cancel" => "Are you sure you wish to abort printing this document?",
+    "not_available" => "Printing is not available at the moment",
 ];
 

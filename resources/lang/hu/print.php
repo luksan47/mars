@@ -15,7 +15,7 @@ return [
     "select_document" => "Dokumentum kiválasztása",
     "number_of_copies" => "Példányszám",
     "invalid_pdf" => "Érvénytelen fájlformátum került feltöltésre. Csak a .pdf kiterjesztés támogatott.",
-    "success" => "Sikeres nyomtatás",
+    "successfully_queued" => "A fájl sorban áll nyomtatásra",
     "error_printing" => "Sikertelen nyomtatás",
     "document" => "Dokumentum",
     "modify" => "Módosítás",
@@ -35,9 +35,10 @@ return [
     "CANCELLED" => "Megszakítva",
     "ERROR" => "Hiba",
     "QUEUED" => "Sorban áll",
-    "SUCCESS" => "Kész",
+    "COMPLETED" => "Kész",
     "cancel" => "Mégse",
     "cancel_job" => "Megszakítás",
     "confirm_cancel" => "Biztos, hogy meg szeretnéd szakítani a dokumentum nyomtatását?",
+    "not_available" => "A nyomtatás jelenleg nem elérhető",
 ];
 
