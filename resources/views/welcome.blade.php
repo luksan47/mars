@@ -77,12 +77,6 @@
                             <a href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
                         @endif
                     @endauth
-                    
-                     @if (App::isLocale('en'))
-                        <a class="nav-link" href="{{ route('setlocale', 'hu') }}">{{ __('HU') }}</a>
-                    @else
-                        <a class="nav-link" href="{{ route('setlocale', 'en') }}">{{ __('EN') }}</a>
-                    @endif
                 </div>
             @endif
 
@@ -102,7 +96,7 @@
                     @lang('main.essential')</a>
                     <a href="">
                     @lang('main.modern')</a>
-                    <a href="">
+                    <a href="https://github.com/luksan47/mars">
                     @lang('main.open')</a>
                 </div>
             </div>

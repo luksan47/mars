@@ -44,6 +44,12 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+  
+    public function showRegistrationForm()
+    {
+        return view('auth.register', ['user_type' => Role::COLLEGIST, 'faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
+    }
+
 
 
     public function showRegistrationForm()
@@ -167,6 +173,23 @@ class RegisterController extends Controller
                     User::where('id', '=', intval($info_key[0]))->update([
                         'verification_user' => 1
                     ]);
+      
+        //TODO change collegist and tenant role into role group
+        switch ($data['user_type']) {
+            case Role::TENANT:
+                $user->roles()->attach(Role::getId(Role::TENANT));
+                $user->roles()->attach(Role::getId(Role::PRINTER));
+                $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+                break;
+            case Role::COLLEGIST:
+                $user->roles()->attach(Role::getId(Role::COLLEGIST));
+                $user->roles()->attach(Role::getId(Role::PRINTER));
+                $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+                foreach ($data['faculty'] as $key => $faculty) {
+                    $user->faculties()->attach($faculty);
+                }
+                foreach ($data['workshop'] as $key => $workshop) {
+                    $user->workshops()->attach($workshop);
                 }
             } else {
                 return view("admin/noactivationlink");
