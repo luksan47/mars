@@ -61,8 +61,8 @@ class InternetController extends Controller
         $this->authorize('viewAny', InternetAccess::class);
 
         $paginator = TabulatorPaginator::from(InternetAccess::join('users as user', 'user.id', '=', 'user_id')->select('internet_accesses.*')->with('user'))
-            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
-            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
+            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
+            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
             ->paginate();
 
         return $paginator;
