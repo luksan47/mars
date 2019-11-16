@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
         $this->createAdmin();
         $this->createCollegist();
         $this->createTenant();
-        
+
         factory(App\User::class, 10)->create()->each(function ($user) {
             factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
             factory(App\PrintJob::class, $user->id % 5)->create(['user_id' => $user->id]);

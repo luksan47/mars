@@ -47,9 +47,11 @@ class InternetController extends Controller
     {
         $this->authorize('viewAny', MacAddress::class);
 
-        $paginator = TabulatorPaginator::from(MacAddress::join('users as user', 'user.id', '=', 'user_id')->select('mac_addresses.*')->with('user'))
-            ->sortable(['mac_address', 'comment', 'state', 'user.name', 'created_at'])
-            ->filterable(['mac_address', 'comment', 'user.name', 'state', 'created_at'])
+        $paginator = TabulatorPaginator::from(MacAddress::join('users as user', 'user.id', '=', 'user_id')
+            ->join('internet_accesses as internet', 'internet.user_id', '=', 'user.id')
+            ->select('mac_addresses.*', 'internet.wifi_username')->with('user'))
+            ->sortable(['mac_address', 'comment', 'state', 'user.name', 'created_at', 'wifi_username'])
+            ->filterable(['mac_address', 'comment', 'user.name', 'state', 'created_at', 'wifi_username'])
             ->paginate();
 
         $paginator->getCollection()->transform($this->translateStates());

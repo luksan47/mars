@@ -14,7 +14,7 @@ class AddWifiUsernameToInternetAccessesTable extends Migration
     public function up()
     {
         Schema::table('internet_accesses', function (Blueprint $table) {
-            $table->string('wifi_username');
+            $table->string('wifi_username')->unique()->nullable();
         });
     }
 
