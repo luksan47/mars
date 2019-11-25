@@ -86,6 +86,26 @@ class PrintController extends Controller
             return back()->withErrors(['print' => __('print.error_printing')]);
         }
     }
+    public function sendPages(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'balance' => 'required|integer',
+            'receiver_id' => 'required|integer|exists:users,id'
+        ]);
+        $validator->validate();
+
+        $balance = $request->balance;
+        $from_account = Auth::user()->printAccount;
+        $to_account = User::find($request->receiver_id)->printAccount;
+
+        if (!$from_account->hasEnoughMoney($balance)) {
+            return $this->handleNoBalance($validator);
+        }
+
+        $from_account->decrement('balance', $balance);
+        $to_account->increment('balance', $balance);
+
+        return redirect()->route('print');
+    }
 
     public function modifyBalance(Request $request) {
         $validator = Validator::make($request->all(), [

@@ -29,6 +29,7 @@
                     @include("print.free")
                     @include("print.modify")
                     @include("print.free-admin")
+                    @include("print.send")
                     @include("print.history")
                 </div>
             </div>
