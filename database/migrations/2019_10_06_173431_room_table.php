@@ -13,7 +13,7 @@ class AddVerifiedToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('rom', function (Blueprint $table) {
+        Schema::table('room', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('floor');
             $table->integer('count_beds');

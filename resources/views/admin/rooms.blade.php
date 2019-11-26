@@ -1,7 +1,6 @@
 @extends('layouts.app')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 @section('content')
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -12,52 +11,44 @@
                             <thead>
                             <tr>
                                 <th scope="col">@lang('admin.room')</th>
-                                <th scope="col">@lang('admin.bed1')</th>
-                                <th scope="col">@lang('admin.bed2')</th>
-                                <th scope="col">@lang('admin.bed3')</th>
+                                <th scope="col">@lang('admin.bed') 1</th>
+                                <th scope="col">@lang('admin.bed') 2</th>
+                                <th scope="col">@lang('admin.bed') 3</th>
                             </tr>
                             </thead>
                             <tbody>
-
                             @foreach ($rooms as $room)
                                 @if($room->floor==3)
                                     <tr>
                                         <th scope="row">{{300+$room->number}}</th>
-
                                         @if($room->count_beds>0)
-                                        @php
-                                            $count= 1;
-                                        @endphp
-                                        @foreach ($students as $student)
-                                            @if(300+$room->number==$student->room)
-                                                <td>{{$student->first_name}} {{$student->second_name}}<br>
-                                                    Start {{$student->start_date}}
-                                                    End {{$student->end_date}}
-                                                    <button id="{{$student->id}}"
-                                                            class="deleteUser btn-sm btn btn-danger">X
-                                                    </button>
-                                                </td>
-                                                @php
-                                                    $count++;
-                                                @endphp
-                                            @endif
-                                        @endforeach
-                                        @for($count;$count<4;$count++)
-                                            <td></td>
-                                        @endfor
-                                            @endif
-
+                                            @php
+                                                $count= 1;
+                                            @endphp
+                                            @foreach ($students as $student)
+                                                @if(300+$room->number==$student->room)
+                                                    <td>{{$student->first_name}} {{$student->second_name}}<br>
+                                                        Start {{$student->start_date}}
+                                                        End {{$student->end_date}}
+                                                        <button id="{{$student->id}}"
+                                                                class="deleteUser btn-sm btn btn-danger">X
+                                                        </button>
+                                                    </td>
+                                                    @php
+                                                        $count++;
+                                                    @endphp
+                                                @endif
+                                            @endforeach
+                                            @for($count;$count<4;$count++)
+                                                <td></td>
+                                            @endfor
+                                        @endif
                                     </tr>
                                 @endif
-
                             @endforeach
-
-
                             </tbody>
                         </table>
-
                     </div>
-
                 </div>
                 <div class="card card-default">
                     <div class="fourthFloor card-header">@lang('admin.fourthFloor')</div>
@@ -66,14 +57,12 @@
                             <thead>
                             <tr>
                                 <th scope="col">@lang('admin.room')</th>
-                                <th scope="col">@lang('admin.bed1')</th>
-                                <th scope="col">@lang('admin.bed2')</th>
-                                <th scope="col">@lang('admin.bed3')</th>
+                                <th scope="col">@lang('admin.bed') 1</th>
+                                <th scope="col">@lang('admin.bed') 2</th>
+                                <th scope="col">@lang('admin.bed') 3</th>
                             </tr>
                             </thead>
                             <tbody>
-
-
                             @foreach ($rooms as $room)
                                 @if($room->floor==4)
                                     <tr>
@@ -98,15 +87,10 @@
                                         @endfor
                                     </tr>
                                 @endif
-
                             @endforeach
-
-
                             </tbody>
                         </table>
-
                     </div>
-
                 </div>
             </div>
             <div class="col-md-12">
@@ -168,22 +152,18 @@
                                            value="{{date('Y-m-d', strtotime(date("Y-m-d") . ' +1 day'))}}" id="date">
                                 </div>
                             </div>
-
                             <div class="col-sm-8">
                                 <input class="btn btn-primary" type="submit" value="@lang('admin.assign')">
                             </div>
                         </form>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
 @endsection
 <script>
     $(document).ready(function () {
-
         $('.thirdFloor').click(function () {
             var attr = $(this).attr('name');
             if (typeof attr !== typeof undefined && attr !== false) {
