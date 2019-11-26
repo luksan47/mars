@@ -7,12 +7,12 @@ keys:
     - ~/.ssh/homestead_rsa
 folders:
     -
-        map: .
-        to: /home/vagrant/code
+        map: /your/local/path/to/mars
+        to: /home/vagrant/mars
 sites:
     -
-        map: homestead.test
-        to: /home/vagrant/code/public
+        map: mars.local
+        to: /home/vagrant/mars/public
 databases:
     - homestead
 features:

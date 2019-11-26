@@ -70,10 +70,11 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">@lang('general.login')</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
+                            <a href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
                         @endif
                     @endauth
                 </div>
@@ -85,14 +86,18 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="">
+                    @lang('main.better')</a>
+                    <a href="">
+                    @lang('main.faster')</a>
+                    <a href="">
+                    @lang('main.brilliant')</a>
+                    <a href="">
+                    @lang('main.essential')</a>
+                    <a href="">
+                    @lang('main.modern')</a>
+                    <a href="https://github.com/luksan47/mars">
+                    @lang('main.open')</a>
                 </div>
             </div>
         </div>
