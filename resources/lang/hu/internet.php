@@ -37,6 +37,8 @@ return [
     'auto_approved_mac_slots' => 'Alap MAC slot',
     'laptop' => 'Laptop',
     'created_at' => 'Létrehozva',
+    'extend' => 'Meghosszabbít',
+    'deactivate' => 'Deaktivál',
 ];
 
 

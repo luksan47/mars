@@ -44,19 +44,22 @@ class User extends Authenticatable
     }
 
     public function internetAccess() {
-        $relation = $this->hasOne('App\InternetAccess');
-        if($relation->count() < 1) {
-            InternetAccess::create([ 'user_id' => $this->id ]);
-        }
-        return $relation;
+        return $this->hasOne('App\InternetAccess');
     }
 
     public function macAddresses() {
         return $this->hasMany('App\MacAddress');
     }
-  
-    public function printJobs()
-    {
+
+    public function workshops() {
+        return $this->belongsToMany(Workshop::class, 'workshop_users');
+    }
+
+    public function faculties() {
+        return $this->belongsToMany(Faculty::class, 'faculty_users');
+    }
+
+    public function printJobs() {
         return $this->hasMany('App\PrintJob');
     }
 

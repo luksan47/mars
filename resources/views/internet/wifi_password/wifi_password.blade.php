@@ -6,7 +6,7 @@
         </div>
 
         @if($internet_access->wifi_password != null)
-            <p>@lang('internet.wifi_user'): {{--  TODO: show wifi username --}}
+            <p>@lang('internet.wifi_user'): {{ $wifi_username }}
                 <br/>
                 @lang('internet.wifi_password'): <span onclick="$(this).text('{{ $internet_access->wifi_password }}');"
                                                        style="cursor: pointer;">@lang('internet.show')</span></p>

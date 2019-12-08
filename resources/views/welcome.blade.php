@@ -70,10 +70,11 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">@lang('general.login')</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
+                            <a href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
                         @endif
                     @endauth
                 </div>
@@ -95,7 +96,7 @@
                     @lang('main.essential')</a>
                     <a href="">
                     @lang('main.modern')</a>
-                    <a href="">
+                    <a href="https://github.com/luksan47/mars">
                     @lang('main.open')</a>
                 </div>
             </div>
