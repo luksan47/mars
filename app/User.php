@@ -51,6 +51,10 @@ class User extends Authenticatable
         return $this->hasMany('App\MacAddress');
     }
 
+    public function personalInformation() {
+        return $this->hasOne('App\PersonalInformation');
+    }
+
     public function workshops() {
         return $this->belongsToMany(Workshop::class, 'workshop_users');
     }

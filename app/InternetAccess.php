@@ -18,4 +18,15 @@ class InternetAccess extends Model
     public function user() {
         return $this->belongsTo('App\User');
     }
+
+    public function setWifiUsername($username = null) {
+        if ($username === null) {
+            if ($this->user->hasRole(Role::COLLEGIST) && isset($this->personalInformation)) {
+                $username = $this->personalInformation->neptun;
+            } else {
+                $username = "wifiuser" . $this->user->id;
+            }
+        }
+        $this->update(["wifi_username" => $username]);
+    }
 }

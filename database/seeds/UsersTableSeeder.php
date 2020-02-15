@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
             factory(App\PrintJob::class, $user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::COLLEGIST));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+            $user->internetAccess->setWifiUsername(); //setWifiUsername();
         });
     }
 
@@ -36,6 +37,7 @@ class UsersTableSeeder extends Seeder
         factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
         $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
         $user->roles()->attach(Role::getId(Role::INTERNET_ADMIN));
+        $user->internetAccess->setWifiUsername();
     }
 
     private function createCollegist() {
@@ -49,6 +51,7 @@ class UsersTableSeeder extends Seeder
         $user->roles()->attach(Role::getId(Role::COLLEGIST));
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+        $user->internetAccess->setWifiUsername();
     }
 
     private function createTenant() {
@@ -60,5 +63,6 @@ class UsersTableSeeder extends Seeder
         ]);
         $user->roles()->attach(Role::getId(Role::TENANT));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+        $user->internetAccess->setWifiUsername();
     }
 }

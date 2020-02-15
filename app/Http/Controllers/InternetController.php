@@ -22,7 +22,6 @@ class InternetController extends Controller
     public function index()
     {
         $internetAccess = Auth::user()->internetAccess;
-//        $wifi_username = $internetAccess->wifi_username;
         return view('internet.app', ['internet_access' => $internetAccess]);
     }
 
