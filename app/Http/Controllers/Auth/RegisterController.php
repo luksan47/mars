@@ -126,13 +126,14 @@ class RegisterController extends Controller
             'neptun' => $data['neptun'] ?? null,
             'year_of_acceptance' => $data['year_of_acceptance'] ?? null
         ]);
-      
+
         //TODO change collegist and tenant role into role group
         switch ($data['user_type']) {
             case Role::TENANT:
                 $user->roles()->attach(Role::getId(Role::TENANT));
                 $user->roles()->attach(Role::getId(Role::PRINTER));
                 $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+                $user->internetAccess()->setWifiUsername();
                 break;
             case Role::COLLEGIST:
                 $user->roles()->attach(Role::getId(Role::COLLEGIST));
@@ -144,6 +145,7 @@ class RegisterController extends Controller
                 foreach ($data['workshop'] as $key => $workshop) {
                     $user->workshops()->attach($workshop);
                 }
+                $user->internetAccess()->setWifiUsername();
                 break;
             default:
                 throw new AuthorizationException();

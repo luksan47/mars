@@ -22,8 +22,7 @@ class InternetController extends Controller
     public function index()
     {
         $internetAccess = Auth::user()->internetAccess;
-        $wifi_username = ''; // TODO
-        return view('internet.app', ['internet_access' => $internetAccess, 'wifi_username' => $wifi_username]);
+        return view('internet.app', ['internet_access' => $internetAccess]);
     }
 
 
@@ -47,9 +46,11 @@ class InternetController extends Controller
     {
         $this->authorize('viewAny', MacAddress::class);
 
-        $paginator = TabulatorPaginator::from(MacAddress::join('users as user', 'user.id', '=', 'user_id')->select('mac_addresses.*')->with('user'))
-            ->sortable(['mac_address', 'comment', 'state', 'user.name', 'created_at'])
-            ->filterable(['mac_address', 'comment', 'user.name', 'state', 'created_at'])
+        $paginator = TabulatorPaginator::from(MacAddress::join('users as user', 'user.id', '=', 'user_id')
+            ->join('internet_accesses as internet', 'internet.user_id', '=', 'user.id')
+            ->select('mac_addresses.*', 'internet.wifi_username')->with('user'))
+            ->sortable(['mac_address', 'comment', 'state', 'user.name', 'created_at', 'wifi_username'])
+            ->filterable(['mac_address', 'comment', 'user.name', 'state', 'created_at', 'wifi_username'])
             ->paginate();
 
         $paginator->getCollection()->transform($this->translateStates());
@@ -61,8 +62,8 @@ class InternetController extends Controller
         $this->authorize('viewAny', InternetAccess::class);
 
         $paginator = TabulatorPaginator::from(InternetAccess::join('users as user', 'user.id', '=', 'user_id')->select('internet_accesses.*')->with('user'))
-            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
-            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
+            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
+            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
             ->paginate();
 
         return $paginator;
