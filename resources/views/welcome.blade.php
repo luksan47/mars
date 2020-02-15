@@ -1,10 +1,16 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('headextra')
+        <title>Laravel</title>
+
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/mobile.css') }}">
         <style>
             html, body {
                 background-color: #fff;
@@ -57,33 +63,45 @@
                 margin-bottom: 30px;
             }
         </style>
-@endsection
+    </head>
+    <body>
+        <div class="flex-center position-ref full-height">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <a href="{{ url('/home') }}">Home</a>
+                    @else
+                        <a href="{{ route('login') }}">@lang('general.login')</a>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-        <div class="content">
+                        @if (Route::has('register'))
+                            <a class="mobile-break" href="{{ route('register') }}">@lang('general.register')</a>
+                            <a class="pc-break" href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
+                            <a class="pc-break" href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+
+            <div class="content">
                 <div class="title m-b-md">
                     Urán 2.0
                 </div>
 
                 <div class="links">
                     <a href="">
-                    @lang('main.better')</a><br/>
+                    @lang('main.better')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.faster')</a><br/>
+                    @lang('main.faster')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.brilliant')</a><br/>
+                    @lang('main.brilliant')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.essential')</a><br/>
+                    @lang('main.essential')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.modern')</a><br/>
+                    @lang('main.modern')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.open')</a><br/>
+                    @lang('main.open')</a><br class="mobile-break"/>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+    </body>
+</html>
