@@ -1,18 +1,18 @@
 <?php
 
 return [
-    "your_registered_devices" => "Your registered devices",
-    "admin.manage_registered_devices" => "Manage registered devices",
-    "mac_address" => "MAC address",
-    "comment" => "Comment",
-    "state" => "State",
-    "requested" => "Requested",
-    "approved" => "Approved",
-    "rejected" => "Rejected",
-    "add" => "Add device",
-    "delete" => "Delete",
-    "cancel" => "Cancel",
-    "confirm_delete" => "Are you sure you want to delete?",
+    'your_registered_devices' => 'Your registered devices',
+    'admin.manage_registered_devices' => 'Manage registered devices',
+    'mac_address' => 'MAC address',
+    'comment' => 'Comment',
+    'state' => 'State',
+    'requested' => 'Requested',
+    'approved' => 'Approved',
+    'rejected' => 'Rejected',
+    'add' => 'Add device',
+    'delete' => 'Delete',
+    'cancel' => 'Cancel',
+    'confirm_delete' => 'Are you sure you want to delete?',
     'error' => 'Error',
     'ajax_error' => 'Server error! Please refresh the site!',
     'ok' => 'OK',
@@ -40,5 +40,3 @@ return [
     'extend' => 'Extend',
     'deactivate' => 'Deactivate',
 ];
-
-

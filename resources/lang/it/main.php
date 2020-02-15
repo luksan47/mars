@@ -7,6 +7,6 @@ return [
     'brilliant' => 'Splendido',
     'essential' => 'Minimale',
     'modern' => 'Moderno',
-    'open'   => 'Open source'
-    
+    'open'   => 'Open source',
+
 ];

@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\User;
-use App\PrintAccount;
-use App\Role;
 use App\Faculty;
-use App\Workshop;
+use App\Http\Controllers\Controller;
 use App\PersonalInformation;
+use App\Role;
+use App\User;
+use App\Workshop;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -45,7 +43,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-  
+
     public function showRegistrationForm()
     {
         return view('auth.register', ['user_type' => Role::COLLEGIST, 'faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
@@ -77,15 +75,15 @@ class RegisterController extends Controller
             'zip_code' => ['required', 'string', 'max:31'],
             'city' => ['required', 'string', 'max:255'],
             'street_and_number' => ['required', 'string', 'max:255'],
-            'user_type' => ['required', 'exists:roles,name']
+            'user_type' => ['required', 'exists:roles,name'],
         ];
         $informationOfStudies = [
-            'year_of_graduation' => ['required', 'integer', 'between:1895,'. date("Y")],
+            'year_of_graduation' => ['required', 'integer', 'between:1895,'.date('Y')],
             'high_school' => ['required', 'string', 'max:255'],
             'neptun' => ['required', 'string', 'size:6'],
-            'year_of_acceptance' => ['required', 'integer', 'between:1895,'. date("Y")],
-            'faculty' => ['required', 'array', 'exists:faculties,id',],
-            'workshop' => ['required', 'array', 'exists:workshops,id',],
+            'year_of_acceptance' => ['required', 'integer', 'between:1895,'.date('Y')],
+            'faculty' => ['required', 'array', 'exists:faculties,id'],
+            'workshop' => ['required', 'array', 'exists:workshops,id'],
         ];
         switch ($data['user_type']) {
             case Role::TENANT:
@@ -124,7 +122,7 @@ class RegisterController extends Controller
             'year_of_graduation' => $data['year_of_graduation'] ?? null,
             'high_school' => $data['high_school'] ?? null,
             'neptun' => $data['neptun'] ?? null,
-            'year_of_acceptance' => $data['year_of_acceptance'] ?? null
+            'year_of_acceptance' => $data['year_of_acceptance'] ?? null,
         ]);
 
         //TODO change collegist and tenant role into role group
@@ -149,6 +147,7 @@ class RegisterController extends Controller
                 throw new AuthorizationException();
         }
         $user->internetAccess->setWifiUsername();
+
         return $user;
     }
 }

@@ -11,10 +11,10 @@ class PrintJob extends Model
     public $incrementing = true;
     public $timestamps = true;
 
-    const QUEUED = "QUEUED";
-    const ERROR = "ERROR";
-    const CANCELLED = "CANCELLED";
-    const SUCCESS = "SUCCESS";
+    const QUEUED = 'QUEUED';
+    const ERROR = 'ERROR';
+    const CANCELLED = 'CANCELLED';
+    const SUCCESS = 'SUCCESS';
     const STATES = [
         self::QUEUED,
         self::ERROR,
@@ -23,19 +23,19 @@ class PrintJob extends Model
     ];
 
     protected $fillable = [
-        'filename', 'filepath', 'user_id', 'state', 'job_id', 'cost'
+        'filename', 'filepath', 'user_id', 'state', 'job_id', 'cost',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo('App\User');
     }
 
-    
     public static function translateStates(): \Closure
     {
         return function ($data) {
-            $data->state = __('print.' . strtoupper($data->state));
+            $data->state = __('print.'.strtoupper($data->state));
+
             return $data;
         };
     }
@@ -44,6 +44,7 @@ class PrintJob extends Model
     {
         return function ($data) {
             $data->cost = "{$data->cost} HUF";
+
             return $data;
         };
     }

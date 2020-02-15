@@ -16,8 +16,8 @@ class Verify
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->user() ||
-            ($request->user() && !$request->user()->verified)) {
+        if (! $request->user() ||
+            ($request->user() && ! $request->user()->verified)) {
             return $request->expectsJson()
                     ? abort(403, __('admin.verification_needed'))
                     : Redirect::route('verification');

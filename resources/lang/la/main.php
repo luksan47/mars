@@ -7,6 +7,6 @@ return [
     'brilliant' => 'Sapien',
     'essential' => 'Necessarius',
     'modern' => 'Neotericus',
-    'open'   => 'Open source'
+    'open'   => 'Open source',
 
 ];
