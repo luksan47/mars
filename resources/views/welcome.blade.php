@@ -80,11 +80,6 @@
                         @endif
                     @endauth
 
-                    @if (App::isLocale('en'))
-                        <a class="nav-link" href="{{ route('setlocale', 'hu') }}">{{ __('HU') }}</a>
-                    @else
-                        <a class="nav-link" href="{{ route('setlocale', 'en') }}">{{ __('EN') }}</a>
-                    @endif
                 </div>
             @endif
 
@@ -104,7 +99,7 @@
                     @lang('main.essential')</a><br class="mobile-break"/>
                     <a href="">
                     @lang('main.modern')</a><br class="mobile-break"/>
-                    <a href="">
+                    <a href="https://github.com/luksan47/mars">
                     @lang('main.open')</a><br class="mobile-break"/>
                 </div>
             </div>

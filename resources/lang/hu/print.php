@@ -29,5 +29,15 @@ return [
     "no_free_pages_left" => "Nincs annyi ingyenesen nyomtatható oldal",
     "user" => "Felhasználó",
     "no_balance" => "Nincs elegendő pénz a számlán",
+    "user" => "Felhasználó",
+    "cost" => "Költség",
+    "state" => "Állapot",
+    "CANCELLED" => "Megszakítva",
+    "ERROR" => "Hiba",
+    "QUEUED" => "Sorban áll",
+    "SUCCESS" => "Kész",
+    "cancel" => "Mégse",
+    "cancel_job" => "Megszakítás",
+    "confirm_cancel" => "Biztos, hogy meg szeretnéd szakítani a dokumentum nyomtatását?",
 ];
 

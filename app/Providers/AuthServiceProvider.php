@@ -16,6 +16,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         \App\MacAddress::class => \App\Policies\MacAddressPolicy::class,
         \App\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
+        \App\PrintJob::class => \App\Policies\PrintJobPolicy::class,
     ];
 
     /**

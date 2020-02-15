@@ -11,12 +11,40 @@ class PrintJob extends Model
     public $incrementing = true;
     public $timestamps = true;
 
+    const QUEUED = "QUEUED";
+    const ERROR = "ERROR";
+    const CANCELLED = "CANCELLED";
+    const SUCCESS = "SUCCESS";
+    const STATES = [
+        self::QUEUED,
+        self::ERROR,
+        self::CANCELLED,
+        self::SUCCESS,
+    ];
+
     protected $fillable = [
-        'filename', 'filepath', 'user', 'state', 'job_id', 'cost'
+        'filename', 'filepath', 'user_id', 'state', 'job_id', 'cost'
     ];
     
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    
+    public static function translateStates(): \Closure
+    {
+        return function ($data) {
+            $data->state = __('print.' . strtoupper($data->state));
+            return $data;
+        };
+    }
+
+    public static function addCurrencyTag(): \Closure
+    {
+        return function ($data) {
+            $data->cost = "{$data->cost} HUF";
+            return $data;
+        };
     }
 }

@@ -45,7 +45,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-    
+  
     public function showRegistrationForm()
     {
         return view('auth.register', ['user_type' => Role::COLLEGIST, 'faculties' => Faculty::all(), 'workshops' => Workshop::all()]);
@@ -133,6 +133,7 @@ class RegisterController extends Controller
                 $user->roles()->attach(Role::getId(Role::TENANT));
                 $user->roles()->attach(Role::getId(Role::PRINTER));
                 $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+                $user->internetAccess()->setWifiUsername();
                 break;
             case Role::COLLEGIST:
                 $user->roles()->attach(Role::getId(Role::COLLEGIST));
@@ -144,6 +145,7 @@ class RegisterController extends Controller
                 foreach ($data['workshop'] as $key => $workshop) {
                     $user->workshops()->attach($workshop);
                 }
+                $user->internetAccess()->setWifiUsername();
                 break;
             default:
                 throw new AuthorizationException();

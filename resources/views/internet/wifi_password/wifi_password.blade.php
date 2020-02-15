@@ -5,11 +5,10 @@
             <p>@lang('internet.wifi_password_info')</p>
         </div>
 
+        <p>@lang('internet.wifi_user'): {{ $internet_access->wifi_username  }} </p>
         @if($internet_access->wifi_password != null)
-            <p>@lang('internet.wifi_user'): {{--  TODO: show wifi username --}}
-                <br/>
-                @lang('internet.wifi_password'): <i><span onclick="$(this).text('{{ $internet_access->wifi_password }}');"
-                                                       style="cursor: pointer;">@lang('internet.show')</span></i></p>
+            <p> @lang('internet.wifi_password'): <span onclick="$(this).text('{{ $internet_access->wifi_password }}');"
+                                                       style="cursor: pointer;">@lang('internet.show')</span></p>
         @else
             <p>@lang('internet.wifi_password_null')</p>
         @endif
