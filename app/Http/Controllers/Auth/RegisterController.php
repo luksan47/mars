@@ -133,7 +133,6 @@ class RegisterController extends Controller
                 $user->roles()->attach(Role::getId(Role::TENANT));
                 $user->roles()->attach(Role::getId(Role::PRINTER));
                 $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-                $user->internetAccess()->setWifiUsername();
                 break;
             case Role::COLLEGIST:
                 $user->roles()->attach(Role::getId(Role::COLLEGIST));
@@ -145,11 +144,11 @@ class RegisterController extends Controller
                 foreach ($data['workshop'] as $key => $workshop) {
                     $user->workshops()->attach($workshop);
                 }
-                $user->internetAccess()->setWifiUsername();
                 break;
             default:
                 throw new AuthorizationException();
         }
+        $user->internetAccess->setWifiUsername();
         return $user;
     }
 }
