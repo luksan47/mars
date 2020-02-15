@@ -23,7 +23,7 @@ class PrintJob extends Model
     ];
 
     protected $fillable = [
-        'filename', 'filepath', 'user', 'state', 'job_id', 'cost'
+        'filename', 'filepath', 'user_id', 'state', 'job_id', 'cost'
     ];
     
     public function user()

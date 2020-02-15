@@ -33,7 +33,7 @@ class PrintAccount extends Model
         return $this->balance >= abs($balance);
     }
 
-    public static function getCost($pages, $is_two_sided, $number_of_copies = 1) {
+    public static function getCost($pages, $is_two_sided, $number_of_copies) {
         if (!$is_two_sided)
             return $pages * self::$COST['one_sided'] * $number_of_copies;
     
