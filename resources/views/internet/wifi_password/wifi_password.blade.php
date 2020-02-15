@@ -29,8 +29,8 @@
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="confirm" id="confirm" value="yes">
                     <label class="form-check-label" for="confirm">Nem baj</label>
+                    <button type="submit" class="btn btn-danger">Új jelszó generálása</button>
                 </div>
-                <button type="submit" class="btn btn-danger">Új jelszó generálása</button>
             </form>
         </div>
     </div>

@@ -33,19 +33,20 @@ class PrintController extends Controller
         $print_account = Auth::user()->printAccount;
         $is_two_sided = $request->has('two_sided');
         $file = $request->file_to_upload;
+        $number_of_copies = $request->number_of_copies;
         $pages = $this->getPages($validator, $file->getPathName());
 
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
 
-        $cost = PrintAccount::getCost($pages, $is_two_sided);
+        $cost = PrintAccount::getCost($pages, $is_two_sided, $number_of_copies);
 
         if (!$print_account->hasEnoughMoney($cost)) {
             return $this->handleNoBalance($validator);
         }
 
-        if ($this->printFile($file, $cost, $is_two_sided, $request->number_of_copies)) {
+        if ($this->printFile($file, $cost, $is_two_sided, $number_of_copies)) {
             $print_account->decrement('balance', $cost);
             return back()->with('print.status', __('print.success'));
         } else {
@@ -117,35 +118,38 @@ class PrintController extends Controller
 
         $this->authorize('update', $printJob);
         
-        if ($printJob->state === PrintJob::QUEUED) $printJob->update(['state' => "CANCELLED"]);
+        if ($printJob->state === PrintJob::QUEUED) $printJob->update(['state' => PrintJob::CANCELLED]);
     }
     
     private function updateCompletedPrintingJobs() {
         if (!config('app.debug')) {
             exec("lpstat -W completed -o " . env('PRINTER_NAME') . " | awk '{print $1}'", $result);
-            PrintJob::whereIn('job_id', $result)->update(['state' => "CANCELLED"]);
+            Log::info($result);
+            PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
         }
     }
 
     private function printFile($file, $cost, $is_two_sided, $number_of_copies) {
-        $printer_name = config('app.printer_name');
+        $printer_name = env('PRINTER_NAME');
         $state = PrintJob::QUEUED;
         try {
             $path = $file->storeAs('', md5(rand(0, 100000) . date('c')) . '.pdf', 'printing');
             $path = Storage::disk('printing')->getDriver()->getAdapter()->applyPathPrefix($path);
-            $result = exec("lp -d " . $printer_name
-                . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ")
-                . "-n " . $number_of_copies . " "
-                . $path . " 2>&1");
-            if (!preg_match("/^request id is ([^\s]*) \\(?<id> file\\(s\\)\\)$/", $result, $job)) {
+            $command = "lp -d " . $printer_name
+                    . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ")
+                    . "-n " . $number_of_copies . " "
+                    . $path . " 2>&1";
+            $result = exec($command);
+            Log::info($command);
+            if (!preg_match("/^request id is ([^\s]*) \\([0-9]* file\\(s\\)\\)$/", $result, $job)) {
                 Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). result:"
                     . print_r($result, true));
-                $state = "ERROR";
+                $state = PrintJob::ERROR;
             }
-            $job_id = $job['id'];
+            $job_id = $job[1];
         } catch (\Exception $e) {
             Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). " . $e->getMessage());
-            $state = "ERROR";
+            $state = PrintJob::ERROR;
             $job_id = "";
             $path = "";
         }
