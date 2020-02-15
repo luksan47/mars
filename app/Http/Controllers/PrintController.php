@@ -129,7 +129,7 @@ class PrintController extends Controller
 
     private function printFile($file, $cost, $is_two_sided, $number_of_copies) {
         $printer_name = config('app.printer_name');
-        $state = "QUEUED";
+        $state = PrintJob::QUEUED;
         try {
             $path = $file->storeAs('', md5(rand(0, 100000) . date('c')) . '.pdf', 'printing');
             $path = Storage::disk('printing')->getDriver()->getAdapter()->applyPathPrefix($path);
@@ -158,7 +158,7 @@ class PrintController extends Controller
             'job_id' => $job_id,
             'cost' => $cost,
         ]);
-        return $state == "QUEUED";
+        return $state == PrintJob::QUEUED;
     }
 
     private function handleNoalance($validator) {
