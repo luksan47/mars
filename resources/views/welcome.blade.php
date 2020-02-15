@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/mobile.css') }}">
         <style>
             html, body {
                 background-color: #fff;
@@ -73,10 +74,12 @@
                         <a href="{{ route('login') }}">@lang('general.login')</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
-                            <a href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
+                            <a class="mobile-break" href="{{ route('register') }}">@lang('general.register')</a>
+                            <a class="pc-break" href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
+                            <a class="pc-break" href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
                         @endif
                     @endauth
+
                 </div>
             @endif
 
@@ -87,17 +90,17 @@
 
                 <div class="links">
                     <a href="">
-                    @lang('main.better')</a>
+                    @lang('main.better')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.faster')</a>
+                    @lang('main.faster')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.brilliant')</a>
+                    @lang('main.brilliant')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.essential')</a>
+                    @lang('main.essential')</a><br class="mobile-break"/>
                     <a href="">
-                    @lang('main.modern')</a>
+                    @lang('main.modern')</a><br class="mobile-break"/>
                     <a href="https://github.com/luksan47/mars">
-                    @lang('main.open')</a>
+                    @lang('main.open')</a><br class="mobile-break"/>
                 </div>
             </div>
         </div>

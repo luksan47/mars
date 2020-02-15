@@ -4,27 +4,27 @@
         <form class="form-horizontal" role="form" method="POST" action="{{ route('print.print') }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <div class="row">
-                <div class="col-md-6"> @lang('print.select_document')</div>
-                <div class="col-md-3 text-right"> @lang('print.twosided')</div>
-                <div class="col-md-3"> <input type="checkbox"  name="two_sided" id="two_sided"  checked/> </div>
+            <div class="alert alert-info">
+                <strong>@lang('general.note'):</strong> @lang('print.pdf_description')
             </div>
             <div class="row">
-                <div class="col-md-6"><input type="file"  name="file_to_upload" id="file_to_upload" required></div>
-                <div class="col-md-3 text-right">  @lang('print.number_of_copies') </div>
-                <div class="col-md-3"><input id="number_of_copies" name="number_of_copies" type="number" min="1" value="1" required> </div>
-            </div>
-
-            <div class="row" style="margin-top:10px;margin-bottom:10px;">
-                <div class="col-md-5"></div>
-                <div class="col-md-2">
-                    <input type="submit" class="form-control btn btn-primary" value="@lang('print.print') " />
+                <div class="col-md-4">
+                    <label for="inlineFormInput">@lang('print.select_document')</label>
+                    <input type="file" class="form-control mb-2" name="file_to_upload" id="file_to_upload" required>
                 </div>
-                <div class="col-md-5"></div>
+                <div class="col-md-2">
+                    <label for="inlineFormInput">@lang('print.number_of_copies')</label>
+                    <input id="number_of_copies" class="form-control mb-2" name="number_of_copies" type="number" min="1" value="1" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="inlineFormInput">@lang('print.twosided')</label>
+                    <input type="checkbox" name="two_sided" id="two_sided"  checked/>
+                </div>
+                <div class="col-md-2">
+                    <br class="pc-break"/>
+                    <input type="submit" class="form-control btn btn-primary" value="@lang('print.print')" />
+                </div>
             </div>
         </form>
-        <div class="alert alert-info">
-            <strong>@lang('general.note'):</strong> @lang('print.pdf_description')
-        </div>
     </div>
 </div>
