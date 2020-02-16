@@ -70,6 +70,12 @@
                     headerFilter: 'input'
                 },
                 {
+                    title: "@lang('internet.wifi_user')",
+                    field: "wifi_username",
+                    sorter: "string",
+                    headerFilter: 'input'
+                },
+                {
                     title: "@lang('internet.mac_address')",
                     field: "mac_address",
                     sorter: "string",

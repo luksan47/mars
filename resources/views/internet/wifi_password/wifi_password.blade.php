@@ -5,10 +5,9 @@
             <p>@lang('internet.wifi_password_info')</p>
         </div>
 
+        <p>@lang('internet.wifi_user'): {{ $internet_access->wifi_username  }} </p>
         @if($internet_access->wifi_password != null)
-            <p>@lang('internet.wifi_user'): {{--  TODO: show wifi username --}}
-                <br/>
-                @lang('internet.wifi_password'): <span onclick="$(this).text('{{ $internet_access->wifi_password }}');"
+            <p> @lang('internet.wifi_password'): <span onclick="$(this).text('{{ $internet_access->wifi_password }}');"
                                                        style="cursor: pointer;">@lang('internet.show')</span></p>
         @else
             <p>@lang('internet.wifi_password_null')</p>
@@ -30,8 +29,8 @@
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="confirm" id="confirm" value="yes">
                     <label class="form-check-label" for="confirm">Nem baj</label>
+                    <button type="submit" class="btn btn-danger">Új jelszó generálása</button>
                 </div>
-                <button type="submit" class="btn btn-danger">Új jelszó generálása</button>
             </form>
         </div>
     </div>

@@ -9,14 +9,27 @@
 
     <title>{{ config('app.name', 'Urán') }}</title>
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/mobile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-formhelpers.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tabulator_bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/cookieconsent.min.css') }}" />
+
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
-
+    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-formhelpers.min.js') }}"></script>
     <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
     <script src="{{ asset('js/site.js') }}" defer></script>
+    <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
+    <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
     <script type="text/javascript">
         $(document).ready(function() {$.ajaxSetup({
             headers: {
@@ -24,15 +37,12 @@
             }
         })});
     </script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/tabulator_bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/site.css') }}" rel="stylesheet">
+    @yield('headextra')
 </head>
 <body>
     <div id="app">
@@ -43,16 +53,13 @@
     </div>
     <script>
         var cookieMessages = {
-            'dismiss' : "{{ __('cookie.dismiss') }}",
-            'allow' : "{{ __('cookie.allow') }}",
-            'deny' : "{{ __('cookie.deny') }}",
-            'link' : "{{ __('cookie.link') }}",
-            'cookie' : "{{ __('cookie.message') }}",
-            'header' : "{{ __('cookie.header') }}",
+            'dismiss' : "@lang('cookie.dismiss')",
+            'allow' : "@lang('cookie.allow')",
+            'deny' : "@lang('cookie.deny')",
+            'link' : "@lang('cookie.link')",
+            'cookie' : "@lang('cookie.message')",
+            'header' : "@lang('cookie.header')",
         };
     </script>
-    <script src="{{ asset('js/cookieconsent.min.js') }}"></script>
-    <script src="{{ asset('js/cookieconsent-initialize.js') }}"></script>
-
 </body>
 </html>

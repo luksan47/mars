@@ -19,7 +19,14 @@ Route::get('/', function () {
 
 Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
 
+Route::get('/privacy_policy', function() {
+    return Storage::download('public/Adatvédelmi tájékoztató.pdf');
+})->name('privacy_policy');
+
 Auth::routes();
+
+Route::get('/register/guest', 'Auth\RegisterController@showTenantRegistrationForm')->name('register.guest');
+
 Route::get('/verification', function () {
     return view('auth.verification');
 })->name('verification');
@@ -28,9 +35,11 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/print', 'PrintController@index')->name('print');
-    Route::post('/print/modify_balance', 'PrintController@modify_balance')->name('print.modify')->middleware('can:print.modify');
-    Route::post('/print/modify_free_pages', 'PrintController@modify_free_pages')->name('print.free_pages')->middleware('can:print.modify-free');
+    Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
+    Route::post('/print/modify_free_pages', 'PrintController@modifyFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
     Route::put('/print/print', 'PrintController@print')->name('print.print');
+    Route::get('/print/print_jobs/all', 'PrintController@listPrintJobs')->name('print.print_jobs.all');
+    Route::post('/print/print_jobs/{id}/cancel', 'PrintController@cancelPrintJob')->name('print.print_jobs.cancel');
 
     Route::get('/internet', 'InternetController@index')->name('internet');
     Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');
@@ -42,6 +51,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/internet/admin/internet_accesses/all', 'InternetController@getInternetAccessesAdmin')->name('internet.admin.internet_accesses.all');
     Route::get('/internet/admin', 'InternetController@admin')->name('internet.admin');
     Route::post('/internet/mac_addresses/{id}/edit', 'InternetController@editMacAddress')->name('internet.mac_addresses.edit');
+    Route::post('/internet/internet_accesses/{id}/edit', 'InternetController@editInternetAccess')->name('internet.internet_accesses.edit');
 
     Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');

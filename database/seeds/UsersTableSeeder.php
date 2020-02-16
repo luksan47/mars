@@ -16,11 +16,13 @@ class UsersTableSeeder extends Seeder
         $this->createAdmin();
         $this->createCollegist();
         $this->createTenant();
-        
+
         factory(App\User::class, 10)->create()->each(function ($user) {
             factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
-            $user->roles()->attach($this->getRoleId(Role::COLLEGIST));
-            $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
+            factory(App\PrintJob::class, $user->id % 5)->create(['user_id' => $user->id]);
+            $user->roles()->attach(Role::getId(Role::COLLEGIST));
+            $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+            $user->internetAccess->setWifiUsername(); //setWifiUsername();
         });
     }
 
@@ -32,8 +34,10 @@ class UsersTableSeeder extends Seeder
             'verified' => true
         ]);
         factory(App\MacAddress::class, 3)->create(['user_id' => $user->id]);
-        $user->roles()->attach($this->getRoleId(Role::PRINT_ADMIN));
-        $user->roles()->attach($this->getRoleId(Role::INTERNET_ADMIN));
+        factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
+        $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
+        $user->roles()->attach(Role::getId(Role::INTERNET_ADMIN));
+        $user->internetAccess->setWifiUsername();
     }
 
     private function createCollegist() {
@@ -43,23 +47,22 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
-        $user->roles()->attach($this->getRoleId(Role::COLLEGIST));
-        $user->roles()->attach($this->getRoleId(Role::PRINTER));
-        $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
+        factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
+        $user->roles()->attach(Role::getId(Role::COLLEGIST));
+        $user->roles()->attach(Role::getId(Role::PRINTER));
+        $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+        $user->internetAccess->setWifiUsername();
     }
 
     private function createTenant() {
         $user = User::create([
-            'name' => 'A külföldi srác',
+            'name' => 'David Tenant',
             'email' => 'tenant@eotvos.elte.hu',
             'password' => bcrypt('asdasdasd'),
             'verified' => true
         ]);
-        $user->roles()->attach($this->getRoleId(Role::TENANT));
-        $user->roles()->attach($this->getRoleId(Role::INTERNET_USER));
-    }
-
-    private function getRoleId(string $roleName) {
-        return Role::where('name', $roleName)->first()->id;
+        $user->roles()->attach(Role::getId(Role::TENANT));
+        $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+        $user->internetAccess->setWifiUsername();
     }
 }
