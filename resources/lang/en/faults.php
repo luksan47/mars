@@ -3,6 +3,7 @@
 return [
     "faults" => "Faults",
     "created_at" => "Date",
+    "location" => "Location",
     "description" => "Description",
     "status" => "Status",
     "submit" => "Submit",

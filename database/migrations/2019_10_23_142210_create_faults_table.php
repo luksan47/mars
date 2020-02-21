@@ -15,6 +15,8 @@ class CreateFaultsTable extends Migration
     {
         Schema::create('faults', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('location');
             $table->string('description');
             $table->set('status', ['unseen', 'seen', 'done', 'wont_fix']);
             $table->timestamps();

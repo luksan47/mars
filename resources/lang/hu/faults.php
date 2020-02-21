@@ -3,6 +3,7 @@
 return [
     "faults" => "Hibák",
     "created_at" => "Időpont",
+    "location" => "Helyszín",
     "description" => "Leírás",
     "status" => "Állapot",
     "submit" => "Küldés",

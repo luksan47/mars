@@ -13,7 +13,7 @@
                 wont_fix: "@lang('faults.wont_fix')"
             };
             var colors = {
-                unseen: "text-info",
+                unseen: "text-secondary",
                 seen: "text-info",
                 done: "text-success",
                 wont_fix: "text-danger"
@@ -70,8 +70,9 @@
             layout: "fitColumns",
             placeholder: "No Data Set",
             columns: [
-                {title: "@lang('faults.created_at')", field: "created_at", sorter: "datetime", sorterParams: {format: "YYYY-MM-DD hh:mm:ss"}, width: 180,
-                 formatter: "datetime", formatterParams: {outputFormat: "YYYY. MM. DD. hh:mm"}},
+                {title: "@lang('faults.created_at')", field: "created_at", sorter: "datetime", sorterParams: {format: "YYYY-MM-DD HH:mm:ss"}, width: 180,
+                 formatter: "datetime", formatterParams: {outputFormat: "YYYY. MM. DD. HH:mm"}},
+                {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 1, formatter: "textarea"},
                 {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 4, formatter: "textarea"},
                 @if(Auth::User()->hasRole(\App\Role::INTERNET_ADMIN))
                 {title: "", field: "id", headerSort: false, width: 60, formatter: custom_formatter, formatterParams: {status: "done"}},
