@@ -1,5 +1,6 @@
 <?php
 
+use App\FaultsTable;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ class CreateFaultsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('location');
             $table->string('description');
-            $table->set('status', ['unseen', 'seen', 'done', 'wont_fix']);
+            $table->set('status', FaultsTable::STATES);
             $table->timestamps();
         });
     }

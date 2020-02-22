@@ -15,5 +15,6 @@ return [
     "wont_fix" => "Nem megoldandó",
     "unseen" => "Nem látott",
     "seen" => "Látott",
-    "autherror" => "Hiba. Nem sikerült a felhasználói engedélyek hitalasítése."
+    "reopen" => "Újra",
+    "autherror" => "Hiba. Nem sikerült a felhasználói engedélyek hitelesítése."
 ];
