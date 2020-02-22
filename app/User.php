@@ -43,6 +43,14 @@ class User extends Authenticatable
         return $this->hasOne('App\PrintAccount');
     }
 
+    public function freePages() {
+        return $this->hasMany('App\FreePages');
+    }
+
+    public function printHistory() {
+        return $this->hasMany('App\PrintAccountHistory');
+    }
+
     public function internetAccess() {
         return $this->hasOne('App\InternetAccess');
     }

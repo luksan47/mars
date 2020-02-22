@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\MacAddress::class => \App\Policies\MacAddressPolicy::class,
         \App\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
         \App\PrintJob::class => \App\Policies\PrintJobPolicy::class,
+        \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
     ];
 
     /**
