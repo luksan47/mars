@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header">@lang('print.send')</div>
+    <div class="card-header">@lang('print.transfer_money')</div>
     <div class="card-body">
         <form method="POST" action="{{ route('print.send') }}">
             @csrf
