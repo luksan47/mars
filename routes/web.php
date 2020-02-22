@@ -60,6 +60,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     Route::get('/faults', 'FaultsController@index')->name('faults');
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
-    Route::post('/faults/add', 'FaultsController@addRecord')->name('faults.add');
+    Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 });

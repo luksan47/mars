@@ -16,10 +16,10 @@ class CreateFaultsTable extends Migration
     {
         Schema::create('faults', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('reporter_id');
             $table->string('location');
             $table->string('description');
-            $table->set('status', FaultsTable::STATES);
+            $table->enum('status', FaultsTable::STATES);
             $table->timestamps();
         });
     }

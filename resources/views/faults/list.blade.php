@@ -6,13 +6,13 @@
             if (typeof cell !== "string") {
                 cell = cell.getValue();
             }
-            var translations = {
+            const translations = {
                 UNSEEN: "@lang('faults.unseen')",
                 SEEN: "@lang('faults.seen')",
                 DONE: "@lang('faults.done')",
                 WONT_FIX: "@lang('faults.wont_fix')"
             };
-            var colors = {
+            const colors = {
                 UNSEEN: "text-secondary",
                 SEEN: "text-info",
                 DONE: "text-success",
@@ -22,19 +22,25 @@
         }
 
         var button = function (cell, formatterParams) {
-            if (formatterParams['status'] === "DONE") {
-                var style = "btn-success";
-                var text = "@lang('faults.done')";
-            } else if (formatterParams['status'] === "WONT_FIX") {
-                var style = "btn-danger";
-                var text = "@lang('faults.wont_fix')";
-            } else if (formatterParams['status'] === "UNSEEN") {
-                var style = "btn-danger";
-                var text = "@lang('faults.reopen')";
+            switch (formatterParams['status']) {
+                case "DONE":
+                    var style = "btn-success";
+                    var text = "@lang('faults.done')";
+                    break;
+            
+                case "WONT_FIX":
+                    var style = "btn-danger";
+                    var text = "@lang('faults.wont_fix')";
+                    break;
+                
+                case "UNSEEN":
+                    var style = "btn-danger";
+                    var text = "@lang('faults.reopen')";
+                    break;
             }
+
             return $("<button type=\"button\" class=\"btn btn-sm " + style + " float-left\">" + text + "</button>").click(function () {
                 var data = cell.getRow().getData();
-                var returned;
                 confirm('@lang('faults.confirm')', '@lang('faults.confirm_message')' + text, '@lang('faults.cancel')', '@lang('faults.confirm')', function() {
                     $.post("{{ route('faults.update') }}", {id: data.id, status: formatterParams['status']}, function(data){
                         if (data !== "true"){
@@ -49,23 +55,34 @@
 
         var button_formatter = function (cell, formatterParams, onRendered) {
             var status = cell.getRow().getData()["status"];
-            if (formatterParams["status"] === "UNSEEN") {
-                if (status === "DONE" || status === "WONT_FIX") {
-                    return button(cell, formatterParams);
-                } else {
-                    return "";
-                }
+
+            switch (formatterParams['status']) {
+                case "DONE":
+                    if (status === "SEEN" || status === "UNSEEN") {
+                        return button(cell, formatterParams);
+                    }
+                    break;
+
+                case "WONT_FIX":
+                    if (status === "UNSEEN") {
+                        onRendered(function () {
+                            $.post("{{ route('faults.update') }}", {id: cell.getValue(), status: "SEEN"}, );
+                        });
+                    }
+                    if (status === "SEEN" || status === "UNSEEN") {
+                        return button(cell, formatterParams);
+                    } else {
+                        return status_translate(status);
+                    }
+                    break;
+
+                case "UNSEEN":
+                    if (status === "DONE" || status === "WONT_FIX") {
+                        return button(cell, formatterParams);
+                    }
+                    break;
             }
-            if (status === "UNSEEN" && formatterParams["status"] === "WONT_FIX") {
-                onRendered(function () {
-                    $.post("{{ route('faults.update') }}", {id: cell.getValue(), status: "SEEN"}, );
-                });
-                return button(cell, formatterParams);
-            } else if (status === "SEEN" || status === "UNSEEN") {
-                return button(cell, formatterParams);
-            } else if (formatterParams["status"] === "WONT_FIX") {
-                return status_translate(status);
-            }
+
             return "";
         }
 

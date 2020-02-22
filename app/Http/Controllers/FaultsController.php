@@ -15,11 +15,11 @@ class FaultsController extends Controller
         return view('faults.app');
     }
 
-    public function addRecord(Request $new)
+    public function addFault(Request $new)
     {
         DB::table('faults')->insert(
             [
-                'user_id' => Auth::User()->id,
+                'reporter_id' => Auth::User()->id,
                 'location' => $new['location'],
                 'description' => $new['description'],
                 'status' => FaultsTable::UNSEEN,
@@ -39,7 +39,7 @@ class FaultsController extends Controller
     public function updateStatus(Request $new)
     {
         $auth = Auth::User()->hasRole(Role::INTERNET_ADMIN) || FaultsTable::getState($new['status']) === FaultsTable::UNSEEN;
-        
+
         if ($auth) {
             DB::table('faults')->where('id', $new['id'])->update(['status' => FaultsTable::getState($new['status'])]);
         }
