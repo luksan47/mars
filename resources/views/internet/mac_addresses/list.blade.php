@@ -1,8 +1,9 @@
+
 <div id="mac-addresses-table"></div>
 <script type="application/javascript">
     $(document).ready(function () {
         var deleteButton = function (cell, formatterParams, onRendered) {
-            return $("<button type=\"button\" class=\"btn btn-sm btn-danger float-left\">@lang('internet.delete')</button>").click(function () {
+            return $("<button type=\"button\" class=\"btn waves-effect secondary-color\">@lang('internet.delete')</button>").click(function () {
                 var data = cell.getRow().getData();
                 confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function() {
                     $.ajax({
@@ -18,16 +19,17 @@
                 });
             })[0];
         };
-
         var table = new Tabulator("#mac-addresses-table", {
-            paginationSizeSelector: [10, 25, 50, 100, 250, 500],
             paginationSize: 10,
+            layout:"fitColumns",
+            autoresize:true,
             pagination: "remote", //enable remote pagination
             ajaxURL: "{{ route('internet.mac_addresses.users') }}", //set url for ajax request
             ajaxSorting: true,
             ajaxFiltering: true,
-            layout: "fitColumns",
-            placeholder: "No Data Set",
+            placeholder: "@lang('internet.nothing_to_show')",
+            columnMinWidth:180,
+            headerSort:false,
             columns: [
                 {title: "@lang('internet.mac_address')", field: "mac_address", sorter: "string"},
                 {title: "@lang('internet.comment')", field: "comment", sorter: "string"},

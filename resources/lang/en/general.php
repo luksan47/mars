@@ -10,5 +10,6 @@ return [
     'dashboard' => 'Dashboard',
     'register_guest' => 'For tenants',
     'register_collegist' => 'For collegists',
+    'i_understand' => 'I understand'
 
 ];

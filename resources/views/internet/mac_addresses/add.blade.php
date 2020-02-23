@@ -1,26 +1,28 @@
 <form action="{{ route('internet.mac_addresses.add') }}" method="post">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="form-row align-items-center">
         @csrf
-        <div class="col-auto">
-            <label for="inlineFormInput">@lang('internet.mac_address')</label>
-            <input type="text" class="form-control mb-2" name="mac_address" placeholder="00:00:00:00:00:00" value="{{ old('mac_address') }}">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="mac_address" type="text" class="validate" name="mac_address" placeholder="00:00:00:00:00:00" value="{{ old('mac_address') }}">
+                <label for="mac_address">@lang('internet.mac_address')</label>
+                @error('mac_address')
+                    <blockquote-error>{{ $message }}</blockquote>
+                @enderror
+            </div>
         </div>
-        <div class="col-auto">
-            <label for="inlineFormInput">@lang('internet.comment')</label>
-            <input type="text" class="form-control mb-2" name="comment" placeholder="@lang('internet.laptop')" value="{{ old('comment') }}">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="comment" type="text" class="validate" name="comment" placeholder="@lang('internet.laptop')" value="{{ old('comment') }}">
+                <label for="mac_address">@lang('internet.comment')</label>
+                @error('comment')
+                    <blockquote-error>{{ $message }}</blockquote>
+                @enderror
+            </div>
         </div>
-        <div class="col-auto">
-            <label>&nbsp;</label>
-            <button type="submit" class="form-control btn btn-primary mb-2">@lang('internet.add')</button>
+        <div class="row">
+            <div class="input-field col s12">
+                <button class="btn waves-effect secondary-color" type="submit" >@lang('internet.add')</button>
+            </div>
         </div>
     </div>
 </form>

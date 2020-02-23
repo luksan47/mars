@@ -1,19 +1,20 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Urán') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('Toggle navigation')">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            @include('layouts.navbar.left')
-
-            <!-- Right Side Of Navbar -->
-            @include('layouts.navbar.right')
+<div class="navbar-fixed">
+    <nav class="top-nav primary-color">
+        <div class="nav-wrapper">
+            <div class="row">
+                <a href="#" data-target="mobile-sidenav" class="sidenav-trigger hide-on-large-only"><i class="material-icons">menu</i></a>
+                <a class="brand-logo center hide-on-large-only" style="text-transform: uppercase;font-weight:300;letter-spacing:3px;" href="{{ url('/') }}"> {{ config('app.name', 'Urán') }} </a>
+                <!-- Right Side Of Navbar -->
+                <ul class="right hide-on-med-and-down">
+                    @include('layouts.navbar.right')
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</div>
+<!--Mobile-->
+<ul class="sidenav" id="mobile-sidenav">
+    @include('layouts.navbar.left')
+    @include('layouts.navbar.right')
+</ul>
+

@@ -1,14 +1,12 @@
 <div class="card">
-    <div class="card-header">@lang('internet.internet_access')</div>
-    <div class="card-body">
+    <div class="card-content">
+        <span class="card-title">@lang('internet.internet_access')</span>
+        <blockquote>
         @if($internet_access->has_internet_until > \Carbon\Carbon::now())
-            <div class="alert alert-success">
-                <p>@lang('internet.has_internet', ['ends' => $internet_access->has_internet_until])</p>
-            </div>
+            @lang('internet.has_internet', ['ends' => $internet_access->has_internet_until])
         @else
-            <div class="alert alert-danger">
-                <p>@lang('internet.no_internet')</p>
-            </div>
+            @lang('internet.no_internet')
         @endif
+        </blockquote>
     </div>
 </div>

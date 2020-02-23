@@ -1,41 +1,18 @@
-<!-- Right Side Of Navbar -->
-<ul class="navbar-nav ml-auto">
-    <!-- Authentication Links -->
-    @guest
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">@lang('general.login')</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('register') }}">@lang('general.register')</a>
-        </li>
-    @else
-        <li class="nav-item dropdown">
-            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }} <span class="caret"></span></a>
-
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    @lang('general.logout')
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
-        </li>
-    @endguest
-    
-    <!-- language selector -->
-    <li class="nav-item dropdown">
-        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" 
-            aria-expanded="false" v-pre>Language <!-- Left it constant on purpose, so everyone can find the button -->
-            <span class="caret"></span></a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            @foreach (config('app.locales') as $code => $name) 
-                @if ($code != App::getLocale())
-                    <a class="dropdown-item" href="{{ route('setlocale', $code) }}">{{ $name }}</a>
-                @endif
-            @endforeach
-        </div>
-    </li>                
+@guest
+    <li><a href="{{ route('login') }}">@lang('general.login')</a></li>
+    <li><a href="{{ route('register') }}">@lang('general.register')</a></li>
+@else
+    <ul id="dropdownUser" class="dropdown-content">
+        <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('general.logout')</a></li>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf </form>
+    </ul>
+    <li><a class="dropdown-trigger-settings" href="#!" data-target="dropdownUser"><i class="material-icons left">account_circle</i>{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+@endguest
+<ul id="dropdownLang" class="dropdown-content">
+    @foreach (config('app.locales') as $code => $name) 
+        @if ($code != App::getLocale())
+            <li><a href="{{ route('setlocale', $code) }}">{{ $name }}</a></li>
+        @endif
+    @endforeach
 </ul>
+<li><a class="dropdown-trigger-settings" href="#!" data-target="dropdownLang"><i class="material-icons left">language</i>Language<i class="material-icons right">arrow_drop_down</i></a></li> 
