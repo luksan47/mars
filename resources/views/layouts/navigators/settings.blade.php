@@ -6,7 +6,7 @@
         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('general.logout')</a></li>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf </form>
     </ul>
-    <li><a class="dropdown-trigger-settings" href="#!" data-target="dropdownUser"><i class="material-icons left">account_circle</i>{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdownUser"><i class="material-icons left">account_circle</i>{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
 @endguest
 <ul id="dropdownLang" class="dropdown-content">
     @foreach (config('app.locales') as $code => $name) 
@@ -15,4 +15,4 @@
         @endif
     @endforeach
 </ul>
-<li><a class="dropdown-trigger-settings" href="#!" data-target="dropdownLang"><i class="material-icons left">language</i>Language<i class="material-icons right">arrow_drop_down</i></a></li> 
+<li><a class="dropdown-trigger" href="#!" data-target="dropdownLang"><i class="material-icons left">language</i>Language<i class="material-icons right">arrow_drop_down</i></a></li> 

@@ -43,9 +43,7 @@
                     headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }});
                 $('.sidenav').sidenav();
-                $(".dropdown-trigger-navbar").dropdown({hover: false});
-                $(".dropdown-trigger-sidebar").dropdown();
-                $(".dropdown-trigger-settings").dropdown(); //TODO
+                $(".dropdown-trigger").dropdown({hover: false});
             }
         );
     </script>
@@ -61,7 +59,6 @@
         @include('layouts.navbar')
     </header>
     <div class="row">
-        @include('layouts.sidebar')
         <div class="container">
             <div class="col s12 m12 l3"><!--space sidenav--></div>
             <div class="col s12 m12 l9">
