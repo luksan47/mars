@@ -19,8 +19,7 @@
                 <td>{{ Auth::user()->printAccount->balance }} HUF</td>
             </tr>
             <tr>
-                <td>@lang('print.available_free_pages')</td>
-                <td>{{ Auth::user()->printAccount->free_pages }}</td>
+                <td colspan="2">@lang('print.available_free_pages', ['number_of_free_pages' => Auth::user()->printAccount->free_pages ])</td>
             </tr>
         </tbody></table>
     </div>

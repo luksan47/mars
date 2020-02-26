@@ -1,10 +1,18 @@
 @can('print.modify')
-<div class="row">
+    <span class="card-title">@lang('print.modify_pages')</span>
+    <div class="row">
     <form method="POST" action="{{ route('print.modify') }}">
         @csrf
-        @include("search-user")
-        <input id="balance" name="balance" type="number">
-        <button type="submit" class="btn btn-primary">@lang('print.add')</button>
+        <div class="input-field col s12 m12 l4">
+            @include("select-user")
+        </div>
+        <div class="input-field col s12 m12 l4">
+            <input id="balance" class="validate" name="balance" type="number" required>
+            <label for="balance">@lang('print.balance')</label>
+        </div>
+        <div class="input-field col s12 m12 l4">
+            <button type="submit" class="btn btn-primary secondary-color">@lang('print.add')</button>
+        </div>
     </form>
-</div>
+    </div>
 @endif

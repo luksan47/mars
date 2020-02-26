@@ -28,7 +28,7 @@
             ajaxSorting: true,
             ajaxFiltering: true,
             placeholder: "@lang('internet.nothing_to_show')",
-            columnMinWidth:180,
+            columnMinWidth:150,
             headerSort:false,
             columns: [
                 {title: "@lang('internet.mac_address')", field: "mac_address", sorter: "string"},

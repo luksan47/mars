@@ -6,7 +6,7 @@
                 <input id="mac_address" type="text" class="validate" name="mac_address" placeholder="00:00:00:00:00:00" value="{{ old('mac_address') }}">
                 <label for="mac_address">@lang('internet.mac_address')</label>
                 @error('mac_address')
-                    <blockquote-error>{{ $message }}</blockquote>
+                    <blockquote class="error">{{ $message }}</blockquote>
                 @enderror
             </div>
         </div>
@@ -15,7 +15,7 @@
                 <input id="comment" type="text" class="validate" name="comment" placeholder="@lang('internet.laptop')" value="{{ old('comment') }}">
                 <label for="mac_address">@lang('internet.comment')</label>
                 @error('comment')
-                    <blockquote-error>{{ $message }}</blockquote>
+                    <blockquote class="error">{{ $message }}</blockquote>
                 @enderror
             </div>
         </div>

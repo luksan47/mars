@@ -23,7 +23,7 @@
                 </div>
                 <div class="input-field col s12 m12 l4">
                     <label>
-                        <input type="checkbox" name="two_sided" id="two_sided" class="filled-in" />
+                        <input type="checkbox" name="two_sided" id="two_sided" class="filled-in checkbox-color" />
                         <span>@lang('print.twosided')</span>
                     </label>
                 </div>
