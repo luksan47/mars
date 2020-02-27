@@ -2,7 +2,7 @@
 
 return [
     "faults" => "Hibák",
-    "created_at" => "Időpont",
+    "created_at" => "Létrehozva",
     "location" => "Helyszín",
     "description" => "Leírás",
     "status" => "Állapot",
@@ -13,8 +13,9 @@ return [
     "confirm" => "Megerősítés",
     "done" => "Kész",
     "wont_fix" => "Nem megoldandó",
-    "unseen" => "Nem látott",
-    "seen" => "Látott",
-    "reopen" => "Újra",
+    "unseen" => "Nem látta",
+    "seen" => "Látta",
+    "reopened" => "Újranyitott",
+    "reopen" => "Újranyit",
     "autherror" => "Hiba. Nem sikerült a felhasználói engedélyek hitelesítése."
 ];

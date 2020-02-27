@@ -15,6 +15,7 @@ return [
     "wont_fix" => "Won't fix",
     "unseen" => "Unseen",
     "seen" => "Seen",
+    "reopened" => "Reopened",
     "reopen" => "Reopen",
     "autherror" => "Error. Could not authenticate user permissions."
 ];

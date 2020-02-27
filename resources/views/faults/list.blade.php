@@ -7,33 +7,33 @@
                 cell = cell.getValue();
             }
             const translations = {
-                UNSEEN: "@lang('faults.unseen')",
-                SEEN: "@lang('faults.seen')",
-                DONE: "@lang('faults.done')",
-                WONT_FIX: "@lang('faults.wont_fix')"
+                {{ App\FaultsTable::UNSEEN }}: "@lang('faults.unseen')",
+                {{ App\FaultsTable::SEEN }}: "@lang('faults.seen')",
+                {{ App\FaultsTable::DONE }}: "@lang('faults.done')",
+                {{ App\FaultsTable::WONT_FIX }}: "@lang('faults.wont_fix')"
             };
             const colors = {
-                UNSEEN: "text-secondary",
-                SEEN: "text-info",
-                DONE: "text-success",
-                WONT_FIX: "text-danger"
+                {{ App\FaultsTable::UNSEEN }}: "text-secondary",
+                {{ App\FaultsTable::SEEN }}: "text-info",
+                {{ App\FaultsTable::DONE }}: "text-success",
+                {{ App\FaultsTable::WONT_FIX }}: "text-danger"
             };
             return '<div class="font-italic ' + colors[cell] + ' text-right">' + translations[cell] + '</div>';
         }
 
         var button = function (cell, formatterParams) {
             switch (formatterParams['status']) {
-                case "DONE":
+                case "{{ App\FaultsTable::DONE }}":
                     var style = "btn-success";
                     var text = "@lang('faults.done')";
                     break;
             
-                case "WONT_FIX":
+                case "{{ App\FaultsTable::WONT_FIX }}":
                     var style = "btn-danger";
                     var text = "@lang('faults.wont_fix')";
                     break;
                 
-                case "UNSEEN":
+                case "{{ App\FaultsTable::UNSEEN }}":
                     var style = "btn-danger";
                     var text = "@lang('faults.reopen')";
                     break;
@@ -41,6 +41,7 @@
 
             return $("<button type=\"button\" class=\"btn btn-sm " + style + " float-left\">" + text + "</button>").click(function () {
                 var data = cell.getRow().getData();
+                text = text == "@lang('faults.reopen')" ? "@lang('faults.reopened')" : text;
                 confirm('@lang('faults.confirm')', '@lang('faults.confirm_message')' + text, '@lang('faults.cancel')', '@lang('faults.confirm')', function() {
                     $.post("{{ route('faults.update') }}", {id: data.id, status: formatterParams['status']}, function(data){
                         if (data !== "true"){
@@ -57,27 +58,27 @@
             var status = cell.getRow().getData()["status"];
 
             switch (formatterParams['status']) {
-                case "DONE":
-                    if (status === "SEEN" || status === "UNSEEN") {
+                case "{{ App\FaultsTable::DONE }}":
+                    if (status === "{{ App\FaultsTable::SEEN }}" || status === "{{ App\FaultsTable::UNSEEN }}") {
                         return button(cell, formatterParams);
                     }
                     break;
 
-                case "WONT_FIX":
-                    if (status === "UNSEEN") {
+                case "{{ App\FaultsTable::WONT_FIX }}":
+                    if (status === "{{ App\FaultsTable::UNSEEN }}") {
                         onRendered(function () {
-                            $.post("{{ route('faults.update') }}", {id: cell.getValue(), status: "SEEN"}, );
+                            $.post("{{ route('faults.update') }}", {id: cell.getValue(), status: "{{ App\FaultsTable::SEEN }}"}, );
                         });
                     }
-                    if (status === "SEEN" || status === "UNSEEN") {
+                    if (status === "{{ App\FaultsTable::SEEN }}" || status === "{{ App\FaultsTable::UNSEEN }}") {
                         return button(cell, formatterParams);
                     } else {
                         return status_translate(status);
                     }
                     break;
 
-                case "UNSEEN":
-                    if (status === "DONE" || status === "WONT_FIX") {
+                case "{{ App\FaultsTable::UNSEEN }}":
+                    if (status === "{{ App\FaultsTable::DONE }}" || status === "{{ App\FaultsTable::WONT_FIX }}") {
                         return button(cell, formatterParams);
                     }
                     break;
@@ -100,12 +101,12 @@
                 {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 1, formatter: "textarea"},
                 {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 4, formatter: "textarea"},
                 @if(Auth::User()->hasRole(\App\Role::INTERNET_ADMIN))
-                {title: "", field: "id", headerSort: false, width: 60, formatter: button_formatter, formatterParams: {status: "DONE"}},
-                {title: "", field: "id", headerSort: false, width: 140, formatter: button_formatter, formatterParams: {status: "WONT_FIX"}},
+                {title: "", field: "id", headerSort: false, width: 60, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::DONE }}"}},
+                {title: "", field: "id", headerSort: false, width: 140, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::WONT_FIX }}"}},
                 @else
                 {title: "@lang('faults.status')", field: "status", sorter: "string", width: 140, formatter: status_translate},
                 @endif
-                {title: "", field: "id", headerSort: false, width: 60, formatter: button_formatter, formatterParams: {status: "UNSEEN"}}
+                {title: "", field: "id", headerSort: false, width: 80, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::UNSEEN }}"}}
             ],
             initialSort: [
                 {column: "created_at", dir: "desc"}
