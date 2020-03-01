@@ -8,5 +8,5 @@ return [
     'register' => 'Registratio',
     'you_are_logged_in' => 'Secunde inivisti.',
     'dashboard' => 'Tabula dirigendi'
-
+    'report_bug' => 'Referre ugbay'
 ];

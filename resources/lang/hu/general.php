@@ -10,5 +10,6 @@ return [
     'dashboard' => 'Irányítópult',
     'register_guest' => 'Vendégeknek',
     'register_collegist' => 'Collegistáknak',
+    'report_bug' => 'Hiba bejelentése',
 
 ];

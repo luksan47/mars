@@ -37,5 +37,9 @@
                 @endif
             @endforeach
         </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]">@lang('general.report_bug')</a>
     </li>                
 </ul>
