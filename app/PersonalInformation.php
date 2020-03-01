@@ -19,9 +19,9 @@ class PersonalInformation extends Model
         'zip_code',
         'city',
         'street_and_number',
-        'year_of_graduation',
-        'high_school',
-        'neptun',
-        'year_of_acceptance',
     ];
+
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 }

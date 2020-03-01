@@ -9,6 +9,7 @@ use App\Role;
 use App\Faculty;
 use App\Workshop;
 use App\PersonalInformation;
+use App\EducationalInformation;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -121,10 +122,6 @@ class RegisterController extends Controller
             'zip_code' => $data['zip_code'],
             'city' => $data['city'],
             'street_and_number' => $data['street_and_number'],
-            'year_of_graduation' => $data['year_of_graduation'] ?? null,
-            'high_school' => $data['high_school'] ?? null,
-            'neptun' => $data['neptun'] ?? null,
-            'year_of_acceptance' => $data['year_of_acceptance'] ?? null
         ]);
 
         //TODO change collegist and tenant role into role group
@@ -138,6 +135,13 @@ class RegisterController extends Controller
                 $user->roles()->attach(Role::getId(Role::COLLEGIST));
                 $user->roles()->attach(Role::getId(Role::PRINTER));
                 $user->roles()->attach(Role::getId(Role::INTERNET_USER));
+                EducationalInformation::create([
+                    'user_id' => $user->id,
+                    'year_of_graduation' => $data['year_of_graduation'],
+                    'high_school' => $data['high_school'],
+                    'neptun' => $data['neptun'],
+                    'year_of_acceptance' => $data['year_of_acceptance'],
+                ]);
                 foreach ($data['faculty'] as $key => $faculty) {
                     $user->faculties()->attach($faculty);
                 }
