@@ -46,6 +46,7 @@ return [
     "cancel_job" => "Megszakítás",
     "confirm_cancel" => "Biztos, hogy meg szeretnéd szakítani a dokumentum nyomtatását?",
     "send" => "Küldés",
-    "transfer_money" => "Felhasználható egyenleg utalása" 
+    "transfer_money" => "Felhasználható egyenleg utalása" ,
+    "amount" => "Összeg"
 ];
 
