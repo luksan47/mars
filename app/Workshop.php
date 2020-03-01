@@ -6,23 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Workshop extends Model
 {
-    const ANGOL = "Angol-amerikai műhely";
-    const BIOLOGIA = "Biológia-kémia műhely";
-    const BOLLOK = "Bollók János Klasszika-filológia műhely";
-    const FILOZOFIA = "Filozófia műhely";
-    const AURELION = "Aurélien Sauvageot Francia műhely";
-    const GERMANISZTIKA = "Germanisztika műhely";
-    const INFORMATIKA = "Informatika műhely";
-    const MAGYAR = "Magyar műhely";
-    const MATEMATIKA = "Matematika-fizika műhely";
-    const MENDOL = "Mendöl Tibor földrajz-, föld- és környezettudományi műhely";
-    const OLASZ = "Olasz műhely";
-    const ORIENTALISZTIKA = "Orientalisztika műhely";
-    const SKANDINAVISZTIKA = "Skandinavisztika műhely";
-    const SPANYOL = "Spanyol műhely";
-    const SZLAVISZTIKA = "Szlavisztika műhely";
-    const TARSADALOMTUDOMANYI = "Társadalomtudományi műhely";
-    const TORTENESZ = "Történész műhely";
+    const ANGOL = 'Angol-amerikai műhely';
+    const BIOLOGIA = 'Biológia-kémia műhely';
+    const BOLLOK = 'Bollók János Klasszika-filológia műhely';
+    const FILOZOFIA = 'Filozófia műhely';
+    const AURELION = 'Aurélien Sauvageot Francia műhely';
+    const GERMANISZTIKA = 'Germanisztika műhely';
+    const INFORMATIKA = 'Informatika műhely';
+    const MAGYAR = 'Magyar műhely';
+    const MATEMATIKA = 'Matematika-fizika műhely';
+    const MENDOL = 'Mendöl Tibor földrajz-, föld- és környezettudományi műhely';
+    const OLASZ = 'Olasz műhely';
+    const ORIENTALISZTIKA = 'Orientalisztika műhely';
+    const SKANDINAVISZTIKA = 'Skandinavisztika műhely';
+    const SPANYOL = 'Spanyol műhely';
+    const SZLAVISZTIKA = 'Szlavisztika műhely';
+    const TARSADALOMTUDOMANYI = 'Társadalomtudományi műhely';
+    const TORTENESZ = 'Történész műhely';
 
     const ALL = [
         self::ANGOL,
@@ -44,7 +44,8 @@ class Workshop extends Model
         self::TORTENESZ,
     ];
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany(User::class, 'workshop_users');
     }
 }

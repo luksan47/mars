@@ -24,18 +24,31 @@
                     <div class="alert alert-info">
                         <strong>@lang('general.note'):</strong>
                         @lang('print.available_money'): {{ Auth::user()->printAccount->balance }} HUF
-                        -
-                        (@lang('print.available_free_pages',
-                            ['number_of_free_pages' => Auth::user()->printAccount->free_pages ]
-                        ))
                     </div>
                     @include("print.print")
-                    @include("print.modify")
                     @include("print.free")
+                    @include("print.modify")
+                    @include("print.free-admin")
+                    @include("print.send")
                     @include("print.history")
                 </div>
             </div>
         </div>
     </div>
     </div>
+
+
+<!-- Datepicker script -->
+<script type="text/javascript">
+	$(function(){
+		$('.date').datepicker({
+			format: 'yyyy-mm-dd',
+			autoclose: true,
+			clearBtn: true,
+			weekStart: 1,
+			startView: "century"
+		})
+	});
+</script>
+
 @endsection

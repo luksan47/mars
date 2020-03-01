@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use App\Role;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use App\Role;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\MacAddress::class => \App\Policies\MacAddressPolicy::class,
         \App\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
         \App\PrintJob::class => \App\Policies\PrintJobPolicy::class,
+        \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
     ];
 
     /**
@@ -26,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Model-related policies, registering the contents of $this->policies 
+        // Model-related policies, registering the contents of $this->policies
         $this->registerPolicies();
         // General policies without models
         $this->registerPrintPolicies();
@@ -55,7 +56,7 @@ class AuthServiceProvider extends ServiceProvider
         });
     }
 
-    public function registerVerificationPolicies() 
+    public function registerVerificationPolicies()
     {
         Gate::define('registration.handle', function ($user) {
             return  $user->hasRole(Role::INTERNET_ADMIN);

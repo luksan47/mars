@@ -1,18 +1,18 @@
 <?php
 
 return [
-    "your_registered_devices" => "Your registered devices",
-    "admin.manage_registered_devices" => "Manage registered devices",
-    "mac_address" => "MAC address",
-    "comment" => "Comment",
-    "state" => "State",
-    "requested" => "Requested",
-    "approved" => "Approved",
-    "rejected" => "Rejected",
-    "add" => "Add device",
-    "delete" => "Delete",
-    "cancel" => "Cancel",
-    "confirm_delete" => "Are you sure you want to delete?",
+    'your_registered_devices' => 'Your registered devices',
+    'admin.manage_registered_devices' => 'Manage registered devices',
+    'mac_address' => 'MAC address',
+    'comment' => 'Comment',
+    'state' => 'State',
+    'requested' => 'Requested',
+    'approved' => 'Approved',
+    'rejected' => 'Rejected',
+    'add' => 'Add device',
+    'delete' => 'Delete',
+    'cancel' => 'Cancel',
+    'confirm_delete' => 'Are you sure you want to delete?',
     'error' => 'Error',
     'ajax_error' => 'Server error! Please refresh the site!',
     'ok' => 'OK',
@@ -29,7 +29,7 @@ return [
     'wifi_user' => 'Wifi username',
     'wifi_password' => 'Wifi password',
     'show' => 'Show!',
-    'wifi_password_reset_warning' => 'You must log in again if you request a new password!',
+    'wifi_password_reset_warning' => 'You must log in again if you request a new password! It might take a few minutes to update.',
     'wifi_password_null' => 'You have no wifi password at the moment. You can generate one below.',
     'no_internet' => 'You are not allowed to access the internet at the moment.',
     'internet_access' => 'Internet access',
@@ -40,5 +40,3 @@ return [
     'extend' => 'Extend',
     'deactivate' => 'Deactivate',
 ];
-
-

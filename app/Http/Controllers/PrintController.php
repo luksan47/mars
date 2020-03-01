@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\PrintAccount;
+use App\FreePages;
 use App\PrintJob;
 use App\Utils\TabulatorPaginator;
+use Illuminate\Support\Facades\DB;
 
 class PrintController extends Controller
 {
@@ -35,9 +37,34 @@ class PrintController extends Controller
         $file = $request->file_to_upload;
         $number_of_copies = $request->number_of_copies;
         $pages = $this->getPages($validator, $file->getPathName());
+        $use_free_pages = $request->use_free_pages;
 
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
+        }
+        // Only calculating the values here to see how many pages can be covered free of charge.
+        $free_page_pool = [];
+        if ($use_free_pages) {
+            $available_pages = 0;
+            $all_pages = Auth::user()->freePages
+                ->where('deadline', '>', \Carbon\Carbon::now())
+                ->sortBy('deadline');
+            foreach ($all_pages as $key => $free_page) {
+                if ($available_pages + $free_page->amount >= $pages) {
+                    $free_page_pool[] = [
+                        'page' => $free_page,
+                        'new_amount' => $free_page->amount - ($pages - $available_pages)
+                    ];
+                    $available_pages = $pages;
+                    break;
+                }
+                $free_page_pool[] = [
+                    'page' => $free_page,
+                    'new_amount' => 0
+                ];
+                $available_pages += $free_page->amount;
+            }
+            $pages -= $available_pages;
         }
 
         $cost = PrintAccount::getCost($pages, $is_two_sided, $number_of_copies);
@@ -45,13 +72,41 @@ class PrintController extends Controller
         if (!$print_account->hasEnoughMoney($cost)) {
             return $this->handleNoBalance($validator);
         }
-
         if ($this->printFile($file, $cost, $is_two_sided, $number_of_copies)) {
+            $print_account->update(['last_modified_by' => Auth::user()->id]);
+            foreach ($free_page_pool as $fp) {
+                $fp['page']->update([
+                    'amount' => $fp['new_amount'],
+                    'last_modified_by' => Auth::user()->id
+                ]);
+            }
             $print_account->decrement('balance', $cost);
             return back()->with('print.status', __('print.success'));
         } else {
             return back()->withErrors(['print' => __('print.error_printing')]);
         }
+    }
+    public function transferBalance(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'balance' => 'required|integer|min:1',
+            'receiver_id' => 'required|integer|exists:users,id'
+        ]);
+        $validator->validate();
+
+        $balance = $request->balance;
+        $from_account = Auth::user()->printAccount;
+        $to_account = User::find($request->receiver_id)->printAccount;
+
+        if (!$from_account->hasEnoughMoney($balance)) {
+            return $this->handleNoBalance($validator);
+        }
+        $to_account->update(['last_modified_by' => Auth::user()->id]);
+        $from_account->update(['last_modified_by' => Auth::user()->id]);
+
+        $from_account->decrement('balance', $balance);
+        $to_account->increment('balance', $balance);
+
+        return redirect()->route('print');
     }
 
     public function modifyBalance(Request $request) {
@@ -67,28 +122,29 @@ class PrintController extends Controller
         if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
         }
-
+        $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
         return redirect()->route('print');
     }
 
-    public function modifyFreePages(Request $request) {
+    public function addFreePages(Request $request) {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
-            'free_pages' => 'required|integer',
+            'free_pages' => 'required|integer|min:1',
+            'deadline' => 'required|date|after:now',
         ]);
         $validator->validate();
 
         $free_pages = $request->free_pages;
-        $print_account = User::find($request->user_id)->printAccount;
 
-        if ($print_account->free_pages + $free_pages < 0) {
-            $validator->errors()->add('$free_pages', __('print.no_free_pages_left'));
-            return back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-        $print_account->increment('free_pages', $free_pages);
+        FreePages::create([
+            'user_id' => $request->user_id,
+            'amount' => $request->free_pages,
+            'deadline' => $request->deadline,
+            'last_modified_by' => Auth::user()->id,
+            'comment' => $request->comment,
+        ]);
+
         return redirect()->route('print');
     }
 
@@ -112,15 +168,44 @@ class PrintController extends Controller
         return $paginator;
     }
 
+    public function listFreePages() {
+        $this->authorize('viewAny', FreePages::class);
+
+        $columns = ['amount', 'deadline', 'modifier', 'comment'];
+        if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
+            array_push($columns, 'user.name');
+            array_push($columns, 'created_at');
+            $paginator = TabulatorPaginator::from(
+                    FreePages::join('users as user', 'user.id', '=', 'user_id')
+                        ->join('users as creator', 'creator.id', '=', 'last_modified_by')
+                        ->select('creator.name as modifier', 'printing_free_pages.*')
+                        ->with('user')
+                )->sortable($columns)
+                ->filterable($columns)
+                ->paginate();
+        } else {
+            $paginator = TabulatorPaginator::from(
+                    Auth::user()->freePages()
+                        ->join('users as creator', 'creator.id', '=', 'last_modified_by')
+                        ->select('creator.name as modifier', 'printing_free_pages.*')
+                        ->with('user')
+                )->sortable($columns)
+                ->filterable($columns)
+                ->paginate();
+        }
+
+        return $paginator;
+    }
+
     public function cancelPrintJob($id) {
         //TODO: actually cancel
         $printJob = PrintJob::findOrFail($id);
 
         $this->authorize('update', $printJob);
-        
+
         if ($printJob->state === PrintJob::QUEUED) $printJob->update(['state' => PrintJob::CANCELLED]);
     }
-    
+
     private function updateCompletedPrintingJobs() {
         if (!config('app.debug')) {
             exec("lpstat -W completed -o " . env('PRINTER_NAME') . " | awk '{print $1}'", $result);
@@ -165,8 +250,8 @@ class PrintController extends Controller
         return $state == PrintJob::QUEUED;
     }
 
-    private function handleNoalance($validator) {
-        $validator->errors()->add('balance', __('print.nobalance'));
+    private function handleNoBalance($validator) {
+        $validator->errors()->add('balance', __('print.no_balance'));
         return back()
             ->withErrors($validator)
             ->withInput();

@@ -22,5 +22,5 @@ return [
     'faculty' => 'Kar',
     'faculty_must_be_filled' => 'A kar kitöltése kötelező.',
     'workshop' => 'Műhely',
-    'workshop_must_be_filled' => 'A műhely kitöltése kötelező.'
+    'workshop_must_be_filled' => 'A műhely kitöltése kötelező.',
 ];

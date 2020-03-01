@@ -16,12 +16,20 @@
                     <label for="inlineFormInput">@lang('print.number_of_copies')</label>
                     <input id="number_of_copies" class="form-control mb-2" name="number_of_copies" type="number" min="1" value="1" required>
                 </div>
-                <div class="col-md-2">
-                    <label for="inlineFormInput">@lang('print.twosided')</label>
-                    <input type="checkbox" name="two_sided" id="two_sided"  checked/>
+                <div class="col-md-6">
+                    <h3>@lang('print.options')</h3>
+                    <div>
+                        <label for="inlineFormInput">@lang('print.use_free_pages')</label>
+                        <input type="checkbox" name="use_free_pages" id="use_free_pages" checked/>
+                    </div>
+                    <div>
+                        <label for="inlineFormInput">@lang('print.twosided')</label>
+                        <input type="checkbox" name="two_sided" id="two_sided"  checked/>
+                    </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-2">
-                    <br class="pc-break"/>
                     <input type="submit" class="form-control btn btn-primary" value="@lang('print.print')" />
                 </div>
             </div>
