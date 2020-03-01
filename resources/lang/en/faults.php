@@ -17,5 +17,6 @@ return [
     "seen" => "Seen",
     "reopened" => "Reopened",
     "reopen" => "Reopen",
-    "autherror" => "Error. Could not authenticate user permissions."
+    "autherror" => "Error. Could not authenticate user permissions.",
+    "fault_description" => "In case you find something amiss in the building (eg. missing light bulb), you can open a ticket and our staff will take care of it as soon as possible.",
 ];

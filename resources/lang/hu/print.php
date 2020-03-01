@@ -45,6 +45,7 @@ return [
     "cancel" => "Mégse",
     "cancel_job" => "Megszakítás",
     "confirm_cancel" => "Biztos, hogy meg szeretnéd szakítani a dokumentum nyomtatását?",
+    'free_pages_description' => 'Néhány felhasználó (pl. nyelvtanárok, választmányi tagok) ingyenes nyomtatással rendelkezhetnek. Ilyenkor hivatalos ügyekben a legkorábbi felhasználási határidővel rendelkező ingyenes oldalaikkal nyomtathatnak.',
     "send" => "Küldés",
     "transfer_money" => "Felhasználható egyenleg utalása" ,
     "amount" => "Összeg"

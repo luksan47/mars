@@ -29,7 +29,7 @@ return [
     'wifi_user' => 'Wifi felhasználói név',
     'wifi_password' => 'Wifi jelszó',
     'show' => 'Mutasd!',
-    'wifi_password_reset_warning' => 'Ha új jelszót igényelsz, mindenhol újra be kell jelentkezned!',
+    'wifi_password_reset_warning' => 'Ha új jelszót igényelsz, mindenhol újra be kell jelentkezned! Az új jelszó beállítása pár percet igénybe vehet.',
     'wifi_password_null' => 'Jelenleg nincs wifi jelszavad. Generálhatsz lent.',
     'no_internet' => 'Jelenleg nincs számodra engedélyezve az internetelérés.',
     'internet_access' => 'Internetelérés',
