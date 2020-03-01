@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
 
 Route::get('/privacy_policy', function() {
-    return Storage::download('public/Adatvédelmi tájékoztató.pdf');
+    return Storage::response('public/adatvedelmi_tajekoztato.pdf');
 })->name('privacy_policy');
 
 Auth::routes();
