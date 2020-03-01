@@ -45,5 +45,6 @@ return [
     "cancel" => "Cancel",
     "cancel_job" => "Abort",
     "confirm_cancel" => "Are you sure you wish to abort printing this document?",
+    'free_pages_description' => 'Some users (eg. teachers, student committee members) can print free of charge in official matters. This way, the free pages with the closes deadline will be used.',
 ];
 

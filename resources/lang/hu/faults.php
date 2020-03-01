@@ -17,5 +17,6 @@ return [
     "seen" => "Látta",
     "reopened" => "Újranyitott",
     "reopen" => "Újranyit",
-    "autherror" => "Hiba. Nem sikerült a felhasználói engedélyek hitelesítése."
+    "autherror" => "Hiba. Nem sikerült a felhasználói engedélyek hitelesítése.",
+    "fault_description" => "Amennyiben valamilyen hibát találsz a Collegium épületében (pl. hiányzó villanykörte), itt be tudod jelenteni, hogy a karbantartó mihamarabb megjavítsa.",
 ];
