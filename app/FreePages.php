@@ -19,11 +19,13 @@ class FreePages extends Model
         'comment',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
-    public function printAccount() {
+    public function printAccount()
+    {
         return $this->belongsTo('App\PrintAccount', 'user_id', 'user_id');
     }
 }

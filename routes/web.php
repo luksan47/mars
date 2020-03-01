@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
-Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
+Route::get('/setlocale/{locale}', 'LocaleController@set')->name('setlocale');
 
-Route::get('/privacy_policy', function() {
+Route::get('/privacy_policy', function () {
     return Storage::response('public/adatvedelmi_tajekoztato.pdf');
 })->name('privacy_policy');
 
