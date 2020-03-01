@@ -8,5 +8,5 @@ return [
     'essential' => 'Esencial',
     'modern' => 'Moderno',
     'open'   => 'Fuente abierta',
-    
+
 ];

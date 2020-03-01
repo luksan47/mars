@@ -9,6 +9,6 @@ $factory->define(App\MacAddress::class, function (Faker $faker) {
     return [
         'mac_address' => $faker->macAddress,
         'comment' => $faker->text,
-        'state' => $faker->randomElement(MacAddress::STATES)
+        'state' => $faker->randomElement(MacAddress::STATES),
     ];
 });

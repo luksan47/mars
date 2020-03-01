@@ -8,5 +8,5 @@ return [
     'essential' => 'Essential',
     'modern' => 'Modern',
     'open'   => 'Open source',
-    
+
 ];

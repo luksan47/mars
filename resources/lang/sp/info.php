@@ -22,5 +22,5 @@ return [
     'faculty' => 'Facultad',
     'faculty_must_be_filled' => 'El hueco de Facultad tiene que ser rellenado.',
     'workshop' => 'Taller',
-    'workshop_must_be_filled' => 'El hueco de Taller tiene que ser rellenado.'
+    'workshop_must_be_filled' => 'El hueco de Taller tiene que ser rellenado.',
 ];
