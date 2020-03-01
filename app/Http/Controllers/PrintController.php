@@ -86,6 +86,28 @@ class PrintController extends Controller
             return back()->withErrors(['print' => __('print.error_printing')]);
         }
     }
+    public function transferBalance(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'balance' => 'required|integer|min:1',
+            'receiver_id' => 'required|integer|exists:users,id'
+        ]);
+        $validator->validate();
+
+        $balance = $request->balance;
+        $from_account = Auth::user()->printAccount;
+        $to_account = User::find($request->receiver_id)->printAccount;
+
+        if (!$from_account->hasEnoughMoney($balance)) {
+            return $this->handleNoBalance($validator);
+        }
+        $to_account->update(['last_modified_by' => Auth::user()->id]);
+        $from_account->update(['last_modified_by' => Auth::user()->id]);
+
+        $from_account->decrement('balance', $balance);
+        $to_account->increment('balance', $balance);
+
+        return redirect()->route('print');
+    }
 
     public function modifyBalance(Request $request) {
         $validator = Validator::make($request->all(), [
@@ -100,7 +122,7 @@ class PrintController extends Controller
         if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
         }
-
+        $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
         return redirect()->route('print');
     }
@@ -229,7 +251,7 @@ class PrintController extends Controller
     }
 
     private function handleNoBalance($validator) {
-        $validator->errors()->add('balance', __('print.nobalance'));
+        $validator->errors()->add('balance', __('print.no_balance'));
         return back()
             ->withErrors($validator)
             ->withInput();

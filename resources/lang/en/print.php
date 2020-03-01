@@ -45,5 +45,8 @@ return [
     "cancel" => "Cancel",
     "cancel_job" => "Abort",
     "confirm_cancel" => "Are you sure you wish to abort printing this document?",
+    "send" => "Send",
+    "transfer_money" => "Transfer money",
+    "amount" => "Amount"
 ];
 
