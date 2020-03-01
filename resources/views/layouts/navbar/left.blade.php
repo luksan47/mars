@@ -9,6 +9,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('internet') }}">@lang('internet.internet')</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('faults') }}">@lang('faults.faults')</a>
+            </li>
             
             @if (Auth::user()->hasRole(\App\Role::INTERNET_ADMIN))
                 <li class="nav-item dropdown">
