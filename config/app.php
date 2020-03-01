@@ -85,6 +85,7 @@ return [
     	'en' => 'English',
     	'hu' => 'Magyar',
         //'it' => 'Italiano',
+        'sp' => 'Spanish', 
         'la' => 'Latina',
     ],
     
