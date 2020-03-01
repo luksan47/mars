@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-10 card-body">
+    <div class="col-md-8 card-body">
         <div class="card">
             <div class="card-header">
                 @lang('faults.new_fault')
