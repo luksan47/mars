@@ -100,7 +100,7 @@
                  formatter: "datetime", formatterParams: {outputFormat: "YYYY. MM. DD. HH:mm"}},
                 {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 1, formatter: "textarea"},
                 {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 4, formatter: "textarea"},
-                @if(Auth::User()->hasRole(\App\Role::INTERNET_ADMIN))
+                @if(Auth::User()->hasRole(\App\Role::STAFF))
                 {title: "", field: "id", headerSort: false, width: 60, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::DONE }}"}},
                 {title: "", field: "id", headerSort: false, width: 140, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::WONT_FIX }}"}},
                 @else

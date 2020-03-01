@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
         $this->createAdmin();
         $this->createCollegist();
         $this->createTenant();
+        $this->createStaff();
 
         factory(App\User::class, 10)->create()->each(function ($user) {
             factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
@@ -64,5 +65,15 @@ class UsersTableSeeder extends Seeder
         $user->roles()->attach(Role::getId(Role::TENANT));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $user->internetAccess->setWifiUsername();
+    }
+
+    private function createStaff() {
+        $user = User::create([
+            'name' => 'Albi',
+            'email' => 'pikacsur@eotvos.elte.hu',
+            'password' => bcrypt('asdasdasd'),
+            'verified' => true
+        ]);
+        $user->roles()->attach(Role::getId(Role::STAFF));
     }
 }
