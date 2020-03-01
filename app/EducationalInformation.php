@@ -15,8 +15,9 @@ class EducationalInformation extends Model
         'neptun',
         'year_of_acceptance',
     ];
-    
-    public function user() {
+
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 }

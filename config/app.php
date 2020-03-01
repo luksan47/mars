@@ -84,8 +84,9 @@ return [
     'locales' => [
     	'en' => 'English',
     	'hu' => 'Magyar',
-        'it' => 'Italiano',
-        'la' => 'Latina',
+      'it' => 'Italiano',
+      'sp' => 'Spanish', 
+      'la' => 'Latina',
     ],
     
     'locale_cookie_lifespan' => 9600,

@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\Log as SystemLog;
-use Illuminate\Support\Facades\Auth;
 use Closure;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log as SystemLog;
 
 class Log
 {
@@ -17,11 +17,12 @@ class Log
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && $request->isMethod('post')){
-            SystemLog::debug("User #" . Auth::user()->id . " sent request: path="
-                . $request->path() . "&"
-                . http_build_query($request->input()));
+        if (Auth::check() && $request->isMethod('post')) {
+            SystemLog::debug('User #'.Auth::user()->id.' sent request: path='
+                .$request->path().'&'
+                .http_build_query($request->input()));
         }
+
         return $next($request);
     }
 }

@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\InternetAccess;
 use App\MacAddress;
 use App\User;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Utils\TabulatorPaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -22,9 +21,9 @@ class InternetController extends Controller
     public function index()
     {
         $internetAccess = Auth::user()->internetAccess;
+
         return view('internet.app', ['internet_access' => $internetAccess]);
     }
-
 
     public function admin()
     {
@@ -58,7 +57,8 @@ class InternetController extends Controller
         return $paginator;
     }
 
-    public function getInternetAccessesAdmin() {
+    public function getInternetAccessesAdmin()
+    {
         $this->authorize('viewAny', InternetAccess::class);
 
         $paginator = TabulatorPaginator::from(InternetAccess::join('users as user', 'user.id', '=', 'user_id')->select('internet_accesses.*')->with('user'))
@@ -80,9 +80,10 @@ class InternetController extends Controller
         $this->autoApproveMacAddresses($macAddress->user);
     }
 
-    public function resetWifiPassword(Request $request) {
+    public function resetWifiPassword(Request $request)
+    {
         $request->validate([
-            'confirm' => 'accepted'
+            'confirm' => 'accepted',
         ]);
 
         $internetAccess = Auth::user()->internetAccess;
@@ -161,7 +162,8 @@ class InternetController extends Controller
         return redirect()->back();
     }
 
-    private function autoApproveMacAddresses($user) {
+    private function autoApproveMacAddresses($user)
+    {
         DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
     }
 
@@ -181,6 +183,7 @@ class InternetController extends Controller
                     $data->state = __('internet.requested');
                     break;
             }
+
             return $data;
         };
     }

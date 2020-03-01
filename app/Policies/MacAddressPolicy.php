@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\MacAddress;
-use App\User;
 use App\Role;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MacAddressPolicy
@@ -16,7 +16,7 @@ class MacAddressPolicy
         if ($user->hasRole(Role::INTERNET_ADMIN)) {
             return true;
         }
-        if (!$user->hasRole(Role::INTERNET_USER)){
+        if (! $user->hasRole(Role::INTERNET_USER)) {
             return false;
         }
     }
@@ -86,7 +86,7 @@ class MacAddressPolicy
      * @param  \App\MacAddress  $macAddress
      * @return mixed
      */
-    public function accept(User $user, MacAddress $macAddress) 
+    public function accept(User $user, MacAddress $macAddress)
     {
         return false;
     }

@@ -7,6 +7,6 @@ return [
     'login'=> 'Inire',
     'register' => 'Registratio',
     'you_are_logged_in' => 'Secunde inivisti.',
-    'dashboard' => 'Tabula dirigendi'
+    'dashboard' => 'Tabula dirigendi',
 
 ];

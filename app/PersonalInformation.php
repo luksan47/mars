@@ -21,7 +21,8 @@ class PersonalInformation extends Model
         'street_and_number',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 }
