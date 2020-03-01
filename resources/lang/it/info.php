@@ -22,5 +22,5 @@ return [
     'faculty' => 'Facoltà',
     'faculty_must_be_filled' => 'Facoltà deve essere riempita.',
     'workshop' => 'Workshop',
-    'workshop_must_be_filled' => 'Workshop deve essere riempito.'
+    'workshop_must_be_filled' => 'Workshop deve essere riempito.',
 ];

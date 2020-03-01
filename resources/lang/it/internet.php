@@ -1,18 +1,18 @@
 <?php
 
 return [
-    "your_registered_devices" => "I tuoi dispositivi registrati",
-    "admin.manage_registered_devices" => "Controllo dei dispositivi registrati",
-    "mac_address" => "Indirizzo MAC",
-    "comment" => "Commenta",
-    "state" => "Stato",
-    "requested" => "Richiesto",
-    "approved" => "Accettato",
-    "rejected" => "Rifiutato",
-    "add" => "Aggiungere altri dispositivi",
-    "delete" => "Cancellare",
-    "cancel" => "Cancellare",
-    "confirm_delete" => "Confermare la cancellazione",
+    'your_registered_devices' => 'I tuoi dispositivi registrati',
+    'admin.manage_registered_devices' => 'Controllo dei dispositivi registrati',
+    'mac_address' => 'Indirizzo MAC',
+    'comment' => 'Commenta',
+    'state' => 'Stato',
+    'requested' => 'Richiesto',
+    'approved' => 'Accettato',
+    'rejected' => 'Rifiutato',
+    'add' => 'Aggiungere altri dispositivi',
+    'delete' => 'Cancellare',
+    'cancel' => 'Cancellare',
+    'confirm_delete' => 'Confermare la cancellazione',
     'error' => 'Errore',
     'ajax_error' => 'Errore! La preghiamo di ricaricare la pagina.',
     'ok' => 'OK',
@@ -40,5 +40,3 @@ return [
     'extend' => 'Prolungare',
     'deactivate' => 'Disattivare',
 ];
-
-
