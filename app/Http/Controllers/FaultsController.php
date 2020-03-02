@@ -24,7 +24,7 @@ class FaultsController extends Controller
                 'description' => $new['description'],
                 'status' => FaultsTable::UNSEEN,
                 'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
+                'updated_at' => date('Y-m-d H:i:s'),
             ]
         );
 
@@ -38,7 +38,7 @@ class FaultsController extends Controller
 
     public function updateStatus(Request $new)
     {
-        $auth = Auth::User()->hasRole(Role::INTERNET_ADMIN) || FaultsTable::getState($new['status']) === FaultsTable::UNSEEN;
+        $auth = Auth::User()->hasRole(Role::STAFF) || FaultsTable::getState($new['status']) === FaultsTable::UNSEEN;
 
         if ($auth) {
             DB::table('faults')->where('id', $new['id'])->update(['status' => FaultsTable::getState($new['status'])]);

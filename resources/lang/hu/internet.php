@@ -1,18 +1,18 @@
 <?php
 
 return [
-    "your_registered_devices" => "Regisztrált eszközeid",
-    "admin.manage_registered_devices" => "Regisztrált eszközök kezelése",
-    "mac_address" => "MAC-cím",
-    "comment" => "Megjegyzés",
-    "state" => "Állapot",
-    "requested" => "Elbírálásra vár",
-    "approved" => "Elfogadott",
-    "rejected" => "Elutasított",
-    "add" => "Eszköz hozzáadása",
-    "delete" => "Törlés",
-    "cancel" => "Mégsem",
-    "confirm_delete" => "Biztosan törli?",
+    'your_registered_devices' => 'Regisztrált eszközeid',
+    'admin.manage_registered_devices' => 'Regisztrált eszközök kezelése',
+    'mac_address' => 'MAC-cím',
+    'comment' => 'Megjegyzés',
+    'state' => 'Állapot',
+    'requested' => 'Elbírálásra vár',
+    'approved' => 'Elfogadott',
+    'rejected' => 'Elutasított',
+    'add' => 'Eszköz hozzáadása',
+    'delete' => 'Törlés',
+    'cancel' => 'Mégsem',
+    'confirm_delete' => 'Biztosan törli?',
     'error' => 'Hiba',
     'ajax_error' => 'Távoli hiba történt! Kérjük frissítse az oldalt!',
     'ok' => 'OK',
@@ -29,7 +29,7 @@ return [
     'wifi_user' => 'Wifi felhasználói név',
     'wifi_password' => 'Wifi jelszó',
     'show' => 'Mutasd!',
-    'wifi_password_reset_warning' => 'Ha új jelszót igényelsz, mindenhol újra be kell jelentkezned!',
+    'wifi_password_reset_warning' => 'Ha új jelszót igényelsz, mindenhol újra be kell jelentkezned! Az új jelszó beállítása pár percet igénybe vehet.',
     'wifi_password_null' => 'Jelenleg nincs wifi jelszavad. Generálhatsz lent.',
     'no_internet' => 'Jelenleg nincs számodra engedélyezve az internetelérés.',
     'internet_access' => 'Internetelérés',
@@ -40,5 +40,3 @@ return [
     'extend' => 'Meghosszabbít',
     'deactivate' => 'Deaktivál',
 ];
-
-

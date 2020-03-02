@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">@lang('print.print')</div>
                 <div class="card-body">
@@ -29,6 +29,7 @@
                     @include("print.free")
                     @include("print.modify")
                     @include("print.free-admin")
+                    @include("print.send")
                     @include("print.history")
                 </div>
             </div>

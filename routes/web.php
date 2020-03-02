@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
-Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
+Route::get('/setlocale/{locale}', 'LocaleController@set')->name('setlocale');
 
-Route::get('/privacy_policy', function() {
+Route::get('/privacy_policy', function () {
     return Storage::response('public/adatvedelmi_tajekoztato.pdf');
 })->name('privacy_policy');
 
@@ -37,6 +37,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
     Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
+    Route::post('/print/transfer_balance', 'PrintController@transferBalance')->name('print.transfer-balance');
     Route::put('/print/print', 'PrintController@print')->name('print.print');
     Route::get('/print/free_pages/all', 'PrintController@listFreePages')->name('print.free_pages.all');
     Route::get('/print/print_jobs/all', 'PrintController@listPrintJobs')->name('print.print_jobs.all');

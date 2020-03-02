@@ -2,8 +2,11 @@
 <div class="card">
     <div class="card-header @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) text-white bg-dark @endif">@lang('print.free')</div>
     <div class="card-body">
+        <div class="alert alert-info">
+            <strong>@lang('general.note'):</strong>
+            @lang('print.free_pages_description')
+        </div>
         <div id="free-page-table"></div>
-
     </div>
 </div>
 

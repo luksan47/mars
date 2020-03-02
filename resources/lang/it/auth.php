@@ -16,5 +16,5 @@ return [
     'failed' => 'Queste credenziali non non sono corrette.',
     'throttle' => 'Troppi tentativi di accesso. Riprova fra :seconds secondi.',
     'wait_for_verification' => 'Per favore attendi fin quando un amministratore approverà la tua registrazione. Ricorda che potrebbe richiedere un po\'.',
-    'successful_registration' => 'Registrato correttamente!'
+    'successful_registration' => 'Registrato correttamente!',
 ];

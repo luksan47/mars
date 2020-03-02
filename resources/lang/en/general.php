@@ -10,5 +10,5 @@ return [
     'dashboard' => 'Dashboard',
     'register_guest' => 'For tenants',
     'register_collegist' => 'For collegists',
-    'report_bug' => 'Report a bug'
+    'report_bug' => 'Report a bug',
 ];

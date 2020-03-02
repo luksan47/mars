@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "admin" => "Admin",
-    "collegist" => "Collegium habitans",
-    "tenant" => "Hospes"
+    'admin' => 'Admin',
+    'collegist' => 'Collegium habitans',
+    'tenant' => 'Hospes',
 ];
