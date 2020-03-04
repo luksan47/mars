@@ -64,7 +64,4 @@ class PrintAccount extends Model
     }
 }
 
-PrintAccount::$COST = [
-    'one_sided' => env('PRINT_COST_ONESIDED'),
-    'two_sided' => env('PRINT_COST_TWOSIDED'),
-];
+PrintAccount::$COST = config('print.cost');
