@@ -27,7 +27,7 @@ class PrintController extends Controller
 
     public function print(Request $request) {
         $validator = Validator::make($request->all(), [
-            'file_to_upload' => 'required|file|mimes:pdf|max:120000',
+            'file_to_upload' => 'required|file|mimes:pdf|max:' . config('print.pdf_size_limit'),
             'number_of_copies' => 'required|integer|min:1'
         ]);
         $validator->validate();
@@ -208,14 +208,14 @@ class PrintController extends Controller
 
     private function updateCompletedPrintingJobs() {
         if (!config('app.debug')) {
-            exec("lpstat -W completed -o " . env('PRINTER_NAME') . " | awk '{print $1}'", $result);
+            exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
             Log::info($result);
             PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
         }
     }
 
     private function printFile($file, $cost, $is_two_sided, $number_of_copies) {
-        $printer_name = env('PRINTER_NAME');
+        $printer_name = config('print.printer_name');
         $state = PrintJob::QUEUED;
         try {
             $path = $file->storeAs('', md5(rand(0, 100000) . date('c')) . '.pdf', 'printing');
