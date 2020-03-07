@@ -38,8 +38,8 @@ return [
     'cancel' => 'Cancelar',
     'cancel_job' => 'Anular',
     'confirm_cancel' => '¿Estás seguro/a de que quieres anular el proceso de imprimir el archivo? ',
-    "how_transfer_works",
-    "upload_money",
-    "costs",
+    'how_transfer_works',
+    'upload_money',
+    'costs',
     'pdf_maxsize',
 ];

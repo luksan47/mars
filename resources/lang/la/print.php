@@ -38,8 +38,8 @@ return [
     'cancel',
     'cancel_job',
     'confirm_cancel',
-    "how_transfer_works",
-    "upload_money",
-    "costs",
+    'how_transfer_works',
+    'upload_money',
+    'costs',
     'pdf_maxsize',
 ];
