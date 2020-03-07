@@ -29,7 +29,6 @@ return [
     'no_free_pages_left' => 'No hay suficientes páginas libres',
     'user' => 'Usuario',
     'no_balance' => 'No tienes bastante dinero en tu cuenta',
-    'user' => 'Usuario',
     'cost' => 'Costo',
     'state' => 'Estado',
     'CANCELLED' => 'Cancelado',

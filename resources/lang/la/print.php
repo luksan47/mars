@@ -29,7 +29,6 @@ return [
     'no_free_pages_left' => 'Tantae gratis paginae non sunt',
     'user' => 'Utens',
     'no_balance' => 'Non idonei numeri est in putatione pecunia',
-    'user',
     'cost',
     'state',
     'CANCELLED',
