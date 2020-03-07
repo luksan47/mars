@@ -5,7 +5,10 @@
             @csrf
             @method('PUT')
             <div class="alert alert-info">
-                <strong>@lang('general.note'):</strong> @lang('print.pdf_description')
+                <strong>@lang('general.note'):</strong> 
+                @lang('print.pdf_description') 
+                @lang("print.pdf_maxsize", ['maxsize' => config('print.pdf_size_limit')/1000/1000])
+                @lang('print.costs',['one_sided'=>App\PrintAccount::$COST['one_sided'], "two_sided" => env('PRINT_COST_TWOSIDED')])
             </div>
             <div class="row">
                 <div class="col-md-4">

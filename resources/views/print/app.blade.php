@@ -23,7 +23,7 @@
                     @endif
                     <div class="alert alert-info">
                         <strong>@lang('general.note'):</strong>
-                        @lang('print.available_money'): {{ Auth::user()->printAccount->balance }} HUF
+                        @lang('print.available_money'): {{ Auth::user()->printAccount->balance }} HUF. @lang('print.upload_money')
                     </div>
                     @include("print.print")
                     @include("print.free")
