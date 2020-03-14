@@ -10,6 +10,6 @@ return [
     'dashboard' => 'Irányítópult',
     'register_guest' => 'Vendégeknek',
     'register_collegist' => 'Collegistáknak',
-    'i_understand' => 'Értem'
+    'i_understand' => 'Értem',
 
 ];

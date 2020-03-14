@@ -80,7 +80,8 @@ class InternetController extends Controller
         $this->autoApproveMacAddresses($macAddress->user);
     }
 
-    public function resetWifiPassword(Request $request) {
+    public function resetWifiPassword(Request $request)
+    {
         $internetAccess = Auth::user()->internetAccess;
         $internetAccess->wifi_password = Str::random(8);
         $internetAccess->save();
