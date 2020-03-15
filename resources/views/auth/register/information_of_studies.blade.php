@@ -41,7 +41,7 @@
     </label></p>
     @endforeach
     @error('faculty')
-    <blockquote class="error">@lang(info.faculty_must_be_filled)</blockquote>
+    <blockquote class="error">@lang('info.faculty_must_be_filled')</blockquote>
     @enderror
 </div>
 
@@ -54,6 +54,6 @@
     </label></p>
     @endforeach
     @error('workshop')
-    <blockquote class="error">@lang(info.workshop_must_be_filled)</blockquote>
+    <blockquote class="error">@lang('info.workshop_must_be_filled')</blockquote>
     @enderror
 </div>

@@ -5,7 +5,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-image">
-                <img src="img/EC_building.jpg">
+                <img src="/img/EC_building.jpg">
                 <span class="card-title">@lang('general.register')</span>
             </div>
             <form method="POST" action="{{ route('register') }}">
