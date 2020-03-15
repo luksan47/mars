@@ -13,10 +13,10 @@
                 <div class="card-content">
                     <blockquote>
                         @if($user_type == \App\Role::COLLEGIST)
-                        <a href="{{ route('register.guest') }}" class="secondary-text-color">
+                        <a href="{{ route('register.guest') }}">
                             @lang('registration.collegist_to_tenant')</a>
                         @else
-                        <a href="{{ route('register') }}" class="secondary-text-color">
+                        <a href="{{ route('register') }}">
                             @lang('registration.tenant_to_collegist')</a>
                         @endif
                     </blockquote>
@@ -60,7 +60,7 @@
                             </label>
                         </div>
                         <div class="col s4">
-                            <button class="btn waves-effect secondary-color right"
+                            <button class="btn waves-effect right"
                                 type="submit">@lang('general.register')
                             </button>
                         </div>

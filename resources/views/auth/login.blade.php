@@ -30,7 +30,7 @@
                         <label for="password">@lang('registration.password')</label>
                         @if (Route::has('password.request'))
                             <span class="helper-text">
-                                <a href="{{ route('password.request') }}" class="secondary-text-color">
+                                <a href="{{ route('password.request') }}">
                                 @lang('registration.forgotpwd')
                                 </a>
                             </span>
@@ -43,7 +43,7 @@
                     <input type="checkbox" name="remember" id="remember" class="filled-in checkbox-color" {{ old('remember') ? 'checked' : '' }} />
                     <span>@lang('registration.remember')</span>
                 </label>
-                <button class="btn waves-effect secondary-color" type="submit" >@lang('general.login')</button>
+                <button class="btn waves-effect" type="submit" >@lang('general.login')</button>
             </div>
         </form>
       </div>

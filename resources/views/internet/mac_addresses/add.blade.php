@@ -21,7 +21,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <button class="btn waves-effect secondary-color" type="submit" >@lang('internet.add')</button>
+                <button class="btn waves-effect" type="submit" >@lang('internet.add')</button>
             </div>
         </div>
     </div>

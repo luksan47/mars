@@ -5,8 +5,8 @@
     @endforeach
 </select>
 -->
-<input type="text" id="autocomplete" class="autocomplete validate" required>
-<label for="autocomplete">@lang('info.name')</label>
+<input type="text" id="user_id" name="user_id" class="autocomplete" required>
+<label for="user_id">@lang('info.name')</label>
 @section('select-user-js')
 $('input.autocomplete').autocomplete({data:
     {

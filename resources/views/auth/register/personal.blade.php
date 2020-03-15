@@ -17,6 +17,16 @@
     <input type="text" class="datepicker validate" id="date_of_birth" name="date_of_birth"
         value="{{ old('date_of_birth') }}" required onfocus="M.Datepicker.getInstance(date_of_birth).open();">
     <label for="date_of_birth">@lang('info.date_of_birth')</label>
+    <script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            firstDay: 1,
+            yearRange: 50,
+            maxDate: today,
+        });
+    });
+    </script>
     @error('date_of_birth')
     <blockquote class="error">{{ $message }}</blockquote>
     @enderror

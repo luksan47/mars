@@ -1,6 +1,6 @@
 <!--navbar-->
 <div class="navbar-fixed">
-    <nav class="top-nav primary-color">
+    <nav class="top-nav">
         <div class="nav-wrapper">
             <div class="row">
                 <a href="#" data-target="mobile-sidenav" class="sidenav-trigger hide-on-large-only"><i class="material-icons">menu</i></a>

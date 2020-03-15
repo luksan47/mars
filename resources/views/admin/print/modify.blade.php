@@ -7,11 +7,11 @@
             @include("select-user")
         </div>
         <div class="input-field col s12 m12 l4">
-            <input id="balance" class="validate" name="balance" type="number" required>
+            <input id="balance" name="balance" type="number" required>
             <label for="balance">@lang('print.balance')</label>
         </div>
         <div class="input-field col s12 m12 l4">
-            <button type="submit" class="btn btn-primary secondary-color">@lang('print.add')</button>
+            <button type="submit" class="btn btn-primary right">@lang('print.add')</button>
         </div>
     </form>
     </div>
