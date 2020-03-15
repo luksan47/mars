@@ -49,4 +49,6 @@ return [
     'send' => 'Send',
     'transfer_money' => 'Transfer money',
     'amount' => 'Amount',
+    "modify_pages",
+    "balance",
 ];

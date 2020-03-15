@@ -19,15 +19,17 @@
     <li><a class="subheader">Urán</a></li>
     @include('layouts.navigators.main')
     <li><div class="divider"></div></li>
-    <li><a class="subheader">News</a></li>
-    <li><a href="#">Hamarosan...</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Választmány</a></li>
-    <li><a href="#">Hamarosan...</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="#" class="secondary-text-color">Report a bug</a></li>
     <div class="hide-on-large-only">
         @include('layouts.navigators.settings')
     </div>
+    <ul id="dropdownLang" class="dropdown-content">
+        @foreach (config('app.locales') as $code => $name) 
+            @if ($code != App::getLocale())
+                <li><a href="{{ route('setlocale', $code) }}">{{ $name }}</a></li>
+            @endif
+        @endforeach
+    </ul>
+    <li><a class="dropdown-trigger" href="#!" data-target="dropdownLang"><i class="material-icons left">language</i>Language<i class="material-icons right">arrow_drop_down</i></a></li> 
+    <li><a href="#">Report a bug</a></li>
 </ul>
 

@@ -1,34 +1,20 @@
-<div class="form-group row">
-    <label for="email" class="col-md-4 col-form-label text-md-right">@lang('registration.email')</label>
-    <div class="col-md-6">
-        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-        @error('email')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
+<div class="input-field col s12">
+    <input type="email" id="email" name="email" class="validate" value="{{ old('email') }}" autocomplete="email"
+        autofocus required>
+    <label for="email">@lang('registration.email')</label>
+    @error('email')
+    <blockquote class="error">{{ $message }}</blockquote>
+    @enderror
 </div>
-
-<div class="form-group row">
-    <label for="password" class="col-md-4 col-form-label text-md-right">@lang('registration.password')</label>
-
-    <div class="col-md-6">
-        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-        @error('password')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
+<div class="input-field col s12 m12 l6">
+    <input id="password" type="password" class="validate" name="password" required autocomplete="new-password">
+    <label for="password">@lang('registration.password')</label>
+    @error('password')
+    <blockquote class="error">{{ $message }}</blockquote>
+    @enderror
 </div>
-
-<div class="form-group row">
-    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">@lang('registration.confirmpwd')</label>
-
-    <div class="col-md-6">
-        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-    </div>
+<div class="input-field col s12 m12 l6">
+    <input id="password-confirm" type="password" class="validate" name="password_confirmation" required
+        autocomplete="new-password">
+    <label for="password">@lang('registration.confirmpwd')</label>
 </div>

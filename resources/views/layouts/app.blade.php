@@ -27,18 +27,19 @@
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
-    <!--
+<!--
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-formhelpers.min.js') }}"></script>
 -->
+    <script src="{{ asset('js/bootstrap-formhelpers.min.js') }}"></script>
     <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
     <script src="{{ asset('js/site.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
     <script type="text/javascript">
+        var today = new Date();
         $(document).ready(
             function() {
                 $.ajaxSetup({
@@ -46,6 +47,13 @@
                 }});
                 $('.sidenav').sidenav();
                 $(".dropdown-trigger").dropdown({hover: false});
+                $('select').formSelect();
+                $('.datepicker').datepicker({
+                    format: 'yyyy-mm-dd',
+                    firstDay: 1,
+                    yearRange: 50,
+                    maxDate: today,
+                });
                 @yield('select-user-js')
             }
         );
