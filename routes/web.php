@@ -31,8 +31,6 @@ Route::get('/verification', function () {
     return view('auth.verification');
 })->name('verification');
 
-
-
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user', 'UserController@index')->name('user');
