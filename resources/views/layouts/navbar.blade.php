@@ -1,10 +1,18 @@
 <!--navbar-->
-<div class="navbar-fixed">
+<div class="navbar-fixed ">
     <nav class="top-nav">
         <div class="nav-wrapper">
             <div class="row">
+                <!--sidenav trigger for mobile-->
                 <a href="#" data-target="sidenav" class="sidenav-trigger hide-on-large-only"><i class="material-icons">menu</i></a>
+                <!--logo for mobile-->
                 <a class="brand-logo center hide-on-large-only" style="text-transform: uppercase;font-weight:300;letter-spacing:3px;" href="{{ url('/') }}"> {{ config('app.name', 'Urán') }} </a>
+                <!--title-->
+                
+                <div class="col hide-on-med-and-down nav-title noselect" style="margin-left:310px">
+                    @yield('title')
+                </div>
+                
                 <!-- Right Side Of Navbar -->
                 <ul class="right hide-on-med-and-down">
                     @include('layouts.navigators.user')

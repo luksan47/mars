@@ -13,10 +13,10 @@
         @csrf    
             <div class="card-content">
                 @error('email')
-                <blockquote>{{ $message }}</blockquote>
+                <blockquote class="error">{{ $message }}</blockquote>
                 @enderror
                 @error('password')
-                <span>{{ $message }}</span>
+                <blockquote class="error">{{ $message }}</blockquote>
                 @enderror
                 <div class="row">
                     <div class="input-field col s12">

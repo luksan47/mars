@@ -8,5 +8,6 @@ return [
     'register' => 'Registratio',
     'you_are_logged_in' => 'Secunde inivisti.',
     'dashboard' => 'Tabula dirigendi',
+    'choose_from_menu',
 
 ];

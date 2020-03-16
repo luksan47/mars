@@ -13,15 +13,12 @@
 
     <!-- Styles -->
     <!--
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mobile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-formhelpers.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
 -->
     <link rel="stylesheet" href="{{ asset('css/tabulator_materialize.min.css') }}">
 
-    <!--<link rel="stylesheet" href="{{ asset('css/site.css') }}">-->
     <link rel="stylesheet" href="{{ asset('css/cookieconsent.min.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection" />
 
@@ -53,7 +50,6 @@
                 hover: false
             });
             $('select').formSelect();
-            @yield('select-user-js')
         }
     );
     </script>

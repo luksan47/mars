@@ -41,7 +41,7 @@
                     <button class="btn waves-effect right" type="submit">@lang('print.print')</button>
                 </div>
             </div>
-            <blockquote>
+            <blockquote class="error">
                 @if (session('print.status'))
                 {{ session('print.status') }}
                 @endif

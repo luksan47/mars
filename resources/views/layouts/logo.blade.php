@@ -1,10 +1,13 @@
+<a href="{{ url('/') }}">
 <ul class="coli blue"style="padding:20px">
     <div class="row">
         <div class="col s12 valign-wrapper center-align">
             <!--<img class="responsive-img " style="height:100px" src="img/eotvos_logo.png">-->
             <img class="material-icons" style="height:80px" src="/img/uran_2.png">
-            <a class=" white-text" style="text-indent:15px;font-size:40px;text-transform: uppercase;font-weight:300;letter-spacing:3px;"; href="{{ url('/') }}"> {{ config('app.name', 'Urán') }} </a>
+            <div class="white-text noselect" style="text-indent:15px;font-size:40px;text-transform: uppercase;font-weight:300;letter-spacing:3px;" > {{ config('app.name', 'Urán') }} </div>
+            <sup class="white-text noselect">{{ env('APP_VERSION', '') }}</sup>
         </div>
     </div>
-    <p class="white-text center-align">Eötvös József Collegium</p>
+    <p class="center-align white-text noselect">Eötvös József Collegium</p>
 </ul>
+</a>

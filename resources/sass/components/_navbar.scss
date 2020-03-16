@@ -101,9 +101,12 @@ nav {
 
   // Title
   .nav-title {
-    display: inline-block;
-    font-size: 32px;
+    ddisplay: inline-block;
+    font-size: 1.1rem;
     padding: 28px 0;
+    text-transform: uppercase;
+    /* font-weight: 100; */
+    letter-spacing: 1px;
   }
 
 

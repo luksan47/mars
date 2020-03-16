@@ -1,4 +1,4 @@
-<!--TODO visible only if user have free pages-->
+<!--TODO: visible only if user have free pages-->
 
 <p>@lang('print.free'):</p>
 <div id="free-page-table"></div>

@@ -10,5 +10,6 @@ return [
     'dashboard' => 'Barra',
     'register_guest' => 'Per ospiti',
     'register_collegist' => 'Per i membri del Collegio',
+    'choose_from_menu',
 
 ];

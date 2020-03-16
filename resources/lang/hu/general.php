@@ -11,5 +11,6 @@ return [
     'register_guest' => 'Vendégeknek',
     'register_collegist' => 'Collegistáknak',
     'i_understand' => 'Értem',
+    'choose_from_menu' => "Válassz egy menüpontot!"
 
 ];

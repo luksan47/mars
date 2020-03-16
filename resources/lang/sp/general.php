@@ -10,5 +10,6 @@ return [
     'dashboard' => 'Tablero de mandos',
     'register_guest' => 'Para visitantes',
     'register_collegist' => 'Para miembros del Collegium',
+    'choose_from_menu',
 
 ];

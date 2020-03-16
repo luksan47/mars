@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@section('title')
+<i class="material-icons left">wifi</i>@lang('internet.internet')
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col s12">

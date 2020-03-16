@@ -88,18 +88,18 @@
         }
 
         var table = new Tabulator("#faults-table", {
-            paginationSizeSelector: [10, 25, 50, 100, 250, 500],
             paginationSize: 10,
+            autoresize:true,
             pagination: "local", //enable remote pagination
             ajaxURL: "{{ route('faults.table') }}", //set url for ajax request
             ajaxFiltering: true,
             layout: "fitColumns",
-            placeholder: "No Data Set",
+            placeholder: "@lang('internet.nothing_to_show')",
             columns: [
                 {title: "@lang('faults.created_at')", field: "created_at", sorter: "datetime", sorterParams: {format: "YYYY-MM-DD HH:mm:ss"}, width: 180,
                  formatter: "datetime", formatterParams: {outputFormat: "YYYY. MM. DD. HH:mm"}},
-                {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 1, formatter: "textarea"},
-                {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 4, formatter: "textarea"},
+                {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 2, formatter: "textarea"},
+                {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 3, formatter: "textarea"},
                 @if(Auth::User()->hasRole(\App\Role::STAFF))
                 {title: "", field: "id", headerSort: false, width: 60, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::DONE }}"}},
                 {title: "", field: "id", headerSort: false, width: 140, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::WONT_FIX }}"}},

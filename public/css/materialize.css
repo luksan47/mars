@@ -1,6 +1,12 @@
-/*!
- * generated from resources/sass
- */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
 .materialize-red {
   background-color: #e51c23 !important; }
 
@@ -1603,6 +1609,12 @@
 .coli-text.text-lightblue {
   color: #6e76e5 !important; }
 
+.coli.purple {
+  background-color: #d5b4eb !important; }
+
+.coli-text.text-purple {
+  color: #d5b4eb !important; }
+
 .black {
   background-color: #000000 !important; }
 
@@ -2032,7 +2044,7 @@ ul:not(.browser-default) {
     list-style-type: none; }
 
 a {
-  color: #6e76e5;
+  color: #b38f2f;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent; }
 
@@ -3222,8 +3234,11 @@ nav {
       margin-right: 15px; }
   nav .nav-title {
     display: inline-block;
-    font-size: 32px;
-    padding: 28px 0; }
+    font-size: 1.1rem;
+    padding: 28px 0;
+    text-transform: uppercase;
+    /* font-weight: 100; */
+    letter-spacing: 1px; }
   nav ul {
     margin: 0; }
     nav ul li {

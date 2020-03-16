@@ -4,9 +4,19 @@
 <div class="row">
     <div class="col s12">
         <div class="card">
-            <a href="{{ route('logout') }}"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">@lang('general.logout')</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf </form>
+            <div class="card-content">
+                <div class="card-title">@lang('info.user_data')</div>
+                <p>Your user data will appear here</p>
+                <!--TODO-->
+            </div>
+            <div class="card-action">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <button class="btn waves-effect right " type="submit">@lang('general.logout')</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
