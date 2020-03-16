@@ -11,6 +11,6 @@ return [
     'register_guest' => 'For tenants',
     'register_collegist' => 'For collegists',
     'i_understand' => 'I understand',
-    'choose_from_menu' => "Select one of the menu options!"
+    'choose_from_menu' => 'Select one of the menu options!',
 
 ];
