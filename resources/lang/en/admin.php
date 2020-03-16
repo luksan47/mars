@@ -3,7 +3,7 @@
 return [
 
     'admin' => 'Admin',
-    'registrations' => "Registrations",
+    'registrations' => 'Registrations',
     'handle_registrations' => 'Handle registrations',
     'accept' => 'Accept',
     'reject' => 'Reject',

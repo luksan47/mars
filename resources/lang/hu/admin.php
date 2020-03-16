@@ -3,7 +3,7 @@
 return [
 
     'admin' => 'Admin',
-    'registrations' => "Regisztrációk",
+    'registrations' => 'Regisztrációk',
     'handle_registrations' => 'Regisztrációk kezelése',
     'accept' => 'Elfogad',
     'reject' => 'Elutasít',
