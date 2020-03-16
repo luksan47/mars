@@ -9,7 +9,7 @@ return [
     'requested' => 'Elbírálásra vár',
     'approved' => 'Elfogadott',
     'rejected' => 'Elutasított',
-    'add' => 'Eszköz hozzáadása',
+    'add' => 'Hozzáadás',
     'delete' => 'Törlés',
     'cancel' => 'Mégsem',
     'confirm_delete' => 'Biztosan törli?',

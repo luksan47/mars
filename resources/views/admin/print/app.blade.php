@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('title')
+<a href="#!" class="breadcrumb">@lang('admin.admin')</a>
+<a href="#!" class="breadcrumb">@lang('print.print')</a>
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col s12">

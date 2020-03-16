@@ -1,6 +1,11 @@
 <div class="card">
     <div class="card-content">
         <span class="card-title">@lang('print.transfer_money')</span>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+            <blockquote>{{ $error }}</blockquote>
+            @endforeach
+        @endif
         <form method="POST" action="{{ route('print.transfer-balance') }}">
             @csrf
             <div class="row">

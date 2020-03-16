@@ -67,10 +67,7 @@
     </header>
     <div class="row">
         <div class="container">
-            <div class="col s12 m12 l3">
-                <!--space sidenav-->
-            </div>
-            <div class="col s12 m12 l9">
+            <div class="col s12 m12 l9 offset-l3">
                 @yield('content')
             </div>
         </div>

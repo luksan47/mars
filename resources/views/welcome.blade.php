@@ -11,6 +11,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/mobile.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection" />
         <style>
             html, body {
                 background-color: #fff;
@@ -84,8 +85,14 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Urán 2.0
+                <div style="margin:40px;margin-left:20%;text-align:center">
+                    <div class="col s12 valign-wrapper">
+                        <img class="material-icons" style="height:160px" src="{{ env('LOGO','') }}">
+                        <div class="noselect"
+                            style="text-indent:15px;font-size:80px;text-transform: uppercase;font-weight:300;letter-spacing:3px;">
+                                    {{ config('app.name', 'Urán') }} </div>
+                        <sup class="noselect" style="height:40px;font-size:30px">{{ env('APP_VERSION', '') }}</sup>
+                    </div>
                 </div>
 
                 <div class="links">

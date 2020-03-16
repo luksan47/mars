@@ -1,13 +1,27 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title')
+<a href="#!" class="breadcrumb">@lang('admin.admin')</a>
+<a href="#!" class="breadcrumb">@lang('internet.internet')</a>
+@endsection
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+@section('content')
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
             @include('admin.internet.internet_access.internet_access')
-        </div>
-        <div class="col-md-8">
-            @include('admin.internet.mac_addresses.mac_addresses')
+            </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col s9 offset-s3"> <!--???-->
+        <div class="card">
+            <div class="card-content">
+            @include('admin.internet.mac_addresses.mac_addresses')
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

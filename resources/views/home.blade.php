@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+<i class="material-icons left">chevron_right</i>@lang('general.dashboard')
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col s12">
