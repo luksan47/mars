@@ -329,6 +329,11 @@ $shades: (
   "white":        #FFFFFF,
   "transparent":  transparent
 );
+$coli: (
+  "blue": #242851,
+  "orange": #b38f2f,
+  "lightblue": #6e76e5,
+);
 
 $colors: (
   "materialize-red": $materialize-red,
@@ -351,7 +356,8 @@ $colors: (
   "brown": $brown,
   "blue-grey": $blue-grey,
   "grey": $grey,
-  "shades": $shades
+  "shades": $shades,
+  "coli": $coli
 ) !default;
 
 

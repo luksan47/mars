@@ -1,4 +1,4 @@
-<ul class="blue-grey darken-1"style="padding:20px">
+<ul class="coli blue"style="padding:20px">
     <div class="row">
         <div class="col s12 valign-wrapper center-align">
             <!--<img class="responsive-img " style="height:100px" src="img/eotvos_logo.png">-->

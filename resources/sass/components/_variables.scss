@@ -34,14 +34,14 @@
 // 1. Colors
 // ==========================================================================
 
-$primary-color: color("blue-grey", "darken-1") !default;
+$primary-color: color("coli", "blue") !default;
 $primary-color-light: lighten($primary-color, 15%) !default;
 $primary-color-dark: darken($primary-color, 15%) !default;
 
-$secondary-color: color("indigo", "darken-1") !default;
-$success-color: color("green", "base") !default;
+$secondary-color: color("coli", "orange") !default;
+$success-color: color("coli", "lighblue") !default;
 $error-color: color("red", "base") !default;
-$link-color: color("light-blue", "darken-1") !default;
+$link-color: color("coli", "orange") !default;
 
 
 // 2. Badges
@@ -79,10 +79,10 @@ $button-large-height: $button-height * 1.5 !default;
 $button-floating-large-size: 56px !default;
 
 // Small buttons
-$button-small-font-size: 13px !default;
-$button-small-icon-font-size: 1.2rem !default;
-$button-small-height: $button-height * .9 !default;
-$button-floating-small-size: $button-height * .9 !default;
+$button-small-font-size: 1em !default;
+$button-small-icon-font-size: 1rem !default;
+$button-small-height: $button-height * .8 !default;
+$button-floating-small-size: $button-height * .8 !default;
 
 // Flat buttons
 $button-flat-color: #343434 !default;
@@ -99,7 +99,7 @@ $button-floating-radius: 50% !default;
 // 4. Cards
 // ==========================================================================
 
-$card-padding: 24px !default;
+$card-padding: 30px !default;
 $card-bg-color: #fff !default;
 $card-link-color: color("orange", "accent-2") !default;
 $card-link-color-light: lighten($card-link-color, 20%) !default;

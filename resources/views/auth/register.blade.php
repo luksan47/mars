@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col s12">
+    <div class="col s12 l12 xl8 offset-xl2">
         <div class="card">
             <div class="card-image">
                 <img src="/img/EC_building.jpg">
@@ -32,37 +32,32 @@
                     </div>
                     <div class="divider"></div>
                     <div class="section">
-                        <div class="card-title">@lang('info.contact')</div>
+                    <div class="card-title">@lang('info.contact')</div>
                         @include("auth.register.contact")
                     </div>
+                    @if($user_type == \App\Role::COLLEGIST)
                     <div class="divider"></div>
                     <div class="section">
-                        @if($user_type == \App\Role::COLLEGIST)
                         <div class="card-title">@lang('info.information_of_studies')</div>
                         @include("auth.register.information_of_studies")
-                        @endif
                     </div>
-                    <div class="divider"></div>
-                    @if ($errors->any())
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                            </ul>
                     @endif
-                    <div class="row">
-                        <div class="col s8">
-                            <label>
-                                <input type="checkbox" name="gdpr" id="qdpr" value="qdpr" required
-                                    class="filled-in checkbox-color" />
-                                <span>@lang('auth.i_agree_to') <a href="{{ route('privacy_policy') }}"
-                                        target="_blank">@lang('auth.privacy_policy')</a></span>
-                            </label>
-                        </div>
-                        <div class="col s4">
-                            <button class="btn waves-effect right"
-                                type="submit">@lang('general.register')
-                            </button>
+                    <div class="divider"></div>
+                    <div class="section">
+                        <div class="row">
+                            <div class="col s12 l8">
+                                <p><label>
+                                    <input type="checkbox" name="gdpr" id="qdpr" value="qdpr" required
+                                        class="filled-in checkbox-color" />
+                                    <span>@lang('auth.i_agree_to') <a href="{{ route('privacy_policy') }}"
+                                            target="_blank">@lang('auth.privacy_policy')</a></span>
+                                </label></p>
+                            </div>
+                            <div class="col s12 l4">
+                                <p><button class="btn waves-effect right"
+                                    type="submit">@lang('general.register')
+                                </button></p>
+                            </div>
                         </div>
                     </div>
                 </div>
