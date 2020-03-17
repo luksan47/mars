@@ -129,7 +129,7 @@ class PrintController extends Controller
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
-        return redirect()->route('print');
+        return redirect()->back();
     }
 
     public function addFreePages(Request $request) {
@@ -150,7 +150,7 @@ class PrintController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return redirect()->route('print');
+        return redirect()->back();
     }
 
     public function listPrintJobs() {
