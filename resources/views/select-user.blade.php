@@ -5,16 +5,9 @@
     @endforeach
 </select>
 -->
-<input type="text" id="user_id" name="user_id" class="autocomplete" required>
+<select searchable="@lang('general.search')" id="user_id" name="user_id">
+  @foreach ($users as $user)
+    <option value="{{ $user->id }}">{{ $user->name }}</option>
+  @endforeach
+</select>
 <label for="user_id">@lang('info.name')</label>
-<script>
-$(document).ready(function(){
-    $('input.autocomplete').autocomplete({
-      data: {
-        @foreach($users as $user)
-        "{{ $user->name }}": null,
-        @endforeach
-      },
-    });
-  });
-</script>

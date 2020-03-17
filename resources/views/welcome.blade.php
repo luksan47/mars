@@ -3,8 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{{ env('LOGO','') }}">
 
-        <title>Urán</title>
+        <title>{{ config('app.name', 'Urán') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -85,26 +86,25 @@
             @endif
 
             <div class="content">
-                <div style="margin:40px;margin-left:20%;text-align:center">
-                    <div class="col s12 valign-wrapper">
-                        <img class="material-icons" style="height:160px" src="{{ env('LOGO','') }}">
-                        <div class="noselect"
-                            style="text-indent:15px;font-size:80px;text-transform: uppercase;font-weight:300;letter-spacing:3px;">
-                                    {{ config('app.name', 'Urán') }} </div>
-                        <sup class="noselect" style="height:40px;font-size:30px">{{ env('APP_VERSION', '') }}</sup>
+                <div class="row">
+                    <div class="col s12 l2 offset-l2 center-align">
+                        <img class="material-icons" style="height:130px" src="{{ env('LOGO','') }}">
+                    </div>
+                    <div class="col s12 l5 center-align">
+                        <div class="noselect " style="text-indent:15px;font-size:80px;text-transform: uppercase;font-weight:300;letter-spacing:3px;" > {{ config('app.name', 'Urán') }} </div>
                     </div>
                 </div>
 
                 <div class="links">
-                    <a href="">
+                    <a href="#">
                     @lang('main.better')</a><br class="mobile-break"/>
-                    <a href="">
+                    <a href="#">
                     @lang('main.faster')</a><br class="mobile-break"/>
-                    <a href="">
+                    <a href="#">
                     @lang('main.brilliant')</a><br class="mobile-break"/>
-                    <a href="">
+                    <a href="#">
                     @lang('main.essential')</a><br class="mobile-break"/>
-                    <a href="">
+                    <a href="#">
                     @lang('main.modern')</a><br class="mobile-break"/>
                     <a href="https://github.com/luksan47/mars">
                     @lang('main.open')</a><br class="mobile-break"/>

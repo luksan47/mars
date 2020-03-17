@@ -11,7 +11,7 @@
         <label for="balance">@lang('print.balance')</label>
     </div>
     <div class="input-field col s12 m12 l2">
-        <button type="submit" class="btn waves-effect">@lang('print.add')</button>
+        <button type="submit" class="btn waves-effect right">@lang('print.add')</button>
     </div>
 </form>
 </div>
