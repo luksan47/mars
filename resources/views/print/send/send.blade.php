@@ -6,6 +6,9 @@
             <blockquote>{{ $error }}</blockquote>
             @endforeach
         @endif
+        <blockquote>
+        @lang('print.how_transfer_works')
+        </blockquote>
         <form method="POST" action="{{ route('print.transfer-balance') }}">
             @csrf
             <div class="row">

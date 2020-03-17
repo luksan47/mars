@@ -8,7 +8,7 @@
         var actions = function (cell, formatterParams, onRendered) {
             var data = cell.getRow().getData();
             var active = (new Date(data.has_internet_until));
-            return $("<button class=\"btn waves-effect\" title=\"{{ $activation_date }}\">@lang('internet.extend')</button>")
+            return $("<button class=\"btn waves-effect\" title=\"{{ $activation_date }}\">@lang('internet.update')</button>")
                 .click(function () {
                     saveData(cell, {...data, has_internet_until: "{{ $activation_date }}"});
                 }).toggle(data.has_internet_until == null || activation_date > active)
@@ -73,7 +73,7 @@
                     title: "@lang('internet.internet_access')",
                     field: "has_internet_until",
                     sorter: "datetime",
-                    editor: 'input'
+                    editor: 'dateEditor'
                 },
                 {
                     title: "@lang('internet.auto_approved_mac_slots')",

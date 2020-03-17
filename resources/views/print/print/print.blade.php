@@ -5,7 +5,13 @@
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <blockquote>
+                @lang('print.pdf_description')
+                @lang("print.pdf_maxsize", ['maxsize' => config('print.pdf_size_limit')/1000/1000])
+                @lang('print.costs',['one_sided'=>App\PrintAccount::$COST['one_sided'], "two_sided" => env('PRINT_COST_TWOSIDED')])
+            </blockquote>
             <div class="row">
+                
                 <div class="file-field input-field col s12 m12 l8 xl10">
                     <div class="btn waves-effect">
                         <span>File</span>
@@ -14,7 +20,6 @@
                     <div class="file-path-wrapper">
                         <input class="file-path" placeholder="@lang('print.select_document')" type="text">
                     </div>
-                    <span class="helper-text">@lang('print.pdf_description')</span>
                 </div>
                 <div class="input-field col s12 m12 l4 xl2">
                     <input id="number_of_copies" name="number_of_copies" type="number" min="1" value="1" required>

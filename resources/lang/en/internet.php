@@ -41,4 +41,5 @@ return [
     'deactivate' => 'Deactivate',
     'generate_new_pwd' => 'Generate new password',
     'nothing_t_show' => 'Nothing to show',
+    'update' => 'Update',
 ];
