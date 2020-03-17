@@ -38,7 +38,7 @@
         var deleteButton = function (cell, formatterParams, onRendered) {
             return $("<button type=\"button\" class=\"btn waves-effect coli blue\">@lang('internet.delete')</button>").click(function () {
                 var data = cell.getRow().getData();
-                confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function () {
+                //confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function () {
                     $.ajax({
                         type: "POST",
                         url: "{{ route('internet.mac_addresses.delete', [':id']) }}".replace(':id', data.id),
@@ -49,7 +49,7 @@
                             ajaxError('@lang('internet.error')', '@lang('internet.ajax_error')', '@lang('internet.ok')', error);
                         }
                     });
-                });
+                //});
             })[0];
         };
 
@@ -59,7 +59,7 @@
             ajaxURL: "{{ route('internet.admin.mac_addresses.all') }}", //set url for ajax request
             ajaxSorting: true,
             ajaxFiltering: true,
-            layout: "fitColumns",
+            layout:"fitColumns",
             placeholder: "No Data Set",
             columns: [
                 {

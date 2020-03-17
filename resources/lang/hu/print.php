@@ -49,4 +49,7 @@ return [
     'send' => 'Küldés',
     'transfer_money' => 'Felhasználható egyenleg utalása',
     'amount' => 'Összeg',
+    'modify_pages' => 'Oldalak módosítása',
+    'balance'=>'Egyenleg',
+    'quantity' => 'Mennyiség',
 ];

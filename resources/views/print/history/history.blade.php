@@ -6,45 +6,38 @@
         $(document).ready(function() {
             var deleteButton = function(cell, formatterParams, onRendered) {
                 return $(
-                    "<button type=\"button\" class=\"btn waves-effect\">@lang('print.cancel_job')</button>"
+                    "<button type=\"button\" class=\"btn waves-effect coli blue\">@lang('print.cancel_job')</button>"
                     ).click(function() {
                     var data = cell.getRow().getData();
-                    confirm(
-                        '@lang('print.cancel_job')',
-                        '@lang('print.confirm_cancel')',
-                        '@lang('print.cancel')',
-                        '@lang('print.cancel_job')',
-                        function() {
-                            $.ajax({
-                                type: "POST",
-                                url: "{{ route('print.print_jobs.cancel', [':id']) }}"
-                                    .replace(':id', data.id),
-                                success: function() {
-                                    cell.getTable().setPage(cell.getTable()
-                                    .getPage());
-                                },
-                                error: function(error) {
-                                    ajaxError(
-                                        '@lang('internet.error')',
-                                        '@lang('internet.ajax_error')',
-                                        '@lang('internet.ok')',
-                                        error);
-                                }
-                            });
+                    //confirm('@lang('print.cancel_job')','@lang('print.confirm_cancel')','@lang('print.cancel')','@lang('print.cancel_job')',function() {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('print.print_jobs.cancel', [':id']) }}"
+                                .replace(':id', data.id),
+                            success: function() {
+                                cell.getTable().setPage(cell.getTable()
+                                .getPage());
+                            },
+                            error: function(error) {
+                                ajaxError(
+                                    '@lang('internet.error')',
+                                    '@lang('internet.ajax_error')',
+                                    '@lang('internet.ok')',
+                                    error);
+                            }
                         });
+                    //});
                 })[0];
             };
 
             var table = new Tabulator("#print-history-table", {
                 paginationSize: 10,
                 layout: "fitColumns",
-                autoresize: true,
                 pagination: "remote", //enable remote pagination
                 ajaxURL: "{{ route('print.print_jobs.all') }}", //set url for ajax request
                 ajaxSorting: true,
                 ajaxFiltering: true,
                 placeholder: "@lang('internet.nothing_to_show')",
-                columnMinWidth: 150,
                 headerSort: false,
                 columns: [{
                         title: "@lang('internet.created_at')",

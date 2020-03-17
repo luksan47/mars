@@ -8,7 +8,6 @@
         var table = new Tabulator("#free-page-table", {
             paginationSize: 10,
             layout: "fitColumns",
-            autoresize: true,
             pagination: "remote", //enable remote pagination
             ajaxSorting: true,
             ajaxFiltering: true,

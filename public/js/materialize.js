@@ -1175,7 +1175,7 @@ M.AutoInit = function (context) {
     Datepicker: root.querySelectorAll('.datepicker:not(.no-autoinit)'),
     Dropdown: root.querySelectorAll('.dropdown-trigger:not(.no-autoinit)'),
     Materialbox: root.querySelectorAll('.materialboxed:not(.no-autoinit)'),
-    Modal: root.querySelectorAll('.modal:not(.no-autoinit)'),
+    //Modal: root.querySelectorAll('.modal:not(.no-autoinit)'),
     Parallax: root.querySelectorAll('.parallax:not(.no-autoinit)'),
     Pushpin: root.querySelectorAll('.pushpin:not(.no-autoinit)'),
     ScrollSpy: root.querySelectorAll('.scrollspy:not(.no-autoinit)'),
@@ -2419,7 +2419,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         var _this10 = this;
 
         var $target = $(e.target);
-        if (this.options.closeOnClick && $target.closest('.dropdown-content').length && !this.isTouchMoving) {
+        if (this.options.closeOnClick && !$target.hasClass('dropDownsearch') && $target.closest('.dropdown-content').length && !this.isTouchMoving) {
           // isTouchMoving to check if scrolling on mobile.
           setTimeout(function () {
             _this10.close();
@@ -11785,6 +11785,34 @@ $jscomp.polyfill = function (e, r, p, m) {
         this.dropdownOptions.id = "select-options-" + M.guid();
         $(this.dropdownOptions).addClass('dropdown-content select-dropdown ' + (this.isMultiple ? 'multiple-select-dropdown' : ''));
 
+		//Added to search
+		this.searchable = this.el.getAttribute('searchable') ? true : false;
+		if (this.searchable) {
+			this.options.dropdownOptions.autoFocus = false; 
+
+			var placeholder = this.el.getAttribute('searchable');
+			var element = $('<div class="input-field col s12"><input type="text" class="dropDownsearch" style="margin: 5px 0px 16px 15px; width: 96%;"> <label for="first_name">'+ placeholder + '</label></div>');
+			$(this.dropdownOptions).append(element);
+			element.children().first().on('keyup', function(event){
+				applySeachInList(this.value);
+			});
+
+			var applySeachInList = (s) => {
+				var searchVlaue= s.toLowerCase();
+				$(this.dropdownOptions).find('li').each((item) =>{
+					  var current = $(item);
+						var liValue = current.text().toLowerCase();
+						
+						if (liValue.indexOf(searchVlaue) === -1) {
+							current.css({ display: 'none' });
+						} else {
+							current.css({ display: 'block' });
+						}
+				});
+				this.dropdown.recalculateDimensions();
+			}
+		}
+	
         // Create dropdown structure.
         if (this.$selectOptions.length) {
           this.$selectOptions.each(function (el) {
@@ -11857,6 +11885,8 @@ $jscomp.polyfill = function (e, r, p, m) {
           if (this.isMultiple) {
             dropdownOptions.closeOnClick = false;
           }
+		  
+
           this.dropdown = M.Dropdown.init(this.input, dropdownOptions);
         }
 

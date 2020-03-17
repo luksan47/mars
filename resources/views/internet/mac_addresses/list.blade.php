@@ -3,26 +3,23 @@
 <script type="application/javascript">
     $(document).ready(function () {
         var deleteButton = function (cell, formatterParams, onRendered) {
-            return $("<button type=\"button\" class=\"btn waves-effect\">@lang('internet.delete')</button>").click(function () {
+            return $("<button type=\"button\" class=\"btn waves-effect coli blue right\">@lang('internet.delete')</button>").click(function () {
                 var data = cell.getRow().getData();
-                confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function() {
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('internet.mac_addresses.delete', [':id']) }}".replace(':id', data.id),
-                        success: function () {
-                            cell.getTable().setPage(cell.getTable().getPage());
-                        },
-                        error: function(error) {
-                            ajaxError('@lang('internet.error')', '@lang('internet.ajax_error')', '@lang('internet.ok')', error);
-                        }
-                    });
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('internet.mac_addresses.delete', [':id']) }}".replace(':id', data.id),
+                    success: function () {
+                        cell.getTable().setPage(cell.getTable().getPage());
+                    },
+                    error: function(error) {
+                        ajaxError('@lang('internet.error')', '@lang('internet.ajax_error')', '@lang('internet.ok')', error);
+                    }
                 });
             })[0];
         };
         var table = new Tabulator("#mac-addresses-table", {
             paginationSize: 10,
             layout:"fitColumns",
-            autoresize:true,
             pagination: "remote", //enable remote pagination
             ajaxURL: "{{ route('internet.mac_addresses.users') }}", //set url for ajax request
             ajaxSorting: true,

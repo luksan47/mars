@@ -47,7 +47,6 @@
             ajaxURL: "{{ route('internet.admin.internet_accesses.all') }}", //set url for ajax request
             ajaxSorting: true,
             ajaxFiltering: true,
-            autoresize:true,
             layout: "fitColumns",
             placeholder: "No Data Set",
             cellEditing:function(cell) {

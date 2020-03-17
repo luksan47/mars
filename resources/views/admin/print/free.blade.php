@@ -3,6 +3,11 @@
 <div class="row">
     <form method="POST" action="{{ route('print.free_pages') }}">
         @csrf
+        @if ($errors->any())
+        @foreach ($errors->all() as $error)
+        <blockquote>{{ $error }}</blockquote>
+        @endforeach
+        @endif
         <div class="input-field col s12 m12 l3">
             @include("select-user")
         </div>
@@ -33,5 +38,4 @@
             <button class="btn waves-effect right" type="submit">@lang('print.add')</button>
         </div>
     </form>
-</div>
-@endif
+@endif</div>

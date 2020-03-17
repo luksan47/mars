@@ -12,30 +12,21 @@
     <title>{{ config('app.name', 'Urán') }}</title>
 
     <!-- Styles -->
-    <!--
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-formhelpers.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
--->
     <link rel="stylesheet" href="{{ asset('css/tabulator_materialize.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('css/cookieconsent.min.css') }}" />
+    <!-- materialize css generated from resources/sass/materialize.scss-->
     <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection" />
 
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
-    <!--
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
--->
-    <script src="{{ asset('js/bootstrap-formhelpers.min.js') }}"></script>
     <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
+
     <script src="{{ asset('js/site.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
-    <script type="text/javascript" src="{{ asset('js/materialize2.js') }}"></script>
+    <!-- modified materialize js for searchable select: https://codepen.io/yassinevic/pen/eXjqjb?editors=1111 -->
+    <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
     
     <script type="text/javascript">
     var today = new Date();
@@ -50,7 +41,6 @@
             $(".dropdown-trigger").dropdown({
                 hover: false
             });
-            $('select').formSelect();
         }
     );
     </script>
