@@ -1,4 +1,4 @@
-<span class="card-title">@lang('internet.internet_access')</div>
+<span class="card-title">@lang('internet.internet_access')</span>
 <div id="net_accesses-table"></div>
 
 <script type="application/javascript">
