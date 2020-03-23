@@ -98,24 +98,24 @@
     <div id="history" class="modal">
         <div class="modal-content">
         <h4>A tevenevelde története</h4>
-        <p>Egyszer volt hol nem volt, volt egyszer egy titokzatos öregember, aki a sivatag közepén élt, ahol a madár se járt. 
-            Egy nap volt egy látomása, aminek hatására tevéket kezdett el nevelni. Fel is építette hát a kis farmját, és ahogy teltek múltak az idők, egyre több tevéje lett, mígnem egyszer arra járt egy fiatal kalandozó.
-            A kalandort az öreg pásztor befogadta, majd munkát is ajánlott neki. 
-            A következő három hónapban a kalandor a pásztornak dolgozott, a tevéit minden reggel elvitte sétálni.
-            Az öregember elmesélte neki a történeteit, látomásait, hogy miért kezdett el tevéket nevelni, és hogy miért jött el Mekkából a sivatag közepébe.
-            A három hónap letelte után a kalandor visszatért hazájába, és hírül vitte, hogy milyen jól érezte magát azon a titokzatos farmon.
-            Ezek után öreg pásztor arra lett figyelmes, hogy egyre több kalandor keresi fel farmját.
-            Az idők teltek, múltak, a titokzatos farmból egy hatalmas látványosság lett mára.
-            A világ minden tájáról járnak oda, csak hogy ők is elvihessék a híres-neves tevecsordákat sétálni.
-            A monda szerint a farmon dolgozó pásztorokra szigorú szabályok vonatkoznak:
-            A pásztorok jelezhetik, hogy mennyi tevét vinnének el sétálni, majd ezután tevecsordákban, meghatározott időszakban vihetik el a tevéket. 
-            Ha teljesítették a próbatételeket, az öregember szelleme bőséges jutalmakkal látja el a bátor pásztorokat.
-            Azt, hogy mi történik a legbátrabb pásztorokkal, arról még a monda sem szól.
-            A pásztorok nem beszélnek a tevenevelés hátteréről, se a titokzatos jutalmakról, ám egyes látogatók szerint a pásztorok szertartásokat szerveznek minden héten, ahol különösen viselkednek, és megidézik a farm alapítóját, akit csak valamilyen prófétaként emlegetnek.
-        </p>
+        <p>Egyszer volt, hol nem volt, élt egyszer a puszta közepén egy titokzatos öregember, kinek egy árva piasztere sem volt. 
+        Egy nap az öregember előtt megjelent Rebeka arkangyal, s így szólott hozzája: „Kezdj el tevéket nevelni, és meglátod, ha kitartó vagy, 
+        tengernyi-tengernyi pénzed lesz.” Az öregember megfogadta a tanácsot, és 40 nap 40 éjen át keményen dolgozott, hogy felépítse tevefarmját. 
+        Ahogy teltek múltak az évek, egyre több és több tevéje lett, mígnem egyszer arra járt egy nincstelen ifjú vándor. 
+        A vándort az öreg tevepásztor befogadta, ő pedig fizetség gyanánt minden reggel elvitte a tevéket a közeli oázisba, 
+        hogy ne haljanak szomjan. Esténként pedig az öregember elmesélte a vándornak látomásait, a farm történetét, hogy miért kezdett el tevéket nevelni.
+        Így ment ez 7 kerek éven át. A 7 év elteltével a vándor útra kelt, hogy új kalandok után nézzen, de bármerre járt,
+        mindig lelkesen mesélt a titokzatos öregemberről és annak titokzatos farmjáról.
+        A farm híre szélsebesen terjedt világszerte és egyre több és több ember kereste fel a híres-neves tevefarmot. 
+        Mára a titokzatos farmból egy lenyűgöző látványosság lett: a világ minden tájáról járnak oda, hogy ők is elvihessék a nevezetes tevecsordákat az oázishoz. 
+        Úgy tartják, a farmon dolgozó pásztorokra szigorú szabályok vonatkoznak: csak előre meghatározott számú tevékből álló csordát vihetnek el, 
+        és azokat is csak egy bizonyos időszakban. Akik becsületesen teljesítették a próbatételt, azokat az öreg pásztor szelleme busásan megjutalmaz. 
+        Arról, hogy a legbátrabb pásztoroknak mi a sorsa, nem szól a monda. A pásztorok senkinek sem beszélnek a farm történetéről és a titokzatos jutalmakról, 
+        ám az a hír járja, hogy minden héten különleges szertartást tartanak, ahol különös viselkedésükkel megidézik a farm alapítóját, 
+        akit csak valamilyen prófétaként emlegetnek…</p>
         </div>
     </div>
-    <div class="row" style="height: 90vh; align-items: center;display: flex;">
+    <div class="row" style="align-items: center;display: flex;">
         <div class="container">
         <a class="left waves-effect btn-flat modal-trigger" href="#history">Történet</a>
         <a class="right waves-effect btn-flat" href="/camelbreeder/edit">Szerkesztés</a>
@@ -133,7 +133,7 @@
                     <form method="POST" action="{{ route('shepherding') }}">
                         @csrf
                         <div class="row">
-                            <div class="input-field col s5">
+                            <div class="input-field col s4 offset-s1">
                                 <input type="text" id="shepherd" name="id" class="shepherd_autocomplete"
                                     onchange="showCamels(this.value, 'shepherd')" autofocus>
                                 <label for="id">Pásztor</label>
@@ -142,7 +142,7 @@
                                 $(document).ready(function() {
                                     $('input.shepherd_autocomplete').autocomplete({
                                         data: {
-                                            @foreach($herds as $herd)
+                                            @foreach($shepherds as $shepherd)
                                             "{{$shepherd -> name}}": null,
                                             {{$shepherd -> id}}: null,
                                             @endforeach
@@ -151,7 +151,7 @@
                                 });
                                 </script>
                             </div>
-                            <div class="input-field col s5">
+                            <div class="input-field col s4">
                                 <input type="text" id="herd" name="name" class="herd_autocomplete"
                                     onchange="showHerds(this.value)">
                                 <label for="herd">Tevecsorda</label>
@@ -168,27 +168,24 @@
                                 });
                                 </script>
                             </div>
-                            <div class="input-field col s2">
-                                <button class="btn waves-effect right" type="submit">Tevék nevelése</button>
+                            <div class="input-field col s3">
+                                <button class="btn waves-effect" type="submit">Tevék nevelése</button>
                             </div>
-                            @if (\Session::has('success'))
-                                <script>M.toast({html: 'Sikeres tevenevelés!})</script>
-                            @endif
                         </div>
                     </form>
                     <form method="POST" action="">
                         @csrf
                         <div class="row">
-                            <div class="input-field col s5">
+                            <div class="input-field col s4 offset-s1">
                                 <input type="text" id="shepherd2" name="id" class="shepherd2_autocomplete"
-                                    onchange="showCamels(this.value, 'shepherd2')" autofocus>
+                                    onchange="showCamels(this.value, 'shepherd2')"/>
                                 <label for="id">Pásztor</label>
                                 <blockquote id="shepherd2_text"><i>Válassz egy pásztort!</i></blockquote>
                                 <script>
                                 $(document).ready(function() {
                                     $('input.shepherd2_autocomplete').autocomplete({
                                         data: {
-                                            @foreach($herds as $herd)
+                                            @foreach($shepherds as $shepherd)
                                             "{{$shepherd -> name}}": null,
                                             {{$shepherd -> id}}: null,
                                             @endforeach
@@ -197,22 +194,33 @@
                                 });
                                 </script>
                             </div>
-                            <div class="input-field col s5">
+                            <div class="input-field col s4">
                                 <input type="number" id="camels" name="camels">
                                 <label for="herd">Tevék</label>
                             </div>
-                            <div class="input-field col s2">
-                                <button class="btn waves-effect right" type="submit">Új tevék hozzáadása</button>
+                            <div class="input-field col s3">
+                                <button class="btn waves-effect" type="submit">Új tevék hozzáadása</button>
                             </div>
-                            @if (\Session::has('success'))
-                                <script>M.toast({html: 'Sikeres hozzáadás'})</script>
-                            @endif
                         </div>
                     </form>
+                    <table>
+                        <tbody>
+                        @foreach($shepherdings as $sh)
+                        <tr>
+                            <td>{{ $sh->shepherd }}</td>
+                            <td>{{ $sh->herd }}</td>
+                            <td>{{ $sh->created_at }}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+    @if (\Session::has('success'))
+    <script>M.toast({html: 'Sikeres tevézés!'})</script>
+    @endif
 </body>
 
 </html>
