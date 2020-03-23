@@ -78,11 +78,12 @@ class CamelController extends Controller
         );
 
         $shepherd_s_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
-        $new_camels = $shepherd_s_camels-$camels;
-        if($new_camels >= env('CAMEL_MIN',-500)){
-            DB::table('shepherds')->where('id',$validatedData['id'])->update(['camels' => $new_camels]);
+        $new_camels = $shepherd_s_camels - $camels;
+        if ($new_camels >= env('CAMEL_MIN', -500)) {
+            DB::table('shepherds')->where('id', $validatedData['id'])->update(['camels' => $new_camels]);
+
             return redirect()->back()->with('success', '');
-        }else{
+        } else {
             return redirect()->back()->with('failure', '');
         }
     }
