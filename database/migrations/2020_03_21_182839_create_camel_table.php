@@ -30,7 +30,7 @@ class CreateCamelTable extends Migration
             $table->unsignedInteger('shepherd');
             $table->string('herd');
             $table->timestamps();
-            
+
             $table->foreign('shepherd')
                     ->references('id')->on('shepherds');
             $table->foreign('herd')

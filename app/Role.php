@@ -17,7 +17,7 @@ class Role extends Model
     const DIRECTOR = 'director';
     const PRESIDENT = 'president';
     const STAFF = 'staff';
-    const CAMEL_BREEDER = "camel-breeder";
+    const CAMEL_BREEDER = 'camel-breeder';
 
     // Module-related roles
     const PRINTER = 'printer';

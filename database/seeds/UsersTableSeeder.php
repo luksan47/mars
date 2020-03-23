@@ -92,6 +92,4 @@ class UsersTableSeeder extends Seeder
         ]);
         $user->roles()->attach(Role::getId(Role::CAMEL_BREEDER));
     }
-
-
 }
