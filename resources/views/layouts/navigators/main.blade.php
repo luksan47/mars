@@ -14,5 +14,9 @@
             <li><a href="{{ route('print.admin') }}">@lang('print.print')</a></li>
             <li><a href="{{ route('internet.admin') }}">@lang('internet.internet')</a></li>
         @endif
+        @if(Auth::user()->hasRole(\App\Role::CAMEL_BREEDER))
+            <li><div class="divider"></div></li>
+            <li><a href="{{ route('camel_breeder') }}">Tevenevelde</a></li>
+        @endif
     @endif
-@endauth
+@endauth 
