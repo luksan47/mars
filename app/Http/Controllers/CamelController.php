@@ -11,16 +11,18 @@ class CamelController extends Controller
     {
         $shepherds = DB::table('shepherds')->get();
         $herds = DB::table('herds')->get();
+        $shepherdings = DB::table('shepherding')->get();
 
-        return view('camel_breeder.app', ['shepherds' => $shepherds, 'herds' => $herds]);
+        return view('camel_breeder.app', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
     }
 
     public function editIndex()
     {
         $shepherds = DB::table('shepherds')->get();
         $herds = DB::table('herds')->get();
+        $shepherdings = DB::table('shepherding')->get();
 
-        return view('camel_breeder.edit', ['shepherds' => $shepherds, 'herds' => $herds]);
+        return view('camel_breeder.edit', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
     }
 
     public function add_shepherd(Request $request)
@@ -64,7 +66,8 @@ class CamelController extends Controller
             'id' => 'required|numeric|exists:shepherds',
             'name' => 'required|exists:herds',
         ]);
-        $camels = DB::table('herds')->where('name', $validatedData['name'])->get();
+
+        $camels = DB::table('herds')->where('name', $validatedData['name'])->value('camel_count');
 
         DB::table('shepherding')->insert(
             [
@@ -73,9 +76,14 @@ class CamelController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
             ]
         );
-        Log::debug($camels);
-        DB::table('shepherds')->where('id', $validatedData['id'])->decrement('camels', $camels);
 
-        return redirect()->back()->with('success', '');
+        $shepherd_s_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
+        $new_camels = $shepherd_s_camels-$camels;
+        if($new_camels >= env('CAMEL_MIN',-500)){
+            DB::table('shepherds')->where('id',$validatedData['id'])->update(['camels' => $new_camels]);
+            return redirect()->back()->with('success', '');
+        }else{
+            return redirect()->back()->with('failure', '');
+        }
     }
 }
