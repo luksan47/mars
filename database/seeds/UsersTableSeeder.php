@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
         $this->createCollegist();
         $this->createTenant();
         $this->createStaff();
+        $this->createCamelBreeder();
 
         factory(App\User::class, 10)->create()->each(function ($user) {
             factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
@@ -80,4 +81,17 @@ class UsersTableSeeder extends Seeder
         ]);
         $user->roles()->attach(Role::getId(Role::STAFF));
     }
+
+    private function createCamelBreeder()
+    {
+        $user = User::create([
+            'name' => 'Viola',
+            'email' => 'viola@eotvos.elte.hu',
+            'password' => bcrypt('asdasdasd'),
+            'verified' => true,
+        ]);
+        $user->roles()->attach(Role::getId(Role::CAMEL_BREEDER));
+    }
+
+
 }

@@ -1,4 +1,3 @@
-
 <div id="mac-addresses-table"></div>
 <script type="application/javascript">
     $(document).ready(function () {

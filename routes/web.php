@@ -66,4 +66,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
+
+    Route::get('/camelbreeder', 'CamelController@index')->name('camel_breeder');
+    Route::get('/camelbreeder/edit', 'CamelController@editIndex')->name('camel_breeder_edit');
+    Route::post('/camelbreeder/shepherding', 'CamelController@shepherding')->name('shepherding');
+    Route::post('/camelbreeder/add_shepherd', 'CamelController@add_shepherd')->name('add_shepherd');
+    Route::post('/camelbreeder/add_herd', 'CamelController@add_herd')->name('add_herd');
 });
