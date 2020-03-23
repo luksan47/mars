@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Log;
 
 class CamelController extends Controller
 {
@@ -13,15 +11,18 @@ class CamelController extends Controller
     {
         $shepherds = DB::table('shepherds')->get();
         $herds = DB::table('herds')->get();
-        return view('camel_breeder.app', ["shepherds" => $shepherds, "herds" => $herds]);
+
+        return view('camel_breeder.app', ['shepherds' => $shepherds, 'herds' => $herds]);
     }
+
     public function editIndex()
     {
         $shepherds = DB::table('shepherds')->get();
         $herds = DB::table('herds')->get();
-        return view('camel_breeder.edit', ["shepherds" => $shepherds, "herds" => $herds]);
+
+        return view('camel_breeder.edit', ['shepherds' => $shepherds, 'herds' => $herds]);
     }
-    
+
     public function add_shepherd(Request $request)
     {
         $validatedData = $request->validate([
@@ -37,8 +38,9 @@ class CamelController extends Controller
             ]
         );
 
-        return redirect()->back()->with('success', '');;
+        return redirect()->back()->with('success', '');
     }
+
     public function add_herd(Request $request)
     {
         $validatedData = $request->validate([
@@ -52,8 +54,10 @@ class CamelController extends Controller
                 'camel_count' => $validatedData['camel_count'],
             ]
         );
-        return redirect()->back()->with('success', '');;
+
+        return redirect()->back()->with('success', '');
     }
+
     public function shepherding(Request $request)
     {
         $validatedData = $request->validate([
@@ -74,5 +78,4 @@ class CamelController extends Controller
 
         return redirect()->back()->with('success', '');
     }
-
 }
