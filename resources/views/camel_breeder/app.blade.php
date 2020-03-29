@@ -19,6 +19,7 @@
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <!-- modified materialize js for searchable select: https://codepen.io/yassinevic/pen/eXjqjb?editors=1111 -->
     <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/camelbreeder.js') }}"></script>
 
 
     <!-- Fonts -->
@@ -29,6 +30,39 @@
     <script>
     $(document).ready(function(){
         $('.modal').modal();
+        $('input.shepherd_autocomplete').autocomplete({
+            data: {
+                @foreach($shepherds as $shepherd)
+                "{{$shepherd -> name}}": null,
+                {{$shepherd -> id}}: null,
+                @endforeach
+            },
+        });
+        $('input.herd_autocomplete').autocomplete({
+            data: {
+                @foreach($herds as $herd)
+                "{{$herd -> name}}": null,
+                @endforeach
+            }
+        });
+        $('input.shepherd2_autocomplete').autocomplete({
+            data: {
+                @foreach($shepherds as $shepherd)
+                "{{$shepherd -> name}}": null,
+                {{$shepherd -> id}}: null,
+                @endforeach
+            },
+        });
+        $(window).keydown(function(event){
+            if( (event.keyCode == 13) && (document.getElementById('herd').value!="") ) {
+            event.preventDefault();
+            console.log('prevented submit on enter');
+            return false;
+            }
+        });
+        @if (\Session::has('success'))
+        M.toast({html: 'Sikeres tevézés!'})
+        @endif
     });
     const shepherds = {
         @foreach($shepherds as $shepherd) 
@@ -45,53 +79,7 @@
         "{{ $herd -> name }}": {{ $herd -> camel_count }},
         @endforeach
     };
-
-    function showCamels(val, elementId) {
-        input = document.getElementById(elementId);
-        info = document.getElementById(elementId+'_text'); 
-        input.classList.remove("invalid");
-        if(!isNaN(val)){
-            id=val;
-        }
-        else {
-            id=shepherds[val];
-            input.value=id;
-        }
-        if (!(id in camels)){
-            input.classList.add("invalid");
-            info.innerHTML = "Nincs ilyen pásztor!";
-        }
-        else{
-            if (id == 0) {
-                text = "<i>Válassz egy pásztort!</i>"
-            } else {
-                text = "<i>" + camels[id].name + "</i> tevéinek száma: " + camels[id].camels;
-            }
-            info.innerHTML = text;
-        }
-    }
-
-    function showHerds(name) {
-        info = document.getElementById('herd_text');
-        input = document.getElementById('herd');
-        input.classList.remove("invalid");
-        if (!(name in herds)){
-            input.classList.add("invalid");
-            info.innerHTML = "Nincs ilyen csorda!";
-        }else{
-            text = "Ez a csorda " + herds[name] + " tevéből áll.";
-            info.innerHTML = text;
-        }
-    }
-    function toggleHistory() {
-        var x = document.getElementById("history");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-    </script>
+    </script> 
 </head>
 
 <body>
@@ -115,84 +103,52 @@
         akit csak valamilyen prófétaként emlegetnek…</p>
         </div>
     </div>
-    <div class="row" style="align-items: center;display: flex;">
+    <div class="row" style="height: 90vh; align-items: center;display: flex;">
         <div class="container">
         <a class="left waves-effect btn-flat modal-trigger" href="#history">Történet</a>
         <a class="right waves-effect btn-flat" href="/camelbreeder/edit">Szerkesztés</a>
             <div class="col s12">
                 <h5 class="center-align" style="font-size:50px;font-weight:300;letter-spacing:3px;">TEVENEVELDE</h5> 
                 <img src="\img\camelbreeder.png" style="display: block;margin-left: auto;margin-right: auto;" class="center-align">
-                <div class="row">             
-                    @if ($errors->any())
-                        <blockquote class="error">
-                            @foreach ($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                            @endforeach
-                        </blockquote>
-                    @endif
+                @if ($errors->any())
+                <div class="row">
+                    <blockquote class="error col offset-s1">
+                        @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                        @endforeach
+                    </blockquote>
+                    <script>M.toast({html: '@foreach ($errors->all() as $error){{ $error }} @endforeach'})</script>
+                </div>
+                @endif
+                <div class="row"> 
                     <form method="POST" action="{{ route('shepherding') }}">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
                                 <input type="text" id="shepherd" name="id" class="shepherd_autocomplete"
-                                    onchange="showCamels(this.value, 'shepherd')" autofocus>
+                                    onchange="shepherdInfo(this.value, 'shepherd')" autofocus>
                                 <label for="id">Pásztor</label>
                                 <blockquote id="shepherd_text"><i>Válassz egy pásztort!</i></blockquote>
-                                <script>
-                                $(document).ready(function() {
-                                    $('input.shepherd_autocomplete').autocomplete({
-                                        data: {
-                                            @foreach($shepherds as $shepherd)
-                                            "{{$shepherd -> name}}": null,
-                                            {{$shepherd -> id}}: null,
-                                            @endforeach
-                                        },
-                                    });
-                                });
-                                </script>
                             </div>
                             <div class="input-field col s4">
-                                <input type="text" id="herd" name="name" class="herd_autocomplete"
-                                    onchange="showHerds(this.value)">
+                                <input type="text" id="herd" class="herd_autocomplete" onchange="addHerd(this.value)"> 
                                 <label for="herd">Tevecsorda</label>
+                                <div id="herd_checkboxes"></div>
                                 <blockquote id="herd_text"><i>Válassz egy csordát!</i></blockquote>
-                                <script>
-                                $(document).ready(function() {
-                                    $('input.herd_autocomplete').autocomplete({
-                                        data: {
-                                            @foreach($herds as $herd)
-                                            "{{$herd -> name}}": null,
-                                            @endforeach
-                                        },
-                                    });
-                                });
-                                </script>
                             </div>
                             <div class="input-field col s3">
                                 <button class="btn waves-effect" type="submit">Tevék nevelése</button>
                             </div>
                         </div>
                     </form>
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('add_camels') }}">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
                                 <input type="text" id="shepherd2" name="id" class="shepherd2_autocomplete"
-                                    onchange="showCamels(this.value, 'shepherd2')"/>
+                                    onchange="shepherdInfo(this.value, 'shepherd2')"/>
                                 <label for="id">Pásztor</label>
                                 <blockquote id="shepherd2_text"><i>Válassz egy pásztort!</i></blockquote>
-                                <script>
-                                $(document).ready(function() {
-                                    $('input.shepherd2_autocomplete').autocomplete({
-                                        data: {
-                                            @foreach($shepherds as $shepherd)
-                                            "{{$shepherd -> name}}": null,
-                                            {{$shepherd -> id}}: null,
-                                            @endforeach
-                                        },
-                                    });
-                                });
-                                </script>
                             </div>
                             <div class="input-field col s4">
                                 <input type="number" id="camels" name="camels">
@@ -203,24 +159,10 @@
                             </div>
                         </div>
                     </form>
-                    <table>
-                        <tbody>
-                        @foreach($shepherdings as $sh)
-                        <tr>
-                            <td>{{ $sh->shepherd }}</td>
-                            <td>{{ $sh->herd }}</td>
-                            <td>{{ $sh->created_at }}</td>
-                        </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-    @if (\Session::has('success'))
-    <script>M.toast({html: 'Sikeres tevézés!'})</script>
-    @endif
 </body>
 
 </html>

@@ -37,6 +37,7 @@ class CamelController extends Controller
                 'name' => $validatedData['name'],
                 'id' => $validatedData['id'],
                 'camels' => 0,
+                'min_camels' => env('CAMEL_MIN', -500),
             ]
         );
 
@@ -60,31 +61,76 @@ class CamelController extends Controller
         return redirect()->back()->with('success', '');
     }
 
-    public function shepherding(Request $request)
+    public function add_camels(Request $request)
     {
         $validatedData = $request->validate([
-            'id' => 'required|numeric|exists:shepherds',
-            'name' => 'required|exists:herds',
+            'id' => 'required|exists:shepherds',
+            'camels' => 'required|numeric|min:0',
         ]);
+        if($validatedData['id'] != 0){ //not visitor
+            $old_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
 
-        $camels = DB::table('herds')->where('name', $validatedData['name'])->value('camel_count');
-
-        DB::table('shepherding')->insert(
-            [
-                'shepherd'=> $validatedData['id'],
-                'herd'=> $validatedData['name'],
-                'created_at' => date('Y-m-d H:i:s'),
-            ]
-        );
-
-        $shepherd_s_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
-        $new_camels = $shepherd_s_camels - $camels;
-        if ($new_camels >= env('CAMEL_MIN', -500)) {
-            DB::table('shepherds')->where('id', $validatedData['id'])->update(['camels' => $new_camels]);
+            DB::table('shepherds')
+                ->where('id', $validatedData['id'])
+                ->update(['camels' => $old_camels + $validatedData['camels']]);
 
             return redirect()->back()->with('success', '');
-        } else {
-            return redirect()->back()->with('failure', '');
+        }else{
+            return back()
+                ->withErrors(['id' => 'Vendég nem adhat hozzá tevéket!'])
+                ->withInput();
         }
+    }
+
+    public function change_herd(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'camel_count' => 'required|numeric|min:0',
+        ]);
+
+        DB::table('herds')
+            ->where('name', $validatedData['name'])
+            ->update(['camel_count' => $validatedData['camel_count']]);
+
+
+        return redirect()->back()->with('success', '');
+    }
+
+    public function shepherding(Request $request)
+    {
+        //TODO visitor shepherdings
+        $validatedData = $request->validate([
+            'id' => 'required|numeric|exists:shepherds',
+            'herds' => 'required',
+        ]);
+
+        $all_camels = 0;
+        foreach($validatedData['herds'] as $herd){
+            $camels = DB::table('herds')->where('name', $herd)->value('camel_count');
+            $all_camels += $camels;
+        }
+        $shepherd_s_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
+        $new_camels = $shepherd_s_camels - $all_camels;
+
+        if ($new_camels < env('CAMEL_MIN', -500) && $validatedData['id'] != 0) { //not visitor and have enough camels
+            return back()
+                ->withErrors(['herds'=> 'Nincs ennyi tevéd!'])
+                ->withInput();
+        }
+        foreach($validatedData['herds'] as $herd){
+            DB::table('shepherding')->insert(
+                [
+                    'shepherd'=> $validatedData['id'],
+                    'herd'=> $herd,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]
+            );
+        }
+        if($validatedData['id'] != 0){ //not visitor
+            DB::table('shepherds')->where('id', $validatedData['id'])->update(['camels' => $new_camels]);
+        }
+
+        return redirect()->back()->with('success', '');
     }
 }
