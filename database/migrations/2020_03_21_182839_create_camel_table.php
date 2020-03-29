@@ -17,6 +17,7 @@ class CreateCamelTable extends Migration
             $table->unsignedInteger('id')->unique();
             $table->string('name')->unique();
             $table->integer('camels')->nullable(); //how many camels belongs to shepherd, null if visitor
+            $table->integer('min_camels')->nullable(); //minimum number of camels the shepherd should have, null if visitor
         });
 
         Schema::create('herds', function (Blueprint $table) {

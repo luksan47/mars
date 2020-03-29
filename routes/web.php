@@ -72,4 +72,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/camelbreeder/shepherding', 'CamelController@shepherding')->name('shepherding');
     Route::post('/camelbreeder/add_shepherd', 'CamelController@add_shepherd')->name('add_shepherd');
     Route::post('/camelbreeder/add_herd', 'CamelController@add_herd')->name('add_herd');
+    Route::post('/camelbreeder/change_herd', 'CamelController@change_herd')->name('change_herd');
+    Route::post('/camelbreeder/add_camels', 'CamelController@add_camels')->name('add_camels');
 });

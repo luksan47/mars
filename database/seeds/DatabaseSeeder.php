@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             'id' => 0,
             'name' => 'Vendég',
             'camels' => null,
+            'min_camels' => null,
         ]);
     }
 }
