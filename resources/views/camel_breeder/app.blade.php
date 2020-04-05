@@ -56,7 +56,6 @@
         $(window).keydown(function(event){
             if( (event.keyCode == 13) && (document.getElementById('herd').value!="") ) {
             event.preventDefault();
-            console.log('prevented submit on enter');
             return false;
             }
         });
@@ -102,6 +101,9 @@
         ám az a hír járja, hogy minden héten különleges szertartást tartanak, ahol különös viselkedésükkel megidézik a farm alapítóját, 
         akit csak valamilyen prófétaként emlegetnek…</p>
         </div>
+        <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Vissza</a>
+        </div>
     </div>
     <div class="row" style="height: 90vh; align-items: center;display: flex;">
         <div class="container">
@@ -121,7 +123,7 @@
                 </div>
                 @endif
                 <div class="row"> 
-                    <form method="POST" action="{{ route('shepherding') }}">
+                    <form method="POST" action="{{ route('camel_breeder.shepherding') }}">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
@@ -141,7 +143,7 @@
                             </div>
                         </div>
                     </form>
-                    <form method="POST" action="{{ route('add_camels') }}">
+                    <form method="POST" action="{{ route('camel_breeder.add_camels') }}">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
