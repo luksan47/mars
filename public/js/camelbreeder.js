@@ -1,3 +1,13 @@
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    console.log(JSON.parse(this.responseText));
+    console.log(shepherds);
+  }
+};
+xmlhttp.open("GET", "{{ route('camel_breeder.send_shepherds')}}", true);
+xmlhttp.send();
+
 var camels_in_herds = 0;
 function shepherdInfo(val, elementId) {
     input = document.getElementById(elementId);
@@ -24,6 +34,7 @@ function shepherdInfo(val, elementId) {
     }
 }
 //nem kell:
+/*
 function showHerds(name) {
     info = document.getElementById('herd_text');
     input = document.getElementById('herd');
@@ -36,7 +47,7 @@ function showHerds(name) {
         info.innerHTML = text;
     }
 }
-
+*/
 function addHerd(name) {
     info = document.getElementById('herd_text');
     input = document.getElementById('herd');
@@ -91,6 +102,7 @@ function isInvalidId(id) {
     input = document.getElementById('shepherd_id');
     input.classList.remove("invalid");
     info.innerHTML = "";
+    //TODO not working
     if (Object.values(shepherds).indexOf(id) >= 0){
         input.classList.add("invalid");
         info.innerHTML = "Ez a szám már foglalt!";
