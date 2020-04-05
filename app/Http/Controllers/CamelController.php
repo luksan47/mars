@@ -72,7 +72,7 @@ class CamelController extends Controller
             'id' => 'required|exists:shepherds',
             'camels' => 'required|numeric|min:0',
         ]);
-        if($validatedData['id'] != 0){ //not visitor
+        if ($validatedData['id'] != 0) { //not visitor
             $old_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
 
             DB::table('shepherds')
@@ -80,7 +80,7 @@ class CamelController extends Controller
                 ->update(['camels' => $old_camels + $validatedData['camels']]);
 
             return redirect()->back()->with('success', '');
-        }else{
+        } else {
             return back()
                 ->withErrors(['id' => 'Vendég nem adhat hozzá tevéket!'])
                 ->withInput();
@@ -98,7 +98,6 @@ class CamelController extends Controller
             ->where('name', $validatedData['name'])
             ->update(['camel_count' => $validatedData['camel_count']]);
 
-
         return redirect()->back()->with('success', '');
     }
     //TODO change_shepherd
@@ -112,7 +111,7 @@ class CamelController extends Controller
         ]);
 
         $all_camels = 0;
-        foreach($validatedData['herds'] as $herd){
+        foreach ($validatedData['herds'] as $herd) {
             $camels = DB::table('herds')->where('name', $herd)->value('camel_count');
             $all_camels += $camels;
         }
@@ -124,7 +123,7 @@ class CamelController extends Controller
                 ->withErrors(['herds'=> 'Nincs ennyi tevéd!'])
                 ->withInput();
         }
-        foreach($validatedData['herds'] as $herd){
+        foreach ($validatedData['herds'] as $herd) {
             DB::table('shepherding')->insert(
                 [
                     'shepherd'=> $validatedData['id'],
@@ -133,7 +132,7 @@ class CamelController extends Controller
                 ]
             );
         }
-        if($validatedData['id'] != 0){ //not visitor
+        if ($validatedData['id'] != 0) { //not visitor
             DB::table('shepherds')->where('id', $validatedData['id'])->update(['camels' => $new_camels]);
         }
 
