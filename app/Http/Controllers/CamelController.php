@@ -25,7 +25,8 @@ class CamelController extends Controller
         return view('camel_breeder.edit', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
     }
 
-    public function send_shepherds(Request $request){
+    public function send_shepherds(Request $request)
+    {
         return response()->json($shepherds = DB::table('shepherds')->get());
     }
     public function send_herds(Request $request){
@@ -37,7 +38,7 @@ class CamelController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:shepherds',
             'id' => 'required|numeric|min:0|unique:shepherds',
-            'camels' => ''
+            'camels' => '',
         ]);
 
         DB::table('shepherds')->insert(
@@ -103,6 +104,7 @@ class CamelController extends Controller
 
         return redirect()->back()->with('success', '');
     }
+
     //TODO change_shepherd
 
     public function shepherding(Request $request)
@@ -144,11 +146,11 @@ class CamelController extends Controller
 
     public function history(Request $request)
     {
-        $data = DB::table('shepherding')->select('shepherd','herd')->get();
+        $data = DB::table('shepherding')->select('shepherd', 'herd')->get();
 
-        return response()->json(array(
-                'success' => true,
-                'data'   => $data
-            )); 
+        return response()->json([
+            'success' => true,
+            'data'   => $data,
+        ]);
     }
 }
