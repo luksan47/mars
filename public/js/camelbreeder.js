@@ -1,13 +1,3 @@
-var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    console.log(JSON.parse(this.responseText));
-    console.log(shepherds);
-  }
-};
-xmlhttp.open("GET", "{{ route('camel_breeder.send_shepherds')}}", true);
-xmlhttp.send();
-
 var camels_in_herds = 0;
 function shepherdInfo(val, elementId) {
     input = document.getElementById(elementId);

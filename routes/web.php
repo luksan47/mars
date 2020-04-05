@@ -69,7 +69,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     Route::get('/camelbreeder', 'CamelController@index')->name('camel_breeder');
     Route::get('/camelbreeder/edit', 'CamelController@editIndex')->name('camel_breeder.edit');
-    Route::get('/camelbreeder/send_shepherds', 'CamelController@send_shepherds')->name('camel_breeder.send_shepherds');
+    Route::get('/camelbreeder/send_shepherds', 'CamelController@send_shepherds');
+    Route::get('/camelbreeder/send_herds', 'CamelController@send_herds');
     Route::post('/camelbreeder/shepherding', 'CamelController@shepherding')->name('camel_breeder.shepherding');
     Route::post('/camelbreeder/add_shepherd', 'CamelController@add_shepherd')->name('camel_breeder.add_shepherd');
     Route::post('/camelbreeder/add_herd', 'CamelController@add_herd')->name('camel_breeder.add_herd');

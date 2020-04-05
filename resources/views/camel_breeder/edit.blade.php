@@ -30,17 +30,19 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script>
+    /*
     const shepherds = {
         @foreach($shepherds as $shepherd) 
         "{{ $shepherd -> name }}": {{ $shepherd -> id}},
         @endforeach
-    };
+    }; 
 
     const camels = {
         @foreach($shepherds as $shepherd) 
         {{ $shepherd -> id }}: {name: '{{ $shepherd -> name }}', camels: {{ $shepherd -> camels ?? 0 }} },
         @endforeach
     };
+    */
     $(document).ready(function(){
         $('.tabs').tabs({
             swipeable: true,
@@ -63,6 +65,27 @@
         @if (\Session::has('success'))
         M.toast({html: 'Sikeres módosítás!'});
         @endif
+
+        //get herds
+        var xmlhttp_herds = new XMLHttpRequest();
+        xmlhttp_herds.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            window.herds = JSON.parse(this.responseText);
+        }};
+        xmlhttp_herds.open("GET", "send_herds", true);
+        xmlhttp_herds.send();
+        
+        //get shepherds
+        var xmlhttp_shepherds = new XMLHttpRequest();
+        xmlhttp_shepherds.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            window.shepherds = JSON.parse(this.responseText);
+        }};
+        xmlhttp_shepherds.open("GET", "send_shepherds", true);
+        xmlhttp_shepherds.send();
+    });
+    $(document).ajaxError(function(){
+        alert("An ajax error occurred!");
     });
     </script>
 </head>
