@@ -29,7 +29,9 @@ class CamelController extends Controller
     {
         return response()->json($shepherds = DB::table('shepherds')->get());
     }
-    public function send_herds(Request $request){
+
+    public function send_herds(Request $request)
+    {
         return response()->json($shepherds = DB::table('herds')->get());
     }
 
