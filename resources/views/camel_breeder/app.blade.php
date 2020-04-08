@@ -99,7 +99,7 @@
         és azokat is csak egy bizonyos időszakban. Akik becsületesen teljesítették a próbatételt, azokat az öreg pásztor szelleme busásan megjutalmaz. 
         Arról, hogy a legbátrabb pásztoroknak mi a sorsa, nem szól a monda. A pásztorok senkinek sem beszélnek a farm történetéről és a titokzatos jutalmakról, 
         ám az a hír járja, hogy minden héten különleges szertartást tartanak, ahol különös viselkedésükkel megidézik a farm alapítóját, 
-        akit csak valamilyen prófétaként emlegetnek…</p>
+        akit csak valamilyen prófétaként emlegetnek…</p><p><i>"Sicut camelus et erit vobiscum."</i></p>
         </div>
         <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Vissza</a>

@@ -27,10 +27,21 @@ class CamelController extends Controller
 
     public function send_shepherds(Request $request)
     {
-        return response()->json($shepherds = DB::table('shepherds')->get());
+        $data = DB::table('shepherds')->get();
+        return response()->json($data);
     }
     public function send_herds(Request $request){
-        return response()->json($shepherds = DB::table('herds')->get());
+        $data = DB::table('herds')->get();
+        return response()->json($data);
+    }
+    
+    public function send_shepherdings(Request $request)
+    {
+        $data = DB::table('shepherding')
+            ->join('shepherds', 'shepherds.id','=','shepherding.shepherd')
+            ->select('shepherds.name as name','shepherd as id', 'herd', 'created_at')
+            ->get();
+        return response()->json($data);
     }
 
     public function add_shepherd(Request $request)
@@ -142,15 +153,5 @@ class CamelController extends Controller
         }
 
         return redirect()->back()->with('success', '');
-    }
-
-    public function history(Request $request)
-    {
-        $data = DB::table('shepherding')->select('shepherd', 'herd')->get();
-
-        return response()->json([
-            'success' => true,
-            'data'   => $data,
-        ]);
     }
 }
