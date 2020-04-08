@@ -19,5 +19,9 @@ class DatabaseSeeder extends Seeder
             'camels' => null,
             'min_camels' => null,
         ]);
+        DB::table('farmer')->insert([
+            'password' => bcrypt('asdasdasd'),
+            'def_min_camels' => -500,
+        ]);
     }
 }
