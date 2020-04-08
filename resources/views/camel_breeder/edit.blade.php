@@ -22,6 +22,7 @@
     <!-- modified materialize js for searchable select: https://codepen.io/yassinevic/pen/eXjqjb?editors=1111 -->
     <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/camelbreeder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
 
 
     <!-- Fonts -->
@@ -131,25 +132,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="row">
-                    <h5>Új csorda hozzáadása</h5>
-                    <form method="POST" action="{{ route('camel_breeder.add_herd') }}">
-                        @csrf
-                        <div class="row">
-                            <div class="input-field col s5">
-                                <input name="name" type="text">
-                                <label for="name">Név</label>
-                            </div>
-                            <div class="input-field col s5">
-                                <input id="camel_count" name="camel_count" type="number">
-                                <label for="id">Hány tevéből áll?</label>
-                            </div>
-                            <div class="input-field col s2">
-                                <button class="btn waves-effect" type="submit">Hozzáadás</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                
                 <div class="row">
                     <h5>Pásztor módosítása</h5>
                     <form method="POST" action="{{ route('camel_breeder.change_shepherd') }}">
@@ -185,14 +168,31 @@
                 </div>
 
                 <div class="row">
-                    <div class="col s12" style="margin-bottom: 20px">
+                    {{--<div class="col s12" style="margin-bottom: 20px">
                       <ul class="tabs">
                         <li class="tab col s4"><a href="#csordak">Csordák</a></li>
                         <li class="tab col s4"><a href="#pasztorok">Pásztorok</a></li>
                         <li class="tab col s4"><a href="#nevelesek">Tevenevelések</a></li>
                       </ul>
                     </div>
+                    --}}
                     <div id="csordak" class="col s12">
+                            <form method="POST" action="{{ route('camel_breeder.add_herd') }}">
+                                @csrf
+                                <div class="row">
+                                    <div class="input-field col s5">
+                                        <input name="name" type="text">
+                                        <label for="name">Név</label>
+                                    </div>
+                                    <div class="input-field col s5">
+                                        <input id="camel_count" name="camel_count" type="number">
+                                        <label for="id">Hány tevéből áll?</label>
+                                    </div>
+                                    <div class="input-field col s2">
+                                        <button class="btn waves-effect" type="submit">Hozzáadás</button>
+                                    </div>
+                                </div>
+                            </form>
                         <table>
                             <tbody>
                             <tr>
@@ -207,128 +207,242 @@
                                     <td>{{ $herd->name }}</td>
                                     <input type="hidden" name="name" value="{{ $herd->name }}">
                                     <td><input type="number" name="camel_count" value="{{ $herd->camel_count }}"></td>
-                                    <td><button class="btn waves-effect" type="submit">Módosítás</button></td>
+                                    <td><button class="btn waves-effect right" type="submit">Módosítás</button></td>
                                 </tr>
                             </form>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <div id="history"></div>
-                    <script type="application/javascript">
-                        $(document).ready(function () {
-                            var table = new Tabulator("#history", {
-                                paginationSize: 20,
-                                pagination: "remote", //enable remote pagination
-                                ajaxURL: "{{ route('camel_breeder.history') }}", //set url for ajax request
-                                ajaxContentType:"json",
-                                ajaxSorting: true,
-                                ajaxFiltering: true,
-                                layout:"fitColumns",
-                                placeholder: "No Data Set",
-                                columns: [
-                                    {
-                                        title: "Pásztor",
-                                        field: "shepherd",
-                                        sorter: "number",
-                                        headerFilter: 'input'
-                                    },
-                                    {
-                                        title: "Csorda",
-                                        field: "herd",
-                                        sorter: "string",
-                                        headerFilter: 'input'
-                                    },
-                                ],
-                            });
-                        });
-                    </script>
                     <div id="pasztorok" class="col s12">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Azonosító</th>
-                                <th>Név</th>
-                                <th>Tevék</th>
-                                <th>Minimum tevék</th>
-                            </tr>
-                            @foreach($shepherds as $shepherd)
-                            <tr>
-                                <td>{{ $shepherd->id }}</td>
-                                <td>{{ $shepherd->name }}</td>
-                                <td>{{ $shepherd->camels }}</td>
-                                <td>{{ $shepherd->min_camels }}</td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        <div id="shepherds"></div>
+                        <script type="application/javascript">
+                            $(document).ready(function () {
+                                //custom max min header filter
+                                var minMaxFilterEditor = function(cell, onRendered, success, cancel, editorParams){
+                                var end;
+                                var container = document.createElement("span");
+                                //create and style inputs
+                                var start = document.createElement("input");
+                                start.setAttribute("type", "number");
+                                start.setAttribute("placeholder", "Min");
+                                start.setAttribute("min", 0);
+                                start.setAttribute("max", 100);
+                                start.style.padding = "4px";
+                                start.style.width = "50%";
+                                start.style.boxSizing = "border-box";
+
+                                start.value = cell.getValue();
+
+                                function buildValues(){
+                                    success({
+                                        start:start.value,
+                                        end:end.value,
+                                    });
+                                }
+                                function keypress(e){
+                                    if(e.keyCode == 13){
+                                        buildValues();
+                                    }
+
+                                    if(e.keyCode == 27){
+                                        cancel();
+                                    }
+                                }
+                                end = start.cloneNode();
+                                end.setAttribute("placeholder", "Max");
+
+                                start.addEventListener("change", buildValues);
+                                start.addEventListener("blur", buildValues);
+                                start.addEventListener("keydown", keypress);
+
+                                end.addEventListener("change", buildValues);
+                                end.addEventListener("blur", buildValues);
+                                end.addEventListener("keydown", keypress);
+
+                                container.appendChild(start);
+                                container.appendChild(end);
+
+                                return container;
+                                }
+
+                                //custom max min filter function
+                                function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams){
+                                //headerValue - the value of the header filter element
+                                //rowValue - the value of the column in this row
+                                //rowData - the data for the row being filtered
+                                //filterParams - params object passed to the headerFilterFuncParams property
+
+                                    if(rowValue){
+                                        if(headerValue.start != ""){
+                                            if(headerValue.end != ""){
+                                                return rowValue >= headerValue.start && rowValue <= headerValue.end;
+                                            }else{
+                                                return rowValue >= headerValue.start;
+                                            }
+                                        }else{
+                                            if(headerValue.end != ""){
+                                                return rowValue <= headerValue.end;
+                                            }
+                                        }
+                                    }
+
+                                return true; //must return a boolean, true if it passes the filter.
+                                }
+                                var table = new Tabulator("#shepherds", {
+                                    paginationSize: 10,
+                                    ajaxURL: "{{ route('camel_breeder.send_shepherds') }}", //set url for ajax request
+                                    ajaxContentType:"json",
+                                    layout:"fitColumns",
+                                    placeholder: "Nincs ilyen pásztor",
+                                    columns: [
+                                        {
+                                            title: "Pásztor",
+                                            field: "name",
+                                            sorter: "string",
+                                            headerFilter: 'input',
+                                            bottomCalc:"count"
+                                        },
+                                        {
+                                            title: "Pásztor azonosító",
+                                            field: "id",
+                                            sorter: "number",
+                                            headerFilter: 'input',
+                                        },
+                                        {
+                                            title: "Tevéi",
+                                            field: "camels",
+                                            sorter:"number", 
+                                            headerFilter:minMaxFilterEditor, 
+                                            headerFilterFunc:minMaxFilterFunction,
+                                            bottomCalc:"sum"
+                                        },
+                                        {
+                                            title: "Minimum tevéi",
+                                            field: "min_camels",
+                                            sorter: "number",
+                                            headerFilter:minMaxFilterEditor, 
+                                            headerFilterFunc:minMaxFilterFunction
+                                        },
+                                    ],
+                                });
+                            });
+                        </script>
                     </div>
                     <div id="nevelesek" class="col s12">
-                        <form method="GET" action="">
-                            @csrf
-                            <div class="row">
-                                <div class="input-field col s3">
-                                    <input type="text" id="shepherd_search" name="id" class="shepherd_search_autocomplete"
-                                        onchange="shepherdInfo(this.value, 'shepherd_search')">
-                                    <label for="id">Pásztor</label>
-                                    <blockquote id="shepherd_search_text"></blockquote>
-                                </div>
-                                <div class="input-field col s3">
-                                    <input type="text" id="herd_search" class="herd_search_autocomplete"> 
-                                    <label for="herd">Tevecsorda</label>
-                                </div>
-                                <div class="input-field col s2">
-                                    <input type="text" class="datepicker_from" id="from_date" name="from_date"
-                                        onfocus="M.Datepicker.getInstance(from_date).open();">
-                                    <label for="from_date">Ettől</label>
-                                    <script>
-                                    $(document).ready(function() {
-                                        $('.datepicker_from').datepicker({
-                                            format: 'yyyy-mm-dd',
-                                            firstDay: 1,
-                                            yearRange: 10,
-                                            maxDate: new Date(),
-                                        });
-                                    });
-                                    </script>
-                                </div>
-                                <div class="input-field col s2">
-                                    <input type="text" class="datepicker_to" id="to_date" name="to_date"
-                                        onfocus="M.Datepicker.getInstance(to_date).open();">
-                                    <label for="from_date">Eddig</label>
-                                    <script>
-                                    $(document).ready(function() {
-                                        $('.datepicker_to').datepicker({
-                                            format: 'yyyy-mm-dd',
-                                            firstDay: 1,
-                                            yearRange: 10,
-                                            maxDate: new Date(),
-                                            defaultDate: new Date(),
-                                        });
-                                    });
-                                    </script>
-                                </div>
-                                <div class="input-field col s2">
-                                    <button class="btn waves-effect" type="submit">Keresés</button>
-                                </div>
-                            </div>
-                        </form>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>shepherd</th>
-                                <th>herd</th>
-                                <th>date</th>
-                            </tr>
-                            @foreach($shepherdings as $sh)
-                            <tr>
-                                <td>{{ $sh->shepherd }}</td>
-                                <td>{{ $sh->herd }}</td>
-                                <td>{{ $sh->created_at }}</td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        <div id="shepherdings"></div>
+                        <script type="application/javascript">
+                            $(document).ready(function () {
+                                //custom header filter
+                                var dateFilterEditor = function(cell, onRendered, success, cancel, editorParams){
+
+                                var container = $("<span></span>")
+                                //create and style input
+                                var start = $("<input type='date' placeholder='Start'/>");
+                                var end = $("<input type='date' placeholder='End'/>");
+
+                                container.append(start).append(end);
+
+                                var inputs = $("input", container);
+
+
+                                inputs.css({
+                                    "padding":"4px",
+                                    "width":"50%",
+                                    "box-sizing":"border-box",
+                                })
+                                .val(cell.getValue());
+
+                                function buildDateString(){
+                                    return {
+                                        start:start.val(),
+                                        end:end.val(),
+                                    };
+                                }
+
+                                //submit new value on blur
+                                inputs.on("change blur", function(e){
+                                    success(buildDateString());
+                                });
+
+                                //submit new value on enter
+                                inputs.on("keydown", function(e){
+                                    if(e.keyCode == 13){
+                                        success(buildDateString());
+                                    }
+
+                                    if(e.keyCode == 27){
+                                        cancel();
+                                    }
+                                });
+
+                                return container[0];
+                                }
+
+                                //custom filter function
+                                function dateFilterFunction(headerValue, rowValue, rowData, filterParams){
+                                //headerValue - the value of the header filter element
+                                //rowValue - the value of the column in this row
+                                //rowData - the data for the row being filtered
+                                //filterParams - params object passed to the headerFilterFuncParams property
+
+                                var format = filterParams.format || "YYYY-MM-DD";
+                                var start = moment(headerValue.start);
+                                var end = moment(headerValue.end);
+                                var value = moment(rowValue, format);
+                                if(rowValue){
+                                    if(start.isValid()){
+                                        if(end.isValid()){
+                                            return value >= start && value <= end;
+                                        }else{
+                                            return value >= start;
+                                        }
+                                    }else{
+                                        if(end.isValid()){
+                                            return value <= end;
+                                        }
+                                    }
+                                }
+
+                                return false; //must return a boolean, true if it passes the filter.
+                                }
+                                var table = new Tabulator("#shepherdings", {
+                                    paginationSize: 10,
+                                    ajaxURL: "{{ route('camel_breeder.send_shepherdings') }}", //set url for ajax request
+                                    ajaxContentType:"json",
+                                    layout:"fitColumns",
+                                    placeholder: "Nincs ilyen tevenevelés :(",
+                                    columns: [
+                                        {
+                                            title: "Pásztor",
+                                            field: "name",
+                                            sorter: "string",
+                                            headerFilter: 'input',
+                                        },
+                                        {
+                                            title: "Pásztor azonosító",
+                                            field: "id",
+                                            sorter: "number",
+                                            headerFilter: 'input',
+                                        },
+                                        {
+                                            title: "Csorda",
+                                            field: "herd",
+                                            sorter: "string",
+                                            headerFilter: 'input'
+                                        },
+                                        {
+                                            title: "Dátum",
+                                            field: "created_at",
+                                            sorter: "string",
+                                            minWidth:350,
+                                            headerFilter:dateFilterEditor, 
+                                            headerFilterFunc:dateFilterFunction
+                                        },
+                                    ],
+                                });
+                            });
+                        </script>
                     </div>
                 </div> 
             </div>
