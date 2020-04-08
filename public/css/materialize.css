@@ -1,3 +1,6 @@
+.italic{
+  font-style: italic;
+}
 .materialize-red {
   background-color: #e51c23 !important; }
 
@@ -3662,7 +3665,7 @@ small {
     margin: 0;
     text-transform: uppercase; }
     .tabs .tab a {
-      color: rgba(36, 40, 81, 0.7);
+      color: rgba(179, 143, 47, 0.7);
       display: block;
       width: 100%;
       height: 100%;
@@ -3672,19 +3675,19 @@ small {
       overflow: hidden;
       transition: color .28s ease, background-color .28s ease; }
       .tabs .tab a:focus, .tabs .tab a:focus.active {
-        background-color: rgba(60, 66, 134, 0.2);
+        background-color: rgba(179, 143, 47, 0.2);
         outline: none; }
       .tabs .tab a:hover, .tabs .tab a.active {
         background-color: transparent;
-        color: #242851; }
+        color: #b38f2f; }
     .tabs .tab.disabled a, .tabs .tab.disabled a:hover {
-      color: rgba(36, 40, 81, 0.4);
+      color: rgba(179, 143, 47, 0.4);
       cursor: default; }
   .tabs .indicator {
     position: absolute;
     bottom: 0;
     height: 2px;
-    background-color: #3c4286;
+    background-color: #b38f2f;
     will-change: left, right; }
 
 @media only screen and (max-width: 992px) {
@@ -6030,7 +6033,7 @@ input[type=range]::-ms-thumb {
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 800px;
   perspective: 500px;
   transform-style: preserve-3d;
   transform-origin: 0% 50%; }
@@ -6048,7 +6051,7 @@ input[type=range]::-ms-thumb {
     .carousel.carousel-slider .carousel-item {
       width: 100%;
       height: 100%;
-      min-height: 400px;
+      min-height: 800px;
       position: absolute;
       top: 0;
       left: 0; }
@@ -6060,8 +6063,8 @@ input[type=range]::-ms-thumb {
         font-size: 15px; }
   .carousel .carousel-item {
     visibility: hidden;
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     position: absolute;
     top: 0;
     left: 0; }

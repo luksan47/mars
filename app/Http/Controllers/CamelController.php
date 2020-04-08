@@ -30,6 +30,7 @@ class CamelController extends Controller
         $data = DB::table('shepherds')->get();
         return response()->json($data);
     }
+    
     public function send_herds(Request $request){
         $data = DB::table('herds')->get();
         return response()->json($data);
@@ -105,7 +106,7 @@ class CamelController extends Controller
     public function change_herd(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|exists:herds',
             'camel_count' => 'required|numeric|min:0',
         ]);
 
@@ -115,8 +116,16 @@ class CamelController extends Controller
 
         return redirect()->back()->with('success', '');
     }
+    public function change_shepherd(Request $request){
+        $validatedData = $request->validate([
+            'id' => 'required|numeric|exists:shepherds',
+            'min_camels' => 'required|numeric'
+        ]);
 
-    //TODO change_shepherd
+        DB::table('shepherds')
+            ->where('id', $validatedData['id'])
+            ->update(['min_camels' => $validatedData['min_camels']]);
+    }
 
     public function shepherding(Request $request)
     {
