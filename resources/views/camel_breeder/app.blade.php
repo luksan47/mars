@@ -62,6 +62,9 @@
         @if (\Session::has('success'))
         M.toast({html: 'Sikeres tevézés!'})
         @endif
+        @if (\Session::has('wrong_password'))
+        M.toast({html: 'Rossz jelszó! :('})
+        @endif
     });
     const shepherds = {
         @foreach($shepherds as $shepherd) 
@@ -105,10 +108,25 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Vissza</a>
         </div>
     </div>
+    <div id="password" class="modal">
+        <div class="modal-content">
+            <form method="POST" id="password_form" action="{{ route('camel_breeder.edit') }}">
+                @csrf
+                <div class="row">
+                    <div class="col s10">
+                        <input id="password_input" type="password" name="password" required placeholder="Titkos jelszó...">
+                    </div>
+                    <div class="col s2">
+                        <button class="btn waves-effect" type="submit">Belépés</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="row" style="margin-top:50px;">
         <div class="container">
-        <a class="left waves-effect btn-flat modal-trigger" href="#history">Történet</a>
-        <a class="right waves-effect btn-flat" href="/camelbreeder/edit">Szerkesztés</a>
+            <a class="left modal-trigger btn-flat" href="#history">Történet</a>
+            <a class="right modal-trigger btn-flat" href="#password">Szerkesztés</a>
             <div class="col s12">
                 <h5 class="center-align" style="font-size:50px;font-weight:300;letter-spacing:3px;">TEVENEVELDE</h5> 
                 <img src="\img\camelbreeder.png" style="display: block;margin-left: auto;margin-right: auto;" class="center-align">

@@ -46,6 +46,10 @@ class CreateCamelTable extends Migration
             $table->foreign('shepherd')
                     ->references('id')->on('shepherds');
         });
+        Schema::create('farmer', function (Blueprint $table) {
+            $table->string('password');
+            $table->integer('def_min_camels');
+        });
     }
 
     /**
@@ -59,5 +63,6 @@ class CreateCamelTable extends Migration
         Schema::dropIfExists('herds');
         Schema::dropIfExists('shepherding');
         Schema::dropIfExists('allocate');
+        Schema::dropIfExists('farmer');
     }
 }

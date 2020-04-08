@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CamelController extends Controller
 {
@@ -15,14 +16,19 @@ class CamelController extends Controller
 
         return view('camel_breeder.app', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
     }
-
-    public function editIndex()
+    
+    public function show_edit(Request $request)
     {
-        $shepherds = DB::table('shepherds')->get();
-        $herds = DB::table('herds')->get();
-        $shepherdings = DB::table('shepherding')->get();
-
-        return view('camel_breeder.edit', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
+        $result =  DB::table('farmer')->select('password')->first();
+        $hashedPassword = $result->password;
+        if(Hash::check($request->input('password'), $hashedPassword)){
+            $shepherds = DB::table('shepherds')->get();
+            $herds = DB::table('herds')->get();
+            $shepherdings = DB::table('shepherding')->get();
+            return view('camel_breeder.edit', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
+        }else{
+            return back()->with('wrong_password', '');
+        }
     }
 
     public function send_shepherds(Request $request)
@@ -162,5 +168,14 @@ class CamelController extends Controller
         }
 
         return redirect()->back()->with('success', '');
+    }
+
+    public function change_password(Request $request){
+        $validatedData = $request->validate([
+            'password' => 'required',
+        ]);
+
+        DB::table('farmer')
+            ->update(['password' => Hash::make($validatedData['password'])]);
     }
 }
