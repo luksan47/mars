@@ -92,7 +92,7 @@
 </head>
 
 <body>
-    <div class="row" {{--style="height: 90vh; align-items: center;display: flex;"--}}>
+    <div class="row" style="margin-top:50px;">
         <div class="container">
             <a class="right waves-effect btn-flat" href="/camelbreeder">Vissza</a>
             <div class="col s12">
@@ -132,87 +132,152 @@
                         </div>
                     </form>
                 </div>
-                
                 <div class="row">
-                    <h5>Pásztor módosítása</h5>
-                    <form method="POST" action="{{ route('camel_breeder.change_shepherd') }}">
+                    <h5>Új csorda hozzáadása</h5>
+                    <form method="POST" action="{{ route('camel_breeder.add_herd') }}">
                         @csrf
                         <div class="row">
                             <div class="input-field col s5">
-                                <input type="text" id="shepherd" name="id" class="shepherd_autocomplete"
-                                    onchange="shepherdInfo(this.value, 'shepherd')">
-                                <label for="id">Pásztor</label>
-                                <blockquote id="shepherd_text"><i>Válassz egy pásztort!</i></blockquote>
-                                <script>
-                                $(document).ready(function() {
-                                    $('input.shepherd_autocomplete').autocomplete({
-                                        data: {
-                                            @foreach($shepherds as $shepherd)
-                                            "{{$shepherd -> name}}": null,
-                                            {{$shepherd -> id}}: null,
-                                            @endforeach
-                                        },
-                                    });
-                                });
-                                </script>
+                                <input name="name" type="text">
+                                <label for="name">Név</label>
                             </div>
                             <div class="input-field col s5">
-                                <input id="min_camels" name="min_camels" type="number" value="{{env('CAMEL_MIN', -500)}}">
-                                <label for="min_camels">Minimum tevék száma</label>
+                                <input id="camel_count" name="camel_count" type="number">
+                                <label for="id">Hány tevéből áll?</label>
                             </div>
                             <div class="input-field col s2">
-                                <button class="btn waves-effect" type="submit">módosítás</button>
+                                <button class="btn waves-effect" type="submit">Hozzáadás</button>
                             </div>
                         </div>
                     </form>
                 </div>
-
                 <div class="row">
-                    {{--<div class="col s12" style="margin-bottom: 20px">
+                    <div class="col s12" style="margin-bottom: 20px">
                       <ul class="tabs">
                         <li class="tab col s4"><a href="#csordak">Csordák</a></li>
                         <li class="tab col s4"><a href="#pasztorok">Pásztorok</a></li>
                         <li class="tab col s4"><a href="#nevelesek">Tevenevelések</a></li>
                       </ul>
                     </div>
-                    --}}
                     <div id="csordak" class="col s12">
-                            <form method="POST" action="{{ route('camel_breeder.add_herd') }}">
-                                @csrf
-                                <div class="row">
-                                    <div class="input-field col s5">
-                                        <input name="name" type="text">
-                                        <label for="name">Név</label>
-                                    </div>
-                                    <div class="input-field col s5">
-                                        <input id="camel_count" name="camel_count" type="number">
-                                        <label for="id">Hány tevéből áll?</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <button class="btn waves-effect" type="submit">Hozzáadás</button>
-                                    </div>
-                                </div>
-                            </form>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <th>Név</th>
-                                <th>Tevék</th>
-                                <th></th>
-                            </tr>
-                            @foreach($herds as $herd)
-                            <form method="POST" action="{{ route('camel_breeder.change_herd') }}">
-                                @csrf
-                                <tr>
-                                    <td>{{ $herd->name }}</td>
-                                    <input type="hidden" name="name" value="{{ $herd->name }}">
-                                    <td><input type="number" name="camel_count" value="{{ $herd->camel_count }}"></td>
-                                    <td><button class="btn waves-effect right" type="submit">Módosítás</button></td>
-                                </tr>
-                            </form>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        <div id="herds"></div>
+                        <script type="application/javascript">
+                            $(document).ready(function () {
+                                //custom max min header filter
+                                var minMaxFilterEditor = function(cell, onRendered, success, cancel, editorParams){
+                                var end;
+                                var container = document.createElement("span");
+                                //create and style inputs
+                                var start = document.createElement("input");
+                                start.setAttribute("type", "number");
+                                start.setAttribute("placeholder", "Min");
+                                start.setAttribute("min", 0);
+                                start.setAttribute("max", 100);
+                                start.style.padding = "4px";
+                                start.style.width = "48%";
+                                start.style.marginRight = "5px";
+                                start.style.boxSizing = "border-box";
+
+                                start.value = cell.getValue();
+
+                                function buildValues(){
+                                    success({
+                                        start:start.value,
+                                        end:end.value,
+                                    });
+                                }
+                                function keypress(e){
+                                    if(e.keyCode == 13){
+                                        buildValues();
+                                    }
+
+                                    if(e.keyCode == 27){
+                                        cancel();
+                                    }
+                                }
+                                end = start.cloneNode();
+                                end.setAttribute("placeholder", "Max");
+
+                                start.addEventListener("change", buildValues);
+                                start.addEventListener("blur", buildValues);
+                                start.addEventListener("keydown", keypress);
+
+                                end.addEventListener("change", buildValues);
+                                end.addEventListener("blur", buildValues);
+                                end.addEventListener("keydown", keypress);
+
+                                container.appendChild(start);
+                                container.appendChild(end);
+
+                                return container;
+                                }
+
+                                //custom max min filter function
+                                function minMaxFilterFunction(headerValue, rowValue, rowData, filterParams){
+                                //headerValue - the value of the header filter element
+                                //rowValue - the value of the column in this row
+                                //rowData - the data for the row being filtered
+                                //filterParams - params object passed to the headerFilterFuncParams property
+
+                                    if(rowValue){
+                                        if(headerValue.start != ""){
+                                            if(headerValue.end != ""){
+                                                return rowValue >= headerValue.start && rowValue <= headerValue.end;
+                                            }else{
+                                                return rowValue >= headerValue.start;
+                                            }
+                                        }else{
+                                            if(headerValue.end != ""){
+                                                return rowValue <= headerValue.end;
+                                            }
+                                        }
+                                    }
+
+                                return true; //must return a boolean, true if it passes the filter.
+                                }
+                                var table = new Tabulator("#herds", {
+                                    paginationSize: 10,
+                                    ajaxURL: "{{ route('camel_breeder.send_herds') }}", //set url for ajax request
+                                    ajaxContentType:"json",
+                                    pagination:"local",
+                                    paginationSize:10,
+                                    layout:"fitColumns",
+                                    placeholder: "Nincsenek csordák :(",
+                                    columns: [
+                                        {
+                                            title: "Név",
+                                            field: "name",
+                                            sorter: "string",
+                                            headerFilter: 'input',
+                                        },
+                                        {
+                                            title: "Hány tevéből áll?",
+                                            field: "camel_count",
+                                            sorter: "number",
+                                            headerFilter:minMaxFilterEditor, 
+                                            headerFilterFunc:minMaxFilterFunction,
+                                            cssClass:"italic",
+                                            editor:"number",
+                                            cellEdited:function(cell){
+                                                $.ajaxSetup({
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    }
+                                                });
+                                                $.ajax({
+                                                    url: "{{ route('camel_breeder.change_herd') }}",
+                                                    data: cell.getRow().getData(),
+                                                    type: "post",
+                                                    success: function(response, textStatus, xhr){
+                                                        M.toast({html: 'Sikeres módosítás!'});
+                                                    },
+                                                })
+                                            },
+                                        },
+                                    ],
+                                });
+                            });
+                        </script>
                     </div>
                     <div id="pasztorok" class="col s12">
                         <div id="shepherds"></div>
@@ -229,7 +294,8 @@
                                 start.setAttribute("min", 0);
                                 start.setAttribute("max", 100);
                                 start.style.padding = "4px";
-                                start.style.width = "50%";
+                                start.style.width = "48%";
+                                start.style.marginRight = "5px";
                                 start.style.boxSizing = "border-box";
 
                                 start.value = cell.getValue();
@@ -293,8 +359,11 @@
                                     paginationSize: 10,
                                     ajaxURL: "{{ route('camel_breeder.send_shepherds') }}", //set url for ajax request
                                     ajaxContentType:"json",
+                                    pagination:"local",
+                                    paginationSize:10,
                                     layout:"fitColumns",
-                                    placeholder: "Nincs ilyen pásztor",
+                                    initialFilter:[{field:"id", type:"!=", value:"0"}],
+                                    placeholder: "Nincs ilyen pásztor :(",
                                     columns: [
                                         {
                                             title: "Pásztor",
@@ -322,7 +391,24 @@
                                             field: "min_camels",
                                             sorter: "number",
                                             headerFilter:minMaxFilterEditor, 
-                                            headerFilterFunc:minMaxFilterFunction
+                                            headerFilterFunc:minMaxFilterFunction,
+                                            cssClass:"italic",
+                                            editor:"number",
+                                            cellEdited:function(cell){
+                                                $.ajaxSetup({
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                    }
+                                                });
+                                                $.ajax({
+                                                    url: "{{ route('camel_breeder.change_shepherd') }}",
+                                                    data: cell.getRow().getData(),
+                                                    type: "post",
+                                                    success: function(response, textStatus, xhr){
+                                                        M.toast({html: 'Sikeres módosítás!'});
+                                                    },
+                                                })
+                                            },
                                         },
                                     ],
                                 });
@@ -348,7 +434,8 @@
 
                                 inputs.css({
                                     "padding":"4px",
-                                    "width":"50%",
+                                    "marginRight":"5px",
+                                    "width":"48%",
                                     "box-sizing":"border-box",
                                 })
                                 .val(cell.getValue());
@@ -411,6 +498,8 @@
                                     ajaxURL: "{{ route('camel_breeder.send_shepherdings') }}", //set url for ajax request
                                     ajaxContentType:"json",
                                     layout:"fitColumns",
+                                    pagination:"local",
+                                    paginationSize:10,
                                     placeholder: "Nincs ilyen tevenevelés :(",
                                     columns: [
                                         {
@@ -418,6 +507,7 @@
                                             field: "name",
                                             sorter: "string",
                                             headerFilter: 'input',
+                                            bottomCalc:"count"
                                         },
                                         {
                                             title: "Pásztor azonosító",
@@ -429,17 +519,21 @@
                                             title: "Csorda",
                                             field: "herd",
                                             sorter: "string",
-                                            headerFilter: 'input'
+                                            headerFilter:"input"
                                         },
                                         {
                                             title: "Dátum",
                                             field: "created_at",
                                             sorter: "string",
+                                            widthGrow:1.2,
                                             minWidth:350,
                                             headerFilter:dateFilterEditor, 
                                             headerFilterFunc:dateFilterFunction
                                         },
                                     ],
+                                    initialSort: [
+                                        {column: "created_at", dir: "desc"}
+                                    ]
                                 });
                             });
                         </script>

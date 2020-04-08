@@ -108,7 +108,7 @@ $card-link-color-light: lighten($card-link-color, 20%) !default;
 // 5. Carousel
 // ==========================================================================
 
-$carousel-height: 400px !default;
+$carousel-height: 800px !default;
 $carousel-item-height: $carousel-height / 2 !default;
 $carousel-item-width: $carousel-item-height !default;
 
@@ -279,8 +279,8 @@ $spinner-default-color: $secondary-color !default;
 // 17. Tabs
 // ==========================================================================
 
-$tabs-underline-color: $primary-color-light !default;
-$tabs-text-color: $primary-color !default;
+$tabs-underline-color: $secondary-color !default;
+$tabs-text-color: $secondary-color !default;
 $tabs-bg-color: #fff !default;
 
 

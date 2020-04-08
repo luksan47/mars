@@ -105,7 +105,7 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Vissza</a>
         </div>
     </div>
-    <div class="row" style="height: 90vh; align-items: center;display: flex;">
+    <div class="row" style="margin-top:50px;">
         <div class="container">
         <a class="left waves-effect btn-flat modal-trigger" href="#history">Történet</a>
         <a class="right waves-effect btn-flat" href="/camelbreeder/edit">Szerkesztés</a>
