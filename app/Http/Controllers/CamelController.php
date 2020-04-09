@@ -12,22 +12,19 @@ class CamelController extends Controller
     {
         $shepherds = DB::table('shepherds')->get();
         $herds = DB::table('herds')->get();
-        $shepherdings = DB::table('shepherding')->get();
 
-        return view('camel_breeder.app', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
+        return view('camel_breeder.app', ['shepherds' => $shepherds, 'herds' => $herds]);
     }
-    
-    public function show_edit(Request $request)
-    {
-        $result =  DB::table('farmer')->select('password')->first();
-        $hashedPassword = $result->password;
+
+    public function password(Request $request){
+        $hashedPassword =  DB::table('farmer')->first()->password;
+        $shepherds = DB::table('shepherds')->get();
+        $herds = DB::table('herds')->get();
+        $shepherdings = DB::table('shepherding')->get();
         if(Hash::check($request->input('password'), $hashedPassword)){
-            $shepherds = DB::table('shepherds')->get();
-            $herds = DB::table('herds')->get();
-            $shepherdings = DB::table('shepherding')->get();
-            return view('camel_breeder.edit', ['shepherds' => $shepherds, 'herds' => $herds, 'shepherdings' => $shepherdings]);
+            return back()->with('edit', '');
         }else{
-            return back()->with('wrong_password', '');
+            return back()->with('message', 'Rossz jelszó! :(');
         }
     }
 
@@ -56,19 +53,18 @@ class CamelController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|unique:shepherds',
             'id' => 'required|numeric|min:0|unique:shepherds',
-            'camels' => '',
         ]);
+        $def_min_camels = DB::table('farmer')->first()->def_min_camels;
 
         DB::table('shepherds')->insert(
             [
                 'name' => $validatedData['name'],
                 'id' => $validatedData['id'],
-                'camels' => $validatedData['camels'] ?? 0,
-                'min_camels' => env('CAMEL_MIN', -500),
+                'camels' => $request->input('camels') ?? 0,
+                'min_camels' => $def_min_camels,
             ]
         );
-
-        return redirect()->back()->with('success', '');
+        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
     }
 
     public function add_herd(Request $request)
@@ -85,7 +81,7 @@ class CamelController extends Controller
             ]
         );
 
-        return redirect()->back()->with('success', '');
+        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
     }
 
     public function add_camels(Request $request)
@@ -101,11 +97,9 @@ class CamelController extends Controller
                 ->where('id', $validatedData['id'])
                 ->update(['camels' => $old_camels + $validatedData['camels']]);
 
-            return redirect()->back()->with('success', '');
+            return redirect()->back()->with('message', 'Sikeres módosítás!');
         } else {
-            return back()
-                ->withErrors(['id' => 'Vendég nem adhat hozzá tevéket!'])
-                ->withInput();
+            return redirect()->back()->with('message', 'Vendég nem adhat hozzá tevéket!');
         }
     }
 
@@ -120,7 +114,7 @@ class CamelController extends Controller
             ->where('name', $validatedData['name'])
             ->update(['camel_count' => $validatedData['camel_count']]);
 
-        return redirect()->back()->with('success', '');
+        return redirect()->back()->with('message', 'Sikeres módosítás!');
     }
     public function change_shepherd(Request $request){
         $validatedData = $request->validate([
@@ -131,6 +125,7 @@ class CamelController extends Controller
         DB::table('shepherds')
             ->where('id', $validatedData['id'])
             ->update(['min_camels' => $validatedData['min_camels']]);
+        return redirect()->back()->with('message', 'Sikeres módosítás!');
     }
 
     public function shepherding(Request $request)
@@ -148,8 +143,10 @@ class CamelController extends Controller
         }
         $shepherd_s_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
         $new_camels = $shepherd_s_camels - $all_camels;
+        
+        $min_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('min_camels');
 
-        if ($new_camels < env('CAMEL_MIN', -500) && $validatedData['id'] != 0) { //not visitor and have enough camels
+        if ($new_camels < $min_camels && $validatedData['id'] != 0) { //not visitor and have enough camels
             return back()
                 ->withErrors(['herds'=> 'Nincs ennyi tevéd!'])
                 ->withInput();
@@ -167,15 +164,24 @@ class CamelController extends Controller
             DB::table('shepherds')->where('id', $validatedData['id'])->update(['camels' => $new_camels]);
         }
 
-        return redirect()->back()->with('success', '');
+        return redirect()->back()->with('message', 'Sikeres tevézés!');
     }
 
     public function change_password(Request $request){
-        $validatedData = $request->validate([
-            'password' => 'required',
-        ]);
-
-        DB::table('farmer')
-            ->update(['password' => Hash::make($validatedData['password'])]);
+        $hashedPassword =  DB::table('farmer')->first()->password;
+        if(Hash::check($request->input('old_password'), $hashedPassword)){
+            DB::table('farmer')
+                ->update(['password' => Hash::make($request->input('new_password'))]);
+            
+            $shepherds = DB::table('shepherds')->get();
+            $herds = DB::table('herds')->get();
+            return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
+        }else{
+            return redirect()->back()->with('message', 'Rossz jelszó! :(');
+        }
+    }
+    public function change_def_min_camels(Request $request){
+        DB::table('farmer')->update(['def_min_camels' => $request->input('def_min_camels')]);
+        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
     }
 }

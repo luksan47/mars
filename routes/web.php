@@ -68,7 +68,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 
     Route::get('/camelbreeder', 'CamelController@index')->name('camel_breeder');
-    Route::post('/camelbreeder/edit', 'CamelController@show_edit')->name('camel_breeder.edit');
+    //Route::get('/camelbreeder/edit', 'CamelController@show_edit')->name('camel_breeder.edit');
+    Route::post('/camelbreeder/password', 'CamelController@password')->name('camel_breeder.password');
     Route::get('/camelbreeder/send_shepherds', 'CamelController@send_shepherds')->name('camel_breeder.send_shepherds');
     Route::get('/camelbreeder/send_herds', 'CamelController@send_herds')->name('camel_breeder.send_herds');
     Route::get('/camelbreeder/send_shepherdings', 'CamelController@send_shepherdings')->name('camel_breeder.send_shepherdings');
@@ -78,5 +79,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/camelbreeder/change_herd', 'CamelController@change_herd')->name('camel_breeder.change_herd');
     Route::post('/camelbreeder/change_shepherd', 'CamelController@change_shepherd')->name('camel_breeder.change_shepherd');
     Route::post('/camelbreeder/add_camels', 'CamelController@add_camels')->name('camel_breeder.add_camels');
+    Route::post('/camelbreeder/change_password', 'CamelController@change_password')->name('camel_breeder.change_password');
+    Route::post('/camelbreeder/change_def_min_camels', 'CamelController@change_def_min_camels')->name('camel_breeder.change_def_min_camels');
+    
     
 });

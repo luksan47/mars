@@ -14,12 +14,15 @@
     <!-- Styles -->
     <!-- materialize css generated from resources/sass/materialize.scss-->
     <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection" />
+    <link rel="stylesheet" href="{{ asset('css/tabulator_materialize.min.css') }}">
 
     <!-- Scripts -->
+    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <!-- modified materialize js for searchable select: https://codepen.io/yassinevic/pen/eXjqjb?editors=1111 -->
     <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/camelbreeder.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
 
 
     <!-- Fonts -->
@@ -30,9 +33,10 @@
     <script>
     $(document).ready(function(){
         $('.modal').modal();
+        $('.collapsible').collapsible();
         $('input.shepherd_autocomplete').autocomplete({
             data: {
-                @foreach($shepherds as $shepherd)
+                @foreach($shepherds  as $shepherd)
                 "{{$shepherd -> name}}": null,
                 {{$shepherd -> id}}: null,
                 @endforeach
@@ -59,12 +63,12 @@
             return false;
             }
         });
-        @if (\Session::has('success'))
-        M.toast({html: 'Sikeres tevézés!'})
+        @if (session('message'))
+        M.toast({html: "{{ session('message') }}" })
         @endif
-        @if (\Session::has('wrong_password'))
-        M.toast({html: 'Rossz jelszó! :('})
-        @endif
+    });
+    $(document).ajaxError(function(){
+        alert("An ajax error occurred!");
     });
     const shepherds = {
         @foreach($shepherds as $shepherd) 
@@ -81,6 +85,7 @@
         "{{ $herd -> name }}": {{ $herd -> camel_count }},
         @endforeach
     };
+
     </script> 
 </head>
 
@@ -108,28 +113,35 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Vissza</a>
         </div>
     </div>
-    <div id="password" class="modal">
-        <div class="modal-content">
-            <form method="POST" id="password_form" action="{{ route('camel_breeder.edit') }}">
-                @csrf
-                <div class="row">
-                    <div class="col s10">
-                        <input id="password_input" type="password" name="password" required placeholder="Titkos jelszó...">
-                    </div>
-                    <div class="col s2">
-                        <button class="btn waves-effect" type="submit">Belépés</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="row" style="margin-top:50px;">
+    <div class="row" style="margin-top:30px;">
         <div class="container">
-            <a class="left modal-trigger btn-flat" href="#history">Történet</a>
-            <a class="right modal-trigger btn-flat" href="#password">Szerkesztés</a>
+            @if (\Session::has('edit'))
+            <a class="right btn btn-large white black-text" style="width:150px" href="{{route('camel_breeder')}}">Vissza</a>
+            @else
+            <ul class="right collapsible" style="width:150px">
+                <li>
+                    <div class="collapsible-header btn-large btn-flat white black-text" style="display: block">SZERKESZTÉS</div>
+                    <div class="collapsible-body">
+                        <form method="POST" id="password_form" action="{{ route('camel_breeder.password') }}">
+                            @csrf
+                            <input type="password" name="password" required placeholder="Titkos jelszó..." onkeydown="submitForm(event)">
+                            <script>
+                            function submitForm(event){
+                                if(event.keyCode == 13){
+                                    document.getElementById("password_form").submit();
+                                }
+                            }
+                            </script>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+            @endif
             <div class="col s12">
+                <a class="black-text modal-trigger" href="#history">
                 <h5 class="center-align" style="font-size:50px;font-weight:300;letter-spacing:3px;">TEVENEVELDE</h5> 
                 <img src="\img\camelbreeder.png" style="display: block;margin-left: auto;margin-right: auto;" class="center-align">
+            </a>
                 @if ($errors->any())
                 <div class="row">
                     <blockquote class="error col offset-s1">
@@ -145,7 +157,7 @@
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
-                                <input type="text" id="shepherd" name="id" class="shepherd_autocomplete"
+                                <input type="text" id="shepherd" name="id" class="shepherd_autocomplete" required
                                     onchange="shepherdInfo(this.value, 'shepherd')" autofocus>
                                 <label for="id">Pásztor</label>
                                 <blockquote id="shepherd_text"><i>Válassz egy pásztort!</i></blockquote>
@@ -165,13 +177,13 @@
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
-                                <input type="text" id="shepherd2" name="id" class="shepherd2_autocomplete"
+                                <input type="text" id="shepherd2" name="id" class="shepherd2_autocomplete" required
                                     onchange="shepherdInfo(this.value, 'shepherd2')"/>
                                 <label for="id">Pásztor</label>
                                 <blockquote id="shepherd2_text"><i>Válassz egy pásztort!</i></blockquote>
                             </div>
                             <div class="input-field col s4">
-                                <input type="number" id="camels" name="camels">
+                                <input type="number" id="camels" name="camels" required>
                                 <label for="herd">Tevék</label>
                             </div>
                             <div class="input-field col s3">
@@ -181,6 +193,9 @@
                     </form>
                 </div>
             </div>
+            @if (\Session::has('edit'))
+                @include('camel_breeder.edit')
+            @endif
         </div>
     </div>
 </body>
