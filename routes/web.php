@@ -81,6 +81,4 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/camelbreeder/add_camels', 'CamelController@add_camels')->name('camel_breeder.add_camels');
     Route::post('/camelbreeder/change_password', 'CamelController@change_password')->name('camel_breeder.change_password');
     Route::post('/camelbreeder/change_def_min_camels', 'CamelController@change_def_min_camels')->name('camel_breeder.change_def_min_camels');
-    
-    
 });
