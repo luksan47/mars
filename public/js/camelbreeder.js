@@ -3,22 +3,26 @@ function shepherdInfo(val, elementId) {
     input = document.getElementById(elementId);
     info = document.getElementById(elementId+'_text'); 
     input.classList.remove("invalid");
-    if(!isNaN(val)){
+    if(val==""){
+        id=0;
+        input.value=id;
+    }
+    else if(!isNaN(val)){
         id=val;
     }
     else {
-        id=shepherds[val];
+        id=shepherd_n_id[val];
         input.value=id;
     }
-    if (!(id in camels)){
+    if (!(id in id_n_shepherd)){
         input.classList.add("invalid");
         info.innerHTML = "Nincs ilyen pásztor!";
     }
     else{
         if (id == 0) {
-            text = "<i>Válassz egy pásztort!</i>"
+            text = "<i>Vendég kiválasztva...</i>"
         } else {
-            text = "<i>" + camels[id].name + "</i> tevéinek száma: " + camels[id].camels;
+            text = "<i>" + id_n_shepherd[id].name + "</i> tevéinek száma: " + id_n_shepherd[id].camels;
         }
         info.innerHTML = text;
     }
@@ -66,22 +70,13 @@ function updateHerdsInfo(){
     info = document.getElementById('herd_text');
     info.innerHTML = "Összesen " + camels_in_herds + " tevéből állnak a csordák.";
 }
-/*
-function toggleHistory() {
-    var x = document.getElementById("history");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
-}
-*/
+
 function isInvalidName(name) {
     info = document.getElementById('name_text');
     input = document.getElementById('shepherd_name');
     input.classList.remove("invalid");
     info.innerHTML = "";
-    if (Object.keys(shepherds).indexOf(name) >= 0){
+    if (Object.keys(shepherd_n_id).indexOf(name) >= 0){
         input.classList.add("invalid");
         info.innerHTML = "Ez a név már foglalt!";
     }
@@ -92,8 +87,7 @@ function isInvalidId(id) {
     input = document.getElementById('shepherd_id');
     input.classList.remove("invalid");
     info.innerHTML = "";
-    //TODO not working
-    if (Object.values(shepherds).indexOf(id) >= 0){
+    if (Object.keys(id_n_shepherd).indexOf(id) >= 0){
         input.classList.add("invalid");
         info.innerHTML = "Ez a szám már foglalt!";
     }
