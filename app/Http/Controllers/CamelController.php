@@ -13,12 +13,13 @@ class CamelController extends Controller
         return view('camel_breeder.app');
     }
 
-    public function password(Request $request){
-        $hashedPassword =  DB::table('farmer')->first()->password;
+    public function password(Request $request)
+    {
+        $hashedPassword = DB::table('farmer')->first()->password;
         $shepherdings = DB::table('shepherding')->get();
-        if(Hash::check($request->input('password'), $hashedPassword)){
+        if (Hash::check($request->input('password'), $hashedPassword)) {
             return back()->with('edit', '');
-        }else{
+        } else {
             return back()->with('message', 'Rossz jelszó! :(');
         }
     }
@@ -26,23 +27,27 @@ class CamelController extends Controller
     public function send_shepherds(Request $request)
     {
         $data = DB::table('shepherds')->get();
+
         return response()->json($data);
     }
-    
-    public function send_herds(Request $request){
+
+    public function send_herds(Request $request)
+    {
         $data = DB::table('herds')->get();
+
         return response()->json($data);
     }
-    
+
     public function send_shepherdings(Request $request)
     {
         $data = DB::table('shepherding')
-            ->join('shepherds', 'shepherds.id','=','shepherding.shepherd')
-            ->select('shepherds.name as name','shepherd as id', 'herd', 'created_at')
+            ->join('shepherds', 'shepherds.id', '=', 'shepherding.shepherd')
+            ->select('shepherds.name as name', 'shepherd as id', 'herd', 'created_at')
             ->get();
+
         return response()->json($data);
     }
-    
+
     public function shepherding(Request $request)
     {
         $validatedData = $request->validate([
@@ -55,7 +60,7 @@ class CamelController extends Controller
             $camels = DB::table('herds')->where('name', $herd)->value('camel_count');
             $all_camels += $camels;
         }
-        if ($validatedData['id']==0){ //if visitor
+        if ($validatedData['id'] == 0) { //if visitor
             //store in shepherdings
             foreach ($validatedData['herds'] as $herd) {
                 DB::table('shepherding')->insert(
@@ -66,12 +71,12 @@ class CamelController extends Controller
                     ]
                 );
             }
-        }else{
+        } else {
             $shepherd_s_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('camels');
             $new_camels = $shepherd_s_camels - $all_camels;
             $min_camels = DB::table('shepherds')->where('id', $validatedData['id'])->value('min_camels');
 
-            if ($new_camels < $min_camels) { //shepherd does have enough camels assigned to himself/herself 
+            if ($new_camels < $min_camels) { //shepherd does have enough camels assigned to himself/herself
                 return back()
                     ->withErrors(['herds'=> 'Nincs ennyi tevéd!'])
                     ->withInput()
@@ -110,7 +115,8 @@ class CamelController extends Controller
                 'min_camels' => $def_min_camels,
             ]
         );
-        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
+
+        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit', '');
     }
 
     public function add_herd(Request $request)
@@ -127,7 +133,7 @@ class CamelController extends Controller
             ]
         );
 
-        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
+        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit', '');
     }
 
     public function add_camels(Request $request)
@@ -163,30 +169,37 @@ class CamelController extends Controller
         return redirect()->back()->with('message', 'Sikeres módosítás!');
     }
 
-    public function change_shepherd(Request $request){
+    public function change_shepherd(Request $request)
+    {
         $validatedData = $request->validate([
             'id' => 'required|numeric|exists:shepherds',
-            'min_camels' => 'required|numeric'
+            'min_camels' => 'required|numeric',
         ]);
 
         DB::table('shepherds')
             ->where('id', $validatedData['id'])
             ->update(['min_camels' => $validatedData['min_camels']]);
+
         return redirect()->back()->with('message', 'Sikeres módosítás!');
     }
 
-    public function change_password(Request $request){
-        $hashedPassword =  DB::table('farmer')->first()->password;
-        if(Hash::check($request->input('old_password'), $hashedPassword)){
+    public function change_password(Request $request)
+    {
+        $hashedPassword = DB::table('farmer')->first()->password;
+        if (Hash::check($request->input('old_password'), $hashedPassword)) {
             DB::table('farmer')
                 ->update(['password' => Hash::make($request->input('new_password'))]);
-            return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
-        }else{
+
+            return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit', '');
+        } else {
             return redirect()->back()->with('message', 'Rossz jelszó! :(');
         }
     }
-    public function change_def_min_camels(Request $request){
+
+    public function change_def_min_camels(Request $request)
+    {
         DB::table('farmer')->update(['def_min_camels' => $request->input('def_min_camels')]);
-        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit','');
+
+        return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit', '');
     }
 }
