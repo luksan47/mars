@@ -38,19 +38,8 @@
                 document.getElementById("farmer_password").focus();
             }
         });
-        $(window).keydown(function(event){
-            if(event.keyCode == 13){
-                if(document.getElementById('herd').value!="") {
-                    addHerd(document.getElementById('herd').value);
-                    event.preventDefault();
-                }
-                if(document.getElementById('shepherd') === document.activeElement){
-                    event.preventDefault();
-                }
-            }
-        });
 
-        //get herds
+        //request herds
         $.ajax({
             url: "{{route('camel_breeder.send_herds')}}",
             type: "get",
@@ -66,7 +55,7 @@
                 });
             },
         })
-        //get shepherds
+        //request shepherds
         $.ajax({
             url: "{{route('camel_breeder.send_shepherds')}}",
             type: "get",
@@ -170,26 +159,31 @@
                         <p>{{ $error }}</p>
                         @endforeach
                     </blockquote>
-                    <script>M.toast({html: '@foreach ($errors->all() as $error){{ $error }} @endforeach'})</script>
+                    <script>M.toast({html: '@foreach ($errors->all() as $error){{ $error }} @endforeach', classes: 'white black-text'})</script>
                 </div>
                 @endif
                 <div class="row"> 
-                    <form method="POST" id="shepherding_form" action="{{ route('camel_breeder.shepherding') }}">
+                    <form method="POST" onsubmit="submit_shepherding(event)" id="shepherding_form" action="{{ route('camel_breeder.shepherding') }}">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
-                                <input type="text" id="shepherd" name="id" class="shepherd_autocomplete" required
-                                    onchange="shepherdInfo(this.value, 'shepherd')" onfocusout="shepherdInfo(this.value, 'shepherd')"
-                                    autofocus tabindex="1" placeholder="Vendég">
+                                <input type="text" id="shepherd" name="id" class="shepherd_autocomplete" 
+                                    onchange="shepherdInfo(this.value, 'shepherd')"
+                                    onfocusout="shepherdInfo(this.value, 'shepherd')"
+                                    autofocus tabindex="1" required placeholder="Vendég">
                                 <label for="id">Pásztor</label>
                                 <blockquote id="shepherd_text"><i>Válassz egy pásztort!</i></blockquote>
                             </div>
                             <div class="input-field col s4">
-                                <input type="text" id="herd" class="herd_autocomplete" tabindex="2" onkeyup="submit_shepherding(event)"> 
+                                <input type="text" id="herd" class="herd_autocomplete" tabindex="2" onkeyup="herd_enter(event)"> 
                                 <script>
-                                function submit_shepherding(event){
-                                    if(event.keyCode == 13 && document.getElementById("herd").value==""){
-                                        document.getElementById("shepherding_form").submit();
+                                function herd_enter(event){
+                                    if(event.keyCode == 13){
+                                        if(document.getElementById("herd").value==""){
+                                            document.getElementById("shepherding_form").submit();
+                                        }else{
+                                            addHerd(document.getElementById('herd').value);
+                                        }
                                     }
                                 }
                                 </script>
@@ -202,6 +196,14 @@
                             </div>
                         </div>
                     </form>
+                    <script>
+                        function submit_shepherding(e) {
+                            if(document.getElementById('shepherd') === document.activeElement || document.getElementById("herd").value!=""){
+                                e.preventDefault();
+                                return false;
+                            }
+                        }
+                    </script>
                     <form method="POST" action="{{ route('camel_breeder.add_camels') }}">
                         @csrf
                         <div class="row">

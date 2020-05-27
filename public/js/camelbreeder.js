@@ -17,6 +17,7 @@ function shepherdInfo(val, elementId) {
     if (!(id in id_n_shepherd)){
         input.classList.add("invalid");
         info.innerHTML = "Nincs ilyen pásztor!";
+        input.value=':(';
     }
     else{
         if (id == 0) {
@@ -27,21 +28,6 @@ function shepherdInfo(val, elementId) {
         info.innerHTML = text;
     }
 }
-//nem kell:
-/*
-function showHerds(name) {
-    info = document.getElementById('herd_text');
-    input = document.getElementById('herd');
-    input.classList.remove("invalid");
-    if (!(name in herds)){
-        input.classList.add("invalid");
-        info.innerHTML = "Nincs ilyen csorda!";
-    }else{
-        text = "Ez a csorda " + herds[name] + " tevéből áll.";
-        info.innerHTML = text;
-    }
-}
-*/
 function addHerd(name) {
     info = document.getElementById('herd_text');
     input = document.getElementById('herd');

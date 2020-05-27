@@ -39,7 +39,7 @@ $(document).ready(function(){
                             <label for="camels">Kezdő teveszám</label>
                         </div>
                         <div class="input-field col s2">
-                            <button class="btn waves-effect" type="submit">Hozzáadás</button>
+                            <button class="btn waves-effect" type="submit" style="width:100%">Hozzáadás</button>
                         </div>
                     </div>
                 </form>
@@ -57,7 +57,7 @@ $(document).ready(function(){
                         <label for="id">Hány tevéből áll?</label>
                     </div>
                     <div class="input-field col s2">
-                        <button class="btn waves-effect" type="submit">Hozzáadás</button>
+                        <button class="btn waves-effect" type="submit" style="width:100%">Hozzáadás</button>
                     </div>
                 </div>
             </form>
@@ -79,34 +79,46 @@ $(document).ready(function(){
                     @include('camel_breeder.tabulators.shepherdings')
                 </div>
             </div>
-            <form method="POST" action="{{ route('camel_breeder.change_password') }}">
-                @csrf
-                <div class="row">
-                    <div class="input-field col s5">
-                        <input id="old_password" name="old_password" type="password" required>
-                        <label for="old_password">Régi jelszó</label>
+            <a class="waves-effect waves-teal btn-flat scale-transition" id="advanced_button" onclick="toggle_advanced_settings()">További beállítások</a>
+            <script>
+                function toggle_advanced_settings(){
+                    settings = document.getElementById('advanced_settings');
+                    button = document.getElementById('advanced_button');
+                    settings.style.display = 'block';
+                    settings.classList.add("scale-in");
+                    button.classList.add('scale-out');
+                };
+            </script>
+            <div id="advanced_settings" style="display:none" class="scale-transition scale-out">
+                <form method="POST" action="{{ route('camel_breeder.change_password') }}">
+                    @csrf
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="old_password" name="old_password" type="password" required>
+                            <label for="old_password">Régi jelszó</label>
+                        </div>
+                        <div class="input-field col s5">
+                            <input id="new=password" name="new_password" type="password" required>
+                            <label for="new_password">Új jelszó</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <button type="submit" class="btn waves-effect" style="width:100%">Módosítás</button>
+                        </div>
                     </div>
-                    <div class="input-field col s5">
-                        <input id="new=password" name="new_password" type="password" required>
-                        <label for="new_password">Új jelszó</label>
+                </form>
+                <form method="POST" action="{{ route('camel_breeder.change_def_min_camels') }}">
+                    @csrf
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="def_min_camels" name="def_min_camels" type="number" required>
+                            <label for="def_min_camels">Alapértelmezett minimum teveszám</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <button type="submit" class="btn waves-effect" style="width:100%">Módosítás</button>
+                        </div>
                     </div>
-                    <div class="input-field col s2">
-                        <button type="submit" class="btn waves-effect right">Módosítás</button>
-                    </div>
-                </div>
-            </form>
-            <form method="POST" action="{{ route('camel_breeder.change_def_min_camels') }}">
-                @csrf
-                <div class="row">
-                    <div class="input-field col s10">
-                        <input id="def_min_camels" name="def_min_camels" type="number" required>
-                        <label for="def_min_camels">Alapértelmezett minimum teveszám</label>
-                    </div>
-                    <div class="input-field col s2">
-                        <button type="submit" class="btn waves-effect right">Módosítás</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
             <a class="right btn-floating btn-large waves-effect waves-light" 
                 href="{{route('camel_breeder')}}">
                 <i class="white coli-text text-orange material-icons">close</i>

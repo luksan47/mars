@@ -96,7 +96,7 @@
                     title: "Pásztor azonosító",
                     field: "id",
                     sorter: "number",
-                    headerFilter: 'input',
+                    headerFilter: 'number',
                 },
                 {
                     title: "Csorda",
