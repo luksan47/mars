@@ -74,8 +74,7 @@ class CamelController extends Controller
             if ($new_camels < $min_camels) { //shepherd does have enough camels assigned to himself/herself 
                 return back()
                     ->withErrors(['herds'=> 'Nincs ennyi tevéd!'])
-                    ->withInput()
-                    ->with('message', 'Nincs ennyi tevéd!');
+                    ->withInput();
             }
             //store in shepherdings
             foreach ($validatedData['herds'] as $herd) {
