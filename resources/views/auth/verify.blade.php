@@ -9,7 +9,7 @@
             <div class="card-content">
                 <div class="card-title">@lang('Verify Your Email Address')</div>
                 @if (session('resent'))
-                <blockquote class="error">@lang('A fresh verification link has been sent to your email address.')</blocquote>
+                <blockquote class="error">@lang('A fresh verification link has been sent to your email address.')</blockquote>
                 @endif
                 <blockquote>@lang('Before proceeding, please check your email for a verification link.')</blockquote>
                 <p>@lang('If you did not receive the email'),

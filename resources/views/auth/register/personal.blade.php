@@ -9,7 +9,7 @@
     <div class="input-field col s12 m12 l6">
         <input id="place_of_birth" name="place_of_birth" type="text" class="validate" value="{{ old('place_of_birth') }}"
             required autocomplete="place_of_birth">
-        <label for="name">@lang('info.place_of_birth')</label>
+        <label for="place_of_birth">@lang('info.place_of_birth')</label>
         @error('place_of_birth')
         <blockquote class="error">{{ $message }}</blockquote>
         @enderror

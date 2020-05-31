@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="email" id="email" name="email" class="validate" value="{{ old('email') }}" autocomplete="email" autofocus required>
-                        <label for="autocomplete-input">@lang('registration.email')</label>
+                        <label for="email">@lang('registration.email')</label>
                     </div>
                 </div>
                 <div class="row">

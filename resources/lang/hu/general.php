@@ -7,7 +7,7 @@ return [
     'login'=> 'Belépés',
     'register' => 'Regisztráció',
     'you_are_logged_in' => 'Sikeresen beléptél.',
-    'dashboard' => 'Irányítópult',
+    'home' => 'Kezdőlap',
     'register_guest' => 'Vendégeknek',
     'register_collegist' => 'Collegistáknak',
     'i_understand' => 'Értem',

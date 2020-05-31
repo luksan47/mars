@@ -1,8 +1,11 @@
 <!--TODO: visible only if user have free pages-->
-
-<p>@lang('print.free'):</p>
-<div id="free-page-table"></div>
-<blockquote>@lang('print.free_pages_description')</blockquote>
+<div class="card">
+    <div class="card-content">
+        <div class="card-title">@lang('print.free')</div>
+        <div id="free-page-table"></div>
+        <blockquote>@lang('print.free_pages_description')</blockquote>
+    </div>
+</div>
 <script type="application/javascript">
     $(document).ready(function () {
         var table = new Tabulator("#free-page-table", {
