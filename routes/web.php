@@ -64,4 +64,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
+
+    Route::get('/games', 'Games\GamesController@index')->name('games');
+    Route::get('/games/domino/create', 'Games\DominoController@create')->name('games.domino.create');
 });

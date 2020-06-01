@@ -1,0 +1,39 @@
+
+
+.domino-piece {
+    background-color:rgb(136, 176, 75);
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    color: white;
+    width: 50px;
+    height: 50px;
+    margin: 0px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: small;
+}
+
+.domino-piece-small {
+    font-size: xx-small!important;
+}
+
+.domino {
+    display: table-cell;
+    border-color: black;
+    border-width: 3px;
+    border-style: solid;
+    margin: 0px;
+    border-radius: .25rem!important;
+}
+
+#map {
+    border-color: black;
+    border-width: 3px;
+    border-style: solid;
+}
+
+.map-element {
+    width: 52px;
+    height: 52px;
+}
