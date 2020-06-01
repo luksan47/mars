@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Console\Commands;
 use App\User;
 use App\PrintAccount;
 use App\FreePages;
@@ -207,11 +208,9 @@ class PrintController extends Controller
     }
 
     private function updateCompletedPrintingJobs() {
-        if (!config('app.debug')) {
-            exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
-            Log::info($result);
-            PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
-        }
+        $result = Commands::updateCompletedPrintingJobs();
+        Log::info("Completed jobs: " . implode(', ', $result));
+        PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
     }
 
     private function printFile($file, $cost, $is_two_sided, $number_of_copies) {
@@ -224,8 +223,8 @@ class PrintController extends Controller
                     . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ")
                     . "-n " . $number_of_copies . " "
                     . $path . " 2>&1";
-            $result = exec($command);
             Log::info($command);
+            $result = Commands::print($command);
             if (!preg_match("/^request id is ([^\s]*) \\([0-9]* file\\(s\\)\\)$/", $result, $job)) {
                 Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). result:"
                     . print_r($result, true));
@@ -258,7 +257,7 @@ class PrintController extends Controller
     }
 
     private function getPages($validator, $path) {
-        $pages = exec("pdfinfo " . $path . " | grep '^Pages' | awk '{print $2}' 2>&1");
+        $pages = Commands::getPages($path);
 
         if ($pages == "" || !is_numeric($pages) || $pages <= 0) {
             Log::error("Cannot get number of pages for uploaded file!" . print_r($pages, true));
