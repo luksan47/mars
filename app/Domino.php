@@ -18,7 +18,7 @@ class Domino extends Model
     {
         return $this->belongsTo('App\User', 'owner', 'id');
     }
-    
+
     public function players()
     {
         return $this->hasMany(User::class, 'game_domino_players', 'game_id', 'player');

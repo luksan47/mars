@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Games;
 
 use App\Http\Controllers\Controller;
-use App\Role;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class GamesController extends Controller
 {
@@ -13,5 +10,4 @@ class GamesController extends Controller
     {
         return view('games.app');
     }
-
 }
