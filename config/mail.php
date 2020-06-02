@@ -2,6 +2,9 @@
 
 return [
 
+    // Set to true, if you wish to send mails on triggers.
+    'active' => env('MAIL_ACTIVE', false),
+
     /*
     |--------------------------------------------------------------------------
     | Mail Driver
@@ -16,7 +19,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => 'smtp',
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +32,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +60,13 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name' => env('APP_NAME', 'Urán'),
+    ],
+
+
+    'reply_to' => [
+        'address' => env('MAIL_REPLYTO_ADDRESS', 'hello@example.com'),
+        'name' => env('APP_NAME', 'Urán'),
     ],
 
     /*
@@ -71,7 +80,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => 'tls',
 
     /*
     |--------------------------------------------------------------------------
