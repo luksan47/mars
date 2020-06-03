@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
             factory(App\PrintJob::class, $user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::COLLEGIST));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            $user->internetAccess->setWifiUsername(); //setWifiUsername();
+            $user->internetAccess->setWifiUsername();
         });
     }
 
