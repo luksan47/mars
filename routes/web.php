@@ -33,6 +33,7 @@ Route::get('/verification', function () {
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/user', 'UserController@index')->name('user');
 
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/print/free_pages/all', 'PrintController@listFreePages')->name('print.free_pages.all');
     Route::get('/print/print_jobs/all', 'PrintController@listPrintJobs')->name('print.print_jobs.all');
     Route::post('/print/print_jobs/{id}/cancel', 'PrintController@cancelPrintJob')->name('print.print_jobs.cancel');
+    Route::get('/print/admin', 'PrintController@admin')->name('print.admin');
 
     Route::get('/internet', 'InternetController@index')->name('internet');
     Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');

@@ -25,6 +25,11 @@ class PrintController extends Controller
         return view('print.app', ["users" => User::all()]);
     }
 
+    public function admin() {
+        return view('admin.print.app', ["users" => User::all()]);
+    }
+
+
     public function print(Request $request) {
         $validator = Validator::make($request->all(), [
             'file_to_upload' => 'required|file|mimes:pdf|max:' . config('print.pdf_size_limit'),
@@ -89,13 +94,13 @@ class PrintController extends Controller
     public function transferBalance(Request $request) {
         $validator = Validator::make($request->all(), [
             'balance' => 'required|integer|min:1',
-            'receiver_id' => 'required|integer|exists:users,id'
+            'user_id' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
 
         $balance = $request->balance;
         $from_account = Auth::user()->printAccount;
-        $to_account = User::find($request->receiver_id)->printAccount;
+        $to_account = User::find($request->user_id)->printAccount;
 
         if (!$from_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
@@ -124,7 +129,7 @@ class PrintController extends Controller
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
-        return redirect()->route('print');
+        return redirect()->back();
     }
 
     public function addFreePages(Request $request) {
@@ -145,7 +150,7 @@ class PrintController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return redirect()->route('print');
+        return redirect()->back();
     }
 
     public function listPrintJobs() {

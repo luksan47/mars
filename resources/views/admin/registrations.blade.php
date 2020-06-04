@@ -1,39 +1,47 @@
 @extends('layouts.app')
 
+@section('title')
+<a href="#!" class="breadcrumb">@lang('admin.admin')</a>
+<a href="#!" class="breadcrumb">@lang('admin.registrations')</a>
+@endsection
+
 @section('content')
 
-<div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header text-white bg-dark">@lang('admin.handle_registrations')</div>
-                <div class="card-body">
-                    @foreach ($users as $user)
-                        <div class="list-group-item">
-                            <div class="row">
-                                <div class="col-md-8">
-                                        {{ $user->name }}
-                                </div>
-                                <div class="col-md-4">
-                                    <form class="d-inline" method="POST" action="{{ route('admin.registrations.show') }}">
-                                        @csrf
-                                        <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                        <button type="submit" class="btn btn-primary">@lang('admin.show')</button>
-                                    </form>
-                                    <form class="d-inline" method="POST" action="{{ route('admin.registrations.accept') }}">
-                                        @csrf
-                                        <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                        <button type="submit" class="btn btn-success">@lang('admin.accept')</button>
-                                    </form>
-                                    <form class="d-inline" method="POST" action="{{ route('admin.registrations.reject') }}">
-                                        @csrf
-                                        <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                        <button type="submit" class="btn btn-danger">@lang('admin.reject')</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">@lang('admin.handle_registrations')</span>
+                <table>
+                    <tbody>
+                        @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>
+                                <form  method="POST" action="{{ route('admin.registrations.show') }}">
+                                    @csrf
+                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
+                                    <button type="submit" class="waves-effect btn-flat">@lang('admin.show')</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form  method="POST" action="{{ route('admin.registrations.accept') }}">
+                                    @csrf
+                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
+                                    <button type="submit" class="btn waves-effect">@lang('admin.accept')</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form  method="POST" action="{{ route('admin.registrations.reject') }}">
+                                    @csrf
+                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
+                                    <button type="submit" class="btn waves-effect coli blue">@lang('admin.reject')</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

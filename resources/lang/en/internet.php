@@ -39,4 +39,7 @@ return [
     'created_at' => 'Created',
     'extend' => 'Extend',
     'deactivate' => 'Deactivate',
+    'generate_new_pwd' => 'Generate new password',
+    'nothing_to_show' => 'Nothing to show',
+    'update' => 'Update',
 ];

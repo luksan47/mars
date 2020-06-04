@@ -1,30 +1,26 @@
 <form action="{{ route('internet.mac_addresses.add') }}" method="post">
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    @foreach ($errors->all() as $error)
+    <blockquote>{{ $error }}</blockquote>
+    @endforeach
     @endif
-    <div class="form-row align-items-center">
+    <div class="row">
         @csrf
-        <div class="col-auto">
-            <label for="inlineFormInput">@lang('internet.user_id')</label> {{-- TODO: Better user selection --}}
-            <input type="text" class="form-control mb-2" name="user_id" placeholder="1" value="{{ old('user_id') }}">
+        <div class="input-field col s12 xl3">
+            @include('select-user')
         </div>
-        <div class="col-auto">
-            <label for="inlineFormInput">@lang('internet.mac_address')</label>
-            <input type="text" class="form-control mb-2" name="mac_address" placeholder="00:00:00:00:00:00" value="{{ old('mac_address') }}">
+        <div class="input-field col s12 xl3">
+            <input id="mac_address" name="mac_address" type="text" placeholder="00:00:00:00:00:00"
+                value="{{ old('mac_address') }}" required>
+            <label for="mac_address">@lang('internet.mac_address')</label>
         </div>
-        <div class="col-auto">
-            <label for="inlineFormInput">@lang('internet.comment')</label>
-            <input type="text" class="form-control mb-2" name="comment" placeholder="@lang('internet.laptop')" value="{{ old('comment') }}">
+        <div class="input-field col s12 xl3">
+            <input id="comment" name="comment" type="text" placeholder="@lang('internet.laptop')"
+                value="{{ old('comment') }}" required>
+            <label for="comment">@lang('internet.comment')</label>
         </div>
-        <div class="col-auto">
-            <label>&nbsp;</label>
-            <button type="submit" class="form-control btn btn-primary mb-2">@lang('internet.add')</button>
+        <div class="input-field col s12 xl3">
+            <button type="submit" class="btn waves-effect right">@lang('internet.add')</button>
         </div>
     </div>
 </form>

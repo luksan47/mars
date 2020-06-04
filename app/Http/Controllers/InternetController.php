@@ -29,7 +29,7 @@ class InternetController extends Controller
     {
         $activationDate = env('INTERNET_ACTIVATION_DATE'); //TODO: get date for current semester
 
-        return view('admin.internet.app', ['activation_date' => $activationDate]);
+        return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all()]);
     }
 
     public function getUsersMacAddresses(Request $request)
@@ -83,10 +83,6 @@ class InternetController extends Controller
 
     public function resetWifiPassword(Request $request)
     {
-        $request->validate([
-            'confirm' => 'accepted',
-        ]);
-
         $internetAccess = Auth::user()->internetAccess;
         $internetAccess->wifi_password = Str::random(8);
         $internetAccess->save();

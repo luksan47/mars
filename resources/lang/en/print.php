@@ -49,4 +49,12 @@ return [
     'send' => 'Send',
     'transfer_money' => 'Transfer money',
     'amount' => 'Amount',
+    'modify_pages' => 'Modify pages',
+    'balance'=>'Balance',
+    'quantity' => 'Quantity',
+    'how_transfer_works' => 'If you want to transfer some of your money to an other user, you can do it here:',
+    'upload_money' => 'You can upload money to your account at the system admins.',
+    'costs' => 'One-sided printing costs :one_sided, and two-sided printing costs :two_sided HUF.',
+    'pdf_maxsize' => 'The maximum file size is :maxsize MB.',
+    'modify_print_balance' => 'Modify print balance',
 ];

@@ -1,3 +1,4 @@
+//TODO rewrite for materialize modal
 function confirm(heading, question, cancelButtonTxt, okButtonTxt, callback) {
     var confirmModal =
         $('<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\n' +

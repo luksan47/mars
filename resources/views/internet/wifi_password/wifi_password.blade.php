@@ -1,37 +1,41 @@
 <div class="card">
-    <div class="card-header">@lang('internet.wifi_password')</div>
-    <div class="card-body">
-        <div class="alert alert-info">
-            <p>@lang('internet.wifi_password_info')</p>
-        </div>
-
-        <p>@lang('internet.wifi_user'): {{ $internet_access->wifi_username  }} </p>
-        @if($internet_access->wifi_password != null)
-            <p> @lang('internet.wifi_password'): <span onclick="$(this).text('{{ $internet_access->wifi_password }}');"
-                                                       style="cursor: pointer;">@lang('internet.show')</span></p>
-        @else
-            <p>@lang('internet.wifi_password_null')</p>
-        @endif
-
-        <div class="alert alert-danger">
-            <form action="{{ route('internet.wifi_password.reset') }}" method="post">
-                @csrf
-                <p>@lang('internet.wifi_password_reset_warning')</p>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="confirm" id="confirm" value="yes">
-                    <label class="form-check-label" for="confirm">Nem baj</label>
-                    <button type="submit" class="btn btn-danger">Új jelszó generálása</button>
-                </div>
-            </form>
+    <div class="card-content">
+        <span class="card-title">@lang('internet.wifi_password')</span>
+        <blockquote>
+            @lang('internet.wifi_password_info')
+        </blockquote>
+        <table>
+            <tbody>
+                <tr>
+                    <td>@lang('internet.wifi_user')</td>
+                    <td class="right">{{ $internet_access->wifi_username }}</td>
+                </tr>
+                <tr>
+                    @if($internet_access->wifi_password != null)
+                    <td>@lang('internet.wifi_password')</td>
+                    <td class="right"><span onclick="$(this).text('{{ $internet_access->wifi_password }}');"
+                            style="cursor: pointer;">
+                            <button class="waves-effect btn-small">@lang('internet.show')</button></span>
+                    </td>
+                    @else
+                    <td colspan="2">@lang('internet.wifi_password_null')</td>
+                    @endif
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col s12 m12 l12 xl8">
+                <blockquote>
+                    <p>@lang('internet.wifi_password_reset_warning')</p>
+                </blockquote>
+            </div>
+            <div class="input-field col s12 m12 l12 xl4">
+                <form action="{{ route('internet.wifi_password.reset') }}" method="post">
+                    @csrf
+                    <button class="btn waves-effect right" type="submit"
+                        name="action">@lang('internet.generate_new_pwd')</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
