@@ -11,6 +11,7 @@ use App\User;
 use App\Workshop;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -151,6 +152,11 @@ class RegisterController extends Controller
                 throw new AuthorizationException();
         }
         $user->internetAccess->setWifiUsername();
+
+        // Send confirmation mail.
+        if (config('mail.active')) {
+            Mail::to($user)->send(new \App\Mail\Confirmation($user->name));
+        }
 
         return $user;
     }
