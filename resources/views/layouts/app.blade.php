@@ -32,7 +32,7 @@
     <script src="{{ asset('js/site.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
-    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/materialize_custom.min.js') }}"></script>
     <script type="text/javascript">
         var today = new Date();
         $(document).ready(
