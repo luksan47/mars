@@ -1,7 +1,7 @@
 @can('print.modify')
-<span class="card-title">@lang('print.modify_pages')</span>
+<span class="card-title">@lang('print.modify_print_balance')</span>
 <div class="row">
-@endif    <form method="POST" action="{{ route('print.modify') }}">
+<form method="POST" action="{{ route('print.modify') }}">
         @csrf
         @if ($errors->any())
         @foreach ($errors->all() as $error)
@@ -20,3 +20,4 @@
         </div>
     </form>
 </div>
+@endif    

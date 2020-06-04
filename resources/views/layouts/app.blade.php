@@ -8,7 +8,7 @@
     <!-- change status bar color on supported mobile browsers -->
     <meta name="theme-color" content="#252A51">
     <!-- change the page's icon in the browser's tab -->
-    <link rel="icon" href="{{ env('LOGO','') }}">
+    <link rel="icon" href="{{ config('app.logo_with_bg_path') }}">
     <!-- CSRF Token for Laravel's forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -32,8 +32,7 @@
     <script src="{{ asset('js/site.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
     <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
-    <!-- modified materialize js for searchable select: https://codepen.io/yassinevic/pen/eXjqjb?editors=1111 -->
-    <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
     <script type="text/javascript">
         var today = new Date();
         $(document).ready(

@@ -2,13 +2,14 @@
     <div class="card-content">
         <span class="card-title">@lang('print.print_document')</span>
         <blockquote>
+            <p>
             @lang('print.pdf_description')
             @lang("print.pdf_maxsize", ['maxsize' => config('print.pdf_size_limit')/1000/1000])
             @lang('print.costs',['one_sided'=>App\PrintAccount::$COST['one_sided'], "two_sided" => env('PRINT_COST_TWOSIDED')])
-        </blockquote>
-        <blockquote>
+            </p><p>
             @lang('print.available_money'): {{ Auth::user()->printAccount->balance }} HUF. 
             @lang('print.upload_money')
+            </p>
         </blockquote>
         <form class="form-horizontal" role="form" method="POST" action="{{ route('print.print') }}"
             enctype="multipart/form-data">
