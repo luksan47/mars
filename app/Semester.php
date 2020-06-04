@@ -72,6 +72,16 @@ class Semester extends Model
         return $this->usersWithStatus(self::ACTIVE);
     }
 
+    public function hasUserWith($user, $status)
+    {
+        return $this->usersWithStatus($status)->get()->contains($user);
+    }
+
+    public function isActive($user)
+    {
+        return $this->hasUserWith($user, self::ACTIVE);
+    }
+
     public static function newest() {
         return Semester::orderBy('year', 'desc')->orderBy('part', 'desc')->first();
     }
@@ -88,13 +98,52 @@ class Semester extends Model
             // This assumes that the semester ends in the new year.
             $year = $now->month <= self::END_OF_AUTUMN_SEMESTER ? $now->year - 1 : $now->year;
         }
-        $current_semester = Semester::all()->where('year', $year)->where('part', $part)->first();
-        if ($current_semester === null) {
-            $current_semester = Semester::create([
+        return Semester::getOrCreate($year, $part);
+    }
+
+    public function succ()
+    {
+        if ($this->isSpring()) {
+            $year = $this->year + 1;
+            $part = 1;
+        } else {
+            $year = $this->year;
+            $part = 2;
+        }
+        return Semester::getOrCreate($year, $part);
+    }
+
+    public static function next()
+    {
+        return Semester::current()->succ();
+    }
+
+    public function pred()
+    {
+        if ($this->isSpring()) {
+            $year = $this->year;
+            $part = 1;
+        } else {
+            $year = $this->year - 1;
+            $part = 2;
+        }
+        return Semester::getOrCreate($year, $part);
+    }
+
+    public static function previous()
+    {
+        return Semester::current()->pred();
+    }
+
+    public static function getOrCreate($year, $part)
+    {
+        $semester = Semester::all()->where('year', $year)->where('part', $part)->first();
+        if ($semester === null) {
+            $semester = Semester::create([
                 'year' => $year,
                 'part' => $part,
             ]);
         }
-        return $current_semester;
+        return $semester;
     }
 }
