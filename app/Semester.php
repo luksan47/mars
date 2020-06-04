@@ -5,7 +5,6 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
-
 /** A semester is identified by a year and by it's either autumn or spring.
  * ie. a spring semester starting in february 2020 will be (2019, 2) since we write 2019/20/2.
  * The autumn semester starting in september 2020 is (2020, 1) since we write 2020/21/1.
@@ -21,7 +20,7 @@ class Semester extends Model
         'part',
     ];
 
-    private const SEPARATOR = "-";
+    private const SEPARATOR = '-';
 
     const PARTS = [1, 2];
     const ACTIVE = 'ACTIVE';
@@ -41,17 +40,19 @@ class Semester extends Model
     const END_OF_SPRING_SEMESTER = 7;
     const START_OF_AUTUMN_SEMESTER = 8;
     const END_OF_AUTUMN_SEMESTER = 1;
-    
 
-    public function tag() {
-        return $this->year . self::SEPARATOR . ($this->year + 1) . self::SEPARATOR . $this->part;
+    public function tag()
+    {
+        return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
     }
 
-    public function isAutumn() {
+    public function isAutumn()
+    {
         return $this->part == 1;
     }
 
-    public function isSpring() {
+    public function isSpring()
+    {
         return $this->part == 2;
     }
 
@@ -82,13 +83,15 @@ class Semester extends Model
         return $this->hasUserWith($user, self::ACTIVE);
     }
 
-    public static function newest() {
+    public static function newest()
+    {
         return Semester::orderBy('year', 'desc')->orderBy('part', 'desc')->first();
     }
 
     // There is always a "current" semester. If there is not in the database, this function creates it.
     // TODO: fine a safer method?
-    public static function current() {
+    public static function current()
+    {
         $now = Carbon::now();
         if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month < self::END_OF_SPRING_SEMESTER) {
             $part = 2;
@@ -98,6 +101,7 @@ class Semester extends Model
             // This assumes that the semester ends in the new year.
             $year = $now->month <= self::END_OF_AUTUMN_SEMESTER ? $now->year - 1 : $now->year;
         }
+
         return Semester::getOrCreate($year, $part);
     }
 
@@ -110,6 +114,7 @@ class Semester extends Model
             $year = $this->year;
             $part = 2;
         }
+
         return Semester::getOrCreate($year, $part);
     }
 
@@ -127,6 +132,7 @@ class Semester extends Model
             $year = $this->year - 1;
             $part = 2;
         }
+
         return Semester::getOrCreate($year, $part);
     }
 
@@ -144,6 +150,7 @@ class Semester extends Model
                 'part' => $part,
             ]);
         }
+
         return $semester;
     }
 }

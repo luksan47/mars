@@ -14,7 +14,7 @@ class SemesterSeeder extends Seeder
         // TODO: there could be more semesters
         $semester = \App\Semester::create([
             'year' => 2019,
-            'part' => 2
+            'part' => 2,
         ]);
 
         $users = \App\User::all();

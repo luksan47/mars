@@ -65,6 +65,5 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 
-
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
 });

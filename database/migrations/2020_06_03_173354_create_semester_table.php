@@ -19,7 +19,7 @@ class CreateSemesterTable extends Migration
             $table->unsignedInteger('year');
             $table->set('part', \App\Semester::PARTS);
         });
-        
+
         Schema::create('semester_status', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedSmallInteger('semester_id');
@@ -42,7 +42,7 @@ class CreateSemesterTable extends Migration
             $table->dropForeign(['user_id']);
             $table->dropForeign(['semester_id']);
         });
-        Schema::dropIfExists('semesters');        
+        Schema::dropIfExists('semesters');
         Schema::dropIfExists('semester_status');
     }
 }

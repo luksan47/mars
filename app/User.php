@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Semester;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -144,7 +143,10 @@ class User extends Authenticatable
     public function getStatusIn($semester)
     {
         $semesters = $this->allSemesters;
-        if (!$semesters->contains($semester)) return Semester::INACTIVE;
+        if (! $semesters->contains($semester)) {
+            return Semester::INACTIVE;
+        }
+
         return $semesters->find($semester)->pivot->status;
     }
 
