@@ -56,5 +56,5 @@ return [
     'upload_money' => 'Pénzt feltölteni a rendszergazdáknál tudsz.',
     'costs' => 'Az egyoldalas nyomtatás díja :one_sided, a kétoldalasé :two_sided Ft.',
     'pdf_maxsize' => 'A fájl mérete legfeljebb :maxsize MB lehet.',
-    'modify_print_balance' => "Felhasználható egyenleg módosítása",
+    'modify_print_balance' => 'Felhasználható egyenleg módosítása',
 ];
