@@ -31,9 +31,12 @@ Route::get('/verification', function () {
     return view('auth.verification');
 })->name('verification');
 
+Route::middleware(['auth', 'log'])->group(function () {
+    Route::get('/user', 'UserController@index')->name('user');
+});
+
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/user', 'UserController@index')->name('user');
 
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
