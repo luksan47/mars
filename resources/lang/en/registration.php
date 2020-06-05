@@ -6,6 +6,7 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'old_password' => 'Old password',
+    'new_password' => 'New password',
     'confirmpwd' => 'Confirm password',
     'remember' => 'Remember Me',
     'forgotpwd'=> 'Forgot your password?',

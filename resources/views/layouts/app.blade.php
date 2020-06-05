@@ -43,10 +43,14 @@
                     }
                 });
                 M.AutoInit();
-                $('.sidenav').sidenav();
                 $(".dropdown-trigger").dropdown({
                     hover: false
                 });
+                $('.collapsible').collapsible();
+                @if (session('message'))
+                console.log('ok');
+                M.toast({html: "{{ session('message') }}"});
+                @endif
             }
         );
     </script>
