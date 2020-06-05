@@ -162,10 +162,13 @@ class PrintController extends Controller
         if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
             array_push($columns, 'user.name');
             $paginator = TabulatorPaginator::from(
-                    PrintJob::join('users as user', 'user.id', '=', 'user_id')->select('print_jobs.*')->with('user')
+                    PrintJob::join('users as user', 'user.id', '=', 'user_id')
+                            ->select('print_jobs.*')
+                            ->with('user')
+                            ->orderby('print_jobs.created_at', 'desc')
                 )->sortable($columns)->filterable($columns)->paginate();
         } else {
-            $paginator = TabulatorPaginator::from(Auth::user()->printJobs())
+            $paginator = TabulatorPaginator::from(Auth::user()->printJobs()->orderby('created_at', 'desc'))
                 ->sortable($columns)->filterable($columns)->paginate();
         }
 
