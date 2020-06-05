@@ -27,7 +27,7 @@
                             @enderror
                         </div>
                         <div class="input-field col s12">
-                            <input id="password-confirm" name="password-confirmation" type="password" class="validate"
+                            <input id="password-confirm" name="password_confirmation" type="password" class="validate"
                                 required autocomplete="new-password">
                             <label for="password-confirm">@lang('registration.confirmpwd')</label>
                         </div>
