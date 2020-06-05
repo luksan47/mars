@@ -7,6 +7,13 @@
             <div class="card">
                 <div class="card-header">@lang('general.user_data')</div>
                     <div class="card-body">
+                        @if($errors)
+                            @foreach($errors->all() as $error)
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
+                        @endif
                         <form method="POST" action="{{ route('userdata.update_email') }}">
                             @csrf
                             <div class="card">
@@ -45,14 +52,14 @@
                                         <label for="old_password" class="col-md-4 col-form-label text-md-right">@lang('registration.old_password')</label>
 
                                         <div class="col-md-6">
-                                            <input id="old_password" type="password" class="form-control @error('password') is-invalid @enderror" name="old_password" required autocomplete="password">
+                                            <input id="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" required autocomplete="password">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">@lang('registration.password')</label>
+                                        <label for="new_password" class="col-md-4 col-form-label text-md-right">@lang('registration.password')</label>
 
                                         <div class="col-md-6">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                            <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" required autocomplete="new-password">
                                             
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
@@ -63,10 +70,10 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">@lang('registration.confirmpwd')</label>
+                                        <label for="password_confirm" class="col-md-4 col-form-label text-md-right">@lang('registration.confirmpwd')</label>
 
                                         <div class="col-md-6">
-                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                            <input id="password_confirm" type="password" class="form-control" name="password_confirm" required autocomplete="new-password">
                                         </div>
                                     </div>
                                     <div class="form-group row mb-0">
