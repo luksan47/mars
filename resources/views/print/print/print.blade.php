@@ -7,7 +7,7 @@
             @lang("print.pdf_maxsize", ['maxsize' => config('print.pdf_size_limit')/1000/1000])
             @lang('print.costs',['one_sided'=>App\PrintAccount::$COST['one_sided'], "two_sided" => env('PRINT_COST_TWOSIDED')])
             </p><p>
-            @lang('print.available_money'): {{ Auth::user()->printAccount->balance }} HUF. 
+            @lang('print.available_money'): <b class="coli-text text-orange"> {{ Auth::user()->printAccount->balance }}</b> HUF. 
             @lang('print.upload_money')
             </p>
         </blockquote>
@@ -41,6 +41,7 @@
                     <p>
                         <label>
                             <input type="checkbox" name="use_free_pages" id="use_free_pages"
+                                @if(Auth::user()->freePages->isEmpty()) disabled @endif
                                 class="filled-in checkbox-color" />
                             <span>@lang('print.use_free_pages')</span>
                         </label>
