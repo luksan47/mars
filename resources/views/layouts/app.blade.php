@@ -42,6 +42,7 @@
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
                     }
                 });
+                M.AutoInit();
                 $('.sidenav').sidenav();
                 $(".dropdown-trigger").dropdown({
                     hover: false

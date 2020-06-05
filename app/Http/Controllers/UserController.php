@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('auth.user');
+        return view('auth.user', ['user' => Auth::user()]);
     }
 
     /**
@@ -25,18 +25,6 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showData()
-    {
-        return view('userdata', ['user' => Auth::user()]);
-    }
-
-    /**
-     * @param Request $request
-     * @return
-     */
     public function updateEmail(Request $request)
     {
         // Get current user
