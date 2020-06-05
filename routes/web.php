@@ -37,7 +37,6 @@ Route::middleware(['auth', 'log'])->group(function () {
 });
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
-    
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
     Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
