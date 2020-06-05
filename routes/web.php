@@ -32,12 +32,12 @@ Route::get('/verification', function () {
 })->name('verification');
 
 Route::middleware(['auth', 'log'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user', 'UserController@index')->name('user');
 });
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
-
+    
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
     Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
