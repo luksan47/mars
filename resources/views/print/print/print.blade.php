@@ -29,7 +29,7 @@
                     <input id="number_of_copies" name="number_of_copies" type="number" min="1" value="1" required>
                     <label for="number_of_copies">@lang('print.number_of_copies')</label>
                 </div>
-                <div class="input-field col s12 m12 l8 xl4">
+                <div class="input-field col s8 xl4">
                     <p>
                         <label>
                             <input type="checkbox" name="two_sided" id="two_sided" class="filled-in checkbox-color"  checked/>
@@ -37,17 +37,20 @@
                         </label>
                     </p>
                 </div>
-                <div class="input-field col s12 m12 l8 xl4">
+                @if(!Auth::user()->freePages->isEmpty()) 
+                <div class="input-field col s8 xl4">
                     <p>
                         <label>
                             <input type="checkbox" name="use_free_pages" id="use_free_pages"
-                                @if(Auth::user()->freePages->isEmpty()) disabled @endif
                                 class="filled-in checkbox-color" />
                             <span>@lang('print.use_free_pages')</span>
                         </label>
                     </p>
                 </div>
-                <div class="input-field col s12 m12 l4">
+                <div class="input-field col s4">
+                @else
+                <div class="input-field col s4 xl8">
+                @endif
                     <button class="btn waves-effect right" type="submit">@lang('print.print')</button>
                 </div>
             </div>
