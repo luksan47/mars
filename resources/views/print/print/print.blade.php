@@ -19,7 +19,7 @@
                 <div class="file-field input-field col s12 m12 l8 xl10">
                     <div class="btn waves-effect">
                         <span>File</span>
-                        <input type="file" accept=".pdf">
+                        <input type="file"id="file_to_upload" name="file_to_upload" accept=".pdf" required>
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path" placeholder="@lang('print.select_document')" type="text" disabled>
