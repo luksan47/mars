@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
+
         return view('auth.user', ['user' => $user])
             ->with('faculties', $user->faculties)
             ->with('workshops', $user->workshops);
@@ -42,19 +41,20 @@ class UserController extends Controller
                 ->withInput();
         }
         $user->update([
-            'email' => $request->email
+            'email' => $request->email,
         ]);
 
         return redirect()->back();
     }
-    public function updatePassword(Request $request){
 
+    public function updatePassword(Request $request)
+    {
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
             'new_password' => 'required|string|min:6|confirmed|different:old_password',
-            'password_confirm' => 'required|same:new_password'
+            'password_confirm' => 'required|same:new_password',
         ]);
 
         if ($validator->fails()) {
@@ -63,10 +63,9 @@ class UserController extends Controller
                 ->withInput();
         }
         $user->update([
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect()->back()->with('message', @lang('info.succesful_modification'));
-
-    } 
+    }
 }
