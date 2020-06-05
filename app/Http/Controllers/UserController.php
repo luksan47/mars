@@ -40,7 +40,7 @@ class UserController extends Controller
 
         // Validate the data submitted by user
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:225|'. Rule::unique('users')->ignore($user->id),
+            'email' => 'required|email|max:225|'.Rule::unique('users')->ignore($user->id),
         ]);
 
         // if fails redirects back with errors
@@ -52,7 +52,7 @@ class UserController extends Controller
 
         // Fill user model
         $user->fill([
-            'email' => $request->email
+            'email' => $request->email,
         ]);
 
         // Save user to database
@@ -61,28 +61,28 @@ class UserController extends Controller
         // Redirect to route
         return redirect()->route('userdata');
     }
-    public function changePassword(Request $request){
 
+    public function changePassword(Request $request)
+    {
         $user = Auth::user();
-        
-        if (!(\Hash::check($request->get('old_password'), $user->password))) {
+
+        if (! (\Hash::check($request->get('old_password'), $user->password))) {
             // The old passwords don't match
             return redirect()->back()
-                ->withErrors("olds dont match")
+                ->withErrors('olds dont match')
                 ->withInput();
-            
         }
-        if(strcmp($request->get('old_password'), $request->get('new_password')) == 0){
+        if (strcmp($request->get('old_password'), $request->get('new_password')) == 0) {
             //Current password and new password are same
             return redirect()->back()
-            ->withErrors("new same as old")
+            ->withErrors('new same as old')
             ->withInput();
         }
 
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
             'new_password' => 'required|string|min:6|confirmed',
-            'password_confirm' => 'required|same:new_password'
+            'password_confirm' => 'required|same:new_password',
         ]);
 
         if ($validator->fails()) {
@@ -97,7 +97,6 @@ class UserController extends Controller
         //Change Password
         $user->save();
 
-        return redirect()->back()->with("success","Password changed successfully !");
-
-    } 
+        return redirect()->back()->with('success', 'Password changed successfully !');
+    }
 }

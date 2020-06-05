@@ -10,6 +10,6 @@ return [
     'remember' => 'Emlékezz rám',
     'forgotpwd'=> 'Elfelejtetted a jelszót?',
     'collegist_to_tenant' => 'Ez az oldal a bejáró és bentlakó collegistáknak szól. Ha vendégként szeretnél regisztrálni, kattints ide!',
-    'tenant_to_collegist' => 'Ez az oldal a Collegium vendégeinek szól. Ha Collegium tagja vagy (bentlakó vagy bejáró), akkor kattints ide!'
+    'tenant_to_collegist' => 'Ez az oldal a Collegium vendégeinek szól. Ha Collegium tagja vagy (bentlakó vagy bejáró), akkor kattints ide!',
 
 ];

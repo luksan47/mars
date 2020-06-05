@@ -7,20 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     // General roles
-    const PRINT_ADMIN = "print-admin";
-    const INTERNET_ADMIN = "internet-admin";
-    const COLLEGIST = "collegist";
-    const TENANT = "tenant";
-    const WORKSHOP_ADMINISTRATOR = "workshop-administrator";
-    const WORKSHOP_LEADER = "workshop-leader";
-    const SECRETARY = "secretary";
-    const DIRECTOR = "director";
-    const PRESIDENT = "president";
-    const STAFF = "staff";
-    
+    const PRINT_ADMIN = 'print-admin';
+    const INTERNET_ADMIN = 'internet-admin';
+    const COLLEGIST = 'collegist';
+    const TENANT = 'tenant';
+    const WORKSHOP_ADMINISTRATOR = 'workshop-administrator';
+    const WORKSHOP_LEADER = 'workshop-leader';
+    const SECRETARY = 'secretary';
+    const DIRECTOR = 'director';
+    const PRESIDENT = 'president';
+    const STAFF = 'staff';
+
     // Module-related roles
-    const PRINTER = "printer";
-    const INTERNET_USER = "internet-user";
+    const PRINTER = 'printer';
+    const INTERNET_USER = 'internet-user';
 
     // all roles
     const ALL = [
@@ -38,7 +38,6 @@ class Role extends Model
         self::INTERNET_USER,
     ];
 
-
     protected $fillable = [
         'name',
     ];
@@ -48,11 +47,13 @@ class Role extends Model
         return $this->belongsToMany(User::class, 'role_users')->withPivot('object_id');
     }
 
-    public function name() {
-        return __('role.' . $name);
+    public function name()
+    {
+        return __('role.'.$name);
     }
 
-    public static function getId(string $roleName) {
+    public static function getId(string $roleName)
+    {
         return Role::where('name', $roleName)->first()->id;
     }
 }

@@ -7,6 +7,6 @@ return [
     'password' => 'Signum',
     'confirmpwd' => 'Signum confirmare',
     'remember' => 'Memento mei',
-    'forgotpwd'=> 'Oblivisceris signi?'
+    'forgotpwd'=> 'Oblivisceris signi?',
 
 ];

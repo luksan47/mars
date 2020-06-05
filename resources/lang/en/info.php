@@ -22,5 +22,5 @@ return [
     'faculty' => 'Faculty',
     'faculty_must_be_filled' => 'The faculty must be filled.',
     'workshop' => 'Workshop',
-    'workshop_must_be_filled' => 'The workshop must be filled.'
+    'workshop_must_be_filled' => 'The workshop must be filled.',
 ];

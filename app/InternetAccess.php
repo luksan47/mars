@@ -15,7 +15,8 @@ class InternetAccess extends Model
         'has_internet_until',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 }

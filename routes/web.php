@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
-Route::get('/setlocale/{locale}',  'LocaleController@set')->name('setlocale');
+Route::get('/setlocale/{locale}', 'LocaleController@set')->name('setlocale');
 
-Route::get('/privacy_policy', function() {
+Route::get('/privacy_policy', function () {
     return Storage::download('public/Adatvédelmi tájékoztató.pdf');
 })->name('privacy_policy');
 
@@ -61,5 +61,4 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
     Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
     Route::post('/admin/registrations/show', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
-
 });

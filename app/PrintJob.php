@@ -12,9 +12,9 @@ class PrintJob extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'filename', 'filepath', 'user', 'state', 'job_id', 'cost'
+        'filename', 'filepath', 'user', 'state', 'job_id', 'cost',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo('App\User');

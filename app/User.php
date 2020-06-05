@@ -2,11 +2,8 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -39,37 +36,44 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function printAccount() {
+    public function printAccount()
+    {
         return $this->hasOne('App\PrintAccount');
     }
 
-    public function internetAccess() {
+    public function internetAccess()
+    {
         return $this->hasOne('App\InternetAccess');
     }
 
-    public function macAddresses() {
+    public function macAddresses()
+    {
         return $this->hasMany('App\MacAddress');
     }
 
-    public function workshops() {
+    public function workshops()
+    {
         return $this->belongsToMany(Workshop::class, 'workshop_users');
     }
 
-    public function faculties() {
+    public function faculties()
+    {
         return $this->belongsToMany(Faculty::class, 'faculty_users');
     }
 
-    public function printJobs() {
+    public function printJobs()
+    {
         return $this->hasMany('App\PrintJob');
     }
 
-    public function roles() {
-        return $this->belongsToMany(Role::class, 'role_users')->withPivot('object_id');;
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_users')->withPivot('object_id');
     }
 
     public function hasAnyRole(array $roleNames, $objectId = null)
     {
-        return $this->roles->contains(function($value, $key) use($roleNames, $objectId) {
+        return $this->roles->contains(function ($value, $key) use ($roleNames, $objectId) {
             return in_array($value->name, $roleNames) && $value->pivot->object_id === $objectId;
         });
     }
@@ -82,8 +86,10 @@ class User extends Authenticatable
     /**
      * @deprecated use hasRole instead
      */
-    public function isAdmin() {
-        trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
+    public function isAdmin()
+    {
+        trigger_error('Method '.__METHOD__.' is deprecated', E_USER_DEPRECATED);
+
         return $this->hasRole(['admin']);
     }
 }

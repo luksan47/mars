@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\InternetAccess;
-use App\User;
 use App\Role;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class InternetAccessPolicy
@@ -16,7 +16,7 @@ class InternetAccessPolicy
         if ($user->hasRole(Role::INTERNET_ADMIN)) {
             return true;
         }
-        if (!$user->hasRole(Role::INTERNET_USER)){
+        if (! $user->hasRole(Role::INTERNET_USER)) {
             return false;
         }
     }
