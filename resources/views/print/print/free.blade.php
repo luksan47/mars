@@ -1,4 +1,4 @@
-<!--TODO: visible only if user have free pages-->
+@if(!Auth::user()->freePages->isEmpty())
 <div class="card">
     <div class="card-content">
         <div class="card-title">@lang('print.free')</div>
@@ -61,3 +61,4 @@
         });
     });
 </script>
+@endif
