@@ -7,76 +7,73 @@
             <div class="card-content">
                 <div class="card-title">@lang('info.user_data')</div>
                 <div class="row">
-                    <table>                
+                    <table>
                         <tbody>
-                          <tr>
-                            <td>@lang('info.name')</td>
-                            <td>{{ $user->name }}</td>
-                          </tr>
-                          <tr>
-                            <td>@lang('info.neptun')</td>
-                            <td>{{ $user->neptun }}</td>
-                          </tr>
-                          <tr>
-                            <td>@lang('info.phone_number')</td>
-                            <td>{{ $user->phone_number }}</td>
-                          </tr>
-                          <tr>
-                            <td>@lang('info.faculty')</td>
-                            <td>
-                                <ul>
-                                    @foreach ($faculties as $faculty)
+                            <tr>
+                                <td>@lang('info.name')</td>
+                                <td colspan="2">{{ $user->name }}</td>
+                            </tr>
+                            <tr>
+                                <form method="POST" action="{{ route('userdata.update_email') }}">
+                                    @csrf
+                                    <td>@lang('registration.email')</td>
+                                    <td>
+                                        <input id="email" type="email" name="email"
+                                            value="{{ old('email', $user->email) }}" required autocomplete="email">
+                                        @error('email')
+                                        <blockquote class="error">
+                                            {{ $message }}
+                                        </blockquote>
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <button class="waves-effect  btn-flat right"
+                                            type="submit">@lang('general.change_email')</button>
+                                    </td>
+                                </form>
+                            </tr>
+                            <tr>
+                                <td>@lang('info.neptun')</td>
+                                <td colspan="2">{{ $user->neptun }}</td>
+                            </tr>
+                            <tr>
+                                <td>@lang('info.phone_number')</td>
+                                <td colspan="2">{{ $user->phone_number }}</td>
+                            </tr>
+                            <tr>
+                                <td>@lang('info.faculty')</td>
+                                <td colspan="2">
+                                    <ul>
+                                        @foreach ($faculties as $faculty)
                                         <li>{{$faculty->name}}</li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>@lang('info.workshop')</td>
-                            <td>
-                                <ul>
-                                    @foreach ($workshops as $workshop)
+                                        @endforeach
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@lang('info.workshop')</td>
+                                <td colspan="2">
+                                    <ul>
+                                        @foreach ($workshops as $workshop)
                                         <li>{{$workshop->name}}</li>
-                                    @endforeach
-                                </ul>
-                            </td>
-                          </tr>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                            </tr>
                         </tbody>
-                      </table>
+                    </table>
                 </div>
             </div>
             <div class="card-action">
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <div class="row">
+                <div class="row">
+                    {{-- <a href="{{ route('password.request') }}" class="btn waves-effect left">
+                    @lang('general.change_password')
+                    </a> --}}
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
                         <button class="btn waves-effect right " type="submit">@lang('general.logout')</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col s12">
-        <div class="card">
-            <div class="card-content">
-                <div class="card-title">@lang('general.change_email')</div>
-                <form method="POST" action="{{ route('userdata.update_email') }}">
-                    @csrf
-                    <div class="row">
-                        <div class="input-field col s8">
-                            <input id="email" type="email" name="email" value="{{ old('email') }}"
-                                placeholder="{{ $user->email }}" required autocomplete="email" autofocus>
-                            <label for="email">@lang('registration.email')</label>
-                            @error('email')
-                            <blockquote class="error">
-                                {{ $message }}
-                            </blockquote>
-                            @enderror
-                        </div>
-                        <div class="input-field col s4">
-                            <button class="btn waves-effect right" type="submit">@lang('general.change_email')</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -98,8 +95,8 @@
                             <label for="new_password">@lang('registration.new_password')</label>
                         </div>
                         <div class="input-field col s4">
-                            <input id="new_password_confirmation" type="password" name="new_password_confirmation" required
-                                autocomplete="new-password">
+                            <input id="new_password_confirmation" type="password" name="new_password_confirmation"
+                                required autocomplete="new-password">
                             <label for="new_password_confirmation">@lang('registration.confirmpwd')</label>
                         </div>
                         <div class="input-field col s4">
@@ -112,6 +109,7 @@
                         {{ $message }}
                     </blockquote>
                     @enderror
+                </form>
                 </form>
             </div>
         </div>
