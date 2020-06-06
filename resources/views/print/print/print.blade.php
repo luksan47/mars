@@ -37,7 +37,7 @@
                         </label>
                     </p>
                 </div>
-                @if(!Auth::user()->freePages->isEmpty()) 
+                @if($free_pages>0) {{-- only show when user have active free pages --}} 
                 <div class="input-field col s8 xl4">
                     <p>
                         <label>
