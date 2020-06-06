@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -63,18 +62,15 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        if (Hash::check($request->old_password, $user->password)) { 
+        if (Hash::check($request->old_password, $user->password)) {
             $user->update([
-                'password' => Hash::make($request->new_password)
+                'password' => Hash::make($request->new_password),
             ]);
-         
+
             return redirect()->back(['message'=> 'ok']);
-         
-         } else {
+        } else {
             return redirect()->back()
                 ->withErrors('old_password');
-         }
-
-        
+        }
     }
 }
