@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -44,7 +46,7 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'ok');
     }
 
     public function updatePassword(Request $request)
@@ -52,9 +54,8 @@ class UserController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
-            'old_password' => 'required',
-            'new_password' => 'required|string|min:6|confirmed|different:old_password',
-            'password_confirm' => 'required|same:new_password',
+            'old_password' => 'required|string|same:',
+            'new_password' => 'required|string|min:8|confirmed|different:old_password',
         ]);
 
         if ($validator->fails()) {
@@ -62,10 +63,18 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user->update([
-            'password' => Hash::make($request->password),
-        ]);
+        if (Hash::check($request->old_password, $user->password)) { 
+            $user->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+         
+            return redirect()->back(['message'=> 'ok']);
+         
+         } else {
+            return redirect()->back()
+                ->withErrors('old_password');
+         }
 
-        return redirect()->back()->with('message', @lang('info.succesful_modification'));
+        
     }
 }

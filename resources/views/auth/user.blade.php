@@ -98,9 +98,9 @@
                             <label for="new_password">@lang('registration.new_password')</label>
                         </div>
                         <div class="input-field col s4">
-                            <input id="password_confirm" type="password" name="password_confirm" required
+                            <input id="new_password_confirmation" type="password" name="new_password_confirmation" required
                                 autocomplete="new-password">
-                            <label for="password_confirm">@lang('registration.confirmpwd')</label>
+                            <label for="new_password_confirmation">@lang('registration.confirmpwd')</label>
                         </div>
                         <div class="input-field col s4">
                             <button class="btn waves-effect right"
