@@ -36,6 +36,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /* Printing related getters */
+
     public function printAccount()
     {
         return $this->hasOne('App\PrintAccount');
@@ -51,6 +53,13 @@ class User extends Authenticatable
         return $this->hasMany('App\PrintAccountHistory');
     }
 
+    public function printJobs()
+    {
+        return $this->hasMany('App\PrintJob');
+    }
+
+    /* Internet module related getters */
+
     public function internetAccess()
     {
         return $this->hasOne('App\InternetAccess');
@@ -60,6 +69,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\MacAddress');
     }
+
+    /* Basic information of the user */
 
     public function personalInformation()
     {
@@ -81,10 +92,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Faculty::class, 'faculty_users');
     }
 
-    public function printJobs()
-    {
-        return $this->hasMany('App\PrintJob');
-    }
+    /* Role related getters */
 
     public function roles()
     {
@@ -101,6 +109,50 @@ class User extends Authenticatable
     public function hasRole(string $roleName, $objectId = null)
     {
         return $this->hasAnyRole([$roleName], $objectId);
+    }
+
+    /* Semester related getters */
+
+    public function allSemesters()
+    {
+        return $this->belongsToMany(Semester::class, 'semester_status')->withPivot(['status', 'comment']);
+    }
+
+    public function semestersWhere($status)
+    {
+        return $this->belongsToMany(Semester::class, 'semester_status')
+                    ->wherePivot('status', '=', $status)
+                    ->withPivot('comment');
+    }
+
+    public function activeSemesters()
+    {
+        return $this->semestersWhere(Semester::ACTIVE);
+    }
+
+    public function isActiveIn($semester)
+    {
+        return $this->activeSemesters->contains($semester);
+    }
+
+    public function isActive()
+    {
+        return $this->isActiveIn(Semester::current());
+    }
+
+    public function getStatusIn($semester)
+    {
+        $semesters = $this->allSemesters;
+        if (! $semesters->contains($semester)) {
+            return Semester::INACTIVE;
+        }
+
+        return $semesters->find($semester)->pivot->status;
+    }
+
+    public function getStatus()
+    {
+        return getStatusIn(Semester::current());
     }
 
     /**
