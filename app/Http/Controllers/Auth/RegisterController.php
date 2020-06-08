@@ -7,6 +7,7 @@ use App\Faculty;
 use App\Http\Controllers\Controller;
 use App\PersonalInformation;
 use App\Role;
+use App\Semester;
 use App\User;
 use App\Workshop;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -147,6 +148,7 @@ class RegisterController extends Controller
                 foreach ($data['workshop'] as $key => $workshop) {
                     $user->workshops()->attach($workshop);
                 }
+                $user->setStatus(Semester::ACTIVE, "Activated through registration");
                 break;
             default:
                 throw new AuthorizationException();

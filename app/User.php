@@ -130,6 +130,11 @@ class User extends Authenticatable
         return $this->semestersWhere(Semester::ACTIVE);
     }
 
+    public function isInSemester($semester)
+    {
+        return $this->allSemesters->contains($semester);
+    }
+
     public function isActiveIn($semester)
     {
         return $this->activeSemesters->contains($semester);
@@ -153,6 +158,22 @@ class User extends Authenticatable
     public function getStatus()
     {
         return getStatusIn(Semester::current());
+    }
+
+    public function setStatusFor($semester, $status, $comment = null)
+    {
+        $this->allSemesters()->syncWithoutDetaching([
+            $semester->id => [
+                'status' => $status,
+                'comment' => $comment,
+            ]
+        ]);
+        return $this;
+    }
+
+    public function setStatus($status, $comment = null)
+    {
+        return $this->setStatusFor(Semester::current(), $status, $comment);
     }
 
     /**
