@@ -39,11 +39,32 @@ class EventTrigger extends Model
         self::DEACTIVATE_STATUS_SIGNAL,
     ];
 
+    public static function listen()
+    {
+        $now = Carbon::now();
+        $events = EventTrigger::where('date', '<=', $now)
+                              ->where('date', '>', $now->subHours(1));
+        foreach ($events as $event) {
+            $event->handleSignal();
+        }
+        return $events;
+    }
+
     /* Getters */
 
-    public static function getInternetActivationDeadline()
+    public static function internetActivationDeadline()
     {
         return self::find(INTERNET_ACTIVATION_SIGNAL)->data;
+    }
+
+    public static function statementRequestDate()
+    {
+        return self::find(SEND_STATUS_STATEMENT_REQUEST)->date;
+    }
+
+    public static function statementDeadline()
+    {
+        return self::find(DEACTIVATE_STATUS_SIGNAL)->date;
     }
 
     /* Handlers which are fired when the set date is reached. */

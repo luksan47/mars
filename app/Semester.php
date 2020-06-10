@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 /** A semester is identified by a year and by it's either autumn or spring.
  * ie. a spring semester starting in february 2020 will be (2019, 2) since we write 2019/20/2.
  * The autumn semester starting in september 2020 is (2020, 1) since we write 2020/21/1.
+ * 
+ * The status can be verified or not (by default it is not). Users with permission has to
+ * confirm that the user can have the given status.
  */
 class Semester extends Model
 {
@@ -41,6 +44,7 @@ class Semester extends Model
     const START_OF_AUTUMN_SEMESTER = 8;
     const END_OF_AUTUMN_SEMESTER = 1;
 
+    // For displaying semesters
     public function tag()
     {
         return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
@@ -58,14 +62,14 @@ class Semester extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'semester_status')->withPivot(['status', 'comment']);
+        return $this->belongsToMany(User::class, 'semester_status')->withPivot(['status', 'verified', 'comment']);
     }
 
     public function usersWithStatus($status)
     {
         return $this->belongsToMany(User::class, 'semester_status')
                     ->wherePivot('status', '=', $status)
-                    ->withPivot('comment');
+                    ->withPivot('comment', 'verified');
     }
 
     public function activeUsers()

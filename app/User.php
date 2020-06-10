@@ -115,14 +115,14 @@ class User extends Authenticatable
 
     public function allSemesters()
     {
-        return $this->belongsToMany(Semester::class, 'semester_status')->withPivot(['status', 'comment']);
+        return $this->belongsToMany(Semester::class, 'semester_status')->withPivot(['status', 'verified', 'comment']);
     }
 
     public function semestersWhere($status)
     {
         return $this->belongsToMany(Semester::class, 'semester_status')
                     ->wherePivot('status', '=', $status)
-                    ->withPivot('comment');
+                    ->withPivot('verified', 'comment');
     }
 
     public function activeSemesters()
@@ -166,7 +166,7 @@ class User extends Authenticatable
             $semester->id => [
                 'status' => $status,
                 'comment' => $comment,
-            ]
+            ],
         ]);
         return $this;
     }
@@ -176,6 +176,16 @@ class User extends Authenticatable
         return $this->setStatusFor(Semester::current(), $status, $comment);
     }
 
+    public function verify($semester)
+    {
+        $this->allSemesters()->syncWithoutDetaching([
+            $semester->id => [
+                'verify' => true,
+            ],
+        ]);
+        return $this;
+    }
+    
     /**
      * @deprecated use hasRole instead
      */

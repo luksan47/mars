@@ -24,6 +24,11 @@ class CreateEventTriggersTable extends Migration
             
             $table->primary('signal');
         });
+
+        Schema::table('semesters', function (Blueprint $table) {
+            $table->boolean('verified')->default(false);
+        });
+
         EventTrigger::create([
             'name' => 'internet_valid_until',
             'data' => Carbon::createFromDate(2020, 3, 15, 'Europe/Budapest'),
@@ -31,12 +36,14 @@ class CreateEventTriggersTable extends Migration
             'signal' => EventTrigger::INTERNET_ACTIVATION_SIGNAL,
             'comment' => 'When the date is reached, activating internet will have new default value',
         ]);
+
         EventTrigger::create([
             'name' => 'internet_valid_until',
             'date' => Carbon::createFromDate(2020, 6, 1, 'Europe/Budapest'),
             'signal' => EventTrigger::SEND_STATUS_STATEMENT_REQUEST,
             'comment' => 'The trigger to nofify students about filling out statements regarding their status in the next semester',
         ]);
+
         EventTrigger::create([
             'name' => 'internet_valid_until',
             'date' => Carbon::createFromDate(2020, 6, 15, 'Europe/Budapest'),
