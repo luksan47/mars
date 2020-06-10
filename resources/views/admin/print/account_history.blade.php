@@ -45,6 +45,9 @@ $(document).ready(function() {
                 sorter: "date",
             },
         ],
+        initialSort: [
+            {column: "modified_at", dir: "desc"}
+        ]
     });
 });
 </script>
