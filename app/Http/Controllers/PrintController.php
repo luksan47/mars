@@ -12,6 +12,7 @@ use App\User;
 use App\PrintAccount;
 use App\FreePages;
 use App\PrintJob;
+use App\PrintAccountHistory;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Support\Facades\DB;
 
@@ -206,6 +207,21 @@ class PrintController extends Controller
         return $paginator;
     }
 
+    public function listPrintAccountHistory() {
+        $this->authorize('viewAny', PrintJob::class);
+        
+        $columns = ['user.name', 'balance_change', 'free_page_change', 'deadline_change', 'modifier', 'modified_at'];
+        $paginator = TabulatorPaginator::from(
+            PrintAccountHistory::join('users as user', 'user.id', '=', 'user_id')
+                    ->join('users as modifier', 'modifier.id', '=', 'modified_by')
+                    ->select('print_account_history.*', 'modifier.name as modifier')
+                    ->with('user')
+            )->sortable($columns)
+            ->filterable($columns)
+            ->paginate(); 
+        return $paginator; 
+    }
+
     public function cancelPrintJob($id) {
         //TODO: actually cancel
         $printJob = PrintJob::findOrFail($id);
@@ -273,4 +289,6 @@ class PrintController extends Controller
         }
         return $pages;
     }
+
+
 }
