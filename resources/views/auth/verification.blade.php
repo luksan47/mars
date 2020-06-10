@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-title">@lang('auth.successful_registration')</div>
-                <blockquote>@lang('auth.wait_for_verification')</blocquote>
+                <blockquote>@lang('auth.wait_for_verification')</blockquote>
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@
 
     <div class="input-field col s12">
         <input id="high_school" name="high_school" type="text" class="validate" value="{{ old('high_school') }}" required>
-        <label for="year_of_graduation">@lang('info.high_school')</label>
+        <label for="high_school">@lang('info.high_school')</label>
         @error('high_school')
         <blockquote class="error">{{ $message }}</blockquote>
         @enderror

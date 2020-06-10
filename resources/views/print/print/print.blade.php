@@ -1,24 +1,28 @@
 <div class="card">
     <div class="card-content">
         <span class="card-title">@lang('print.print_document')</span>
+        <blockquote>
+            <p>
+            @lang('print.pdf_description')
+            @lang("print.pdf_maxsize", ['maxsize' => config('print.pdf_size_limit')/1000/1000])
+            @lang('print.costs',['one_sided'=>App\PrintAccount::$COST['one_sided'], "two_sided" => env('PRINT_COST_TWOSIDED')])
+            </p><p>
+            @lang('print.available_money'): {{ Auth::user()->printAccount->balance }} HUF. 
+            @lang('print.upload_money')
+            </p>
+        </blockquote>
         <form class="form-horizontal" role="form" method="POST" action="{{ route('print.print') }}"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <blockquote>
-                @lang('print.pdf_description')
-                @lang("print.pdf_maxsize", ['maxsize' => config('print.pdf_size_limit')/1000/1000])
-                @lang('print.costs',['one_sided'=>App\PrintAccount::$COST['one_sided'], "two_sided" => env('PRINT_COST_TWOSIDED')])
-            </blockquote>
             <div class="row">
-                
                 <div class="file-field input-field col s12 m12 l8 xl10">
                     <div class="btn waves-effect">
                         <span>File</span>
-                        <input type="file">
+                        <input type="file" accept=".pdf">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path" placeholder="@lang('print.select_document')" type="text">
+                        <input class="file-path" placeholder="@lang('print.select_document')" type="text" disabled>
                     </div>
                 </div>
                 <div class="input-field col s12 m12 l4 xl2">

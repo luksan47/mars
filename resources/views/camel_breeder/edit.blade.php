@@ -25,18 +25,18 @@ $(document).ready(function(){
                         <div class="input-field col s4">
                             <input id="shepherd_name" name="name" type="text" 
                                 oninput="isInvalidName(this.value)" required>
-                            <label for="name">Név</label>
+                            <label for="shepherd_name">Név</label>
                             <blockquote id="name_text"></blockquote>
                         </div>
                         <div class="input-field col s4">
                             <input id="shepherd_id" name="id" type="number" min="1" 
                                 oninput="isInvalidId(this.value)" required>
-                            <label for="id">Azonosító</label>
+                            <label for="shepherd_id">Azonosító</label>
                             <blockquote id="id_text"></blockquote>
                         </div>
                         <div class="input-field col s2">
-                            <input name="camels" type="number">
-                            <label for="camels">Kezdő teveszám</label>
+                            <input id="init_camels"name="camels" type="number">
+                            <label for="init_camels">Kezdő teveszám</label>
                         </div>
                         <div class="input-field col s2">
                             <button class="btn waves-effect" type="submit" style="width:100%">Hozzáadás</button>
@@ -49,12 +49,12 @@ $(document).ready(function(){
                 @csrf
                 <div class="row">
                     <div class="input-field col s5">
-                        <input name="name" type="text" required>
-                        <label for="name">Név</label>
+                        <input id="herd_name"name="name" type="text" required>
+                        <label for="herd_name">Név</label>
                     </div>
                     <div class="input-field col s5">
                         <input id="camel_count" name="camel_count" min="0" type="number" required>
-                        <label for="id">Hány tevéből áll?</label>
+                        <label for="camel_count">Hány tevéből áll?</label>
                     </div>
                     <div class="input-field col s2">
                         <button class="btn waves-effect" type="submit" style="width:100%">Hozzáadás</button>

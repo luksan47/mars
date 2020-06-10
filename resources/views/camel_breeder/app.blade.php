@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ env('LOGO','') }}">
+    <link rel="icon" href="{{ config('app.logo_with_bg_path') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,7 +19,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-    <!-- modified materialize js for searchable select: https://codepen.io/yassinevic/pen/eXjqjb?editors=1111 -->
     <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/camelbreeder.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
@@ -46,10 +45,12 @@
             success: function(response, textStatus, xhr){
                 herds = {};
                 herd_autocomplete = {};
+                //restructure data
                 response.forEach(element => {
                     herds[element.name] = element.camel_count;
                     herd_autocomplete[element.name] = null;
                 });
+                //initialize autocompletes
                 $('input.herd_autocomplete').autocomplete({
                     data: herd_autocomplete
                 });
@@ -63,12 +64,14 @@
                 shepherd_n_id = {};
                 id_n_shepherd = {};
                 shepherd_autocomplete = {};
+                //restructure data
                 response.forEach(element => {
                     shepherd_n_id[element.name] = element.id;
                     id_n_shepherd[element.id] = {name: element.name, camels: element.camels, min_camels: element.min_camels};
                     shepherd_autocomplete[element.name] = null;
                     shepherd_autocomplete[element.id] = null;
                 });
+                //initialize autocompletes
                 $('input.shepherd_autocomplete').autocomplete({
                     data: shepherd_autocomplete
                 });
@@ -171,7 +174,7 @@
                                     onchange="shepherdInfo(this.value, 'shepherd')"
                                     onfocusout="shepherdInfo(this.value, 'shepherd')"
                                     autofocus tabindex="1" required placeholder="Vendég">
-                                <label for="id">Pásztor</label>
+                                <label for="shepherd">Pásztor</label>
                                 <blockquote id="shepherd_text"><i>Válassz egy pásztort!</i></blockquote>
                             </div>
                             <div class="input-field col s4">
@@ -210,7 +213,7 @@
                             <div class="input-field col s4 offset-s1">
                                 <input type="text" id="shepherd2" name="id" class="shepherd2_autocomplete" required
                                     onchange="shepherdInfo(this.value, 'shepherd2')" tabindex="4"/>
-                                <label for="id">Pásztor</label>
+                                <label for="shepherd2">Pásztor</label>
                                 <blockquote id="shepherd2_text"><i>Válassz egy pásztort!</i></blockquote>
                             </div>
                             <div class="input-field col s4">

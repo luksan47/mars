@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="{{ asset('js/register_helper.js') }}"></script>
 <div class="row">
     <div class="col s12 l12 xl8 offset-xl2">
         <div class="card">
@@ -64,19 +65,4 @@
             </form>
         </div>
     </div>
-
-
-    <!-- Datepicker script
-<script type="text/javascript">
-	$(function(){
-		$('.date').datepicker({
-			format: 'yyyy-mm-dd',
-			autoclose: true,
-			clearBtn: true,
-			weekStart: 1,
-			startView: "century"
-		})
-	});
-</script>
--->
-    @endsection
+@endsection

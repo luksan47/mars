@@ -13,7 +13,7 @@
                         <div class="input-field col s12">
                             <input id="email" name="email" type="email" class="validate"
                                 value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-                            <label for="balance">@lang('registration.email')</label>
+                            <label for="email">@lang('registration.email')</label>
                             @error('email')
                             <blockquote class="error">{{ $message }}</blockquote>
                             @enderror
@@ -35,9 +35,7 @@
                 </div>
                 <div class="card-action">
                     <div class="row">
-                        <div class="input-field col s12">
                             <button type="submit" class="btn waves-effect right">@lang('passwords.resetpwd')</button>
-                        </div>
                     </div>
                 </div>
             </form>

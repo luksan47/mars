@@ -3,10 +3,13 @@
 
 <head>
     <meta charset="utf-8">
+    <!-- indicate mobile friendly page-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{{ env('LOGO','') }}">
-
-    <!-- CSRF Token -->
+    <!-- change status bar color on supported mobile browsers -->
+    <meta name="theme-color" content="#252A51">
+    <!-- change the page's icon in the browser's tab -->
+    <link rel="icon" href="{{ config('app.logo_with_bg_path') }}">
+    <!-- CSRF Token for Laravel's forms -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Urán') }}</title>
@@ -17,39 +20,35 @@
     <!-- materialize css generated from resources/sass/materialize.scss-->
     <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection" />
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
-
-    <script src="{{ asset('js/site.js') }}" defer></script>
-    <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
-    <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
-    <!-- modified materialize js for searchable select: https://codepen.io/yassinevic/pen/eXjqjb?editors=1111 -->
-    <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
-    
-    <script type="text/javascript">
-    var today = new Date();
-    $(document).ready(
-        function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
-            $('.sidenav').sidenav();
-            $(".dropdown-trigger").dropdown({
-                hover: false
-            });
-        }
-    );
-    </script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    
+    <!-- Scripts --> <!-- TODO: optimize loading --> 
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
+    <script src="{{ asset('js/site.js') }}" defer></script>
+    <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
+    <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+    <script type="text/javascript">
+        var today = new Date();
+        $(document).ready(
+            function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    }
+                });
+                $('.sidenav').sidenav();
+                $(".dropdown-trigger").dropdown({
+                    hover: false
+                });
+            }
+        );
+    </script>
 </head>
 
 <body>
@@ -62,7 +61,7 @@
                 @yield('content')
             </div>
         </div>
-    </div>
+    </div>    
     <script>
     var cookieMessages = {
         'dismiss': "@lang('cookie.dismiss')",

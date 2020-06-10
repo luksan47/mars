@@ -54,6 +54,7 @@ return [
     'quantity' => 'Mennyiség',
     'how_transfer_works' => 'Ha egy másik felhasználónak szeretnél a pénzedből utalni, azt itt teheted meg:',
     'upload_money' => 'Pénzt feltölteni a rendszergazdáknál tudsz.',
-    'costs' => 'Az egyoldalas nyomtatás díja :one_sided, a kétoldalasé :two_sided ft.',
+    'costs' => 'Az egyoldalas nyomtatás díja :one_sided, a kétoldalasé :two_sided Ft.',
     'pdf_maxsize' => 'A fájl mérete legfeljebb :maxsize MB lehet.',
+    'modify_print_balance' => 'Felhasználható egyenleg módosítása',
 ];

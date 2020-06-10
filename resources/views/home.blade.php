@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-<i class="material-icons left">chevron_right</i>@lang('general.dashboard')
+<i class="material-icons left">chevron_right</i>@lang('general.home')
 @endsection
 
 @section('content')

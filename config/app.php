@@ -15,6 +15,14 @@ return [
 
     'name' => env('APP_NAME', 'Urán'),
 
+    'version' => '3.0',
+
+    'logo_blue_path' => '/img/uran_blue.png',
+
+    'logo_white_path'  => '/img/uran_white.png',
+
+    'logo_with_bg_path'  => '/img/uran_with_bg.png',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

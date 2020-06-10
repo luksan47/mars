@@ -56,4 +56,5 @@ return [
     'upload_money' => 'You can upload money to your account at the system admins.',
     'costs' => 'One-sided printing costs :one_sided, and two-sided printing costs :two_sided HUF.',
     'pdf_maxsize' => 'The maximum file size is :maxsize MB.',
+    'modify_print_balance' => 'Modify print balance',
 ];

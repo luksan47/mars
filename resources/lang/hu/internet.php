@@ -40,6 +40,6 @@ return [
     'extend' => 'Meghosszabbít',
     'deactivate' => 'Deaktivál',
     'generate_new_pwd' => 'Új jelszó generálása',
-    'nothing_t_show' => 'Nincs megjeleníthető adat',
+    'nothing_to_show' => 'Nincs megjeleníthető adat',
     'update' => 'Frissítés',
 ];
