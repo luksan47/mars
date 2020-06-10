@@ -59,6 +59,9 @@ class CreateEventTriggersTable extends Migration
      */
     public function down()
     {
+        Schema::table('semesters', function (Blueprint $table) {
+            $table->dropColumn('verified');
+        });
         Schema::dropIfExists('event_triggers');
     }
 }
