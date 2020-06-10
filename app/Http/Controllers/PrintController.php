@@ -22,7 +22,7 @@ class PrintController extends Controller
     }
 
     public function index() {
-        return view('print.app', ["users" => User::all(), "free_pages" => $this->allActiveFreePages()]);
+        return view('print.app', ["users" => User::all(), "free_pages" => $this->sumOfActiveFreePages()]);
     }
 
     public function admin() {
@@ -48,7 +48,6 @@ class PrintController extends Controller
             return back()->withErros($validator)->withInput();
         }
         // Only calculating the values here to see how many pages can be covered free of charge.
-        // TODO: if possible, use allActiveFreePages()
         $free_page_pool = [];
         if ($use_free_pages) {
             $available_pages = 0;
@@ -93,7 +92,7 @@ class PrintController extends Controller
         }
     }
 
-    public function allActiveFreePages() {
+    public function sumOfActiveFreePages() {
         return Auth::user()->freePages
                 ->where('deadline', '>', \Carbon\Carbon::now())
                 ->sum('amount');
