@@ -11,4 +11,15 @@ class SecretariatController extends Controller
         return \App\EventTrigger::first()->handleSignal();
         return Semester::current()->activeUsers;
     }
+
+    public static function sendStatementMail()
+    {
+        //TODO
+    }
+
+    public static function finalizeStatements()
+    {
+        //TODO
+    }
+
 }

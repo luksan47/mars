@@ -2,16 +2,20 @@
 
 namespace App;
 
+use App\Http\Controllers\SecretariatController;
 use App\Semester;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
 /**
- * This class implements the logic of triggering certain events (eg. automatic status changes)
+ * This class implements the logic of triggering certain (recurring) events (eg. automatic status changes)
  * when we reach a given datetime. The triggers will fire a signal that we handle accordingly.
  * Members of this models should not get created through the site. It is stored in the database
  * so the dates can be changed on the run, everything else should be static.
+ * The handlers of each signal will do one or two things:
+ *  - Runs the function/does the changes relvant to the event.
+ *  - (only recurring events) Updates the trigger date.
  */
 class EventTrigger extends Model
 {
@@ -28,12 +32,19 @@ class EventTrigger extends Model
 
     const INTERNET_ACTIVATION_SIGNAL = 0;
     const SEND_STATUS_STATEMENT_REQUEST = 1;
-    const DEACTIVATE_STATUS = 2;
+    const DEACTIVATE_STATUS_SIGNAL = 2;
     const SIGNALS = [
         self::INTERNET_ACTIVATION_SIGNAL,
         self::SEND_STATUS_STATEMENT_REQUEST,
-        self::DEACTIVATE_STATUS,
+        self::DEACTIVATE_STATUS_SIGNAL,
     ];
+
+    /* Getters */
+
+    public static function getInternetActivationDeadline()
+    {
+        return self::find(INTERNET_ACTIVATION_SIGNAL)->data;
+    }
 
     /* Handlers which are fired when the set date is reached. */
 
@@ -46,7 +57,7 @@ class EventTrigger extends Model
             case self::SEND_STATUS_STATEMENT_REQUEST:
                 $this->handleSendStatusStatementRequest();
                 break;
-            case self::DEACTIVATE_STATUS:
+            case self::DEACTIVATE_STATUS_SIGNAL:
                 $this->deactivateStatus();
                 break;
             default:        
@@ -56,7 +67,8 @@ class EventTrigger extends Model
         return $this;
     }
 
-    private function handleInternetActivationSignal() {
+    private function handleInternetActivationSignal()
+    {
         $months_to_add = Semester::current()->isSpring() ? 7 : 5;
         $current_date = Carbon::instance($this->date);
         $current_data = Carbon::parse($this->data);
@@ -68,11 +80,31 @@ class EventTrigger extends Model
         ]);
     }
 
-    private function handleSendStatusStatementRequest() {
+    private function handleSendStatusStatementRequest()
+    {
+        $months_to_add = Semester::current()->isSpring() ? 7 : 5;
+        $current_date = Carbon::instance($this->date);
 
+        // Triggering the event
+        SecretariatController::sendStatementMail();
+
+        $this->update([
+            // Update the new trigger date
+            'date' => $current_date->addMonth($months_to_add),
+        ]);
     }
     
-    private function deactivateStatus() {
+    private function deactivateStatus()
+    {
+        $months_to_add = Semester::current()->isSpring() ? 7 : 5;
+        $current_date = Carbon::instance($this->date);
 
+        // Triggering the event
+        SecretariatController::finalizeStatements();
+
+        $this->update([
+            // Update the new trigger date
+            'date' => $current_date->addMonth($months_to_add),
+        ]);
     }
 }
