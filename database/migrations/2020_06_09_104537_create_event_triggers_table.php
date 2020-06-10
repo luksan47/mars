@@ -21,7 +21,7 @@ class CreateEventTriggersTable extends Migration
             $table->timestamp('date');
             $table->integer('signal');
             $table->text('comment')->nullable();
-            
+
             $table->primary('signal');
         });
 

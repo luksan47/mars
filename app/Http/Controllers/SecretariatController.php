@@ -36,10 +36,9 @@ class SecretariatController extends Controller
         $users = User::all();
         $next_semester = Semester::next();
         foreach ($users as $user) {
-            if (!$user->isInSemester($next_semester)) {
-                $user->setStatusFor($next_semester, Semester::INACTIVE, "Failed to make a statement");
+            if (! $user->isInSemester($next_semester)) {
+                $user->setStatusFor($next_semester, Semester::INACTIVE, 'Failed to make a statement');
             }
         }
     }
-
 }

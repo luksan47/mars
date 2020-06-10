@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /** A semester is identified by a year and by it's either autumn or spring.
  * ie. a spring semester starting in february 2020 will be (2019, 2) since we write 2019/20/2.
  * The autumn semester starting in september 2020 is (2020, 1) since we write 2020/21/1.
- * 
+ *
  * The status can be verified or not (by default it is not). Users with permission has to
  * confirm that the user can have the given status.
  */

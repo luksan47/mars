@@ -168,6 +168,7 @@ class User extends Authenticatable
                 'comment' => $comment,
             ],
         ]);
+
         return $this;
     }
 
@@ -183,9 +184,10 @@ class User extends Authenticatable
                 'verify' => true,
             ],
         ]);
+
         return $this;
     }
-    
+
     /**
      * @deprecated use hasRole instead
      */

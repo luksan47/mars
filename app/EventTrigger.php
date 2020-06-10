@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Http\Controllers\SecretariatController;
-use App\Semester;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
@@ -52,6 +51,7 @@ class EventTrigger extends Model
         foreach ($events as $event) {
             $event->handleSignal();
         }
+
         return $events;
     }
 
@@ -86,10 +86,11 @@ class EventTrigger extends Model
             case self::DEACTIVATE_STATUS_SIGNAL:
                 $this->deactivateStatus();
                 break;
-            default:        
-                Log::warning("Event Trigger got undefined signal: " . $this->signal);
+            default:
+                Log::warning('Event Trigger got undefined signal: '.$this->signal);
                 break;
         }
+
         return $this;
     }
 
@@ -119,7 +120,7 @@ class EventTrigger extends Model
             'date' => $current_date->addMonth($months_to_add),
         ]);
     }
-    
+
     private function deactivateStatus()
     {
         $months_to_add = Semester::current()->isSpring() ? 7 : 5;
