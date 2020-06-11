@@ -34,11 +34,11 @@
                             </tr>
                             <tr>
                                 <td>@lang('info.neptun')</td>
-                                <td colspan="2">{{ $user->neptun }}</td>
+                                <td colspan="2">{{ $neptun }}</td>
                             </tr>
                             <tr>
                                 <td>@lang('info.phone_number')</td>
-                                <td colspan="2">{{ $user->phone_number }}</td>
+                                <td colspan="2">{{ $phone_number }}</td>
                             </tr>
                             <tr>
                                 <td>@lang('info.faculty')</td>
@@ -66,9 +66,6 @@
             </div>
             <div class="card-action">
                 <div class="row">
-                    {{-- <a href="{{ route('password.request') }}" class="btn waves-effect left">
-                    @lang('general.change_password')
-                    </a> --}}
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button class="btn waves-effect right " type="submit">@lang('general.logout')</button>
@@ -109,7 +106,6 @@
                         {{ $message }}
                     </blockquote>
                     @enderror
-                </form>
                 </form>
             </div>
         </div>

@@ -14,6 +14,8 @@ class UserController extends Controller
         $user = Auth::user();
 
         return view('auth.user', ['user' => $user])
+            ->with('neptun', $user->neptun)
+            ->with('phone_number', $user->phone_number)
             ->with('faculties', $user->faculties)
             ->with('workshops', $user->workshops);
     }
@@ -53,7 +55,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
-            'old_password' => 'required|string|same:',
+            'old_password' => 'required|string|password',
             'new_password' => 'required|string|min:8|confirmed|different:old_password',
         ]);
 
@@ -62,15 +64,9 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        if (Hash::check($request->old_password, $user->password)) {
-            $user->update([
-                'password' => Hash::make($request->new_password),
-            ]);
-
-            return redirect()->back(['message'=> 'ok']);
-        } else {
-            return redirect()->back()
-                ->withErrors('old_password');
-        }
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+        return redirect()->back()->with('message', 'ok');
     }
 }
