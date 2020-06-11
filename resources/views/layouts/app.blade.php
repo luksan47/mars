@@ -47,10 +47,6 @@
                     hover: false
                 });
                 $('.collapsible').collapsible();
-                @if (session('message'))
-                console.log('ok');
-                M.toast({html: "{{ session('message') }}"});
-                @endif
             }
         );
     </script>
