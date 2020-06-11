@@ -97,7 +97,7 @@ class Semester extends Model
     public static function current()
     {
         $now = Carbon::now();
-        if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month < self::END_OF_SPRING_SEMESTER) {
+        if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month <= self::END_OF_SPRING_SEMESTER) {
             $part = 2;
             $year = $now->year - 1;
         } else {
@@ -156,5 +156,12 @@ class Semester extends Model
         }
 
         return $semester;
+    }
+
+    /* Helpers for testing */
+
+    public function equals($other)
+    {
+        return $this->year == $other->year && $this->part == $other->part;
     }
 }
