@@ -88,12 +88,12 @@
                         </div>
                         <div class="input-field col s4">
                             <input id="new_password" type="password" name="new_password" required
-                                autocomplete="new-password">
+                                >
                             <label for="new_password">@lang('registration.new_password')</label>
                         </div>
                         <div class="input-field col s4">
                             <input id="new_password_confirmation" type="password" name="new_password_confirmation"
-                                required autocomplete="new-password">
+                                required>
                             <label for="new_password_confirmation">@lang('registration.confirmpwd')</label>
                         </div>
                         <div class="input-field col s4">
@@ -101,7 +101,12 @@
                                 type="submit">@lang('general.change_password')</button>
                         </div>
                     </div>
-                    @error('password' or 'new_password' or 'old_password')
+                    @error('old_password')
+                    <blockquote class="error">
+                        {{ $message }}
+                    </blockquote>
+                    @enderror
+                    @error('new_password')
                     <blockquote class="error">
                         {{ $message }}
                     </blockquote>
