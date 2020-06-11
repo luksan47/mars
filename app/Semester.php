@@ -87,11 +87,6 @@ class Semester extends Model
         return $this->hasUserWith($user, self::ACTIVE);
     }
 
-    public static function newest()
-    {
-        return Semester::orderBy('year', 'desc')->orderBy('part', 'desc')->first();
-    }
-
     // There is always a "current" semester. If there is not in the database, this function creates it.
     // TODO: fine a safer method?
     public static function current()
