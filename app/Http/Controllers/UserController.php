@@ -14,8 +14,8 @@ class UserController extends Controller
         $user = Auth::user();
 
         return view('auth.user', ['user' => $user])
-            ->with('neptun', $user->neptun)
-            ->with('phone_number', $user->phone_number)
+            ->with('neptun', $user->educationalInformation->neptun)
+            ->with('phone_number', $user->personalInformation->phone_number)
             ->with('faculties', $user->faculties)
             ->with('workshops', $user->workshops);
     }
@@ -37,6 +37,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:225|unique:users',
         ]);
+        $validator->validate();
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -45,6 +46,27 @@ class UserController extends Controller
         }
         $user->update([
             'email' => $request->email,
+        ]);
+
+        return redirect()->back()->with('message', 'ok');
+    }
+
+    public function updatePhone(Request $request)
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'phone_number' => 'required|string|min:16|max:18',
+        ]);
+        $validator->validate();
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $user->personalInformation->update([
+            'phone_number' => $request->phone_number,
         ]);
 
         return redirect()->back()->with('message', 'ok');

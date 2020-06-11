@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('userdata', 'UserController@showData')->name('userdata');
     Route::post('userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
+    Route::post('userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
     Route::post('userdata/update_password', 'UserController@updatePassword')->name('userdata.update_password');
 });
 
