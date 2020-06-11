@@ -50,6 +50,8 @@ class CreateCamelTable extends Migration
             $table->string('password');
             $table->integer('def_min_camels');
         });
+
+        DB::table('roles')->insertOrIgnore(['name' => 'camel-breeder']);
     }
 
     /**
@@ -64,5 +66,7 @@ class CreateCamelTable extends Migration
         Schema::dropIfExists('shepherding');
         Schema::dropIfExists('allocate');
         Schema::dropIfExists('farmer');
+
+        DB::table('users')->where('name', '=', 'camel-breeder')->delete();
     }
 }
