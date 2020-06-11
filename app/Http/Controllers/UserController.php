@@ -67,6 +67,7 @@ class UserController extends Controller
         $user->update([
             'password' => Hash::make($request->new_password),
         ]);
+
         return redirect()->back()->with('message', 'ok');
     }
 }
