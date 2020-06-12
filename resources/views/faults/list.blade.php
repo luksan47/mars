@@ -1,5 +1,6 @@
 <div id="faults-table"></div>
-<script src="js/moment.min.js"></script>
+<!-- TODO: revisit if moment js is necessary (hint: it's not, we just have to get rid of datetime sort in the table) -->
+<script src="{{ mix('js/moment.min.js') }}"></script>
 <script type="application/javascript">
     $(document).ready(function () {
         function status_translate(cell) {

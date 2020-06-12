@@ -14,41 +14,25 @@
 
     <title>{{ config('app.name', 'Urán') }}</title>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/tabulator_materialize.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/cookieconsent.min.css') }}" />
-    <!-- materialize css generated from resources/sass/materialize.scss-->
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection" />
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
+    <!-- Styles -->
+    <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen,projection" >
+    <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
+
     <!-- Scripts --> <!-- TODO: optimize loading --> 
-    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
-    <script src="{{ asset('js/site.js') }}" defer></script>
-    <script src="{{ asset('js/cookieconsent.min.js') }}" defer></script>
-    <script src="{{ asset('js/cookieconsent-initialize.js') }}" defer></script>
-    <script type="text/javascript" src="{{ asset('js/materialize_custom.min.js') }}"></script>
-    <script type="text/javascript">
-        var today = new Date();
-        $(document).ready(
-            function() {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    }
-                });
-                $('.sidenav').sidenav();
-                $(".dropdown-trigger").dropdown({
-                    hover: false
-                });
-            }
-        );
-    </script>
+    <script type="text/javascript" src="{{ mix('js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/popper.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ mix('js/tabulator.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ mix('js/site.js') }}" defer></script>
+    <script type="text/javascript" src="{{ mix('js/cookieconsent.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ mix('js/cookieconsent-initialize.js') }}" defer></script>
+    <script type="text/javascript" src="{{ mix('js/materialize.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/csrf.js') }}"></script>
+
 </head>
 
 <body>
@@ -61,7 +45,7 @@
                 @yield('content')
             </div>
         </div>
-    </div>    
+    </div>
     <script>
     var cookieMessages = {
         'dismiss': "@lang('cookie.dismiss')",
