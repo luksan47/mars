@@ -15,6 +15,6 @@ class StatusTest extends TestCase
 
     public function testCurrentSemester()
     {
-        
+        $this->assertTrue(true);
     }
 }
