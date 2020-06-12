@@ -115,19 +115,24 @@ class User extends Authenticatable
 
     public function allSemesters()
     {
-        return $this->belongsToMany(Semester::class, 'semester_status')->withPivot(['status', 'comment']);
+        return $this->belongsToMany(Semester::class, 'semester_status')->withPivot(['status', 'verified', 'comment']);
     }
 
     public function semestersWhere($status)
     {
         return $this->belongsToMany(Semester::class, 'semester_status')
                     ->wherePivot('status', '=', $status)
-                    ->withPivot('comment');
+                    ->withPivot('verified', 'comment');
     }
 
     public function activeSemesters()
     {
         return $this->semestersWhere(Semester::ACTIVE);
+    }
+
+    public function isInSemester($semester)
+    {
+        return $this->allSemesters->contains($semester);
     }
 
     public function isActiveIn($semester)
@@ -153,6 +158,34 @@ class User extends Authenticatable
     public function getStatus()
     {
         return getStatusIn(Semester::current());
+    }
+
+    public function setStatusFor($semester, $status, $comment = null)
+    {
+        $this->allSemesters()->syncWithoutDetaching([
+            $semester->id => [
+                'status' => $status,
+                'comment' => $comment,
+            ],
+        ]);
+
+        return $this;
+    }
+
+    public function setStatus($status, $comment = null)
+    {
+        return $this->setStatusFor(Semester::current(), $status, $comment);
+    }
+
+    public function verify($semester)
+    {
+        $this->allSemesters()->syncWithoutDetaching([
+            $semester->id => [
+                'verify' => true,
+            ],
+        ]);
+
+        return $this;
     }
 
     /**
