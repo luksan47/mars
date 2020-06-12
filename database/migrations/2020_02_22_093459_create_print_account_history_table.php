@@ -26,6 +26,7 @@ class CreatePrintAccountHistoryTable extends Migration
             $table->unsignedBigInteger('modified_by');
             $table->timestamp('modified_at');
         });
+        // This triggers is changed in fix_trigger migrations.
         DB::unprepared('
             CREATE TRIGGER trigger_print_account_history_balance
             AFTER UPDATE ON print_accounts
@@ -38,6 +39,7 @@ class CreatePrintAccountHistoryTable extends Migration
                     modified_by)
                 VALUES(OLD.user_id, NEW.balance - OLD.balance, 0, NULL, NEW.last_modified_by);
         ');
+
         DB::unprepared('
             CREATE TRIGGER trigger_update_print_account_history_free_pages
             AFTER UPDATE ON printing_free_pages
@@ -54,6 +56,7 @@ class CreatePrintAccountHistoryTable extends Migration
                     VALUES(OLD.user_id, 0, NEW.amount, @new_deadline, NEW.last_modified_by, NEW.updated_at);
                 END;
         ');
+
         DB::unprepared('
             CREATE TRIGGER trigger_insert_print_account_history_free_pages
             AFTER INSERT ON printing_free_pages
