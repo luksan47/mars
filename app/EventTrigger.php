@@ -59,17 +59,17 @@ class EventTrigger extends Model
 
     public static function internetActivationDeadline()
     {
-        return self::find(INTERNET_ACTIVATION_SIGNAL)->data;
+        return self::find(self::INTERNET_ACTIVATION_SIGNAL)->data;
     }
 
     public static function statementRequestDate()
     {
-        return self::find(SEND_STATUS_STATEMENT_REQUEST)->date;
+        return self::find(self::SEND_STATUS_STATEMENT_REQUEST)->date;
     }
 
     public static function statementDeadline()
     {
-        return self::find(DEACTIVATE_STATUS_SIGNAL)->date;
+        return self::find(self::DEACTIVATE_STATUS_SIGNAL)->date;
     }
 
     /* Handlers which are fired when the set date is reached. */
