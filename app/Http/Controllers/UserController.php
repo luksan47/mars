@@ -13,11 +13,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        return view('auth.user', ['user' => $user])
-            ->with('neptun', $user->educationalInformation->neptun)
-            ->with('phone_number', $user->personalInformation->phone_number)
-            ->with('faculties', $user->faculties)
-            ->with('workshops', $user->workshops);
+        return view('auth.user', ['user' => $user]);
     }
 
     /**
@@ -37,7 +33,6 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|max:225|unique:users',
         ]);
-        $validator->validate();
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -48,7 +43,7 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->back()->with('message', 'ok');
+        return redirect()->back();
     }
 
     public function updatePhone(Request $request)
@@ -58,18 +53,19 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'phone_number' => 'required|string|min:16|max:18',
         ]);
-        $validator->validate();
 
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
         }
+
         $user->personalInformation->update([
             'phone_number' => $request->phone_number,
         ]);
+        //if user doesn`t have personalInformation TODO
 
-        return redirect()->back()->with('message', 'ok');
+        return redirect()->back();
     }
 
     public function updatePassword(Request $request)
@@ -80,7 +76,7 @@ class UserController extends Controller
             'old_password' => 'required|string|password',
             'new_password' => 'required|string|min:8|confirmed|different:old_password',
         ]);
-        $validator->validate();
+
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
@@ -90,6 +86,6 @@ class UserController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
 
-        return redirect()->back()->with('message', 'ok');
+        return redirect()->back();
     }
 }

@@ -53,7 +53,7 @@
                                     <div class="input-field inline" style="margin:0">
                                         <input id="phone_number" type="tel" name="phone_number" size="30" disabled
                                             style="margin:0" class="validate black-text"
-                                            value="{{ old('phone_number', $phone_number) }}"
+                                            value="{{ old('phone_number', $user->personalInformation->phone_number ?? '') }}"
                                             pattern="[+][0-9]{1,4}\s[(][0-9]{1,4}[)]\s[-|0-9]*" minlength="16"
                                             maxlength="18" required>
                                         <span id="phone_format" class="helper-text hide">+36 (20) 123-4567</span>
@@ -83,13 +83,13 @@
                         </tr>
                         <tr>
                             <th scope="row">@lang('info.neptun')</th>
-                            <td>{{ $neptun }}</td>
+                            <td>{{ $user->educationalInformation->neptun ?? ''}}</td>
                         </tr>
                         <tr>
                             <th scope="row">@lang('info.faculty')</th>
                             <td>
                                 <ul>
-                                    @foreach ($faculties as $faculty)
+                                    @foreach ($user->faculties as $faculty)
                                     <li>{{$faculty->name}}</li>
                                     @endforeach
                                 </ul>
@@ -99,7 +99,7 @@
                             <th scope="row">@lang('info.workshop')</th>
                             <td>
                                 <ul>
-                                    @foreach ($workshops as $workshop)
+                                    @foreach ($user->workshops as $workshop)
                                     <li>{{$workshop->name}}</li>
                                     @endforeach
                                 </ul>
