@@ -19,13 +19,6 @@ class FreePages extends Model
         'comment',
     ];
 
-    public function sumOfActive()
-    {
-        return $this
-                ->where('deadline', '>', \Carbon\Carbon::now())
-                ->sum('amount');
-    }
-
     public function user()
     {
         return $this->belongsTo('App\User');

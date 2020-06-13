@@ -23,8 +23,8 @@ class PrintController extends Controller
 
     public function index() {
         return view('print.app', [
-            "users" => User::all(), 
-            "free_pages" => Auth::user()->freePages->sumOfActive()
+                "users" => User::all(),
+                "free_pages" => Auth::user()->sumOfActiveFreePages()
             ]);
     }
 

@@ -46,6 +46,13 @@ class User extends Authenticatable
         return $this->hasMany('App\FreePages');
     }
 
+    public function sumOfActiveFreePages()
+    {
+        return $this->freePages
+                    ->where('deadline', '>', \Carbon\Carbon::now())
+                    ->sum('amount');
+    }
+
     public function printHistory()
     {
         return $this->hasMany('App\PrintAccountHistory');
