@@ -31,22 +31,22 @@ class CreateEventTriggersTable extends Migration
 
         EventTrigger::create([
             'name' => 'internet_valid_until',
-            'data' => Carbon::createFromDate(2020, 3, 15, 'Europe/Budapest'),
-            'date' => Carbon::createFromDate(2020, 2, 1, 'Europe/Budapest'),
+            'data' => Carbon::createFromDate(2020, 10, 15, 'Europe/Budapest'),
+            'date' => Carbon::createFromDate(2020, 9, 1, 'Europe/Budapest'),
             'signal' => EventTrigger::INTERNET_ACTIVATION_SIGNAL,
             'comment' => 'When the date is reached, activating internet will have new default value',
         ]);
 
         EventTrigger::create([
-            'name' => 'internet_valid_until',
-            'date' => Carbon::createFromDate(2020, 6, 1, 'Europe/Budapest'),
+            'name' => 'send_status_statement_request',
+            'date' => Carbon::createFromDate(2021, 1, 1, 'Europe/Budapest'),
             'signal' => EventTrigger::SEND_STATUS_STATEMENT_REQUEST,
             'comment' => 'The trigger to nofify students about filling out statements regarding their status in the next semester',
         ]);
 
         EventTrigger::create([
-            'name' => 'internet_valid_until',
-            'date' => Carbon::createFromDate(2020, 6, 15, 'Europe/Budapest'),
+            'name' => 'deactivate_status_signal',
+            'date' => Carbon::createFromDate(2021, 1, 15, 'Europe/Budapest'),
             'signal' => EventTrigger::DEACTIVATE_STATUS_SIGNAL,
             'comment' => 'The date when all students who did not make the above statement will lose their status for the next semester',
         ]);
