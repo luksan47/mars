@@ -25,7 +25,6 @@
 
     <!-- Scripts --> <!-- TODO: optimize loading --> 
     <script type="text/javascript" src="{{ mix('js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('js/popper.min.js') }}" ></script>
     <script type="text/javascript" src="{{ mix('js/tabulator.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ mix('js/site.js') }}" defer></script>
     <script type="text/javascript" src="{{ mix('js/cookieconsent.min.js') }}" defer></script>

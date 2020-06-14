@@ -24,6 +24,8 @@
         "minimist": "^1.2.5"
     },
     "dependencies": {
-        "jquery": "^3.5"
+        "jquery": "^3.5",
+        "moment": "^2.26.0",
+        "tabulator-tables": "^4.6.3"
     }
 }
