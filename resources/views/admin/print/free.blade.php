@@ -20,12 +20,14 @@
                 required onfocus="M.Datepicker.getInstance(deadline).open();">
             <label for="deadline">@lang('print.deadline')</label>
             <script>
+            var tomorrow = new Date();
+            tomorrow.setDate(new Date().getDate()+1);
             $(document).ready(function() {
                 $('.datepicker').datepicker({
                     format: 'yyyy-mm-dd',
                     firstDay: 1,
                     yearRange: 10,
-                    minDate: today,
+                    minDate: tomorrow,
                 });
             });
             </script>

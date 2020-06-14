@@ -24,13 +24,15 @@ class PrintController extends Controller
     }
 
     public function index() {
-        return view('print.app', ["users" => User::all()]);
+        return view('print.app', [
+                "users" => User::all(),
+                "free_pages" => Auth::user()->sumOfActiveFreePages()
+            ]);
     }
 
     public function admin() {
         return view('admin.print.app', ["users" => User::all()]);
     }
-
 
     public function print(Request $request) {
         $validator = Validator::make($request->all(), [
@@ -93,6 +95,7 @@ class PrintController extends Controller
             return back()->withErrors(['print' => __('print.error_printing')]);
         }
     }
+
     public function transferBalance(Request $request) {
         $validator = Validator::make($request->all(), [
             'balance' => 'required|integer|min:1',
