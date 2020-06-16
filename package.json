@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "jquery": "^3.5",
+        "materialize-css": "^1.0.0-rc.2",
         "moment": "^2.26.0",
         "tabulator-tables": "^4.6.3"
     }
