@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\EventTrigger;
+use App\Classroom;
 use App\Semester;
 use App\User;
 
@@ -11,6 +12,12 @@ class SecretariatController extends Controller
     public function list()
     {
         return Semester::current()->activeUsers;
+    }
+
+    public function rooms()
+    {
+        $rooms = Classroom::select('name');
+        return view('secretariat.rooms')->with('rooms', $rooms);
     }
 
     public static function isStatementAvailable()

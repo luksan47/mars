@@ -87,6 +87,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
+    Route::get('/secretariat/rooms', 'SecretariatController@rooms')->name('secretariat.rooms');
 
     Route::get('/locale', 'LocaleController@list')->name('locales');
 });
