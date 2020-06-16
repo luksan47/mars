@@ -1,41 +1,47 @@
-@charset "UTF-8";
+//custom color
+$coli: (
+  "blue": #242851,
+  "orange": #b38f2f,
+  "lightblue": #6e76e5
+);
+//import and overwrite default colors
+@import "node_modules/materialize-css/sass/components/color-variables";
+$colors: map-merge($colors,("coli": $coli));
 
-// Color
-@import "components/color-variables";
-@import "components/color-classes";
+//create color classes
+@import "node_modules/materialize-css/sass/components/color-classes";
 
-// Variables;
-@import "components/variables";
+//set colors to use
+$primary-color: color("coli", "blue");
+$secondary-color: color("coli", "orange");
+$success-color: color("blue-grey", "lighten-1");
+$link-color: color("coli", "orange");
 
-// Reset
-@import "components/normalize";
+//import the remaining materialize style 
+//(will include the previous ones also, but it won't overwrite those)
+@import "node_modules/materialize-css/sass/materialize.scss";
 
-// components
-@import "components/global";
-@import "components/badges";
-@import "components/icons-material-design";
-@import "components/grid";
-@import "components/navbar";
-@import "components/typography";
-@import "components/transitions";
-@import "components/cards";
-@import "components/toast";
-@import "components/tabs";
-@import "components/tooltip";
-@import "components/buttons";
-@import "components/dropdown";
-@import "components/waves";
-@import "components/modal";
-@import "components/collapsible";
-@import "components/chips";
-@import "components/materialbox";
-@import "components/forms/forms";
-@import "components/table_of_contents";
-@import "components/sidenav";
-@import "components/preloader";
-@import "components/slider";
-@import "components/carousel";
-@import "components/tapTarget";
-@import "components/pulse";
-@import "components/datepicker";
-@import "components/timepicker";
+//overwrite some materialize classes
+blockquote {
+  margin: 20px 0;
+  padding-left: 1.5rem;
+  border-left: 5px solid $secondary-color !important;
+  &.error {
+    color: $secondary-color;
+  }
+}
+.breadcrumb {
+  cursor:default;
+}
+
+//other, custom classes
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
+}
+
