@@ -1,6 +1,5 @@
 <?php
 
-use APP\PersonalInformation;
 use App\Role;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -18,7 +17,7 @@ class UsersTableSeeder extends Seeder
         $this->createCollegist();
         $this->createTenant();
         $this->createStaff();
-        
+
         //generate random collegists
         factory(App\User::class, 10)->create()->each(function ($user) {
             factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
@@ -27,11 +26,11 @@ class UsersTableSeeder extends Seeder
             factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::COLLEGIST));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            for ($x = 0; $x < rand(1,3); $x++) {
-                $user->faculties()->attach(rand(1,7));
+            for ($x = 0; $x < rand(1, 3); $x++) {
+                $user->faculties()->attach(rand(1, 7));
             }
-            for ($x = 0; $x < rand(1,3); $x++) {
-                $user->workshops()->attach(rand(1,17));
+            for ($x = 0; $x < rand(1, 3); $x++) {
+                $user->workshops()->attach(rand(1, 17));
             }
             $user->internetAccess->setWifiUsername();
         });
@@ -59,16 +58,15 @@ class UsersTableSeeder extends Seeder
         factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
         factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
-        for ($x = 0; $x < rand(1,3); $x++) {
-            $user->faculties()->attach(rand(1,7));
+        for ($x = 0; $x < rand(1, 3); $x++) {
+            $user->faculties()->attach(rand(1, 7));
         }
-        for ($x = 0; $x < rand(1,3); $x++) {
-            $user->workshops()->attach(rand(1,17));
+        for ($x = 0; $x < rand(1, 3); $x++) {
+            $user->workshops()->attach(rand(1, 17));
         }
         $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
         $user->roles()->attach(Role::getId(Role::INTERNET_ADMIN));
         $user->internetAccess->setWifiUsername();
-        
     }
 
     private function createCollegist()
@@ -86,11 +84,11 @@ class UsersTableSeeder extends Seeder
         $user->internetAccess->setWifiUsername();
         factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
-        for ($x = 0; $x < rand(1,3); $x++) {
-            $user->faculties()->attach(rand(1,7));
+        for ($x = 0; $x < rand(1, 3); $x++) {
+            $user->faculties()->attach(rand(1, 7));
         }
-        for ($x = 0; $x < rand(1,3); $x++) {
-            $user->workshops()->attach(rand(1,17));
+        for ($x = 0; $x < rand(1, 3); $x++) {
+            $user->workshops()->attach(rand(1, 17));
         }
     }
 

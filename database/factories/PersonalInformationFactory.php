@@ -15,6 +15,6 @@ $factory->define(PersonalInformation::class, function (Faker $faker) {
         'county' => $faker->state,
         'zip_code' => $faker->postcode,
         'city' => $faker->city,
-        'street_and_number' => $faker->streetAddress
+        'street_and_number' => $faker->streetAddress,
     ];
 });

@@ -65,7 +65,7 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\PersonalInformation');
     }
-    
+
     public function hasPersonalInformation()
     {
         return isset($this->personalInformation);

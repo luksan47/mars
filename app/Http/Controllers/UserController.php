@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        if($user->hasPersonalInformation()){
+        if ($user->hasPersonalInformation()) {
             $validator = Validator::make($request->all(), [
                 'phone_number' => 'required|string|min:16|max:18',
             ]);
