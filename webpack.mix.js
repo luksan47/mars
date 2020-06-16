@@ -23,7 +23,7 @@ mix.js('resources/js/materialize_custom.js', 'public/js/materialize.js') // We u
       'node_modules/tabulator-tables/dist/js/tabulator.min.js'
    ], 'public/js/')
    // Compile SASS
-   .sass('resources/css/materialize.scss', 'public/css/')
+   .sass('resources/sass/materialize.scss', 'public/css/')
    // Add common styles here
    .styles([
       'resources/css/tabulator_materialize.min.css', // This might cause problems if it gets ouf of sync with the JS
