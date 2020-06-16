@@ -1,4 +1,4 @@
-var today = new Date();
+window.today = new Date();
 $(document).ready(
     function() {
         $.ajaxSetup({

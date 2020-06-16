@@ -23,7 +23,7 @@
     <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen,projection" >
     <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
 
-    <!-- Scripts --> <!-- TODO: optimize loading --> 
+    <!-- Scripts -->
     <script type="text/javascript" src="{{ mix('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ mix('js/tabulator.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ mix('js/site.js') }}" defer></script>
