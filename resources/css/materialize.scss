@@ -14,7 +14,7 @@ $colors: map-merge($colors,("coli": $coli));
 //set colors to use
 $primary-color: color("coli", "blue");
 $secondary-color: color("coli", "orange");
-$success-color: color("coli", "lighblue");
+$success-color: color("coli", "lightblue");
 $link-color: color("coli", "orange");
 
 //import the remaining materialize style 
