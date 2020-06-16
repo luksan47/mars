@@ -65,10 +65,20 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\PersonalInformation');
     }
+    
+    public function hasPersonalInformation()
+    {
+        return isset($this->personalInformation);
+    }
 
     public function educationalInformation()
     {
         return $this->hasOne('App\EducationalInformation');
+    }
+
+    public function hasEducationalInformation()
+    {
+        return isset($this->educationalInformation);
     }
 
     public function workshops()

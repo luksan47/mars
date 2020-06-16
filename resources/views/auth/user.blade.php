@@ -45,6 +45,7 @@
                                 @enderror
                             </td>
                         </tr>
+                        @if($user->hasPersonalInformation())
                         <tr>
                             <th scope="row">@lang('info.phone_number')</th>
                             <td>
@@ -81,6 +82,8 @@
                                 @enderror
                             </td>
                         </tr>
+                        @endif
+                        @if($user->hasEducationalInformation())
                         <tr>
                             <th scope="row">@lang('info.neptun')</th>
                             <td>{{ $user->educationalInformation->neptun ?? ''}}</td>
@@ -105,6 +108,7 @@
                                 </ul>
                             </td>
                         </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

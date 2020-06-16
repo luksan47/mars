@@ -50,20 +50,21 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $validator = Validator::make($request->all(), [
-            'phone_number' => 'required|string|min:16|max:18',
-        ]);
+        if($user->hasPersonalInformation()){
+            $validator = Validator::make($request->all(), [
+                'phone_number' => 'required|string|min:16|max:18',
+            ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $user->personalInformation->update([
+                'phone_number' => $request->phone_number,
+            ]);
         }
-
-        $user->personalInformation->update([
-            'phone_number' => $request->phone_number,
-        ]);
-        //if user doesn`t have personalInformation TODO
 
         return redirect()->back();
     }
