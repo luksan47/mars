@@ -18,7 +18,7 @@ mix.js('resources/js/materialize_custom.js', 'public/js/materialize.js') // We u
    .copy([
       'node_modules/moment/min/moment.min.js',
       'node_modules/jquery/dist/jquery.min.js',
-      'node_modules/tabulator-tables/dist/js/tabulator.min.js'
+      'node_modules/tabulator-tables/dist/js/tabulator.min.js',
    ], 'public/js/')
    // Compile SASS
    .sass('resources/sass/materialize.scss', 'public/css/')

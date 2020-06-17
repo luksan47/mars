@@ -21,7 +21,7 @@ class CreateCoursesTable extends Migration
             $table->text('name_english');
             $table->set('type', \App\Course::TYPES);
             $table->unsignedTinyInteger('credits');
-            $table->timestamp('hours');
+            $table->unsignedTinyInteger('hours');
             $table->unsignedSmallInteger('semester_id');
             $table->unsignedBigInteger('teacher_id');
             $table->timestamps();

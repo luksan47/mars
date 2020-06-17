@@ -6,15 +6,16 @@
 @section('content')
 
 <div class="row">
-  <div class="col s12">
+  <div class="col s12 m12 l12">
     <div class="card">
       <div class="card-content">
         <span class="card-title">@lang('secretariat.classroom_timetable')</span>
-        <div id="timeline" style="height: 180px;"></div>
+        <div id="timeline" style="height: 500px;"></div>
       </div>
     </div>
   </div>
 </div>
+    <script src="{{ mix('js/moment.min.js') }}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['timeline']});
@@ -29,18 +30,23 @@
         dataTable.addColumn({ type: 'date', id: 'Start' });
         dataTable.addColumn({ type: 'date', id: 'End' });
         dataTable.addRows([
-          [ '012', 'Beginning JavaScript',       new Date(0,0,0,12,0,0),  new Date(0,0,0,13,30,0) ],
-          [ '012', 'Intermediate JavaScript',    new Date(0,0,0,14,0,0),  new Date(0,0,0,15,30,0) ],
-          [ '013', 'Advanced JavaScript',        new Date(0,0,0,16,0,0),  new Date(0,0,0,17,30,0) ],
-          [ '015',   'Beginning Google Charts',    new Date(0,0,0,12,30,0), new Date(0,0,0,14,0,0) ],
-          [ '015',   'Intermediate Google Charts', new Date(0,0,0,14,30,0), new Date(0,0,0,16,0,0) ],
-          [ '015',   'Advanced Google Charts',     new Date(0,0,0,16,30,0), new Date(0,0,0,18,0,0) ]]);
-        
+          @foreach($timetable as $lesson)
+            @if($lesson->isToday())
+              [ '{{ $lesson->classroom->number }}', '{{ $lesson->course->name }}',  moment('{{ $lesson->time }}').toDate(),  moment('{{ $lesson->time }}').add(90, 'minutes').toDate() ],
+            @endif
+          @endforeach
+        ]);
+
         var options = {
-          timeline: { colorByRowLabel: true }
+          timeline: {
+            colorByRowLabel: true,
+          }
         };
 
         chart.draw(dataTable, options);
       }
+      $(window).resize(function(){
+        drawChart();
+      });
     </script>
 @endsection

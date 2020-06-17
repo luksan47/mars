@@ -8,14 +8,14 @@ use Faker\Generator as Faker;
 $factory->define(App\Course::class, function (Faker $faker) {
     return [
         'code' => $faker->slug,
-        'workshop_id' => 0, //TODO: $faker->
+        'workshop_id' => \App\Workshop::find(1)->id, //TODO: $faker->
         'name' => $faker->catchPhrase,
         'name_english' => $faker->bs,
         'type' => $faker->randomElement(Course::TYPES),
         'credits' => $faker->randomDigit,
-        'hours' => $faker->dateTimeInInterval('-1 week', '+ 1 week'),
-        'semester_id' => 0, //TODO: $faker->
-        'teacher_id' => 0, //TODO: $faker->
+        'hours' => $faker->numberBetween(1, 3),
+        'semester_id' => \App\Semester::find(1)->id, //TODO: $faker->
+        'teacher_id' => \App\Semester::find(1)->id, //TODO: $faker->
         'updated_at' => now(),
         'created_at' => now(),
     ];

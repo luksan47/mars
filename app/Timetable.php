@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Timetable extends Pivot
@@ -12,10 +13,26 @@ class Timetable extends Pivot
     public $timestamps = true;
 
     protected $fillable = [
-        'user_id',
-        'amount',
-        'deadline',
-        'last_modified_by',
-        'comment',
+        'time',
     ];
+
+    protected $casts = [
+        'time' => 'datetime',
+    ];
+
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo('App\Classroom');
+    }
+
+    public function isToday()
+    {
+        $dt = Carbon::instance($this->time);
+        return $dt->isToday(); 
+    }
 }

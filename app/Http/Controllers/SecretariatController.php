@@ -16,10 +16,7 @@ class SecretariatController extends Controller
 
     public function rooms()
     {
-        $timetable = \App\Timetable::all();
-        echo($timetable);
-        $rooms = Classroom::select('name');
-        return view('secretariat.rooms')->with('rooms', $rooms);
+        return view('secretariat.rooms')->with('timetable', \App\Timetable::all());
     }
 
     public static function isStatementAvailable()
