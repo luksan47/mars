@@ -30,6 +30,7 @@ class Timetable extends Pivot
         return $this->belongsTo('App\Classroom');
     }
 
+    // Only for testing
     public function isToday()
     {
         $dt = Carbon::instance($this->time);

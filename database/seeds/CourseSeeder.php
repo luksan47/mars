@@ -17,6 +17,9 @@ class CourseSeeder extends Seeder
             $dt = \Carbon\Carbon::instance($time);
             $midDay = \Carbon\Carbon::instance($dt)->midDay();
             if ($dt < $midDay) {
+                // The use case is that we have lessons mostly in the evening, so pushing
+                // the hours to the second half of the day. This way the UI will better reflect
+                // what we will see in prod.
                 $dt = $dt->addHours(12);
             }
             $course->classrooms()->attach(
