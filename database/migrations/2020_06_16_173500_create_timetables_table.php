@@ -21,24 +21,24 @@ class CreateTimetablesTable extends Migration
         });
 
         App\Classroom::insert([[
-                'number' => '012',
-                'capacity' => 10,
-            ],[
-                'number' => '013',
-                'capacity' => 10,
-            ],[
-                'number' => '015',
-                'capacity' => 10,
-            ],[
-                'number' => '016',
-                'capacity' => 30,
-            ],[
-                'number' => '018',
-                'capacity' => 20,
-            ],[
-                'number' => 'Borzsák könyvtár',
-                'capacity' => 15,
-            ],
+            'number' => '012',
+            'capacity' => 10,
+        ], [
+            'number' => '013',
+            'capacity' => 10,
+        ], [
+            'number' => '015',
+            'capacity' => 10,
+        ], [
+            'number' => '016',
+            'capacity' => 30,
+        ], [
+            'number' => '018',
+            'capacity' => 20,
+        ], [
+            'number' => 'Borzsák könyvtár',
+            'capacity' => 15,
+        ],
         ]);
 
         Schema::create('timetable', function (Blueprint $table) {

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\EventTrigger;
-use App\Classroom;
 use App\Semester;
 use App\User;
 

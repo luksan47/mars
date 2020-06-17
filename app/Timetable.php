@@ -33,6 +33,7 @@ class Timetable extends Pivot
     public function isToday()
     {
         $dt = Carbon::instance($this->time);
-        return $dt->isToday(); 
+
+        return $dt->isToday();
     }
 }

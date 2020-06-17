@@ -16,8 +16,7 @@ class CourseSeeder extends Seeder
             $time = $faker->dateTimeBetween('-1 week', '+ 1 week');
             $dt = \Carbon\Carbon::instance($time);
             $midDay = \Carbon\Carbon::instance($dt)->midDay();
-            if ($dt < $midDay)
-            {
+            if ($dt < $midDay) {
                 $dt = $dt->addHours(12);
             }
             $course->classrooms()->attach(

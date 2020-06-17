@@ -21,15 +21,15 @@ class Course extends Model
         'teacher_id',
     ];
 
-    const TYPE_SEMINAR = "SEMINAR";
-    const TYPE_LECTURE = "LECTURE";
-    const TYPE_PRACTICE = "PRACTICE";
+    const TYPE_SEMINAR = 'SEMINAR';
+    const TYPE_LECTURE = 'LECTURE';
+    const TYPE_PRACTICE = 'PRACTICE';
     const TYPES = [
         self::TYPE_SEMINAR,
         self::TYPE_LECTURE,
         self::TYPE_PRACTICE,
     ];
-    
+
     // A course can be held in multiple classrooms, or in the same, but multiple times.
     public function classrooms()
     {

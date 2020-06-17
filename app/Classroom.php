@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Course;
 use Illuminate\Database\Eloquent\Model;
 
 class Classroom extends Model
@@ -22,5 +21,4 @@ class Classroom extends Model
                     ->withPivot('time')
                     ->withTimestamps();
     }
-
 }
