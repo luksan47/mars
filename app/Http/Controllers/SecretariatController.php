@@ -16,6 +16,8 @@ class SecretariatController extends Controller
 
     public function rooms()
     {
+        $timetable = \App\Timetable::all();
+        echo($timetable);
         $rooms = Classroom::select('name');
         return view('secretariat.rooms')->with('rooms', $rooms);
     }

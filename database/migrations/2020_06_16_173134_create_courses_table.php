@@ -21,9 +21,10 @@ class CreateCoursesTable extends Migration
             $table->text('name_english');
             $table->set('type', \App\Course::TYPES);
             $table->unsignedTinyInteger('credits');
-            $table->unsignedTinyInteger('hours');
+            $table->timestamp('hours');
             $table->unsignedSmallInteger('semester_id');
             $table->unsignedBigInteger('teacher_id');
+            $table->timestamps();
 
             $table->foreign('workshop_id')->references('id')->on('workshops')->onDelete('cascade');
             $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');

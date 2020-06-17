@@ -41,7 +41,7 @@ class CreateTimetablesTable extends Migration
             ],
         ]);
 
-        Schema::create('timetables', function (Blueprint $table) {
+        Schema::create('timetable', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('course_id');
             $table->unsignedTinyInteger('classroom_id');

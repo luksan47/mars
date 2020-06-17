@@ -13,8 +13,10 @@ $factory->define(App\Course::class, function (Faker $faker) {
         'name_english' => $faker->bs,
         'type' => $faker->randomElement(Course::TYPES),
         'credits' => $faker->randomDigit,
-        'hours' => $faker->dateTimeInInterval('-1 years', '+ 2 years'),
+        'hours' => $faker->dateTimeInInterval('-1 week', '+ 1 week'),
         'semester_id' => 0, //TODO: $faker->
         'teacher_id' => 0, //TODO: $faker->
+        'updated_at' => now(),
+        'created_at' => now(),
     ];
 });
