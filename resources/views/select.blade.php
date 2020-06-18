@@ -1,4 +1,7 @@
 {{-- In order to use this blade, we need to pass an $elements array with id and name, and UID for the page. --}}
+@php
+  $elements = $elements->sortBy('name')
+@endphp
 <select searchable="@lang('general.search')" id="{{ $element_id }}" name="{{ $element_id }}">
   @foreach ($elements as $element)
   <option value="{{ $element->id }}">{{ $element->name }}</option>
