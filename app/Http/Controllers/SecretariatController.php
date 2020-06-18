@@ -15,7 +15,19 @@ class SecretariatController extends Controller
 
     public function rooms()
     {
-        return view('secretariat.rooms')->with('timetable', \App\Timetable::all());
+        return view('secretariat.rooms')
+            ->with('timetable', \App\Timetable::all());
+    }
+
+    public function addCourse()
+    {
+        return view('secretariat.rooms.add')
+            ->with('users', \App\User::all());
+    }
+
+    public function scheduleCourse()
+    {
+        return view('secretariat.rooms.schedule');
     }
 
     public static function isStatementAvailable()

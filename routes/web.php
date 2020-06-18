@@ -88,6 +88,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
     Route::get('/secretariat/rooms', 'SecretariatController@rooms')->name('secretariat.rooms');
+    Route::get('/secretariat/rooms/add', 'SecretariatController@addCourse')->name('secretariat.rooms.add');
+    Route::get('/secretariat/rooms/schedule', 'SecretariatController@scheduleCourse')->name('secretariat.rooms.schedule');
 
     Route::get('/locale', 'LocaleController@list')->name('locales');
 });
