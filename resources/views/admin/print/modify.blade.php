@@ -9,7 +9,7 @@
         @endforeach
         @endif
         <div class="input-field col s12 m12 l5">
-            @include("select-user")
+            @include("select", ['elements' => $users, 'element_id' => 'user_id_modify'])
         </div>
         <div class="input-field col s12 m12 l5">
             <input id="balance" name="balance" type="number" required>

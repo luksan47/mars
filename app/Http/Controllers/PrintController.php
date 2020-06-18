@@ -99,13 +99,13 @@ class PrintController extends Controller
     public function transferBalance(Request $request) {
         $validator = Validator::make($request->all(), [
             'balance' => 'required|integer|min:1',
-            'user_id' => 'required|integer|exists:users,id'
+            'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
 
         $balance = $request->balance;
         $from_account = Auth::user()->printAccount;
-        $to_account = User::find($request->user_id)->printAccount;
+        $to_account = User::find($request->user_to_send)->printAccount;
 
         if (!$from_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
@@ -121,13 +121,13 @@ class PrintController extends Controller
 
     public function modifyBalance(Request $request) {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id_modify' => 'required|integer|exists:users,id',
             'balance' => 'required|integer',
         ]);
         $validator->validate();
 
         $balance = $request->balance;
-        $print_account = User::find($request->user_id)->printAccount;
+        $print_account = User::find($request->user_id_modify)->printAccount;
 
         if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
@@ -139,7 +139,7 @@ class PrintController extends Controller
 
     public function addFreePages(Request $request) {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id_free' => 'required|integer|exists:users,id',
             'free_pages' => 'required|integer|min:1',
             'deadline' => 'required|date|after:now',
         ]);
@@ -148,7 +148,7 @@ class PrintController extends Controller
         $free_pages = $request->free_pages;
 
         FreePages::create([
-            'user_id' => $request->user_id,
+            'user_id' => $request->user_id_free,
             'amount' => $request->free_pages,
             'deadline' => $request->deadline,
             'last_modified_by' => Auth::user()->id,
