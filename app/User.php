@@ -82,7 +82,7 @@ class User extends Authenticatable
     public function setVerified()
     {
         $this->update([
-            'verified' => true
+            'verified' => true,
         ]);
     }
 
