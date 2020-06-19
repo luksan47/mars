@@ -7,12 +7,9 @@ use App\Role;
 use App\PrintAccount;
 use App\Http\Controllers\PrintController;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PrintTest extends TestCase
 {
-
     /**
      * A basic unit test example.
      *

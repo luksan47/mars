@@ -47,6 +47,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('print.modify-free', function ($user) {
             return $user->hasRole(Role::PRINT_ADMIN);
         });
+        Gate::define('print.admin', function ($user) {
+            return $user->hasRole(Role::PRINT_ADMIN);
+        });
     }
 
     public function registerInternetPolicies()
