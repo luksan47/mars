@@ -27,7 +27,8 @@ class SecretariatController extends Controller
 
     public function scheduleCourse()
     {
-        return view('secretariat.rooms.schedule');
+        return view('secretariat.rooms.schedule')
+            ->with('users', \App\User::all());
     }
 
     public static function isStatementAvailable()

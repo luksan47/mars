@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<i class="material-icons left">table_view</i>@lang('print.print')
+<i class="material-icons left">table_view</i>@lang('secretariat.module')
 @endsection
 
 @section('content')
@@ -44,7 +44,7 @@
         dataTable.addRows([
           @foreach($timetable as $lesson)
             @if($lesson->isToday())
-              [ '{{ $lesson->classroom->number }}', '{{ $lesson->course->name }}',  moment('{{ $lesson->time }}').toDate(),  moment('{{ $lesson->time }}').add(90, 'minutes').toDate() ],
+              [ '{{ $lesson->classroom->name }}', '{{ $lesson->course->name }}',  moment('{{ $lesson->time }}').toDate(),  moment('{{ $lesson->time }}').add(90, 'minutes').toDate() ],
             @endif
           @endforeach
         ]);

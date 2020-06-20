@@ -15,29 +15,38 @@ class CreateTimetablesTable extends Migration
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->text('number');
+            $table->text('name');
             $table->unsignedInteger('capacity');
             $table->timestamps();
         });
 
         App\Classroom::insert([[
-            'number' => '012',
+            'name' => '012',
             'capacity' => 10,
         ], [
-            'number' => '013',
+            'name' => '013',
             'capacity' => 10,
         ], [
-            'number' => '015',
+            'name' => '015',
             'capacity' => 10,
         ], [
-            'number' => '016',
+            'name' => '016',
             'capacity' => 30,
         ], [
-            'number' => '018',
+            'name' => '018',
             'capacity' => 20,
+        ],[
+            'name' => '019',
+            'capacity' => 30,
         ], [
-            'number' => 'Borzsák könyvtár',
+            'name' => '022',
+            'capacity' => 30,
+        ], [
+            'name' => 'Borzsák könyvtár',
             'capacity' => 15,
+        ], [
+            'name' => 'Nagyklub',
+            'capacity' => 30,
         ],
         ]);
 
@@ -60,7 +69,11 @@ class CreateTimetablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('timetables');
+        Schema::table('timetable', function (Blueprint $table) {
+            $table->dropForeign(['course_id']);
+            $table->dropForeign(['classroom_id']);
+        });
+        Schema::dropIfExists('timetable');
         Schema::dropIfExists('classrooms');
     }
 }

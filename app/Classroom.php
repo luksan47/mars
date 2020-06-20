@@ -10,7 +10,7 @@ class Classroom extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'number',
+        'name',
         'capacity',
     ];
 

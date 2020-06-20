@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<i class="material-icons left">table_view</i>@lang('print.print')
+<i class="material-icons left">table_view</i>@lang('secretariat.module')
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
   <div class="col s12 m12 l12">
     <div class="card">
       <div class="card-content">
-        <span class="card-title">@lang('secretariat.classroom_timetable')</span>
+        <span class="card-title">@lang('secretariat.create_course')</span>
         <div class="row">
             <div class="input-field col s12 l6">
                 <input type="text" id="code" name="code" class="autocomplete validate" value="{{ old('code') }}" required>
