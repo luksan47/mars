@@ -13,7 +13,7 @@
         <div class="row">
             <!-- TODO: make it a select -->
             <div class="input-field col s12 m6">
-                <input type="text" id="course" name="course" class="validate" value="{{ old('course') }}" required />
+                <input type="number" id="course" name="course" class="validate" value="{{ old('course') }}" required />
                 <label for="course">@lang('secretariat.course')</label>
                 @error('course')
                 <blockquote class="error">{{ $message }}</blockquote>
@@ -29,15 +29,6 @@
             </div>
 
             <div class="input-field col s12 m6">
-                <input type="text" class="timepicker validate" id="course_time" name="course_time"
-                    value="{{ old('course_time') }}" onfocus="M.Timepicker.getInstance(course_time).open();" required>
-                <label for="course_time">@lang('info.course_time')</label>
-                @error('course_time')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
-            </div>
-
-            <div class="input-field col s12 m6">
                 <select id="course_day" name="course_day">
                     <option value="0">@lang('general.monday')</option>
                     <option value="1">@lang('general.tuesday')</option>
@@ -47,8 +38,17 @@
                     <option value="5">@lang('general.saturday')</option>
                     <option value="6">@lang('general.sunday')</option>
                 </select>
-                <label>@lang('info.select_course_day')</label>
+                <label>@lang('secretariat.course_day')</label>
                 @error('course_day')
+                <blockquote class="error">{{ $message }}</blockquote>
+                @enderror
+            </div>
+
+            <div class="input-field col s12 m6">
+                <input type="text" class="timepicker validate" id="course_time" name="course_time"
+                    value="{{ old('course_time') }}" required>
+                <label for="course_time">@lang('secretariat.course_time')</label>
+                @error('course_time')
                 <blockquote class="error">{{ $message }}</blockquote>
                 @enderror
             </div>

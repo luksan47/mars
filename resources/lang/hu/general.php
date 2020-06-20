@@ -23,4 +23,12 @@ return [
     'successfully_added' => 'Sikeres hozzáadás!',
     'user_data' => 'Adatok',
     'you_are_logged_in' => 'Sikeresen beléptél.',
+    'monday' => 'Hétfő',
+    'tuesday' => 'Kedd',
+    'wednesday' => 'Szerda',
+    'thursday' => 'Csütörtök',
+    'friday' => 'Péntek',
+    'saturday' => 'Szombat',
+    'sunday' => 'Vasárnap',
+
 ];

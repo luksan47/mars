@@ -23,4 +23,11 @@ return [
     'successfully_added' => 'Successfully added!',
     'user_data' => 'User data',
     'you_are_logged_in' => 'You are logged in.',
+    'monday' => 'Monday',
+    'tuesday' => 'Tuesday',
+    'wednesday' => 'Wednesday',
+    'thursday' => 'Thursday',
+    'friday' => 'Friday',
+    'saturday' => 'Saturday',
+    'sunday' => 'Sunday',
 ];
