@@ -35,7 +35,7 @@ class CreateTimetablesTable extends Migration
         ], [
             'name' => '018',
             'capacity' => 20,
-        ],[
+        ], [
             'name' => '019',
             'capacity' => 30,
         ], [
