@@ -52,6 +52,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::put('/print/print', 'PrintController@print')->name('print.print');
     Route::get('/print/free_pages/all', 'PrintController@listFreePages')->name('print.free_pages.all');
     Route::get('/print/print_jobs/all', 'PrintController@listPrintJobs')->name('print.print_jobs.all');
+    Route::get('/print/account_history', 'PrintController@listPrintAccountHistory')->name('print.account_history')->middleware('can:print.modify');
     Route::post('/print/print_jobs/{id}/cancel', 'PrintController@cancelPrintJob')->name('print.print_jobs.cancel');
     Route::get('/print/admin', 'PrintController@admin')->name('print.admin');
 
@@ -76,4 +77,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
+
+    Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
 });

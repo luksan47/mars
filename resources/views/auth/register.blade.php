@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="{{ asset('js/register_helper.js') }}"></script>
+<script src="{{ mix('js/register_helper.js') }}"></script>
 <div class="row">
     <div class="col s12 l12 xl8 offset-xl2">
         <div class="card">

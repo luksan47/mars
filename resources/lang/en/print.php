@@ -57,4 +57,9 @@ return [
     'costs' => 'One-sided printing costs :one_sided, and two-sided printing costs :two_sided HUF.',
     'pdf_maxsize' => 'The maximum file size is :maxsize MB.',
     'modify_print_balance' => 'Modify print balance',
+    'balance_change'  => 'Balance change',
+    'free_page_change' => 'Free page change',
+    'deadline_change' => 'Deadline change',
+    'modified_by' => 'Modified by',
+    'modified_at' => 'Modified at',
 ];

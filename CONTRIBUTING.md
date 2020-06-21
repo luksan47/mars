@@ -24,6 +24,8 @@ With these steps you should be able to run Mars on your machine:
 7. Run `vagrant up`.
 8. Get a console to the virtual machine with `vagrant ssh`.
    * In the project root (`cd /home/vagrant/mars`) run `composer install` and `php artisan migrate:fresh --seed`.
+   * Run `npm install` to install JS related dependencies.
+   * Run `npm run dev` to create the CSS and JS files in the `public` directory. 
 9. The project should be running at [mars.local](http://mars.local/).
 
 The MySQL database listens on port 3306 in the virtual machine, 33060 is forwarded from the host. See credentials in `.env`.
@@ -32,6 +34,13 @@ We like to use [PHPStorm](https://www.jetbrains.com/phpstorm/) for development. 
 The project contains basic configuration for this IDE with the Homestead environment, just open the project root in PHPStorm.
 
 You can even use XDebug with this setup. Turn on listening for remote debug connections in PHPStorm and use the [XDebug](https://xdebug.org) browser extension in your favourite browser.
+
+### For everyday use
+
+Most of the above setup is a one-time thing to do. However, whenever you start working on based on a newer version, you will have to run the following commands:
+
+ * `npm run dev`: In case of recent UI changes (ie. JS or CSS), this will generate the new assets from `webpack.mix.js`. For frontend developers, `npm watch` might be useful -- it does the same, but also updates on change.
+ * `php artisan migrate:fresh --seed`: This will migrate everything from scratch (useful if you work on changes in parallel) and seeds the database.
 
 ## Keep it minimal
 
