@@ -14,9 +14,10 @@ return [
     */
 
     'failed' => 'Non idonea(e) notitia(e).',
-    'throttle' => 'Experimenta sunt nimia. Require post :seconds secunda.',
     'i_agree_to' => 'Decerno me legere acceptareque',
     'privacy_policy' => 'Actum notitiarum administrandarum',
-    'wait_for_verification' => 'Mane aequo animo dum unus administrator tuam registrationem acceptat.',
     'successful_registration' => 'Registratio secunda',
+    'throttle' => 'Experimenta sunt nimia. Require post :seconds secunda.',
+    'wait_for_verification' => 'Mane aequo animo dum unus administrator tuam registrationem acceptat.',
+    
 ];

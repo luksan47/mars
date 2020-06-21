@@ -2,10 +2,11 @@
 
 return [
 
-    'admin' => 'Admin',
-    'registrations' => 'Regisztrációk',
-    'handle_registrations' => 'Regisztrációk kezelése',
     'accept' => 'Elfogad',
+    'admin' => 'Admin',
+    'handle_registrations' => 'Regisztrációk kezelése',
+    'registrations' => 'Regisztrációk',
     'reject' => 'Elutasít',
     'show' => 'Mutat',
+    
 ];

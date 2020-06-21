@@ -3,9 +3,9 @@
 return [
 
     'better' => 'Melius',
-    'faster' => 'Citius',
     'brilliant' => 'Sapien',
     'essential' => 'Necessarius',
+    'faster' => 'Citius',
     'modern' => 'Neotericus',
     'open'   => 'Open source',
 

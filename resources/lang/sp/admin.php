@@ -2,9 +2,10 @@
 
 return [
 
+    'accept' => 'Aceptar',
     'admin' => 'Admin',
     'handle_registrations' => 'Manejar reistraciones',
-    'accept' => 'Aceptar',
+    //'registrations' => 'Registrations',
     'reject' => 'Rechazar',
     'show' => 'Mostrar',
 

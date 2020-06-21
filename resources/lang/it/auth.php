@@ -14,7 +14,9 @@ return [
     */
 
     'failed' => 'Queste credenziali non non sono corrette.',
+    //'i_agree_to' => 'I agree to the',
+    //'privacy_policy' => 'privacy policy',
+    'successful_registration' => 'Registrato correttamente!',
     'throttle' => 'Troppi tentativi di accesso. Riprova fra :seconds secondi.',
     'wait_for_verification' => 'Per favore attendi fin quando un amministratore approverà la tua registrazione. Ricorda che potrebbe richiedere un po\'.',
-    'successful_registration' => 'Registrato correttamente!',
 ];

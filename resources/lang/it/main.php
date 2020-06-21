@@ -3,9 +3,9 @@
 return [
 
     'better' => 'Migliore',
-    'faster' => 'Più veloce',
     'brilliant' => 'Splendido',
     'essential' => 'Minimale',
+    'faster' => 'Più veloce',
     'modern' => 'Moderno',
     'open'   => 'Open source',
 
