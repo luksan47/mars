@@ -19,5 +19,8 @@ return [
     'change_email' => 'Change email',
     'change_password' => 'Change password',
     'settings' => 'Settings',
+    'success' => 'Success!',
+    'successful_modification' => 'Successful modification!',
+    'successfully_added' => 'Successfully added!',
 
 ];

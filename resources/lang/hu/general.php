@@ -19,5 +19,8 @@ return [
     'change_email' => 'Email megváltoztatása',
     'change_password' => 'Jelszó megváltoztatása',
     'settings' => 'Beállítások',
+    'success' => 'Siker!',
+    'successful_modification' => 'Sikeres módosítás!',
+    'successfully_added' => 'Sikeres hozzáadás!',
 
 ];
