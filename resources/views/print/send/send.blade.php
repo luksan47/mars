@@ -13,7 +13,7 @@
             @csrf
             <div class="row">
                 <div class="input-field col s12 m12 l5">
-                    @include("select", ['elements' => $users, 'element_id' => 'user_to_send'])
+                    @include("utils.select", ['elements' => $users, 'element_id' => 'user_to_send'])
                 </div>
                 <div class="input-field col s12 m12 l5">
                     <input id="balance" name="balance" type="number" min="0" value="{{ old('balance') }}" required>

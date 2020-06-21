@@ -7,7 +7,7 @@
     <div class="row">
         @csrf
         <div class="input-field col s12 xl3">
-            @include("select", ['elements' => $users, 'element_id' => 'user_id'])
+            @include("utils.select", ['elements' => $users, 'element_id' => 'user_id'])
         </div>
         <div class="input-field col s12 xl3">
             <input id="mac_address" name="mac_address" type="text" placeholder="00:00:00:00:00:00"

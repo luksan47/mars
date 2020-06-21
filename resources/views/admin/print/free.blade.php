@@ -9,7 +9,7 @@
         @endforeach
         @endif
         <div class="input-field col s12 m12 l3">
-            @include("select", ['elements' => $users, 'element_id' => 'user_id_free'])
+            @include("utils.select", ['elements' => $users, 'element_id' => 'user_id_free'])
         </div>
         <div class="input-field col s12 m12 l3">
             <input id="free_pages" name="free_pages" type="number" min="0" value="{{ old('free_pages') }}" required>
