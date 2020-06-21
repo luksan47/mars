@@ -36,7 +36,7 @@ Route::middleware(['auth', 'log'])->group(function () {
     Route::get('/user', 'UserController@index')->name('user');
 });
 
-Route::middleware(['auth, verified'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('userdata/update_password', 'UserController@updatePassword')->name('userdata.update_password');
 });
 
