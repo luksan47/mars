@@ -20,3 +20,4 @@ before_script:
   - php artisan migrate
 script:
   - php artisan test
+  
