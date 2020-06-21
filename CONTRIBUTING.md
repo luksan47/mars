@@ -48,6 +48,10 @@ The main problem with Urán 1.1 was its *reinventing the wheel* strategy. Larave
 The other problem was the unnecessary features came before the most important ones. Therefore the now defined issues are minial, only
 contain the necessary parts of the system. After these are done, we can change the world. But first, build it.
 
+## Localization
+
+Please add your new expressions to every language (commented out for unfamiliar languages) and place them in alphabetical order.
+
 ## Commiting
 
 When you would like to make some change, assign an issue to yourself, only after that start working on it.
