@@ -27,10 +27,10 @@ class UsersTableSeeder extends Seeder
             $user->roles()->attach(Role::getId(Role::COLLEGIST));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
             for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->faculties()->attach(rand(1, 7));
+                $user->faculties()->attach(rand(1, count(App\Faculty::ALL)));
             }
             for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->workshops()->attach(rand(1, 17));
+                $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
             }
             $user->internetAccess->setWifiUsername();
         });
@@ -59,10 +59,10 @@ class UsersTableSeeder extends Seeder
         factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->faculties()->attach(rand(1, 7));
+            $user->faculties()->attach(rand(1, count(App\Faculty::ALL)));
         }
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->workshops()->attach(rand(1, 17));
+            $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
         }
         $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
         $user->roles()->attach(Role::getId(Role::INTERNET_ADMIN));
@@ -85,10 +85,10 @@ class UsersTableSeeder extends Seeder
         factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->faculties()->attach(rand(1, 7));
+            $user->faculties()->attach(rand(1, count(App\Faculty::ALL)));
         }
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->workshops()->attach(rand(1, 17));
+            $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
         }
     }
 
