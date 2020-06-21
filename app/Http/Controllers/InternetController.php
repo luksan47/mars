@@ -7,9 +7,9 @@ use App\MacAddress;
 use App\User;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class InternetController extends Controller
