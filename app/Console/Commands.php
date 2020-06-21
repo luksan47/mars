@@ -17,7 +17,7 @@ class Commands
     public static function updateCompletedPrintingJobs()
     {
         if (self::isDebugMode()) {
-            $result = [\App\PrintJob::latest()->first()->id];
+            $result = [0];
         } else {
             $result = exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
         }
@@ -27,7 +27,7 @@ class Commands
     public static function print($command)
     {
         if (self::isDebugMode()) {
-            $job_id = \App\PrintJob::latest()->first()->id + 1;
+            $job_id = 0;
             $result = "request id is " . config('print.printer_name') . "-" . $job_id . " (1 file(s))";
         } else {
             $result = exec($command);
