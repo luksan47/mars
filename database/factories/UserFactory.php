@@ -27,5 +27,5 @@ $factory->define(User::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(User::class, function ($user, $faker) {
-    $user->printAccount()->save(factory(\App\PrintAccount::class)->make());
+    $user->printAccount()->save(factory(\App\PrintAccount::class)->create());
 });
