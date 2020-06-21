@@ -4,11 +4,6 @@
         <blockquote>
         @lang('print.how_transfer_works')
         </blockquote>
-        @if ($errors->any())
-        @foreach ($errors->all() as $error)
-        <blockquote class="error">{{ $error }}</blockquote>
-        @endforeach
-    @endif
         <form method="POST" action="{{ route('print.transfer-balance') }}">
             @csrf
             <div class="row">
@@ -16,7 +11,7 @@
                     @include("utils.select", ['elements' => $users, 'element_id' => 'user_to_send'])
                 </div>
                 <div class="input-field col s12 m12 l5">
-                    <input id="balance" name="balance" type="number" min="0" value="{{ old('balance') }}" required>
+                    <input id="balance" name="balance" type="number" min="1" value="{{ old('balance') }}" required>
                     <label for="balance">@lang('print.amount')</label>
                 </div>
                 <div class="input-field col s12 m12 l2">
