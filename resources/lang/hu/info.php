@@ -23,5 +23,5 @@ return [
     'year_of_acceptance' => 'Felvétel éve',
     'year_of_graduation' => 'Érettségi éve',
     'zip_code' => 'Irányítószám',
-    
+
 ];

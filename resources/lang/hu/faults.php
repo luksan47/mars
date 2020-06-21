@@ -20,5 +20,5 @@ return [
     'submit' => 'Küldés',
     'unseen' => 'Nem látta',
     'wont_fix' => 'Nem megoldandó',
-    
+
 ];

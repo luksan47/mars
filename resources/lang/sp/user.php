@@ -39,7 +39,7 @@ return [
     'tanito_eso_vokepzo_kar' => 'Facultad de Educación Infantil y Primaria',
     'tarsadalomtudomanyi_kar' => 'Facultad de Sociología',
     'termeszettudomanyi_kar' => 'Facultad de Ciencias Naturales',
-    
+
     /* workshops */
     'angol_amerikai_muhely' => 'Taller Angloamericano',
     'biologia_kemia_muhely' => 'Taller de Biología y Química',
@@ -58,5 +58,5 @@ return [
     'szlavisztika_muhely' => 'Taller de Eslavística',
     'tarsadalomtudomanyi_muhely' => 'Taller de Ciencias Sociales',
     'törtenesz_muhely' => 'Taller de Historia',
-    
+
 ];

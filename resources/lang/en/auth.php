@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    
+
     'failed' => 'These credentials do not match our records.',
     'i_agree_to' => 'I agree to the',
     'privacy_policy' => 'privacy policy',

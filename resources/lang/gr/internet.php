@@ -42,5 +42,5 @@ return [
     //'wifi_password_reset_warning' => 'You must log in again if you request a new password! It might take a few minutes to update.',
     //'wifi_user' => 'Wifi username',
     //'your_registered_devices' => 'Your registered devices',
-    
+
 ];

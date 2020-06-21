@@ -43,5 +43,5 @@ return [
     'wifi_password_reset_warning' => 'Se richiedi una nuova password, devi fare il login di nuovo',
     'wifi_user' => 'Nome utente Wifi',
     'your_registered_devices' => 'I tuoi dispositivi registrati',
-    
+
 ];

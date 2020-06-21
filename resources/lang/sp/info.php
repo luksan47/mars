@@ -23,5 +23,5 @@ return [
     'year_of_acceptance' => 'Año de inscripción',
     'year_of_graduation' => 'Año de examen de bachillerato',
     'zip_code' => 'Código postal',
-    
+
 ];

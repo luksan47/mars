@@ -8,5 +8,5 @@ return [
     'registrations' => 'Regisztrációk',
     'reject' => 'Elutasít',
     'show' => 'Mutat',
-    
+
 ];

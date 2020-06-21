@@ -39,7 +39,7 @@ return [
     'tanito_eso_vokepzo_kar' => 'Facultas Educationis Primariae et Prescholaris',
     'tarsadalomtudomanyi_kar' => 'Facultas Scientiarum Societatis',
     'termeszettudomanyi_kar' => 'Facultas Scientiarum Naturalium',
-    
+
     /* workshops */
     'angol_amerikai_muhely' => 'Anglo-americana officina',
     'biologia_kemia_muhely' => 'Biologiae-chemiae officina',
@@ -58,5 +58,5 @@ return [
     'szlavisztika_muhely' => 'Slavistica officina',
     'tarsadalomtudomanyi_muhely' => 'Scientiarum societatis officina',
     'törtenesz_muhely' => 'Historica officina',
-    
+
 ];

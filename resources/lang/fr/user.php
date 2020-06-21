@@ -29,7 +29,7 @@ return [
     //'year_of_enrollment' => 'Year of enrollment',
     //'year_of_the_leaving_exam' => 'Year of the leaving exam',
     //'zip_code' => 'Zip code',
-    
+
     /* faculties */
     //'jogtudomanyi_kar' => 'Jogtudományi Kar',
     //'barczi_gusztav_gyogypedagogiai_kar' => 'Bárczi Gusztáv Gyógypedagógiai Kar',
@@ -39,7 +39,7 @@ return [
     //'tanito_eso_vokepzo_kar' => 'Tanító- és Óvóképző Kar',
     //'tarsadalomtudomanyi_kar' => 'Társadalomtudományi Kar',
     //'termeszettudomanyi_kar' => 'Természettudományi Kar',
-    
+
     /* workshops */
     //'angol_amerikai_muhely' => 'Angol-amerikai műhely',
     //'biologia_kemia_muhely' => 'Biológia-kémia műhely',
@@ -58,5 +58,5 @@ return [
     //'szlavisztika_muhely' => 'Szlavisztika műhely',
     //'tarsadalomtudomanyi_muhely' => 'Társadalomtudományi műhely',
     //'törtenesz_muhely' => 'Történész műhely',
-    
+
 ];

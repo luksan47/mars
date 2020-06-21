@@ -23,5 +23,5 @@ return [
     'year_of_acceptance' => 'Anno della ammissione',
     'year_of_graduation' => 'Anno del diploma',
     'zip_code' => 'Codice postale',
-    
+
 ];

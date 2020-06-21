@@ -1,7 +1,7 @@
 <?php
 
 return [
-    
+
     'add' => 'Hozzáadás',
     'admin.manage_registered_devices' => 'Regisztrált eszközök kezelése',
     'ajax_error' => 'Távoli hiba történt! Kérjük frissítse az oldalt!',
