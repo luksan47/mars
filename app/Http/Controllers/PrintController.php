@@ -104,6 +104,10 @@ class PrintController extends Controller
             'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
+        
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
 
         $balance = $request->balance;
         $from_account = Auth::user()->printAccount;
