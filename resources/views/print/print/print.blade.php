@@ -22,7 +22,10 @@
                         <input type="file"id="file_to_upload" name="file_to_upload" accept=".pdf" required>
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path" placeholder="@lang('print.select_document')" type="text" disabled>
+                        <input class="file-path @error('file_to_upload') invalid @enderror" placeholder="@lang('print.select_document')" type="text" disabled>
+                        @error('file_to_upload')
+                        <span class="helper-text" data-error="{{ $message }}"></span>
+                        @enderror
                     </div>
                 </div>
                 <div class="input-field col s12 m12 l4 xl2">
@@ -54,18 +57,9 @@
                     <button class="btn waves-effect right" type="submit">@lang('print.print')</button>
                 </div>
             </div>
-            <blockquote class="error">
-                @if (session('print.status'))
-                {{ session('print.status') }}
-                @endif
-                @if ($errors->any())
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-                @endif
-            </blockquote>
+            @error('print')
+            <blockquote class="error">{{ $message }}</blockquote>
+            @enderror
         </form>
     </div>
 </div>

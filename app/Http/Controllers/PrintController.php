@@ -92,7 +92,7 @@ class PrintController extends Controller
                 ]);
             }
             $print_account->decrement('balance', $cost);
-            return back()->with('print.status', __('print.success'));
+            return back()->with('message', __('print.success'));
         } else {
             return back()->withErrors(['print' => __('print.error_printing')]);
         }
@@ -279,10 +279,9 @@ class PrintController extends Controller
     }
 
     private function handleNoBalance($validator) {
-        $validator->errors()->add('balance', __('print.no_balance'));
-        return back()
-            ->withErrors($validator)
-            ->withInput();
+
+        return back()->with('error',  __('print.no_balance'));
+    
     }
 
     private function getPages($validator, $path) {
