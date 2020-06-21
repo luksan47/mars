@@ -14,6 +14,7 @@ before_script:
   - sudo mysql -e 'create database homestead;'
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
+  - npm run dev
   - php artisan key:generate
   - php artisan migrate
 script:
