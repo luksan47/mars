@@ -212,7 +212,7 @@ class PrintControllerTest extends TestCase
     // Helpers
     private function transfer($reciever, $balance) {
         $response = $this->post('/print/transfer_balance', [
-            'user_id' => $reciever->id,
+            'user_to_send' => $reciever->id,
             'balance' => $balance,
         ]);
         return $response;
@@ -227,7 +227,7 @@ class PrintControllerTest extends TestCase
 
     private function modify($reciever, $balance) {
         $response = $this->post('/print/modify_balance', [
-            'user_id' => $reciever->id,
+            'user_id_modify' => $reciever->id,
             'balance' => $balance,
         ]);
         return $response;
