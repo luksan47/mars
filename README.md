@@ -5,7 +5,7 @@ rewrite, therefore comes under a new name and repository. Only a few resources a
 
 ## Architecture
 
-Urán is a Laravel based application. For more information, see the [official Laravel documentation](https://laravel.com/docs/6.x).
+Urán is a Laravel based application. For more information, see the [official Laravel documentation](https://laravel.com/docs).
 
 ## Contributions
 

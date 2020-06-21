@@ -15,7 +15,7 @@
                 .add($("<button class=\"btn waves-effect\">@lang('internet.deactivate')</button>")
                     .click(function () {
                         saveData(cell, {...data, has_internet_until: null});
-                    }).toggle(data.has_internet_until != null && active > now)).wrapAll('<div></div>').parent()[0];
+                    }).toggle(data.has_internet_until != null && active >= now)).wrapAll('<div></div>').parent()[0];
         };
 
         var saveData = function(cell, data = null) {

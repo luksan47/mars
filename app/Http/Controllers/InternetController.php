@@ -27,7 +27,7 @@ class InternetController extends Controller
 
     public function admin()
     {
-        $activationDate = env('INTERNET_ACTIVATION_DATE'); //TODO: get date for current semester
+        $activationDate = \App\EventTrigger::internetActivationDeadline();
 
         return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all()]);
     }
