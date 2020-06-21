@@ -7,6 +7,7 @@ use App\MacAddress;
 use App\User;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -134,12 +135,15 @@ class InternetController extends Controller
 
     public function addMacAddress(Request $request)
     {
-        $request->validate(
-            [
-                'comment' => 'required|max:1000',
-                'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required|max:1000',
+            'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
+        ]);
+        $validator->validate();
+
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
 
         $macAddress = new MacAddress();
         $macAddress->user_id = Auth::user()->id;
