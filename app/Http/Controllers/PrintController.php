@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -31,6 +32,7 @@ class PrintController extends Controller
     }
 
     public function admin() {
+        Gate::authorize('print.admin');
         return view('admin.print.app', ["users" => User::all()]);
     }
 
