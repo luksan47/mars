@@ -3,22 +3,24 @@
 <div class="row">
     <form method="POST" action="{{ route('print.free_pages') }}">
         @csrf
-        @if ($errors->any())
-        @foreach ($errors->all() as $error)
-        <blockquote>{{ $error }}</blockquote>
-        @endforeach
-        @endif
         <div class="input-field col s12 m12 l3">
             @include("utils.select", ['elements' => $users, 'element_id' => 'user_id_free'])
         </div>
         <div class="input-field col s12 m12 l3">
-            <input id="free_pages" name="free_pages" type="number" min="0" value="{{ old('free_pages') }}" required>
+            <input id="free_pages" name="free_pages" type="number" min="1" value="{{ old('free_pages') }}" required
+                class="validate @error('free_pages') invalid @enderror">
             <label for="free_pages">@lang('print.quantity')</label>
+            @error('free_pages')
+            <span class="helper-text" data-error="{{ $message }}"></span>
+            @enderror
         </div>
         <div class="input-field col s12 m12 l3" data-provide="datepicker">
-            <input type="text" class="datepicker" id="deadline" name="deadline" value="{{ old('deadline') }}"
+            <input type="text" class="datepicker validate @error('deadline') invalid @enderror" id="deadline" name="deadline" value="{{ old('deadline') }}"
                 required onfocus="M.Datepicker.getInstance(deadline).open();">
             <label for="deadline">@lang('print.deadline')</label>
+            @error('deadline')
+            <span class="helper-text" data-error="{{ $message }}"></span>
+            @enderror
             <script>
             var tomorrow = new Date();
             tomorrow.setDate(new Date().getDate()+1);
