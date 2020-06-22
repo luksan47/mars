@@ -12,6 +12,7 @@
                             <th scope="row">@lang('info.name')</th>
                             <td>{{ $user->name }}</td>
                         </tr>
+                        {{-- email --}}
                         <tr>
                             <th scope="row">@lang('registration.email')</th>
                             <td>
@@ -45,6 +46,7 @@
                                 @enderror
                             </td>
                         </tr>
+                        {{-- Phone number --}}
                         @if($user->hasPersonalInformation())
                         <tr>
                             <th scope="row">@lang('info.phone_number')</th>
@@ -83,6 +85,7 @@
                             </td>
                         </tr>
                         @endif
+                        {{-- Neptun code, faculties and workshops --}}
                         @if($user->hasEducationalInformation())
                         <tr>
                             <th scope="row">@lang('info.neptun')</th>
@@ -111,7 +114,11 @@
                         @endif
                     </tbody>
                 </table>
+                @if($user->hasEducationalInformation())
+                <blockquote>@lang('user.change_outdated_data')</blockquote>
+                @endif
             </div>
+            {{-- Logout --}}
             <div class="card-action">
                 <div class="row">
                     <form action="{{ route('logout') }}" method="POST">
@@ -122,6 +129,7 @@
             </div>
         </div>
     </div>
+    {{-- Change password  --}}
     <div class="col s12">
         <div class="card">
             <div class="card-content">
