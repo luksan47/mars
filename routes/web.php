@@ -91,14 +91,14 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
 //test emails with urls
 Route::get('/test_mails/{mail}/{send?}', function ($mail, $send = false) {
-    //use to see preview:   /test_mails/Confirmation
-    //use to send:          /test_mails/Confirmation/send            
+    //to see preview:   /test_mails/Confirmation
+    //to send:          /test_mails/Confirmation/send            
     if (config('app.debug')) {
         $user = Auth::user();
         $mailClass = '\\App\\Mail\\'.$mail;
         if($send == "send"){
-            Mail::to($user)->send(new $mailClass($user->name));
-            return response("email sent");
+            Mail::to($user)->queue(new $mailClass($user->name));
+            return response("Email sent.");
         } else{
             return new $mailClass($user->name);
         }
