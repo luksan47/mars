@@ -57,9 +57,6 @@
                     <button class="btn waves-effect right" type="submit">@lang('print.print')</button>
                 </div>
             </div>
-            @error('print')
-            <blockquote class="error">{{ $message }}</blockquote>
-            @enderror
         </form>
     </div>
 </div>

@@ -21,6 +21,7 @@ return [
     'settings' => 'Settings',
     'success' => 'Success!',
     'successful_modification' => 'Successful modification!',
+    'successful_transaction' => 'Successful transaction!',
     'successfully_added' => 'Successfully added!',
 
 ];

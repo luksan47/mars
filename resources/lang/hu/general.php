@@ -21,6 +21,7 @@ return [
     'settings' => 'Beállítások',
     'success' => 'Siker!',
     'successful_modification' => 'Sikeres módosítás!',
+    'successful_transaction' => 'Sikeres tranzakció!',
     'successfully_added' => 'Sikeres hozzáadás!',
 
 ];
