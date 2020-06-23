@@ -19,9 +19,13 @@
                                 <form method="POST" action="{{ route('userdata.update_email') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="email" type="email" name="email" size="30" disabled style="margin:0"
-                                            value="{{ old('email', $user->email) }}" required autocomplete="email"
-                                            class="validate black-text">
+                                        <input id="email" type="email" name="email" size="30" autocomplete="email"
+                                            @if(!($errors->has('email'))) disabled @endif 
+                                            style="margin:0" value="{{ old('email', $user->email) }}" required 
+                                            class="validate black-text @error('email') invalid @enderror">
+                                        @error('email')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
                                     </div>
                                     <button id="email_send_btn" class="btn-floating right waves-effect waves-light hide"
                                         type="submit" style="margin-top:10px">
@@ -39,11 +43,6 @@
                                             }
                                     </script>
                                 </form>
-                                @error('email')
-                                <blockquote class="error">
-                                    {{ $message }}
-                                </blockquote>
-                                @enderror
                             </td>
                         </tr>
                         {{-- Phone number --}}
@@ -54,12 +53,16 @@
                                 <form method="POST" action="{{ route('userdata.update_phone') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="phone_number" type="tel" name="phone_number" size="30" disabled
-                                            style="margin:0" class="validate black-text"
+                                        <input id="phone_number" type="tel" name="phone_number" size="30" 
+                                            @if(!($errors->has('phone_number'))) disabled @endif 
+                                            style="margin:0" class="validate black-text @error('phone_number') invalid @enderror"
                                             value="{{ old('phone_number', $user->personalInformation->phone_number ?? '') }}"
                                             pattern="[+][0-9]{1,4}\s[(][0-9]{1,4}[)]\s[-|0-9]*" minlength="16"
                                             maxlength="18" required>
                                         <span id="phone_format" class="helper-text hide">+36 (20) 123-4567</span>
+                                        @error('phone_number')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
                                     </div>
                                     <button id="phone_send_btn" class="btn-floating right waves-effect waves-light hide"
                                         type="submit" style="margin-top:10px">
@@ -77,11 +80,6 @@
                                             }
                                     </script>
                                 </form>
-                                @error('phone_number')
-                                <blockquote class="error">
-                                    {{ $message }}
-                                </blockquote>
-                                @enderror
                             </td>
                         </tr>
                         @endif
@@ -139,30 +137,25 @@
                     <div class="row" style="margin-bottom: 0">
                         <div class="input-field col s12">
                             <input id="old_password" type="password" name="old_password" required
-                                autocomplete="password">
+                                autocomplete="password" class="validate @error('old_password') invalid @enderror">
                             <label for="old_password">@lang('registration.old_password')</label>
                             @error('old_password')
-                            <blockquote class="error">
-                                {{ $message }}
-                            </blockquote>
+                            <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
                         <div class="input-field col s6">
-                            <input id="new_password" type="password" name="new_password" required>
+                            <input id="new_password" type="password" name="new_password" required 
+                                class="validate @error('new_password') invalid @enderror">
                             <label for="new_password">@lang('registration.new_password')</label>
+                            @error('new_password')
+                            <span class="helper-text" data-error="{{ $message }}"></span>
+                            @enderror
                         </div>
                         <div class="input-field col s6">
                             <input id="new_password_confirmation" type="password" name="new_password_confirmation"
-                                required>
+                                required class="validate @error('new_password') invalid @enderror">
                             <label for="new_password_confirmation">@lang('registration.confirmpwd')</label>
                         </div>
-                        @error('new_password')
-                        <div class="col s12">
-                            <blockquote class="error">
-                                {{ $message }}
-                            </blockquote>
-                        </div>
-                        @enderror
                     </div>
                 </div>
                 <div class="card-action">

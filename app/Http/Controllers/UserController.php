@@ -43,7 +43,7 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function updatePhone(Request $request)
@@ -66,7 +66,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function updatePassword(Request $request)
@@ -87,6 +87,6 @@ class UserController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 }
