@@ -26,3 +26,7 @@ $factory->define(User::class, function (Faker $faker) {
         'verified' => $faker->boolean($chanceOfGettingTrue = 75),
     ];
 });
+
+$factory->afterCreating(User::class, function ($user, $faker) {
+    $user->printAccount()->save(factory(\App\PrintAccount::class)->make(['user_id' => $user->id]));
+});

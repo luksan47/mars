@@ -79,6 +79,13 @@ class User extends Authenticatable
 
     /* Basic information of the user */
 
+    public function setVerified()
+    {
+        $this->update([
+            'verified' => true,
+        ]);
+    }
+
     public function personalInformation()
     {
         return $this->hasOne('App\PersonalInformation');
