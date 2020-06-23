@@ -23,5 +23,6 @@ return [
     'successful_modification' => 'Successful modification!',
     'successful_transaction' => 'Successful transaction!',
     'successfully_added' => 'Successfully added!',
+    'choose_option' => 'Choose an option...'
 
 ];
