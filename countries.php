@@ -196,5 +196,5 @@ return [
     'Vietnam',
     'Yemen',
     'Zambia',
-    'Zimbabwe'
+    'Zimbabwe',
 ];
