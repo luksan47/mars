@@ -47,8 +47,8 @@ class AddExpression extends Command
         $expression_value = $this->argument('value');
         $reviewed = $this->option('force');
         $expressions = require base_path('resources/lang/'.$language.'/'.$file.'.php');
-        if(!($reviewed)){
-            if(isset($expressions[$expression_key])){
+        if (! ($reviewed)) {
+            if (isset($expressions[$expression_key])) {
                 if ($this->confirm('Do you want to override '.$expressions[$expression_key].' to '.$expression_value.'?')) {
                     $reviewed = true;
                 }
@@ -58,16 +58,16 @@ class AddExpression extends Command
                 }
             }
         }
-        if($reviewed){
+        if ($reviewed) {
             $expressions[$expression_key] = $expression_value;
-            if(!(ksort($expressions))){
+            if (! (ksort($expressions))) {
                 $this->error('Sorting '.$file_in.' failed.');
             }
-            $file_write = fopen(base_path('resources/lang/'.$language.'/'.$file.'.php'), "w");
-            if(!(fwrite($file_write, "<?php\n\nreturn ".var_export($expressions, true).";"))){
+            $file_write = fopen(base_path('resources/lang/'.$language.'/'.$file.'.php'), 'w');
+            if (! (fwrite($file_write, "<?php\n\nreturn ".var_export($expressions, true).';'))) {
                 $this->error('Writing to '.$file.' failed.');
-            };
-            $this->line('Set '.$expression_key.' to '. $expression_value.'.');
+            }
+            $this->line('Set '.$expression_key.' to '.$expression_value.'.');
         } else {
             $this->comment('Nothing changed.');
         }

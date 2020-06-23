@@ -37,18 +37,18 @@ class SortLanguageFiles extends Command
      */
     public function handle()
     {
-        $languages = array_diff(scandir(base_path('resources/lang/')), array('..', '.'));
+        $languages = array_diff(scandir(base_path('resources/lang/')), ['..', '.']);
         foreach ($languages as $language) {
-            $files = array_diff(scandir(base_path('resources/lang/'.$language)), array('..', '.'));
-            foreach ($files as $file_in){
+            $files = array_diff(scandir(base_path('resources/lang/'.$language)), ['..', '.']);
+            foreach ($files as $file_in) {
                 $expressions = require base_path('resources/lang/'.$language.'/'.$file_in);
-                if(!(ksort($expressions))){
+                if (! (ksort($expressions))) {
                     $this->error('Sorting '.$file_in.' failed.');
                 }
-                $file_out = fopen(base_path('resources/lang/'.$language.'/'.$file_in), "w");
-                if(!(fwrite($file_out, "<?php\n\nreturn ".var_export($expressions, true).";"))){
+                $file_out = fopen(base_path('resources/lang/'.$language.'/'.$file_in), 'w');
+                if (! (fwrite($file_out, "<?php\n\nreturn ".var_export($expressions, true).';'))) {
                     $this->error('Writing to '.$file_in.' failed.');
-                };
+                }
             }
         }
     }
