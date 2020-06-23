@@ -42,8 +42,8 @@ class AddExpression extends Command
     public function handle()
     {
         $language = $this->argument('language');
-        $file = explode(".", $this->argument('key'))[0];
-        $expression_key = explode(".", $this->argument('key'))[1];
+        $file = explode('.', $this->argument('key'))[0];
+        $expression_key = explode('.', $this->argument('key'))[1];
         $expression_value = $this->argument('value');
         $reviewed = $this->option('force');
         $expressions = require base_path('resources/lang/'.$language.'/'.$file.'.php');
