@@ -46,6 +46,7 @@
             </div>
         </div>
     </div>
+    @include('utils.toast')
     <script>
     var cookieMessages = {
         'dismiss': "@lang('cookie.dismiss')",

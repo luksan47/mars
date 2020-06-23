@@ -24,14 +24,14 @@ class RegistrationsController extends Controller
     {
         User::findOrFail($request->user_id)->update(['verified' => true]);
 
-        return redirect()->route('admin.registrations');
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function reject(Request $request)
     {
         User::findOrFail($request->user_id)->delete();
 
-        return redirect()->route('admin.registrations');
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function show(Request $request)

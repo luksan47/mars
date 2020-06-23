@@ -92,9 +92,9 @@ class PrintController extends Controller
                 ]);
             }
             $print_account->decrement('balance', $cost);
-            return back()->with('print.status', __('print.success'));
+            return back()->with('message', __('print.success'));
         } else {
-            return back()->withErrors(['print' => __('print.error_printing')]);
+            return back()->with('error', __('print.error_printing'));
         }
     }
 
@@ -104,6 +104,10 @@ class PrintController extends Controller
             'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
+        
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
 
         $balance = $request->balance;
         $from_account = Auth::user()->printAccount;
@@ -118,7 +122,7 @@ class PrintController extends Controller
         $from_account->decrement('balance', $balance);
         $to_account->increment('balance', $balance);
 
-        return redirect()->route('print');
+        return redirect()->back()->with('message', __('general.successful_transaction'));
     }
 
     public function modifyBalance(Request $request) {
@@ -136,7 +140,8 @@ class PrintController extends Controller
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
-        return redirect()->back();
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function addFreePages(Request $request) {
@@ -157,7 +162,7 @@ class PrintController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
     public function listPrintJobs() {
@@ -279,10 +284,9 @@ class PrintController extends Controller
     }
 
     private function handleNoBalance($validator) {
-        $validator->errors()->add('balance', __('print.no_balance'));
-        return back()
-            ->withErrors($validator)
-            ->withInput();
+
+        return back()->withInput()->with('error',  __('print.no_balance'));
+    
     }
 
     private function getPages($validator, $path) {

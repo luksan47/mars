@@ -8,6 +8,11 @@
   @endforeach
 </select>
 <label for="{{ $element_id }}">@lang('info.name')</label>
+@error($element_id)
+<blockquote class="error">
+  {{ $message }}
+</blockquote>
+@enderror
 <script>
   //Initialize materialize select
   var instances;
