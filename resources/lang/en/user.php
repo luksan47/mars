@@ -54,4 +54,5 @@ return [
     'tarsadalomtudomanyi_muhely' => 'Társadalomtudományi műhely',
     'törtenesz_muhely' => 'Történész műhely',
     'save'=>'Save',
+    'change_outdated_data' => 'If your listed informations are outdated, please contact the secretariat or the admins.',
 ];

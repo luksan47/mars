@@ -92,6 +92,7 @@ return [
     'not_regex' => 'A(z) :attribute formátuma érvénytelen.',
     'numeric' => 'Egy számnak kell lennie: :attribute.',
     'present' => 'A(z) :attribute mezőnek jelen kell lennie.',
+    'password' => 'Rossz jelszó.',
     'regex' => 'A(z) :attribute formátuma érvénytelen.',
     'required' => 'A(z) :attribute mező kitöltése kötelező.',
     'required_if' => 'A(z) :attribute mező kitöltése kötelező, ha :other :value.',
