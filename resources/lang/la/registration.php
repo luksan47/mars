@@ -1,10 +1,10 @@
 <?php
 
-return [
-    'confirmpwd' => 'Signum confirmare',
-    'email' => 'E-mail nomen',
-    'forgotpwd' => 'Oblivisceris signi?',
-    'name' => 'Nomen',
-    'password' => 'Signum',
-    'remember' => 'Memento mei',
-];
+return array (
+  'confirmpwd' => 'Signum confirmare',
+  'email' => 'E-mail nomen',
+  'forgotpwd' => 'Oblivisceris signi?',
+  'name' => 'Nomen',
+  'password' => 'Signum',
+  'remember' => 'Memento mei',
+);

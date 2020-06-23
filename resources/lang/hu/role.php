@@ -1,7 +1,7 @@
 <?php
 
-return [
-    'admin' => 'Admin',
-    'collegist' => 'Collegista',
-    'tenant' => 'Vendég',
-];
+return array (
+  'admin' => 'Admin',
+  'collegist' => 'Collegista',
+  'tenant' => 'Vendég',
+);
