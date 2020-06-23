@@ -122,7 +122,7 @@ class PrintController extends Controller
         $from_account->decrement('balance', $balance);
         $to_account->increment('balance', $balance);
 
-        return redirect()->back()->with('message', __('general.succesful_transaction'));
+        return redirect()->back()->with('message', __('general.successful_transaction'));
     }
 
     public function modifyBalance(Request $request) {
@@ -141,7 +141,7 @@ class PrintController extends Controller
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
 
-        return redirect()->back()->with('message', __('general.succesful_modification'));
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function addFreePages(Request $request) {
@@ -162,7 +162,7 @@ class PrintController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return redirect()->back()->with('message', __('general.succesfully_added'));
+        return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
     public function listPrintJobs() {
@@ -285,7 +285,7 @@ class PrintController extends Controller
 
     private function handleNoBalance($validator) {
 
-        return back()->with('error',  __('print.no_balance'));
+        return back()->withInput()->with('error',  __('print.no_balance'));
     
     }
 

@@ -160,7 +160,7 @@ class InternetController extends Controller
 
         $this->autoApproveMacAddresses(Auth::user());
 
-        return redirect()->back()->with('message', __('general.succesfully_added'));
+        return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
     private function autoApproveMacAddresses($user)
