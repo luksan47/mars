@@ -59,7 +59,7 @@
                             {{ $value }}
                         </div>
                         <div class="col s6">
-                            <textarea id="{{ $fname.'.'.$key }}"
+                            <textarea name="{{ $fname.'.'.$key }}"
                                 class="materialize-textarea">@lang($fname.'.'.$key)</textarea>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                                 {{ $value }}
                             </div>
                             <div class="col s6">
-                                <textarea id="{{ $fname.'.'.$key }}"
+                                <textarea name="{{ $fname.'.'.$key }}"
                                     class="materialize-textarea">@lang($fname.'.'.$key)</textarea>
                             </div>
                         </div>
