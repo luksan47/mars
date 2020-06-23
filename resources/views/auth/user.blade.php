@@ -24,10 +24,10 @@
                                             class="validate black-text">
                                     </div>
                                     <button id="email_send_btn" class="btn-floating right waves-effect waves-light hide"
-                                        type="submit">
+                                        type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
                                     <a id="email_edit_btn" class="btn-floating right waves-effect waves-light"
-                                        onclick="mail_editor()">
+                                        onclick="mail_editor()" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                     <script>
                                         function mail_editor(){
@@ -62,10 +62,10 @@
                                         <span id="phone_format" class="helper-text hide">+36 (20) 123-4567</span>
                                     </div>
                                     <button id="phone_send_btn" class="btn-floating right waves-effect waves-light hide"
-                                        type="submit">
+                                        type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
                                     <a id="phone_edit_btn" class="btn-floating right waves-effect waves-light"
-                                        onclick="phone_editor()">
+                                        onclick="phone_editor()" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                     <script>
                                         function phone_editor(){
@@ -147,16 +147,16 @@
                             </blockquote>
                             @enderror
                         </div>
-                        <div class="input-field col s4">
+                        <div class="input-field col s6 xl4">
                             <input id="new_password" type="password" name="new_password" required>
                             <label for="new_password">@lang('registration.new_password')</label>
                         </div>
-                        <div class="input-field col s4">
+                        <div class="input-field col s6 xl4">
                             <input id="new_password_confirmation" type="password" name="new_password_confirmation"
                                 required>
                             <label for="new_password_confirmation">@lang('registration.confirmpwd')</label>
                         </div>
-                        <div class="input-field col s4">
+                        <div class="input-field col s12 xl4">
                             <button class="btn waves-effect right"
                                 type="submit">@lang('general.change_password')</button>
                         </div>
