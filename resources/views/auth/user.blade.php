@@ -120,7 +120,7 @@
             </div>
             {{-- Logout --}}
             <div class="card-action">
-                <div class="row">
+                <div class="row" style="margin-bottom: 0">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button class="btn waves-effect right " type="submit">@lang('general.logout')</button>
@@ -132,11 +132,11 @@
     {{-- Change password  --}}
     <div class="col s12">
         <div class="card">
-            <div class="card-content">
-                <div class="card-title">@lang('general.change_password')</div>
-                <form method="POST" action="{{ route('userdata.update_password') }}">
-                    @csrf
-                    <div class="row">
+            <form method="POST" action="{{ route('userdata.update_password') }}">
+                @csrf
+                <div class="card-content">
+                    <div class="card-title">@lang('general.change_password')</div>
+                    <div class="row" style="margin-bottom: 0">
                         <div class="input-field col s12">
                             <input id="old_password" type="password" name="old_password" required
                                 autocomplete="password">
@@ -147,18 +147,14 @@
                             </blockquote>
                             @enderror
                         </div>
-                        <div class="input-field col s6 xl4">
+                        <div class="input-field col s6">
                             <input id="new_password" type="password" name="new_password" required>
                             <label for="new_password">@lang('registration.new_password')</label>
                         </div>
-                        <div class="input-field col s6 xl4">
+                        <div class="input-field col s6">
                             <input id="new_password_confirmation" type="password" name="new_password_confirmation"
                                 required>
                             <label for="new_password_confirmation">@lang('registration.confirmpwd')</label>
-                        </div>
-                        <div class="input-field col s12 xl4">
-                            <button class="btn waves-effect right"
-                                type="submit">@lang('general.change_password')</button>
                         </div>
                         @error('new_password')
                         <div class="col s12">
@@ -168,8 +164,13 @@
                         </div>
                         @enderror
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="card-action">
+                    <div class="row" style="margin-bottom: 0">
+                        <button class="btn waves-effect right" type="submit">@lang('general.change_password')</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
