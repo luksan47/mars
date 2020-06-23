@@ -54,6 +54,6 @@ return [
     'tarsadalomtudomanyi_muhely' => 'Társadalomtudományi műhely',
     'törtenesz_muhely' => 'Történész műhely',
     'save'=>'Save',
-    'change_outdated_data' => 'Ha a fenti információk elavultak, kérjük, vedd fel a kapcsolatot a titkársággal vagy az adminokkal.',
+    'change_outdated_data' => 'Ha a fenti információk elavultak, kérjük, vedd fel a kapcsolatot a titkársággal vagy a rendszergazdákkal.',
 
 ];
