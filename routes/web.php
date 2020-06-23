@@ -53,6 +53,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
+    Route::get('localizations', 'LocalizationController@index')->name('localizations');
+
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
     Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
