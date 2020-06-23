@@ -13,9 +13,8 @@ class AddExpression extends Command
      */
     protected $signature = 'language:add 
                             {language : the language to add eg. en} 
-                            {file : the file to add eg. general} 
-                            {expression_key : the english key of the expression} 
-                            {expression_value : the localized value of the expression} 
+                            {key : the key of the expression eg. general.home} 
+                            {value : the localized value of the expression} 
                             {--F|force : Whether confirmation is required to overwrite values}';
 
     /**
@@ -43,9 +42,9 @@ class AddExpression extends Command
     public function handle()
     {
         $language = $this->argument('language');
-        $file = $this->argument('file');
-        $expression_key = $this->argument('expression_key');
-        $expression_value = $this->argument('expression_value');
+        $file = explode(".", $this->argument('key'))[0];
+        $expression_key = explode(".", $this->argument('key'))[1];
+        $expression_value = $this->argument('value');
         $reviewed = $this->option('force');
         $expressions = require base_path('resources/lang/'.$language.'/'.$file.'.php');
         if(!($reviewed)){
