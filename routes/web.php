@@ -23,21 +23,7 @@ Route::get('/privacy_policy', function () {
     return Storage::response('public/adatvedelmi_tajekoztato.pdf');
 })->name('privacy_policy');
 
-Route::get('/img/{filename}', function($filename){
-    $path = public_path() . '//img//' . $filename;
-
-    if(!File::exists($path)) {
-        return response()->json(['message' => 'Image not found'], 404);
-    }
-
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    $response = Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-});
+Route::get('/img/{filename}', 'EmailController@getPicture');
 
 Auth::routes();
 
@@ -50,6 +36,7 @@ Route::get('/verification', function () {
 Route::middleware(['auth', 'log'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user', 'UserController@index')->name('user');
+    Route::get('/test_mails/{mail}/{send?}', 'EmailController@testEmail');
 });
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
@@ -87,24 +74,4 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
-});
-
-//test emails with urls
-Route::middleware(['auth', 'log'])->group(function () {
-    Route::get('/test_mails/{mail}/{send?}', function ($mail, $send = false) {
-        //to see preview:   /test_mails/Confirmation
-        //to send:          /test_mails/Confirmation/send            
-        if (config('app.debug')) {
-            $user = Auth::user();
-            $mailClass = '\\App\\Mail\\'.$mail;
-            if($send == "send"){
-                Mail::to($user)->queue(new $mailClass($user->name));
-                return response("Email sent.");
-            } else{
-                return new $mailClass($user->name);
-            }
-        } else {
-            abort(404);
-        }
-    });
 });
