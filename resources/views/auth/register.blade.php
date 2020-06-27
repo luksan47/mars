@@ -1,81 +1,68 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">@lang('general.register')</div>
-
-                <div class="card-body">
-                    <div class="alert alert-info">
-                        <strong>@lang('general.note'):</strong> 
+<script src="{{ mix('js/register_helper.js') }}"></script>
+<div class="row">
+    <div class="col s12 l12 xl8 offset-xl2">
+        <div class="card">
+            <div class="card-image">
+                <img src="/img/EC_building.jpg">
+                <span class="card-title">@lang('general.register')</span>
+            </div>
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+                <div class="card-content">
+                    <blockquote>
                         @if($user_type == \App\Role::COLLEGIST)
-                            <a href="{{ route('register.guest') }}">
+                        <a href="{{ route('register.guest') }}">
                             @lang('registration.collegist_to_tenant')</a>
                         @else
-                            <a href="{{ route('register') }}">
+                        <a href="{{ route('register') }}">
                             @lang('registration.tenant_to_collegist')</a>
                         @endif
-                    </div>
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+                    </blockquote>
+                    <div class="divider"></div>
+                    <div class="section">
                         @include("auth.register.basic")
-
                         <input type="text" name="user_type" id="user_type" value="{{ $user_type }}" readonly hidden>
-						<div class="card">
-							<div class="card-header">@lang('info.user_data')</div>
-							<div class="card-body">
-                                @include("auth.register.personal")
+                    </div>
+                    <div class="divider"></div>
+                    <div class="section">
+                        <div class="card-title">@lang('info.user_data')</div>
+                        @include("auth.register.personal")
+                    </div>
+                    <div class="divider"></div>
+                    <div class="section">
+                    <div class="card-title">@lang('info.contact')</div>
+                        @include("auth.register.contact")
+                    </div>
+                    @if($user_type == \App\Role::COLLEGIST)
+                    <div class="divider"></div>
+                    <div class="section">
+                        <div class="card-title">@lang('info.information_of_studies')</div>
+                        @include("auth.register.information_of_studies")
+                    </div>
+                    @endif
+                    <div class="divider"></div>
+                    <div class="section">
+                        <div class="row">
+                            <div class="col s12 l8">
+                                <p><label>
+                                    <input type="checkbox" name="gdpr" id="qdpr" value="qdpr" required
+                                        class="filled-in checkbox-color" />
+                                    <span>@lang('auth.i_agree_to') <a href="{{ route('privacy_policy') }}"
+                                            target="_blank">@lang('auth.privacy_policy')</a></span>
+                                </label></p>
+                            </div>
+                            <div class="col s12 l4">
+                                <p><button class="btn waves-effect right"
+                                    type="submit">@lang('general.register')
+                                </button></p>
                             </div>
                         </div>
-
-						<div class="card">
-							<div class="card-header">@lang('info.contact')</div>
-							<div class="card-body">
-                                @include("auth.register.contact")
-                            </div>
-                        </div>
-                        
-                        @if($user_type == \App\Role::COLLEGIST)
-                            <div class="card">
-                                <div class="card-header">@lang('info.information_of_studies')</div>
-                                <div class="card-body">
-                                    @include("auth.register.information_of_studies")
-                                </div>
-                            </div>
-                        @endif
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="gdpr" value="gdpr" required>
-                                @lang('auth.i_agree_to') <a href="{{ route('privacy_policy') }}" target="_blank">@lang('auth.privacy_policy')</a>
-                            </label>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-mb-4">
-                                <button type="submit" class="btn btn-primary">
-                                    @lang('general.register')
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-</div>
-
-
-<!-- Datepicker script -->
-<script type="text/javascript">
-	$(function(){
-		$('.date').datepicker({
-			format: 'yyyy-mm-dd',
-			autoclose: true,
-			clearBtn: true,
-			weekStart: 1,
-			startView: "century"
-		})
-	});
-</script>
 @endsection

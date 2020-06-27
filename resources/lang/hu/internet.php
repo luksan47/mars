@@ -9,7 +9,7 @@ return [
     'requested' => 'Elbírálásra vár',
     'approved' => 'Elfogadott',
     'rejected' => 'Elutasított',
-    'add' => 'Eszköz hozzáadása',
+    'add' => 'Hozzáadás',
     'delete' => 'Törlés',
     'cancel' => 'Mégsem',
     'confirm_delete' => 'Biztosan törli?',
@@ -39,4 +39,7 @@ return [
     'created_at' => 'Létrehozva',
     'extend' => 'Meghosszabbít',
     'deactivate' => 'Deaktivál',
+    'generate_new_pwd' => 'Új jelszó generálása',
+    'nothing_to_show' => 'Nincs megjeleníthető adat',
+    'update' => 'Frissítés',
 ];

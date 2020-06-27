@@ -1,4 +1,4 @@
-<div id="internet-accesses-table"></div>
+<div id="mac-addresses-table"></div>
 <script type="application/javascript">
     $(document).ready(function () {
         var actions = function (cell, formatterParams, onRendered) {
@@ -21,24 +21,24 @@
                 });
             };
 
-            return $("<button type=\"button\" style=\"margin: 2px;\" class=\"btn btn-sm btn-danger float-left\">@lang('internet.reject')</button>")
+            return $("<button type=\"button\" style=\"margin: 2px;\" class=\"btn waves-effect coli blue\">@lang('internet.reject')</button></br>")
                 .click(function () {
                 changeState('rejected');
             }).toggle(data._state === '{{ \App\MacAddress::REQUESTED }}')
-                .add($("<button type=\"button\" style=\"margin: 2px;\" class=\"btn btn-sm btn-success float-left\">@lang('internet.approve')</button>")
+                .add($("<button type=\"button\" style=\"margin: 2px;\" class=\"btn waves-effect\">@lang('internet.approve')</button></br>")
                     .click(function () {
                 changeState('approved');
             }).toggle(data._state === '{{ \App\MacAddress::REQUESTED }}'))
-                .add($("<button type=\"button\" style=\"margin: 2px;\" class=\"btn btn-sm btn-warning float-left\">@lang('internet.request')</button>")
+                .add($("<button type=\"button\" style=\"margin: 2px;\" class=\"btn waves-effect\">@lang('internet.request')</button></br>")
                     .click(function () {
                 changeState('requested');
             }).toggle(data._state !== '{{ \App\MacAddress::REQUESTED }}')).wrapAll('<div></div>').parent()[0];
         };
 
         var deleteButton = function (cell, formatterParams, onRendered) {
-            return $("<button type=\"button\" class=\"btn btn-sm btn-danger float-left\">@lang('internet.delete')</button>").click(function () {
+            return $("<button type=\"button\" class=\"btn waves-effect coli blue\">@lang('internet.delete')</button>").click(function () {
                 var data = cell.getRow().getData();
-                confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function () {
+                //confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function () {
                     $.ajax({
                         type: "POST",
                         url: "{{ route('internet.mac_addresses.delete', [':id']) }}".replace(':id', data.id),
@@ -49,18 +49,17 @@
                             ajaxError('@lang('internet.error')', '@lang('internet.ajax_error')', '@lang('internet.ok')', error);
                         }
                     });
-                });
+                //});
             })[0];
         };
 
-        var table = new Tabulator("#internet-accesses-table", {
-            paginationSizeSelector: [10, 25, 50, 100, 250, 500],
+        var table = new Tabulator("#mac-addresses-table", {
             paginationSize: 10,
             pagination: "remote", //enable remote pagination
             ajaxURL: "{{ route('internet.admin.mac_addresses.all') }}", //set url for ajax request
             ajaxSorting: true,
             ajaxFiltering: true,
-            layout: "fitColumns",
+            layout:"fitColumns",
             placeholder: "No Data Set",
             columns: [
                 {
@@ -96,7 +95,7 @@
                         "requested": "@lang('internet.requested')"
                     }
                 },
-                {title: "", field: "state", headerSort: false, formatter: actions},
+                {title: "", field: "state", width:"130", headerSort: false, formatter: actions},
                 {title: "", field: "id", headerSort: false, formatter: deleteButton},
             ],
         });

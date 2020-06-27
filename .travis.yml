@@ -1,0 +1,27 @@
+os:
+  - linux
+language: php
+php:
+  - 7.3
+services:
+  - mysql
+cache:
+  directories:
+    - node_modules
+    - vendor
+before_script:
+  - cp .env.travis .env
+  - sudo mysql -e 'create database homestead;'
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - npm install
+  - npm run dev
+  - php artisan key:generate
+  - php artisan migrate
+script:
+  - php artisan test
+branches:
+  only:
+  - master
+  - uran-2.x
+  

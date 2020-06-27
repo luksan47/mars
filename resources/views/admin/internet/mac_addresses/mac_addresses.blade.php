@@ -1,11 +1,4 @@
-<div class="card">
-    <div class="card-header text-white bg-dark">@lang('internet.admin.manage_registered_devices')</div>
-    <div class="card-body">
-        @include('admin.internet.mac_addresses.add')
-        <br/>
-        <div class="alert alert-warning">
-            <p>@lang('internet.edit_warning_auto_approve')</p>
-        </div>
-        @include('admin.internet.mac_addresses.list')
-    </div>
-</div>
+<span class="card-title">@lang('internet.admin.manage_registered_devices')</span>
+@include('admin.internet.mac_addresses.add')
+<blockquote>@lang('internet.edit_warning_auto_approve')</blockquote>
+@include('admin.internet.mac_addresses.list')

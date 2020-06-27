@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'faults' => 'Hibák',
+    'faults' => 'Hibafüzet',
     'created_at' => 'Létrehozva',
     'location' => 'Helyszín',
     'description' => 'Leírás',

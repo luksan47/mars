@@ -36,6 +36,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /* Printing related getters */
+
     public function printAccount()
     {
         return $this->hasOne('App\PrintAccount');
@@ -46,10 +48,24 @@ class User extends Authenticatable
         return $this->hasMany('App\FreePages');
     }
 
+    public function sumOfActiveFreePages()
+    {
+        return $this->freePages
+                    ->where('deadline', '>', \Carbon\Carbon::now())
+                    ->sum('amount');
+    }
+
     public function printHistory()
     {
         return $this->hasMany('App\PrintAccountHistory');
     }
+
+    public function printJobs()
+    {
+        return $this->hasMany('App\PrintJob');
+    }
+
+    /* Internet module related getters */
 
     public function internetAccess()
     {
@@ -61,14 +77,33 @@ class User extends Authenticatable
         return $this->hasMany('App\MacAddress');
     }
 
+    /* Basic information of the user */
+
+    public function setVerified()
+    {
+        $this->update([
+            'verified' => true,
+        ]);
+    }
+
     public function personalInformation()
     {
         return $this->hasOne('App\PersonalInformation');
     }
 
+    public function hasPersonalInformation()
+    {
+        return isset($this->personalInformation);
+    }
+
     public function educationalInformation()
     {
         return $this->hasOne('App\EducationalInformation');
+    }
+
+    public function hasEducationalInformation()
+    {
+        return isset($this->educationalInformation);
     }
 
     public function workshops()
@@ -81,10 +116,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Faculty::class, 'faculty_users');
     }
 
-    public function printJobs()
-    {
-        return $this->hasMany('App\PrintJob');
-    }
+    /* Role related getters */
 
     public function roles()
     {
@@ -101,6 +133,83 @@ class User extends Authenticatable
     public function hasRole(string $roleName, $objectId = null)
     {
         return $this->hasAnyRole([$roleName], $objectId);
+    }
+
+    /* Semester related getters */
+
+    public function allSemesters()
+    {
+        return $this->belongsToMany(Semester::class, 'semester_status')->withPivot(['status', 'verified', 'comment']);
+    }
+
+    public function semestersWhere($status)
+    {
+        return $this->belongsToMany(Semester::class, 'semester_status')
+                    ->wherePivot('status', '=', $status)
+                    ->withPivot('verified', 'comment');
+    }
+
+    public function activeSemesters()
+    {
+        return $this->semestersWhere(Semester::ACTIVE);
+    }
+
+    public function isInSemester($semester)
+    {
+        return $this->allSemesters->contains($semester);
+    }
+
+    public function isActiveIn($semester)
+    {
+        return $this->activeSemesters->contains($semester);
+    }
+
+    public function isActive()
+    {
+        return $this->isActiveIn(Semester::current());
+    }
+
+    public function getStatusIn($semester)
+    {
+        $semesters = $this->allSemesters;
+        if (! $semesters->contains($semester)) {
+            return Semester::INACTIVE;
+        }
+
+        return $semesters->find($semester)->pivot->status;
+    }
+
+    public function getStatus()
+    {
+        return getStatusIn(Semester::current());
+    }
+
+    public function setStatusFor($semester, $status, $comment = null)
+    {
+        $this->allSemesters()->syncWithoutDetaching([
+            $semester->id => [
+                'status' => $status,
+                'comment' => $comment,
+            ],
+        ]);
+
+        return $this;
+    }
+
+    public function setStatus($status, $comment = null)
+    {
+        return $this->setStatusFor(Semester::current(), $status, $comment);
+    }
+
+    public function verify($semester)
+    {
+        $this->allSemesters()->syncWithoutDetaching([
+            $semester->id => [
+                'verify' => true,
+            ],
+        ]);
+
+        return $this;
     }
 
     /**

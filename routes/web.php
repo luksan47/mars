@@ -31,8 +31,19 @@ Route::get('/verification', function () {
     return view('auth.verification');
 })->name('verification');
 
-Route::middleware(['auth', 'log', 'verified'])->group(function () {
+Route::middleware(['auth', 'log'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/user', 'UserController@index')->name('user');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('userdata/update_password', 'UserController@updatePassword')->name('userdata.update_password');
+});
+
+Route::middleware(['auth', 'log', 'verified'])->group(function () {
+    Route::get('userdata', 'UserController@showData')->name('userdata');
+    Route::post('userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
+    Route::post('userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
@@ -41,7 +52,9 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::put('/print/print', 'PrintController@print')->name('print.print');
     Route::get('/print/free_pages/all', 'PrintController@listFreePages')->name('print.free_pages.all');
     Route::get('/print/print_jobs/all', 'PrintController@listPrintJobs')->name('print.print_jobs.all');
+    Route::get('/print/account_history', 'PrintController@listPrintAccountHistory')->name('print.account_history')->middleware('can:print.modify');
     Route::post('/print/print_jobs/{id}/cancel', 'PrintController@cancelPrintJob')->name('print.print_jobs.cancel');
+    Route::get('/print/admin', 'PrintController@admin')->name('print.admin');
 
     Route::get('/internet', 'InternetController@index')->name('internet');
     Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');
@@ -64,4 +77,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
+
+    Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
 });

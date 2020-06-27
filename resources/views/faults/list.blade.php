@@ -1,5 +1,6 @@
 <div id="faults-table"></div>
-<script src="js/moment.min.js"></script>
+<!-- TODO: revisit if moment js is necessary (hint: it's not, we just have to get rid of datetime sort in the table) -->
+<script src="{{ mix('js/moment.min.js') }}"></script>
 <script type="application/javascript">
     $(document).ready(function () {
         function status_translate(cell) {
@@ -13,36 +14,35 @@
                 {{ App\FaultsTable::WONT_FIX }}: "@lang('faults.wont_fix')"
             };
             const colors = {
-                {{ App\FaultsTable::UNSEEN }}: "text-secondary",
-                {{ App\FaultsTable::SEEN }}: "text-info",
-                {{ App\FaultsTable::DONE }}: "text-success",
-                {{ App\FaultsTable::WONT_FIX }}: "text-danger"
+                {{ App\FaultsTable::UNSEEN }}: "",
+                {{ App\FaultsTable::SEEN }}: "",
+                {{ App\FaultsTable::DONE }}: "coli-text text-orange",
+                {{ App\FaultsTable::WONT_FIX }}: "coli-text text-blue"
             };
-            return '<div class="font-italic ' + colors[cell] + ' text-right">' + translations[cell] + '</div>';
+            return '<div class="font-italic ' + colors[cell] + '">' + translations[cell] + '</div>';
         }
 
         var button = function (cell, formatterParams) {
             switch (formatterParams['status']) {
                 case "{{ App\FaultsTable::DONE }}":
-                    var style = "btn-success";
+                    var style = "btn waves-effect";
                     var text = "@lang('faults.done')";
                     break;
             
                 case "{{ App\FaultsTable::WONT_FIX }}":
-                    var style = "btn-danger";
+                    var style = "waves-effect btn coli blue";
                     var text = "@lang('faults.wont_fix')";
                     break;
                 
                 case "{{ App\FaultsTable::UNSEEN }}":
-                    var style = "btn-danger";
+                    var style = "btn-flat waves-effect grey lighten-4 ";
                     var text = "@lang('faults.reopen')";
                     break;
             }
 
-            return $("<button type=\"button\" class=\"btn btn-sm " + style + " float-left\">" + text + "</button>").click(function () {
+            return $("<button type=\"button\" class=\"btn " + style + "\">" + text + "</button>").click(function () {
                 var data = cell.getRow().getData();
-                text = text == "@lang('faults.reopen')" ? "@lang('faults.reopened')" : text;
-                confirm('@lang('faults.confirm')', '@lang('faults.confirm_message')' + text, '@lang('faults.cancel')', '@lang('faults.confirm')', function() {
+                //confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function () {
                     $.post("{{ route('faults.update') }}", {id: data.id, status: formatterParams['status']}, function(data){
                         if (data !== "true"){
                             alert('@lang('faults.autherror')');
@@ -50,7 +50,7 @@
                             window.location.reload(true);
                         }
                     });
-                });
+                //});
             })[0];
         };
 
@@ -88,25 +88,24 @@
         }
 
         var table = new Tabulator("#faults-table", {
-            paginationSizeSelector: [10, 25, 50, 100, 250, 500],
             paginationSize: 10,
             pagination: "local", //enable remote pagination
             ajaxURL: "{{ route('faults.table') }}", //set url for ajax request
             ajaxFiltering: true,
             layout: "fitColumns",
-            placeholder: "No Data Set",
+            placeholder: "@lang('internet.nothing_to_show')",
             columns: [
                 {title: "@lang('faults.created_at')", field: "created_at", sorter: "datetime", sorterParams: {format: "YYYY-MM-DD HH:mm:ss"}, width: 180,
                  formatter: "datetime", formatterParams: {outputFormat: "YYYY. MM. DD. HH:mm"}},
-                {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 1, formatter: "textarea"},
-                {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 4, formatter: "textarea"},
+                {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 2, formatter: "textarea"},
+                {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 3, formatter: "textarea"},
                 @if(Auth::User()->hasRole(\App\Role::STAFF))
-                {title: "", field: "id", headerSort: false, width: 60, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::DONE }}"}},
-                {title: "", field: "id", headerSort: false, width: 140, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::WONT_FIX }}"}},
+                {title: "", field: "id", headerSort: false, width: 100, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::DONE }}"}},
+                {title: "", field: "id", headerSort: false, width: 200, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::WONT_FIX }}"}},
                 @else
-                {title: "@lang('faults.status')", field: "status", sorter: "string", width: 140, formatter: status_translate},
+                {title: "@lang('faults.status')", field: "status", sorter: "string", width: 150, formatter: status_translate},
                 @endif
-                {title: "", field: "id", headerSort: false, width: 80, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::UNSEEN }}"}}
+                {title: "", field: "id", headerSort: false, width: 130, formatter: button_formatter, formatterParams: {status: "{{ App\FaultsTable::UNSEEN }}"}}
             ],
             initialSort: [
                 {column: "created_at", dir: "desc"}

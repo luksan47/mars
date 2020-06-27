@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Console\Commands;
 use App\User;
 use App\PrintAccount;
 use App\FreePages;
 use App\PrintJob;
+use App\PrintAccountHistory;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +25,15 @@ class PrintController extends Controller
     }
 
     public function index() {
-        return view('print.app', ["users" => User::all()]);
+        return view('print.app', [
+                "users" => User::all(),
+                "free_pages" => Auth::user()->sumOfActiveFreePages()
+            ]);
+    }
+
+    public function admin() {
+        Gate::authorize('print.admin');
+        return view('admin.print.app', ["users" => User::all()]);
     }
 
     public function print(Request $request) {
@@ -81,21 +92,26 @@ class PrintController extends Controller
                 ]);
             }
             $print_account->decrement('balance', $cost);
-            return back()->with('print.status', __('print.success'));
+            return back()->with('message', __('print.success'));
         } else {
-            return back()->withErrors(['print' => __('print.error_printing')]);
+            return back()->with('error', __('print.error_printing'));
         }
     }
+
     public function transferBalance(Request $request) {
         $validator = Validator::make($request->all(), [
             'balance' => 'required|integer|min:1',
-            'receiver_id' => 'required|integer|exists:users,id'
+            'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
+        
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
 
         $balance = $request->balance;
         $from_account = Auth::user()->printAccount;
-        $to_account = User::find($request->receiver_id)->printAccount;
+        $to_account = User::find($request->user_to_send)->printAccount;
 
         if (!$from_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
@@ -106,30 +122,31 @@ class PrintController extends Controller
         $from_account->decrement('balance', $balance);
         $to_account->increment('balance', $balance);
 
-        return redirect()->route('print');
+        return redirect()->back()->with('message', __('general.successful_transaction'));
     }
 
     public function modifyBalance(Request $request) {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id_modify' => 'required|integer|exists:users,id',
             'balance' => 'required|integer',
         ]);
         $validator->validate();
 
         $balance = $request->balance;
-        $print_account = User::find($request->user_id)->printAccount;
+        $print_account = User::find($request->user_id_modify)->printAccount;
 
         if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
-        return redirect()->route('print');
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function addFreePages(Request $request) {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer|exists:users,id',
+            'user_id_free' => 'required|integer|exists:users,id',
             'free_pages' => 'required|integer|min:1',
             'deadline' => 'required|date|after:now',
         ]);
@@ -138,14 +155,14 @@ class PrintController extends Controller
         $free_pages = $request->free_pages;
 
         FreePages::create([
-            'user_id' => $request->user_id,
+            'user_id' => $request->user_id_free,
             'amount' => $request->free_pages,
             'deadline' => $request->deadline,
             'last_modified_by' => Auth::user()->id,
             'comment' => $request->comment,
         ]);
 
-        return redirect()->route('print');
+        return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
     public function listPrintJobs() {
@@ -156,10 +173,13 @@ class PrintController extends Controller
         if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
             array_push($columns, 'user.name');
             $paginator = TabulatorPaginator::from(
-                    PrintJob::join('users as user', 'user.id', '=', 'user_id')->select('print_jobs.*')->with('user')
+                    PrintJob::join('users as user', 'user.id', '=', 'user_id')
+                            ->select('print_jobs.*')
+                            ->with('user')
+                            ->orderby('print_jobs.created_at', 'desc')
                 )->sortable($columns)->filterable($columns)->paginate();
         } else {
-            $paginator = TabulatorPaginator::from(Auth::user()->printJobs())
+            $paginator = TabulatorPaginator::from(Auth::user()->printJobs()->orderby('created_at', 'desc'))
                 ->sortable($columns)->filterable($columns)->paginate();
         }
 
@@ -197,6 +217,21 @@ class PrintController extends Controller
         return $paginator;
     }
 
+    public function listPrintAccountHistory() {
+        $this->authorize('viewAny', PrintJob::class);
+        
+        $columns = ['user.name', 'balance_change', 'free_page_change', 'deadline_change', 'modifier', 'modified_at'];
+        $paginator = TabulatorPaginator::from(
+            PrintAccountHistory::join('users as user', 'user.id', '=', 'user_id')
+                    ->join('users as modifier', 'modifier.id', '=', 'modified_by')
+                    ->select('print_account_history.*', 'modifier.name as modifier')
+                    ->with('user')
+            )->sortable($columns)
+            ->filterable($columns)
+            ->paginate(); 
+        return $paginator; 
+    }
+
     public function cancelPrintJob($id) {
         //TODO: actually cancel
         $printJob = PrintJob::findOrFail($id);
@@ -207,11 +242,9 @@ class PrintController extends Controller
     }
 
     private function updateCompletedPrintingJobs() {
-        if (!config('app.debug')) {
-            exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
-            Log::info($result);
-            PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
-        }
+        $result = Commands::updateCompletedPrintingJobs();
+        Log::info("Completed jobs: " . implode(', ', $result));
+        PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
     }
 
     private function printFile($file, $cost, $is_two_sided, $number_of_copies) {
@@ -224,8 +257,8 @@ class PrintController extends Controller
                     . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ")
                     . "-n " . $number_of_copies . " "
                     . $path . " 2>&1";
-            $result = exec($command);
             Log::info($command);
+            $result = Commands::print($command);
             if (!preg_match("/^request id is ([^\s]*) \\([0-9]* file\\(s\\)\\)$/", $result, $job)) {
                 Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). result:"
                     . print_r($result, true));
@@ -251,14 +284,13 @@ class PrintController extends Controller
     }
 
     private function handleNoBalance($validator) {
-        $validator->errors()->add('balance', __('print.no_balance'));
-        return back()
-            ->withErrors($validator)
-            ->withInput();
+
+        return back()->withInput()->with('error',  __('print.no_balance'));
+    
     }
 
     private function getPages($validator, $path) {
-        $pages = exec("pdfinfo " . $path . " | grep '^Pages' | awk '{print $2}' 2>&1");
+        $pages = Commands::getPages($path);
 
         if ($pages == "" || !is_numeric($pages) || $pages <= 0) {
             Log::error("Cannot get number of pages for uploaded file!" . print_r($pages, true));
@@ -266,4 +298,6 @@ class PrintController extends Controller
         }
         return $pages;
     }
+
+
 }

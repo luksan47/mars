@@ -1,108 +1,75 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ config('app.logo_with_bg_path') }}">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <title>{{ config('app.name', 'Urán') }}</title>
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/mobile.css') }}">
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-            .full-height {
-                height: 100vh;
-            }
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ mix('css/welcome_page.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
+</head>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">@lang('general.login')</a>
-
-                        @if (Route::has('register'))
-                            <a class="mobile-break" href="{{ route('register') }}">@lang('general.register')</a>
-                            <a class="pc-break" href="{{ route('register') }}">@lang('general.register') @lang('general.register_collegist')</a>
-                            <a class="pc-break" href="{{ route('register.guest') }}">@lang('general.register') @lang('general.register_guest')</a>
-                        @endif
-                    @endauth
-
+<body>
+    @if (Route::has('login'))
+    <header>
+        <div class="navbar-fixed">
+            <nav class="top-nav">
+                <div class="nav-wrapper">
+                    <div class="row">
+                        <ul class="right">
+                            @auth
+                            <li><a href="{{ url('/home') }}">@lang('general.home')</a></li>
+                            @else
+                            <li><a href="{{ route('login') }}">@lang('general.login')</a></li>
+                            <li><a href="{{ route('register') }}">@lang('general.register')
+                                    <span class="hide-on-small-only">@lang('general.register_collegist')</span></a></li>
+                            <li class="hide-on-small-only"><a href="{{ route('register.guest') }}">@lang('general.register')
+                                    @lang('general.register_guest')</a></li>
+                            @endauth
+                        </ul>
+                    </div>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Urán 2.0
+            </nav>
+        </div>
+    </header>
+    @endif
+    </header>
+    <div class="flex-center position-ref full-height">
+        <div class="content">
+            <div class="row">
+                <div class="col s12 l2 offset-l2 center-align">
+                    <img class="material-icons" style="height:100px" src="{{ config('app.logo_blue_path') }}">
                 </div>
-
-                <div class="links">
-                    <a href="">
-                    @lang('main.better')</a><br class="mobile-break"/>
-                    <a href="">
-                    @lang('main.faster')</a><br class="mobile-break"/>
-                    <a href="">
-                    @lang('main.brilliant')</a><br class="mobile-break"/>
-                    <a href="">
-                    @lang('main.essential')</a><br class="mobile-break"/>
-                    <a href="">
-                    @lang('main.modern')</a><br class="mobile-break"/>
-                    <a href="https://github.com/luksan47/mars">
-                    @lang('main.open')</a><br class="mobile-break"/>
+                <div class="col s12 l5 center-align">
+                    <div class="noselect"
+                        style="text-indent:15px;font-size:80px;text-transform: uppercase;font-weight:300;letter-spacing:3px;">
+                        {{ config('app.name') }} </div>
                 </div>
             </div>
+
+            <div class="links">
+                <a href="#">
+                    @lang('main.better')</a><br class="mobile-break" />
+                <a href="#">
+                    @lang('main.faster')</a><br class="mobile-break" />
+                <a href="#">
+                    @lang('main.brilliant')</a><br class="mobile-break" />
+                <a href="#">
+                    @lang('main.essential')</a><br class="mobile-break" />
+                <a href="#">
+                    @lang('main.modern')</a><br class="mobile-break" />
+                <a href="https://github.com/luksan47/mars">
+                    @lang('main.open')</a><br class="mobile-break" />
+            </div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

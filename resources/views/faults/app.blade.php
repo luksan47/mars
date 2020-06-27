@@ -1,33 +1,32 @@
 @extends('layouts.app')
-
+@section('title')
+<i class="material-icons left">build</i>@lang('faults.faults')
+@endsection
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-8 card-body">
+<div class="row">
+    <div class="col s12">
         <div class="card">
-            <div class="card-header">
-                @lang('faults.new_fault')
-            </div>
-            <div class="card-body">
-                <div class="alert alert-info">
-                    <strong>@lang('general.note'):</strong>
-                    @lang('faults.fault_description')
-                </div>
+            <div class="card-content">
+                <span class="card-title">@lang('faults.new_fault')</span>
+                <blockquote>@lang('faults.fault_description')</blockquote>
                 <form id="send-fault" class="form-horizontal" method="POST" action=" {{ route('faults.add') }} ">
                     @csrf
-                    <input class="form-control" form="send-fault" name="location" placeholder="@lang('faults.location')"><br>
-                    <textarea class="form-control" form="send-fault" name="description" style="height: 8em" placeholder="@lang('faults.description')"></textarea>
-
-                    <div class="row" style="margin-top:10px;margin-bottom:10px;">
-                        <div class="col-md-5"></div>
-                        <div class="col-md-2">
-                            <input type="submit" class="form-control btn btn-primary" value="@lang('faults.submit')" />
-                        </div>
-                        <div class="col-md-5"></div>
+                    <div class="input-field col s12">
+                        <input type="text" form="send-fault" id="location" name="location" autofocus required>
+                        <label for="location">@lang('faults.location')</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea class="materialize-textarea" form="send-fault" name="description"
+                            id="description"></textarea>
+                        <label for="description">@lang('faults.description')</label>
+                    </div>
+                    <div class="col s12">
+                        <p><button class="btn waves-effect right" type="submit">@lang('faults.submit')</button></p>
                     </div>
                 </form>
+                @include('faults.list')
             </div>
         </div>
-        @include('faults.list')
     </div>
 </div>
 @endsection
