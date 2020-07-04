@@ -27,14 +27,13 @@ class EmailController extends Controller
     }
 
     //test emails with url
-    public function testEmail($mail, $send = "") {
+    public function testEmail($mail, $send = false) {
         //to see preview:   /test_mails/Confirmation
-        //to send:          /test_mails/Confirmation/send   
+        //to send:          /test_mails/Confirmation/send
         if(config('app.debug')) {
-            $send_email = ($send == "send"); 
             $user = Auth::user();
             $mailClass = '\\App\\Mail\\'.$mail;
-            if($send_email){
+            if($send){
                 Mail::to($user)->queue(new $mailClass($user->name));
                 return response("Email sent.");
             } else {
