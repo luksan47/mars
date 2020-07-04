@@ -1,6 +1,6 @@
 
 <div id="mac-addresses-table"></div>
-<script type="application/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
         var deleteButton = function (cell, formatterParams, onRendered) {
             return $("<button type=\"button\" class=\"btn waves-effect coli blue right\">@lang('internet.delete')</button>").click(function () {
