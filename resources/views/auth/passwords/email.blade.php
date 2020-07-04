@@ -13,11 +13,11 @@
                     @endif
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="email" name="email" type="email" class="validate" value="{{ old('email') }}"
+                            <input id="email" name="email" type="email" class="validate @error('email') invalid @enderror" value="{{ old('email') }}"
                                 required autocomplete="email" autofocus>
                             <label for="email">@lang('registration.email')</label>
                             @error('email')
-                            <blockquote class="error">{{ $message }}</blockquote>
+                            <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
                     </div>

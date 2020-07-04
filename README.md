@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/luksan47/mars.svg?branch=uran-2.x)](https://travis-ci.org/luksan47/mars) [![StyleCI](https://github.styleci.io/repos/211704659/shield?branch=uran-2.x?style=plastic)](https://github.styleci.io/repos/211704659)
+[![Build Status](https://travis-ci.com/luksan47/mars.svg?branch=uran-2.x)](https://travis-ci.com/luksan47/mars)
+[![StyleCI](https://github.styleci.io/repos/211704659/shield?branch=uran-2.x&style=plastic)](https://github.styleci.io/repos/211704659)
 
 # Mars
 

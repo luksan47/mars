@@ -1,35 +1,35 @@
 <div class="row">
     <div class="input-field col s12">
         <input id="year_of_graduation" name="year_of_graduation" min="1895" max="{{ date('Y') }}" type="number"
-            class="validate" value="{{ old('year_of_graduation') }}" required>
+            class="validate @error('year_of_graduation') invalid @enderror" value="{{ old('year_of_graduation') }}" required>
         <label for="year_of_graduation">@lang('info.year_of_graduation')</label>
         @error('year_of_graduation')
-        <blockquote class="error">{{ $message }}</blockquote>
+        <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
 
     <div class="input-field col s12">
-        <input id="high_school" name="high_school" type="text" class="validate" value="{{ old('high_school') }}" required>
+        <input id="high_school" name="high_school" type="text" class="validate @error('high_school') invalid @enderror" value="{{ old('high_school') }}" required>
         <label for="high_school">@lang('info.high_school')</label>
         @error('high_school')
-        <blockquote class="error">{{ $message }}</blockquote>
+        <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
 
     <div class="input-field col s12">
-        <input id="neptun" name="neptun" type="text" class="validate" value="{{ old('neptun') }}" required>
+        <input id="neptun" name="neptun" type="text" class="validate @error('neptun') invalid @enderror" value="{{ old('neptun') }}" required>
         <label for="neptun">@lang('info.neptun')</label>
         @error('neptun')
-        <blockquote class="error">{{ $message }}</blockquote>
+        <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
 
     <div class="input-field col s12">
         <input id="year_of_acceptance" name="year_of_acceptance" type="number" min="1895" max="{{ date('Y') }}"
-            class="validate" value="{{ old('year_of_acceptance') }}" required>
+            class="validate @error('year_of_acceptance') invalid @enderror" value="{{ old('year_of_acceptance') }}" required>
         <label for="year_of_acceptance">@lang('info.year_of_acceptance')</label>
         @error('year_of_acceptance')
-        <blockquote class="error">{{ $message }}</blockquote>
+        <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
 

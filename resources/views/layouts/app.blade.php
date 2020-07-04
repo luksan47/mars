@@ -19,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+
     <!-- Styles -->
     <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen,projection" >
     <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
@@ -45,6 +46,7 @@
             </div>
         </div>
     </div>
+    @include('utils.toast')
     <script>
     var cookieMessages = {
         'dismiss': "@lang('cookie.dismiss')",

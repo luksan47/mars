@@ -28,7 +28,7 @@ class FaultsController extends Controller
             ]
         );
 
-        return redirect()->route('faults');
+        return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
     public function getFaultsTable(Request $request)
