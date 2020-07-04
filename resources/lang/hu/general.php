@@ -23,5 +23,6 @@ return [
     'successful_modification' => 'Sikeres módosítás!',
     'successful_transaction' => 'Sikeres tranzakció!',
     'successfully_added' => 'Sikeres hozzáadás!',
+    'choose_option' => 'Válassz...',
 
 ];
