@@ -23,6 +23,8 @@ Route::get('/privacy_policy', function () {
     return Storage::response('public/adatvedelmi_tajekoztato.pdf');
 })->name('privacy_policy');
 
+Route::get('/img/{filename}', 'EmailController@getPicture');
+
 Auth::routes();
 
 Route::get('/register/guest', 'Auth\RegisterController@showTenantRegistrationForm')->name('register.guest');
@@ -34,6 +36,7 @@ Route::get('/verification', function () {
 Route::middleware(['auth', 'log'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user', 'UserController@index')->name('user');
+    Route::get('/test_mails/{mail}/{send?}', 'EmailController@testEmail');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

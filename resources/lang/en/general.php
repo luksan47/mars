@@ -4,6 +4,7 @@ return [
     'change_email' => 'Change email',
     'change_password' => 'Change password',
     'choose_from_menu' => 'Select one of the menu options!',
+    'choose_option' => 'Choose an option...',
     'home' => 'Home',
     'i_understand' => 'I understand',
     'if_mail_not_working' => 'In some cases, this function may not work properly. In this case, please write an email to root@eotvos.elte.hu with your issues!',
