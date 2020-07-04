@@ -5,6 +5,9 @@ return [
     // Set to true, if you wish to send mails on triggers.
     'active' => env('MAIL_ACTIVE', false),
 
+    // Test mail to seed the admin user with.
+    'test_mail' => env('MAIL_TEST_ADMIN', 'example@uran.hu'),
+
     /*
     |--------------------------------------------------------------------------
     | Mail Driver
