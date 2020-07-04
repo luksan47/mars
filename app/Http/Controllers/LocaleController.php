@@ -15,6 +15,16 @@ class LocaleController extends Controller
 
     public function list()
     {
-        return view('locale.app');
+        $locale = [];
+        $languages = array_diff(scandir(base_path('resources/lang/')), ['..', '.']);
+        foreach ($languages as $language) {
+            $files = array_diff(scandir(base_path('resources/lang/'.$language)), ['..', '.']);
+            foreach ($files as $file_in) {
+                $name = substr($file_in, 0, strlen($file_in) - 4);
+                $expressions = require base_path('resources/lang/'.$language.'/'.$file_in);
+                $locale[$language][$name] = $expressions;
+            }
+        }
+        return view('locale.app')->with('locale', $locale);
     }
 }

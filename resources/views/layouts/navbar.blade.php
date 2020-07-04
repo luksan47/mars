@@ -45,7 +45,7 @@
                 class="material-icons left">language</i>Language<i class="material-icons right">arrow_drop_down</i></a>
     </li>
     <li>
-        <a class="dropdown-trigger" href="#!" data-target="dropdownLang">
+        <a class="dropdown-trigger" href="{{ route('locales') }}">
             <i class="material-icons left">translate</i>@lang('locale.contribute')
         </a>
     </li>
