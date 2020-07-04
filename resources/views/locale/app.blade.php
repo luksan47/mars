@@ -12,7 +12,14 @@
                     <span class="card-title">@lang('locale.category'): {{ $category }}</span>
                     @foreach($translations as $key => $value)
                         @if(!is_array($value))
-                            {{ $key }} - {{ $value }} <br>
+                        <div class="row">
+                            <div class="col xl3">
+                                <p>{{ $key }}</p>
+                            </div>
+                            <div class="col 10">
+                                <p>{{ $value }}</p>
+                            </div>
+                        </div>
                         @endif
                     @endforeach
                 </div>
