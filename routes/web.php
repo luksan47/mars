@@ -23,6 +23,8 @@ Route::get('/privacy_policy', function () {
     return Storage::response('public/adatvedelmi_tajekoztato.pdf');
 })->name('privacy_policy');
 
+Route::get('/img/{filename}', 'EmailController@getPicture');
+
 Auth::routes();
 
 Route::get('/register/guest', 'Auth\RegisterController@showTenantRegistrationForm')->name('register.guest');
@@ -34,16 +36,17 @@ Route::get('/verification', function () {
 Route::middleware(['auth', 'log'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user', 'UserController@index')->name('user');
+    Route::get('/test_mails/{mail}/{send?}', 'EmailController@testEmail');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::post('userdata/update_password', 'UserController@updatePassword')->name('userdata.update_password');
+    Route::post('/userdata/update_password', 'UserController@updatePassword')->name('userdata.update_password');
 });
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
-    Route::get('userdata', 'UserController@showData')->name('userdata');
-    Route::post('userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
-    Route::post('userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
+    Route::get('/userdata', 'UserController@showData')->name('userdata');
+    Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
+    Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
@@ -79,4 +82,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
+
+    Route::get('/locale', 'LocaleController@list')->name('locales');
 });

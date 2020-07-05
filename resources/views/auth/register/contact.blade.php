@@ -1,10 +1,27 @@
 <div class="row">
     <div class="input-field col s12">
-        <input type="text" id="country" name="country" value="Hungary" class="autocomplete validate @error('country') invalid @enderror">
-        <label for="country">@lang('info.country')</label>
-        @error('country')
-        <blockquote class="error">{{ $message }}</blockquote>
-        @enderror
+        <select searchable="@lang('general.search')" id="country" name="country">
+            @foreach ($countries as $country)
+            <option value="{{ $country }}" @if($country=="Hungary") selected @endif>{{ $country }} </option>
+            @endforeach
+          </select>
+          <label for="country">@lang('info.country')</label>
+          <script>
+            var instances;
+            $(document).ready(
+              function() {
+                var elems = $('#country');
+                const options = [
+                  @foreach ($countries as $country)
+                  { name : '{{ $country }}',  value : '{{ $country }}' },
+                  @endforeach
+                  ]
+                instances = M.FormSelect.init(elems, options);
+          });
+          </script>
+          @error('country')
+          <blockquote class="error">{{ $message }}</blockquote>
+          @enderror
     </div>
     <div class="input-field col s12 m12 l6">
         <input id="county" name="county" type="text" class="validate @error('county') invalid @enderror" value="{{ old('county') }}" required>
