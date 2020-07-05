@@ -18,5 +18,5 @@ return [
     'status' => 'Állapot',
     'submit' => 'Küldés',
     'unseen' => 'Nem látta',
-    'wont_fix' => 'Nem megoldandó'
+    'wont_fix' => 'Nem megoldandó',
 ];

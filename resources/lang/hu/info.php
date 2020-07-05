@@ -21,5 +21,5 @@ return [
     'workshop_must_be_filled' => 'A műhely kitöltése kötelező.',
     'year_of_acceptance' => 'Felvétel éve',
     'year_of_graduation' => 'Érettségi éve',
-    'zip_code' => 'Irányítószám'
+    'zip_code' => 'Irányítószám',
 ];

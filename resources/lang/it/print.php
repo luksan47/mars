@@ -21,5 +21,5 @@ return [
     'select_document' => 'Seleziona documento',
     'success' => 'Successo',
     'twosided' => 'Stampa fronte-retro',
-    'user' => 'Utente'
+    'user' => 'Utente',
 ];

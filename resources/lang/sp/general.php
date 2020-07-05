@@ -9,5 +9,5 @@ return [
     'register' => 'Registración',
     'register_collegist' => 'Para miembros del Collegium',
     'register_guest' => 'Para visitantes',
-    'you_are_logged_in' => 'Sesión iniciada con éxito.'
+    'you_are_logged_in' => 'Sesión iniciada con éxito.',
 ];

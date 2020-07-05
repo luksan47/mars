@@ -30,5 +30,5 @@ return [
     'state' => 'Estado',
     'success' => 'Éxito',
     'twosided' => 'Imprimir en ambos lados de la hoja',
-    'user' => 'Usuario'
+    'user' => 'Usuario',
 ];

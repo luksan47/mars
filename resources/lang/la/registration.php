@@ -6,5 +6,5 @@ return [
     'forgotpwd' => 'Oblivisceris signi?',
     'name' => 'Nomen',
     'password' => 'Signum',
-    'remember' => 'Memento mei'
+    'remember' => 'Memento mei',
 ];

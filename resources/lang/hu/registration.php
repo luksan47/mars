@@ -11,5 +11,5 @@ return [
     'old_password' => 'Régi jelszó',
     'password' => 'Jelszó',
     'remember' => 'Emlékezz rám',
-    'tenant_to_collegist' => 'Ez az oldal a Collegium vendégeinek szól. Ha Collegium tagja vagy (bentlakó vagy bejáró), akkor kattints ide!'
+    'tenant_to_collegist' => 'Ez az oldal a Collegium vendégeinek szól. Ha Collegium tagja vagy (bentlakó vagy bejáró), akkor kattints ide!',
 ];
