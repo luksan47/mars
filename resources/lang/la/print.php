@@ -21,5 +21,5 @@ return [
     'select_document' => 'Chartam legere',
     'success' => 'Extritus secundus',
     'twosided' => 'Extere in utrasque paginas',
-    'user' => 'Utens'
+    'user' => 'Utens',
 ];

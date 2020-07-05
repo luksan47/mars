@@ -52,5 +52,5 @@ return [
     'workshop' => 'Taller',
     'year_of_enrollment' => 'Año de inscripción',
     'year_of_the_leaving_exam' => 'Año del examen de bachillerato',
-    'zip_code' => 'Código postal'
+    'zip_code' => 'Código postal',
 ];

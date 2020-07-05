@@ -22,5 +22,5 @@ return [
     'successful_transaction' => 'Sikeres tranzakció!',
     'successfully_added' => 'Sikeres hozzáadás!',
     'user_data' => 'Adatok',
-    'you_are_logged_in' => 'Sikeresen beléptél.'
+    'you_are_logged_in' => 'Sikeresen beléptél.',
 ];

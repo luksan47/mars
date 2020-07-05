@@ -6,5 +6,5 @@ return [
     'dismiss' => 'Accepto',
     'header' => 'Haec pagina crustis utitur!',
     'link' => 'Cur est opus hoc?',
-    'message' => 'Haec pagina ad commoditatem utentium permittendam crustis utitur.'
+    'message' => 'Haec pagina ad commoditatem utentium permittendam crustis utitur.',
 ];

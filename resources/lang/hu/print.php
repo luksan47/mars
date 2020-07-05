@@ -53,5 +53,5 @@ return [
     'twosided' => 'Kétoldalas nyomtatás',
     'upload_money' => 'Pénzt feltölteni a rendszergazdáknál tudsz.',
     'use_free_pages' => 'Ingyenes oldalak használata',
-    'user' => 'Felhasználó'
+    'user' => 'Felhasználó',
 ];

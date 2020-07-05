@@ -6,5 +6,5 @@ return [
     'essential' => 'Minimale',
     'faster' => 'Più veloce',
     'modern' => 'Moderno',
-    'open' => 'Open source'
+    'open' => 'Open source',
 ];

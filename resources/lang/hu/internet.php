@@ -41,5 +41,5 @@ return [
     'wifi_password_null' => 'Jelenleg nincs wifi jelszavad. Generálhatsz lent.',
     'wifi_password_reset_warning' => 'Ha új jelszót igényelsz, mindenhol újra be kell jelentkezned! Az új jelszó beállítása pár percet igénybe vehet.',
     'wifi_user' => 'Wifi felhasználói név',
-    'your_registered_devices' => 'Regisztrált eszközeid'
+    'your_registered_devices' => 'Regisztrált eszközeid',
 ];

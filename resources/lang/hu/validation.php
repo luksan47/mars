@@ -18,14 +18,14 @@ return [
         'numeric' => ':min és :max között kell lennie ennek: :attribute.',
         'file' => ':min kB és :max kB között kell lennie ennek: :attribute.',
         'string' => 'Minimum :min és maximum :max karakterből állhat ez: :attribute.',
-        'array' => 'Minimum :min és maximum :max elemből állhat ez: :attribute.'
+        'array' => 'Minimum :min és maximum :max elemből állhat ez: :attribute.',
     ],
     'boolean' => 'A(z) :attribute mező csak igaz vagy hamis lehet.',
     'confirmed' => 'A(z) :attribute megerősítés nem egyezik meg.',
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'custom-message'
-        ]
+            'rule-name' => 'custom-message',
+        ],
     ],
     'date' => 'A(z) :attribute nem egy érvényes dátum.',
     'date_equals' => 'A(z) :attribute egy evvel megegyező dátumnak kell lennie: :date.',
@@ -44,13 +44,13 @@ return [
         'numeric' => 'A(z) :attribute -nak/nek nagyobbnak kell lennie ennél: :value.',
         'file' => 'A(z) :attribute fájlnak nagyobbnak kell lennie :value kB-nál.',
         'string' => 'A(z) :attribute szövegnek több, mint :value karakterből kell állnia.',
-        'array' => 'A(z) :attribute tömbnek :value darabnál több elemből kell állnia.'
+        'array' => 'A(z) :attribute tömbnek :value darabnál több elemből kell állnia.',
     ],
     'gte' => [
         'numeric' => 'A(z) :attribute értékének minimum :value lehet.',
         'file' => 'A(z) :attribute minimum :value kB lennie.',
         'string' => 'A(z) :attribute minumum :value karakterből állhat.',
-        'array' => 'A(z) :attribute minumum :value elemből állhat.'
+        'array' => 'A(z) :attribute minumum :value elemből állhat.',
     ],
     'image' => 'Egy képnek kell lennie: :attribute.',
     'in' => 'A kiválasztott :attribute érvénytelen.',
@@ -64,19 +64,19 @@ return [
         'numeric' => 'A(z) :attribute értékének kisebbnek kell lennie ennél: :value.',
         'file' => 'A(z) :attribute fáljnak kisebbnek kell lennie :value kB-nál.',
         'string' => 'A(z) :attribute szövegnek kevesebb, mint :value karakterből kell állnia.',
-        'array' => 'A(z) :attribute tömbnek kevesebb, mint :value elemből kell állnia.'
+        'array' => 'A(z) :attribute tömbnek kevesebb, mint :value elemből kell állnia.',
     ],
     'lte' => [
         'numeric' => 'A(z) :attribute értéke maximum :value lehet.',
         'file' => 'A(z) :attribute maximum :value kB lehet.',
         'string' => 'A(z) :attribute maximum :value karakterből állhat.',
-        'array' => 'A(z) :attribute maximum :value elemből állhat.'
+        'array' => 'A(z) :attribute maximum :value elemből állhat.',
     ],
     'max' => [
         'numeric' => 'A(z) :attribute értéke maximum :value lehet.',
         'file' => 'A(z) :attribute értéke maximum :value kB lehet.',
         'string' => 'A(z) :attribute maximum :value karakterből állhat.',
-        'array' => 'A(z) :attribute maximum :value elemből állhat.'
+        'array' => 'A(z) :attribute maximum :value elemből állhat.',
     ],
     'mimes' => 'A(z) :attribute fájlnak ilyen típusúnak kell lennie: :values.',
     'mimetypes' => 'A(z) :attribute fájlnak ilyen típusúnak kell lennie: :values.',
@@ -84,7 +84,7 @@ return [
         'numeric' => 'A(z) :attribute értéke minimum :value lehet.',
         'file' => 'A(z) :attribute értékének minimum :value kB lehet.',
         'string' => 'A(z) :attribute minimum :value karakterből állhat.',
-        'array' => 'A(z) :attribute minimum :value elemből állhat.'
+        'array' => 'A(z) :attribute minimum :value elemből állhat.',
     ],
     'not_in' => 'A kiválasztott :attribute érvénytelen.',
     'not_regex' => 'A(z) :attribute formátuma érvénytelen.',
@@ -104,7 +104,7 @@ return [
         'numeric' => 'A(z) :attribute értéke nem :size!',
         'file' => 'A(z) :attribute kép nem :size kB!.',
         'string' => 'A(z) :attribute szöveg nem :size karakter hosszú!.',
-        'array' => 'A(z) :attribute tömbnek :size db elemből kell állnia!.'
+        'array' => 'A(z) :attribute tömbnek :size db elemből kell állnia!.',
     ],
     'starts_with' => 'A(z) :attribute az alábbiak egyikével kell kezdődnie: :values',
     'string' => 'A(z) :attribute -nak/nek egy szövegnek kell lennie.',
@@ -112,5 +112,5 @@ return [
     'unique' => 'A(z) :attribute már foglalt.',
     'uploaded' => 'A(z) :attribute feltöltése sikertelen volt.',
     'url' => 'A(z) :attribute formátuma érvénytelen.',
-    'uuid' => 'A(z) :attribute nem egy érvényes UUID!'
+    'uuid' => 'A(z) :attribute nem egy érvényes UUID!',
 ];

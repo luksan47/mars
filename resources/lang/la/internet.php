@@ -36,5 +36,5 @@ return [
     'wifi_password_null' => 'Nunc wifi signum non habes. Generare infero potes.',
     'wifi_password_reset_warning' => 'Si signum novum poscas, tibi ubicumque necesse sit inire!',
     'wifi_user' => 'Wifi nomen utentis',
-    'your_registered_devices' => 'Instrumenti registrati'
+    'your_registered_devices' => 'Instrumenti registrati',
 ];

@@ -53,5 +53,5 @@ return [
     'twosided' => 'Two-sided printing',
     'upload_money' => 'You can upload money to your account at the system admins.',
     'use_free_pages' => 'Use free pages',
-    'user' => 'User'
+    'user' => 'User',
 ];
