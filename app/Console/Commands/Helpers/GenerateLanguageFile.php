@@ -7,8 +7,8 @@ if (! function_exists('var_export54')) {
             case 'string':
                 return '\''.addcslashes($var, "\\\$\"\'\r\n\t\v\f").'\'';
             case 'array':
-                if(count($var) == 0) {
-                    return "[]";
+                if (count($var) == 0) {
+                    return '[]';
                 }
                 $indexed = array_keys($var) === range(0, count($var) - 1);
                 $r = [];
