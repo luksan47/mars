@@ -7,6 +7,9 @@ if (! function_exists('var_export54')) {
             case 'string':
                 return '\''.addcslashes($var, "\\\$\"\'\r\n\t\v\f").'\'';
             case 'array':
+                if(count($var) == 0) {
+                    return "[]";
+                }
                 $indexed = array_keys($var) === range(0, count($var) - 1);
                 $r = [];
                 foreach ($var as $key => $value) {
@@ -15,7 +18,7 @@ if (! function_exists('var_export54')) {
                         .var_export54($value, "$indent    ");
                 }
 
-                return "[\n".implode(",\n", $r)."\n".$indent.']';
+                return "[\n".implode(",\n", $r).",\n".$indent.']';
             case 'boolean':
                 return $var ? 'TRUE' : 'FALSE';
             default:
