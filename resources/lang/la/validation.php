@@ -9,9 +9,7 @@ return [
     'alpha_dash' => ':attribute potest solis ex literis, numeris, signo cogitandi et circumlito constare.',
     'alpha_num' => ':attribute potest solis ex literis et numeris constare.',
     'array' => ':attribute necesse est una multitudo esse.',
-    'attributes' => [
-
-    ],
+    'attributes' => [],
     'before' => ':attribute necesse est unum datum esse ante :date.',
     'before_or_equal' => ':attribute necesse est unum datum ante :date aut hoc aequum esse.',
     'between' => [

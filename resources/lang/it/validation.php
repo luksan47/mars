@@ -9,9 +9,7 @@ return [
     'alpha_dash' => '\':attribute\' può contenere solamente lettere, numeri e trattini.',
     'alpha_num' => '\':attribute\' può contenere solamente lettere e numeri.',
     'array' => '\':attribute\' deve essere un array.',
-    'attributes' => [
-
-    ],
+    'attributes' => [],
     'before' => '\':attribute\' deve essere una data antecedente a :date.',
     'before_or_equal' => '\':attribute\' deve essere una data antecedente o uguale a :date.',
     'between' => [

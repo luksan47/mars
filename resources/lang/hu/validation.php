@@ -9,9 +9,7 @@ return [
     'alpha_dash' => 'A(z) :attribute csak betűkből, számokból, gondolatjelből és aláhúzásból állhat.',
     'alpha_num' => 'A(z) :attribute csak betűkből és számokból állhat.',
     'array' => 'Egy tömbnek kell lennie ennek: :attribute.',
-    'attributes' => [
-
-    ],
+    'attributes' => [],
     'before' => 'Egy :date előtti dátumnak kell lennie ennek: :attribute.',
     'before_or_equal' => 'Egy :date előtti vagy avval megegyező dátumnak kell lennie ennek: :attribute.',
     'between' => [
