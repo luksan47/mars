@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+require_once base_path('app/Console/Commands/Helpers/GenerateLanguageFile.php');
 
 class SortLanguageFiles extends Command
 {
@@ -11,7 +12,7 @@ class SortLanguageFiles extends Command
      *
      * @var string
      */
-    protected $signature = 'language:sort';
+    protected $signature = 'locale:sort';
 
     /**
      * The console command description.
@@ -46,10 +47,11 @@ class SortLanguageFiles extends Command
                     $this->error('Sorting '.$file_in.' failed.');
                 }
                 $file_out = fopen(base_path('resources/lang/'.$language.'/'.$file_in), 'w');
-                if (! (fwrite($file_out, "<?php\n\nreturn ".var_export($expressions, true).';'))) {
+                if (! (generate_file($file_out, $expressions))) {
                     $this->error('Writing to '.$file_in.' failed.');
                 }
             }
         }
+        $this->comment("Expressions sorted succesfully");
     }
 }

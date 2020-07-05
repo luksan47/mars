@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+require_once base_path('app/Console/Commands/Helpers/GenerateLanguageFile.php');
 
 class AddExpression extends Command
 {
@@ -11,7 +12,7 @@ class AddExpression extends Command
      *
      * @var string
      */
-    protected $signature = 'language:add 
+    protected $signature = 'locale:add 
                             {language : the language to add eg. en} 
                             {key : the key of the expression eg. general.home} 
                             {value : the localized value of the expression} 
@@ -64,10 +65,10 @@ class AddExpression extends Command
                 $this->error('Sorting '.$file_in.' failed.');
             }
             $file_write = fopen(base_path('resources/lang/'.$language.'/'.$file.'.php'), 'w');
-            if (! (fwrite($file_write, "<?php\n\nreturn ".var_export($expressions, true).';'))) {
+            if (! (generate_file($file_write, $expressions))) {
                 $this->error('Writing to '.$file.' failed.');
             }
-            $this->line('Set '.$expression_key.' to '.$expression_value.'.');
+            $this->comment('Set '.$expression_key.' to '.$expression_value.'.');
         } else {
             $this->comment('Nothing changed.');
         }
