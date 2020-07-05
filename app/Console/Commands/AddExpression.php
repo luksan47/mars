@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+
 require_once base_path('app/Console/Commands/Helpers/GenerateLanguageFile.php');
 
 class AddExpression extends Command
