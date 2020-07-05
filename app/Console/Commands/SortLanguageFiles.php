@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+
 require_once base_path('app/Console/Commands/Helpers/GenerateLanguageFile.php');
 
 class SortLanguageFiles extends Command
@@ -52,6 +53,6 @@ class SortLanguageFiles extends Command
                 }
             }
         }
-        $this->comment("Expressions sorted succesfully");
+        $this->comment('Expressions sorted succesfully');
     }
 }
