@@ -52,5 +52,5 @@ return [
     'workshop' => 'Workshop',
     'year_of_enrollment' => 'Year of enrollment',
     'year_of_the_leaving_exam' => 'Year of the leaving exam',
-    'zip_code' => 'Zip code',
+    'zip_code' => 'Zip code'
 ];

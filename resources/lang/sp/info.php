@@ -21,5 +21,5 @@ return [
     'workshop_must_be_filled' => 'El hueco de Taller tiene que ser rellenado.',
     'year_of_acceptance' => 'Año de inscripción',
     'year_of_graduation' => 'Año de examen de bachillerato',
-    'zip_code' => 'Código postal',
+    'zip_code' => 'Código postal'
 ];

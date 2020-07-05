@@ -10,6 +10,7 @@ return [
     'alpha_num' => '\':attribute\' può contenere solamente lettere e numeri.',
     'array' => '\':attribute\' deve essere un array.',
     'attributes' => [
+
     ],
     'before' => '\':attribute\' deve essere una data antecedente a :date.',
     'before_or_equal' => '\':attribute\' deve essere una data antecedente o uguale a :date.',
@@ -17,14 +18,14 @@ return [
         'numeric' => '\':attribute\' deve essere compreso tra :min e :max.',
         'file' => '\':attribute\' deve essere compreso tra :min e :max kilobytes.',
         'string' => '\':attribute\' deve essere compreso tra :min and :max caratteri.',
-        'array' => '\':attribute\' deve essere compreso tra :min and :max elementi.',
+        'array' => '\':attribute\' deve essere compreso tra :min and :max elementi.'
     ],
     'boolean' => '\':attribute\' deve essere vero o falso.',
     'confirmed' => '\':attribute\' non corrisponde.',
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+            'rule-name' => 'custom-message'
+        ]
     ],
     'date' => '\':attribute\' non è una data valida.',
     'date_equals' => '\':attribute\' deve essere uguale a :date.',
@@ -42,13 +43,13 @@ return [
         'numeric' => '\':attribute\' deve essere maggiore di :value.',
         'file' => '\':attribute\' deve essere più grande di :value kilobytes.',
         'string' => '\':attribute\' deve contenere più di :value caratteri.',
-        'array' => '\':attribute\' deve contenere più di :value elementi.',
+        'array' => '\':attribute\' deve contenere più di :value elementi.'
     ],
     'gte' => [
         'numeric' => '\':attribute\' deve essere maggiore o uguale di :value.',
         'file' => '\':attribute\' deve essere maggiore o uguale a :value kilobytes.',
         'string' => '\':attribute\' deve contenere almeno :value caratteri.',
-        'array' => '\':attribute\' deve contenere almeno :value elementi.',
+        'array' => '\':attribute\' deve contenere almeno :value elementi.'
     ],
     'image' => '\':attribute\' deve essere un\'immagine.',
     'in' => '\':attribute\' selezionato non è valido.',
@@ -62,19 +63,19 @@ return [
         'numeric' => '\':attribute\' deve essere inferiore a :value.',
         'file' => '\':attribute\' deve essere più piccolo di :value kilobytes.',
         'string' => '\':attribute\' deve contenere meno di :value caratteri.',
-        'array' => '\':attribute\' deve contenere meno di :value elementi.',
+        'array' => '\':attribute\' deve contenere meno di :value elementi.'
     ],
     'lte' => [
         'numeric' => '\':attribute\' deve essere inferiore o uguale a :value.',
         'file' => '\':attribute\' deve essere minore o uguale a :value kilobytes.',
         'string' => '\':attribute\' deve contenere non più di :value caratteri.',
-        'array' => '\':attribute\' deve contenere non più di :value elementi.',
+        'array' => '\':attribute\' deve contenere non più di :value elementi.'
     ],
     'max' => [
         'numeric' => '\':attribute\' non può essere superiore a :max.',
         'file' => '\':attribute\' non può essere più grande di :max kilobytes.',
         'string' => '\':attribute\' non può essere più lungo di :max caratteri.',
-        'array' => '\':attribute\' non può contenere più di :max elementi.',
+        'array' => '\':attribute\' non può contenere più di :max elementi.'
     ],
     'mimes' => '\':attribute\' deve contenere un file di tipo: :values.',
     'mimetypes' => '\':attribute\' deve contenere un file di tipo: :values.',
@@ -82,7 +83,7 @@ return [
         'numeric' => '\':attribute\' deve essere almeno :min.',
         'file' => '\':attribute\' deve essere almeno :min kilobyte.',
         'string' => '\':attribute\' deve avere almeno :min caratteri.',
-        'array' => '\':attribute\' deve avere almeno :min elementi.',
+        'array' => '\':attribute\' deve avere almeno :min elementi.'
     ],
     'not_in' => '\':attribute\' selezionato non è valido.',
     'not_regex' => 'Il formato di \':attribute\' non è valido.',
@@ -101,7 +102,7 @@ return [
         'numeric' => '\':attribute\' deve essere :size.',
         'file' => '\':attribute\' deve essere :size kilobytes.',
         'string' => '\':attribute\' deve essere di :size caratteri.',
-        'array' => '\':attribute\' deve contenere :size elementi.',
+        'array' => '\':attribute\' deve contenere :size elementi.'
     ],
     'starts_with' => '\':attribute\' deve cominciare con uno dei seguenti valori: :values',
     'string' => '\':attribute\' deve essere una stringa.',
@@ -109,5 +110,5 @@ return [
     'unique' => '\':attribute\' è già in uso.',
     'uploaded' => 'L\'upload di \':attribute\' è fallito',
     'url' => 'Il formato di \':attribute\' non è valido.',
-    'uuid' => '\':attribute\' deve essere un UUID valido.',
+    'uuid' => '\':attribute\' deve essere un UUID valido.'
 ];

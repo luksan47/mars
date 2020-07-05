@@ -7,5 +7,5 @@ return [
     'logout' => 'Exire',
     'note' => 'Nota',
     'register' => 'Registratio',
-    'you_are_logged_in' => 'Secunde inivisti.',
+    'you_are_logged_in' => 'Secunde inivisti.'
 ];

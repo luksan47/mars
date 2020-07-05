@@ -38,5 +38,5 @@ return [
     'wifi_password_null' => 'En el momento no tienes ninguna contraseña WiFi. Puedes generar una abajo.',
     'wifi_password_reset_warning' => '¡Tienes que iniciar sesión de nuevo si has solicitado un cambio de contraseña!',
     'wifi_user' => 'Nombre de usuario WiFi',
-    'your_registered_devices' => 'Tus dispositivos registrados',
+    'your_registered_devices' => 'Tus dispositivos registrados'
 ];

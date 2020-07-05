@@ -6,5 +6,5 @@ return [
     'handle_registrations' => 'Handle registrations',
     'registrations' => 'Registrations',
     'reject' => 'Reject',
-    'show' => 'Show',
+    'show' => 'Show'
 ];

@@ -10,6 +10,7 @@ return [
     'alpha_num' => ':attribute potest solis ex literis et numeris constare.',
     'array' => ':attribute necesse est una multitudo esse.',
     'attributes' => [
+
     ],
     'before' => ':attribute necesse est unum datum esse ante :date.',
     'before_or_equal' => ':attribute necesse est unum datum ante :date aut hoc aequum esse.',
@@ -17,14 +18,14 @@ return [
         'numeric' => 'inter :min et :max necesse est hoc esse: :attribute.',
         'file' => 'inter :min kB et :max kB necesse est hoc esse: :attribute.',
         'string' => 'Minimo :min et maximo :max ex characteribus potest hoc constare: :attribute.',
-        'array' => 'Minimo :min et maximo :max ex rebus potest hoc constare: :attribute.',
+        'array' => 'Minimo :min et maximo :max ex rebus potest hoc constare: :attribute.'
     ],
     'boolean' => 'Ager :attribute potest solum verum aut falsum esse.',
     'confirmed' => ':attribute confirmatio impar est.',
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+            'rule-name' => 'custom-message'
+        ]
     ],
     'date' => ':attribute non est datum idoneum.',
     'date_equals' => ':attribute necesse est datum hoc aequum esse: :date.',
@@ -43,13 +44,13 @@ return [
         'numeric' => 'Necesse est :attribute maius esse, quam :value.',
         'file' => 'Necesse est :attribute filum maius esse, quam :value kB.',
         'string' => 'Necesse est :attribute textum plures characteres habere, quam :value.',
-        'array' => 'Necesse est :attribute multitudo ex pluribus rebus constare, quam :value.',
+        'array' => 'Necesse est :attribute multitudo ex pluribus rebus constare, quam :value.'
     ],
     'gte' => [
         'numeric' => 'Huius :attribute pretium potest minimo :value habere.',
         'file' => 'Necesse est :attribute minimo :value kB esse.',
         'string' => ':attribute potest minimo ex :value characteribus constare.',
-        'array' => ':attribute potest minimo :value ex rebus constare.',
+        'array' => ':attribute potest minimo :value ex rebus constare.'
     ],
     'image' => 'Necesse est imaginem esse: :attribute.',
     'in' => 'Lectum :attribute non est ideoneum.',
@@ -63,19 +64,19 @@ return [
         'numeric' => 'Huius :attribute pretium necesse est minus esse, quam :value.',
         'file' => 'Necesse est :attribute filum minus esse, quam :value kB.',
         'string' => 'Necesse est :attribute textum pauciores characteres habere, quam :value.',
-        'array' => 'Necesse est :attribute multitudinem pauciores res habere, quam :value.',
+        'array' => 'Necesse est :attribute multitudinem pauciores res habere, quam :value.'
     ],
     'lte' => [
         'numeric' => 'Huius :attribute pretium potest maximo :value habere.',
         'file' => 'Necesse est :attribute maximo :value kB esse.',
         'string' => ':attribute potest maximo ex :value characteribus constare.',
-        'array' => ':attribute potest maximo :value ex rebus constare.',
+        'array' => ':attribute potest maximo :value ex rebus constare.'
     ],
     'max' => [
         'numeric' => 'Huius :attribute pretium potest maximo :value habere.',
         'file' => 'Necesse est :attribute maximo :value kB esse.',
         'string' => ':attribute potest maximo ex :value characteribus constare.',
-        'array' => ':attribute potest maximo :value ex rebus constare.',
+        'array' => ':attribute potest maximo :value ex rebus constare.'
     ],
     'mimes' => ':attribute filum necesse est hac facie esse: :values.',
     'mimetypes' => ':attribute filum necesse est hac facie esse: :values.',
@@ -83,7 +84,7 @@ return [
         'numeric' => 'Huius :attribute pretium potest minimo :value habere.',
         'file' => 'Necesse est :attribute minimo :value kB esse.',
         'string' => ':attribute potest minimo ex :value characteribus constare.',
-        'array' => ':attribute potest minimo :value ex rebus constare.',
+        'array' => ':attribute potest minimo :value ex rebus constare.'
     ],
     'not_in' => 'Lectum :attribute non est idoneum.',
     'not_regex' => 'Huius :attribute facies non est ideonea.',
@@ -102,7 +103,7 @@ return [
         'numeric' => 'Huius :attribute pretium non :size est!',
         'file' => ':attribute imago non :size kB est!.',
         'string' => ':attribute textum non est :size characteribus longum!.',
-        'array' => 'Necesse est :attribute multitudinem :size ex rebus constare!.',
+        'array' => 'Necesse est :attribute multitudinem :size ex rebus constare!.'
     ],
     'starts_with' => 'Necesse est :attribute duci uno ex his: :values',
     'string' => 'Necesse est :attribute textum esse.',
@@ -110,5 +111,5 @@ return [
     'unique' => ':attribute iam occupatum est.',
     'uploaded' => ':attribute implere incassum est.',
     'url' => 'Facies huius :attribute non idonea est.',
-    'uuid' => ':attribute non est UUID idoneum!',
+    'uuid' => ':attribute non est UUID idoneum!'
 ];

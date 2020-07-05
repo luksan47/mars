@@ -21,5 +21,5 @@ return [
     'workshop_must_be_filled' => 'Workshop deve essere riempito.',
     'year_of_acceptance' => 'Anno della ammissione',
     'year_of_graduation' => 'Anno del diploma',
-    'zip_code' => 'Codice postale',
+    'zip_code' => 'Codice postale'
 ];

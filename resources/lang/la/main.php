@@ -6,5 +6,5 @@ return [
     'essential' => 'Necessarius',
     'faster' => 'Citius',
     'modern' => 'Neotericus',
-    'open' => 'Open source',
+    'open' => 'Open source'
 ];

@@ -5,5 +5,5 @@ return [
     'admin' => 'Amministratore',
     'handle_registrations' => 'Gestisci registrazioni',
     'reject' => 'Rifiuta',
-    'show' => 'Mostra',
+    'show' => 'Mostra'
 ];

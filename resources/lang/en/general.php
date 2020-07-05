@@ -22,5 +22,5 @@ return [
     'successful_transaction' => 'Successful transaction!',
     'successfully_added' => 'Successfully added!',
     'user_data' => 'User data',
-    'you_are_logged_in' => 'You are logged in.',
+    'you_are_logged_in' => 'You are logged in.'
 ];

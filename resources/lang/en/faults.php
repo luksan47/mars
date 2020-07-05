@@ -18,5 +18,5 @@ return [
     'status' => 'Status',
     'submit' => 'Submit',
     'unseen' => 'Unseen',
-    'wont_fix' => 'Won\'t fix',
+    'wont_fix' => 'Won\'t fix'
 ];

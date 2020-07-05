@@ -8,5 +8,5 @@ return [
     'name' => 'Nombre',
     'password' => 'Contraseña',
     'remember' => 'Recuérdame',
-    'tenant_to_collegist' => 'Esta página es para los huéspedes del Collegium. Si eres miembro del Collegium (sin importar si eres residente o  no) ¡haz clic aquí!',
+    'tenant_to_collegist' => 'Esta página es para los huéspedes del Collegium. Si eres miembro del Collegium (sin importar si eres residente o  no) ¡haz clic aquí!'
 ];

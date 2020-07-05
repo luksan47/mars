@@ -6,5 +6,5 @@ return [
     'privacy_policy' => 'adatkezelési irányelveket',
     'successful_registration' => 'Sikeres regisztráció',
     'throttle' => 'Túl sok próbálkozás. Próbáld újra :seconds másodperc múlva.',
-    'wait_for_verification' => 'Kérlek légy türelemmel amíg egy adminisztrátor elfogadja a regisztrációdat.',
+    'wait_for_verification' => 'Kérlek légy türelemmel amíg egy adminisztrátor elfogadja a regisztrációdat.'
 ];
