@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class CamelController extends Controller
 {
     public function index()
     {
-        return view('camel_breeder.app');
+        if(Auth::user()->hasRole('camel-breeder')){
+            return view('camel_breeder.app');
+        } else {
+            abort(418);
+        }
     }
 
     public function password(Request $request)
