@@ -11,11 +11,7 @@ class CamelController extends Controller
 {
     public function index()
     {
-        if(Auth::user()->hasRole('camel-breeder')){
-            return view('camel_breeder.app');
-        } else {
-            abort(418);
-        }
+        return view('camel_breeder.app');
     }
 
     public function password(Request $request)
