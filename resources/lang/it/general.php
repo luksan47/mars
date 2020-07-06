@@ -1,7 +1,6 @@
 <?php
 
 return [
-    0 => 'choose_from_menu',
     'home' => 'Barra',
     'login' => 'Accesso',
     'logout' => 'Uscita',

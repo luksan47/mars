@@ -12,18 +12,22 @@
                     <div class="col xl2">
                         <select id="locale-select" class="dropdown-content">
                             @foreach (config('app.locales') as $code => $name)
-                                <option value="{{ $code }}">{{ $name }}</option>
+                                @if($code != 'hu')
+                                    <option value="{{ $code }}">{{ $name }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
-                    <button class="btn waves-effect right" type="submit">@lang('locale.send')</button>
+                    <!-- TODO: make it do something -->
+                    <!-- <button class="btn waves-effect right" type="submit">@lang('locale.send')</button> -->
                 </div>
             </div>
         </div>
         <div id="contents">
             @foreach($locale as $language => $locales)
+                @if($language != 'hu')
                 <div id="{{ $language }}-block" @if($language != 'en') hidden @endif>
-                    @foreach($locales as $category => $translations)
+                    @foreach($locale['hu'] as $category => $translations)
                         <div class="card">
                             <div class="card-content">
                                 <span class="card-title">@lang('locale.category'): {{ $category }}</span>
@@ -31,10 +35,13 @@
                                     @if(!is_array($value))
                                     <div class="row">
                                         <div class="col s5 m3">
-                                            <p>{{ $key }}</p>
+                                            <p>{{ $value }}</p>
                                         </div>
                                         <div class="col s7 m9">
-                                            <input id="balance" name="balance" type="text" value="{{ $value }}">
+                                            <input id="translation-{{ $language }}-{{ $key }}" name="translation-{{ $language }}-{{ $key }}" type="text"
+                                                @if(array_key_exists($category, $locales) && array_key_exists($key, $locales[$category]))
+                                                    value="{{ $locales[$category][$key] }}"
+                                                @endif >
                                         </div>
                                     </div>
                                     @endif
@@ -43,6 +50,7 @@
                         </div>
                     @endforeach
                 </div>
+                @endif
             @endforeach
         </div>
     </div>

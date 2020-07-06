@@ -1,7 +1,6 @@
 <?php
 
 return [
-    0 => 'choose_from_menu',
     'home' => 'Tablero de mandos',
     'login' => 'Iniciar sesión',
     'logout' => 'Cerrar sesión',
