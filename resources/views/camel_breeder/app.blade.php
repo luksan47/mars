@@ -12,17 +12,17 @@
     <title>Tevenevelde</title>
 
     <!-- Styles -->
-    <!-- materialize css generated from resources/sass/materialize.scss-->
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}" media="screen,projection" />
-    <link rel="stylesheet" href="{{ asset('css/tabulator_materialize.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen,projection" >
+    <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
 
     <!-- Scripts -->
-    <script src="{{ asset('js/tabulator.min.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/tabulator.min.js') }}" defer></script>
+    <script type="text/javascript" src="{{ mix('js/materialize.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/camelbreeder.js') }}"></script>
+{{-- 
     <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
-
+ --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -218,7 +218,7 @@
                             </div>
                             <div class="input-field col s4">
                                 <input type="number" id="camels" name="camels" required tabindex="5">
-                                <label for="herd">Tevék</label>
+                                <label for="camels">Tevék</label>
                             </div>
                             <div class="input-field col s2">
                                 <button class="btn waves-effect" type="submit" tabindex="6" style="width:100%">Tevék hozzáadása</button>
