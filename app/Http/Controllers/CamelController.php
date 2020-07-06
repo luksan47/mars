@@ -44,7 +44,8 @@ class CamelController extends Controller
     {
         $data = DB::table('shepherding')
             ->join('shepherds', 'shepherds.id', '=', 'shepherding.shepherd')
-            ->select('shepherds.name as name', 'shepherd as id', 'herd', 'created_at')
+            ->join('herds', 'herds.name', '=', 'shepherding.herd')
+            ->select('shepherds.name as name', 'shepherd as id', 'herd', 'herds.camel_count as camels', 'created_at')
             ->get();
 
         return response()->json($data);

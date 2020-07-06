@@ -90,19 +90,26 @@
                     field: "name",
                     sorter: "string",
                     headerFilter: 'input',
-                    bottomCalc:"count"
+                    bottomCalc: "count"
                 },
                 {
                     title: "Pásztor azonosító",
                     field: "id",
                     sorter: "number",
-                    headerFilter: 'number',
+                    headerFilter: "number",
                 },
                 {
                     title: "Csorda",
                     field: "herd",
                     sorter: "string",
                     headerFilter:"input"
+                },
+                {
+                    title: "Tevék",
+                    field: "camels",
+                    sorter: "number",
+                    headerFilter: "number",
+                    bottomCalc: "sum"
                 },
                 {
                     title: "Dátum",
