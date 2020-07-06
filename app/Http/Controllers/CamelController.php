@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CamelController extends Controller
 {
@@ -53,7 +54,8 @@ class CamelController extends Controller
     {
         $validatedData = $request->validate([
             'id' => 'required|numeric|exists:shepherds',
-            'herds' => 'required',
+            'herds' => 'required|array|min:1',
+            'herds.*' => 'string|exists:herds,name'
         ]);
 
         $all_camels = 0;

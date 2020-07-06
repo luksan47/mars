@@ -30,6 +30,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script>
+    var config = {
+        routes: {
+            shepherding: "{{ route('camel_breeder.shepherding') }}"
+        }
+    };
     $(document).ready(function(){
         $('.modal').modal();
         $('.collapsible').collapsible({
@@ -166,7 +171,8 @@
                 </div>
                 @endif
                 <div class="row"> 
-                    <form method="POST" onsubmit="submit_shepherding(event)" id="shepherding_form" action="{{ route('camel_breeder.shepherding') }}">
+                    <form id="shepherding_form" {{-- action="{{ route('camel_breeder.shepherding') }}" --}}>
+                        <input type="hidden" name="herds">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
@@ -178,20 +184,9 @@
                                 <blockquote id="shepherd_text"><i>Válassz egy pásztort!</i></blockquote>
                             </div>
                             <div class="input-field col s4">
-                                <input type="text" id="herd" class="herd_autocomplete" tabindex="2" onkeyup="herd_enter(event)"> 
-                                <script>
-                                function herd_enter(event){
-                                    if(event.keyCode == 13){
-                                        if(document.getElementById("herd").value==""){
-                                            document.getElementById("shepherding_form").submit();
-                                        }else{
-                                            addHerd(document.getElementById('herd').value);
-                                        }
-                                    }
-                                }
-                                </script>
+                                <input type="text" id="herd" class="herd_autocomplete" tabindex="2"> 
                                 <label for="herd">Tevecsorda</label>
-                                <div id="herd_checkboxes"></div>
+                                <div id="herd_list"></div>
                                 <blockquote id="herd_text"><i>Válassz egy csordát!</i></blockquote>
                             </div>
                             <div class="input-field col s2">
@@ -199,14 +194,6 @@
                             </div>
                         </div>
                     </form>
-                    <script>
-                        function submit_shepherding(e) {
-                            if(document.getElementById('shepherd') === document.activeElement || document.getElementById("herd").value!=""){
-                                e.preventDefault();
-                                return false;
-                            }
-                        }
-                    </script>
                     <form method="POST" action="{{ route('camel_breeder.add_camels') }}">
                         @csrf
                         <div class="row">
