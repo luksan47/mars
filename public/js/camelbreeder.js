@@ -1,212 +1,418 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/js/camelbreeder.js":
+/*!**************************************!*\
+  !*** ./resources/js/camelbreeder.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
 var herds_selected = {};
-function shepherdInfo(val, elementId) { //show info abut selected shepherd
-    input = document.getElementById(elementId);
-    info = document.getElementById(elementId+'_text'); 
-    input.classList.remove("invalid");
-    if(val==""){ //default value is 0 - visitor
-        id=0;
-        input.value=id;
+$(document).ready(function () {
+  $('.modal').modal();
+  $('.collapsible').collapsible({
+    onOpenEnd: function onOpenEnd() {
+      document.getElementById("farmer_password").focus();
     }
-    else if(!isNaN(val)){ //id entered
-        id=val;
+  }); //request herds
+
+  $.ajax({
+    url: config.routes.send_herds,
+    type: "get",
+    success: function success(response, textStatus, xhr) {
+      herds = {};
+      herd_autocomplete = {}; //restructure data
+
+      response.forEach(function (element) {
+        herds[element.name] = element.camel_count;
+        herd_autocomplete[element.name] = null;
+      }); //initialize autocompletes
+
+      $('input.herd_autocomplete').autocomplete({
+        data: herd_autocomplete
+      });
     }
-    else { //name entered
-        id=shepherd_n_id[val];
-        input.value=id;
+  }); //request shepherds
+
+  $.ajax({
+    url: config.routes.send_shepherds,
+    type: "get",
+    success: function success(response, textStatus, xhr) {
+      shepherd_n_id = {};
+      id_n_shepherd = {};
+      shepherd_autocomplete = {}; //restructure data
+
+      response.forEach(function (element) {
+        shepherd_n_id[element.name] = element.id;
+        id_n_shepherd[element.id] = {
+          name: element.name,
+          camels: element.camels,
+          min_camels: element.min_camels
+        };
+        shepherd_autocomplete[element.name] = null;
+        shepherd_autocomplete[element.id] = null;
+      }); //initialize autocompletes
+
+      $('input.shepherd_autocomplete').autocomplete({
+        data: shepherd_autocomplete
+      });
+      $('input.shepherd2_autocomplete').autocomplete({
+        data: shepherd_autocomplete
+      });
     }
-    if (!(id in id_n_shepherd)){ //invalid id
-        input.classList.add("invalid");
-        info.innerHTML = "Nincs ilyen pásztor!";
-        input.value=':(';
-    }
-    else{
-        if (id == 0) {
-            text = "<i>Vendég kiválasztva...</i>"
-        } else {
-            text = "<i>" + id_n_shepherd[id].name + "</i> tevéinek száma: " + id_n_shepherd[id].camels;
+  });
+  row_count = 0;
+  $("#herd").keyup(function () {
+    //add or remove herds in list by pressing arrows while in herd autocomplete
+    herds_length = Object.keys(herds_selected).length;
+
+    if (herds_length > 0) {
+      if (row_count > herds_length - 1) {
+        //overflow
+        row_count = herds_length - 1;
+      }
+
+      name = Object.keys(herds_selected)[row_count];
+
+      if (event.key === "ArrowLeft") {
+        removeHerd(name);
+      }
+
+      if (event.key === "ArrowRight") {
+        addHerd(name);
+      }
+
+      if (event.key === "ArrowDown") {
+        if (row_count < herds_length - 1) {
+          //overflow
+          row_count++;
         }
-        info.innerHTML = text;
+      }
+
+      if (event.key === "ArrowUp") {
+        if (row_count > 0) {
+          //underflow
+          row_count--;
+        }
+      }
+    } //add herd or submit form
+
+
+    if (event.keyCode == 13) {
+      //enter
+      herd = document.getElementById("herd").value;
+
+      if (herd == "") {
+        submit_shepherding();
+      } else {
+        if (!(herd in herds_selected) && herds_length > 0) {
+          row_count = Object.keys(herds_selected).length;
+        }
+
+        addHerd(herd);
+      }
     }
+  });
+  $('#shepherding_form').submit(function (e) {
+    e.preventDefault();
+
+    if (document.getElementById('shepherd') === document.activeElement || document.getElementById("herd").value != "") {
+      return false;
+    }
+
+    submit_shepherding();
+  });
+  $('#shepherd').focusout(function () {
+    shepherdInfo(this.value, 'shepherd');
+  });
+  $('#shepherd').change(function () {
+    shepherdInfo(this.value, 'shepherd');
+  });
+  $('#shepherd2').change(function () {
+    shepherdInfo(this.value, 'shepherd2');
+  });
+  $('#shepherd_name').on("input", function () {
+    isInvalidName(this.value);
+  });
+  $('#shepherd_id').on("input", function () {
+    isInvalidId(this.value);
+  });
+  $('#advanced_button').click(function () {
+    settings = document.getElementById('advanced_settings');
+    button = document.getElementById('advanced_button');
+    settings.style.display = 'block';
+    settings.classList.add("scale-in");
+    button.classList.add('scale-out');
+  });
+});
+$(document).ajaxError(function () {
+  alert("Hiba történt!");
+}); //preloader
+
+$(document).ajaxStart(function () {
+  M.toast({
+    html: config.preloader,
+    classes: "loader white z-depth-0"
+  });
+  toastElement = document.querySelector('.loader');
+  window.ajaxLoadingToast = M.Toast.getInstance(toastElement);
+}); //dismiss preloader
+
+$(document).ajaxComplete(function () {
+  ajaxLoadingToast.dismiss();
+});
+
+function shepherdInfo(val, elementId) {
+  //show info abut selected shepherd
+  input = document.getElementById(elementId);
+  info = document.getElementById(elementId + '_text');
+  input.classList.remove("invalid");
+
+  if (val == "") {
+    //default value is 0 - visitor
+    id = 0;
+    input.value = id;
+  } else if (!isNaN(val)) {
+    //id entered
+    id = val;
+  } else {
+    //name entered
+    id = shepherd_n_id[val];
+    input.value = id;
+  }
+
+  if (!(id in id_n_shepherd) || id == 0 && elementId == "shepherd2") {
+    //invalid id
+    input.classList.add("invalid");
+    info.innerHTML = "Nincs ilyen pásztor!";
+    input.value = ':(';
+  } else {
+    if (id == 0) {
+      text = "<i>Vendég kiválasztva...</i>";
+    } else {
+      text = "<i>" + id_n_shepherd[id].name + "</i> tevéinek száma: " + id_n_shepherd[id].camels;
+    }
+
+    info.innerHTML = text;
+  }
 }
 
 function addHerd(name) {
-    info = document.getElementById('herd_text');
-    input = document.getElementById('herd');
-    output = document.getElementById('herd_list');
-    input.classList.remove("invalid");
-    if (!(name in herds)){
-        input.classList.add("invalid");
-        info.innerHTML = "Nincs ilyen csorda!";
-    }else{
-        if(name in herds_selected){
-            herds_selected[name]["quantity"] ++;
-            herds_selected[name]["amount"] += herds[name];
-        }else{
-            herds_selected[name] = {};
-            herds_selected[name]["quantity"] = 1;
-            herds_selected[name]["amount"] = herds[name];
-        }
-        input.value = "";
-        updateHerdsInfo();
+  info = document.getElementById('herd_text');
+  input = document.getElementById('herd');
+  output = document.getElementById('herd_list');
+  input.classList.remove("invalid");
+
+  if (!(name in herds)) {
+    input.classList.add("invalid");
+    info.innerHTML = "Nincs ilyen csorda!";
+  } else {
+    if (name in herds_selected) {
+      herds_selected[name]["quantity"]++;
+      herds_selected[name]["amount"] += herds[name];
+    } else {
+      herds_selected[name] = {};
+      herds_selected[name]["quantity"] = 1;
+      herds_selected[name]["amount"] = herds[name];
     }
+
+    input.value = "";
+    updateHerdsInfo();
+  }
 }
 
 function removeHerd(name) {
-    if(name in herds_selected){
-        herds_selected[name]["quantity"] --;
-        herds_selected[name]["amount"] -= herds[name];
-        if(herds_selected[name]["quantity"] == 0){
-            delete herds_selected[name];
-        }
+  if (name in herds_selected) {
+    herds_selected[name]["quantity"]--;
+    herds_selected[name]["amount"] -= herds[name];
+
+    if (herds_selected[name]["quantity"] == 0) {
+      delete herds_selected[name];
     }
-    updateHerdsInfo();
+  }
+
+  updateHerdsInfo();
 }
 
+function submit_shepherding() {
+  form = document.getElementById('shepherding_form');
+  var error = false;
 
-$(document).ready(function(){
-    row_count = 0;
-    $("#herd").keyup(function(){
-        //add or remove herds in list by pressing arrows while in herd autocomplete
-        herds_length = Object.keys(herds_selected).length;
-        if(herds_length>0){    
-            if(row_count>herds_length-1){ //overflow
-                row_count = herds_length-1;
-            }
-            name = Object.keys(herds_selected)[row_count];
-            if(event.key === "ArrowLeft"){
-                removeHerd(name);
-            }
-            if(event.key === "ArrowRight"){
-                addHerd(name);
-            }
-            if(event.key === "ArrowDown"){
-                if(row_count<herds_length-1){ //overflow
-                    row_count++;
-                }
-            }
-            if(event.key === "ArrowUp"){
-                if(row_count>0){ //underflow
-                    row_count--;
-                }
-            }
-        }
-        //add herd or submit form
-        if(event.keyCode == 13){ //enter
-            herd = document.getElementById("herd").value;
-            if(herd==""){
-                submit_shepherding();
-            }else{
-                if(!(herd in herds_selected) &&  herds_length>0){
-                    row_count = Object.keys(herds_selected).length;
-                }
-                addHerd(herd);
-            }
-        }
-    });
-    $('#shepherding_form').submit(function(e) {
-        e.preventDefault();
-        if(document.getElementById('shepherd') === document.activeElement || document.getElementById("herd").value!=""){
-            return false;
-        }
-        submit_shepherding();
-    });
-})
+  if (!(form.id.value in id_n_shepherd)) {
+    error = true;
+    error_message = "Nincs ilyen pásztor!";
+  }
 
-function submit_shepherding(){
-    form = document.getElementById('shepherding_form');
-    var error = false;
-    console.log(form.id.value, id_n_shepherd);
-    if(!(form.id.value in id_n_shepherd)){
-        error = true;
-        error_message="Nincs ilyen pásztor!";
-    }
-    if(Object.keys(herds_selected).length<1){
-        error = true;
-        error_message="Nincs kiválasztva csorda!";
-    }
-    if(error){
-        var toastHTML=`
-            <i class='material-icons' style='margin-right:5px'>error</i>`
-            + error_message +
-            `<button 
-                class='btn-flat toast-action' 
-                onclick="dismissToast()">
-                <i class='material-icons white-text'>clear</i>
-            </button>
-            `;
-        M.toast({
-            html: toastHTML,
-            displayLength: 10000,
-        });
-        return false;
-    }
-    url = config.routes.shepherding;
-    herds = [];
-    for(var name in herds_selected){
-        var i;
-        for(i = 0; i < herds_selected[name]["quantity"]; i++){
-            herds.push(name);
-        }
-    }
-    form.herds.value = herds;
-    form.submit();
-    return false;
-    data = {
-        '_token': form._token.value,
-        'id' : form.shepherd.value,
-        'herds' : herds
-    };
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        success: function(response){
-            M.toast({html: response, classes:"white black-text" });
-        },
-        error: function(xhr, textStatus, error){
-            alert(xhr.responseText);
-        }
-    });
+  if (Object.keys(herds_selected).length < 1) {
+    error = true;
+    error_message = "Nincs kiválasztva csorda!";
+  }
 
+  if (error) {
+    M.toast({
+      html: "<i class='material-icons' style='margin-right:5px'>error</i>" + error_message
+    });
+    return;
+  }
+
+  url = config.routes.shepherding;
+
+  for (var name in herds_selected) {
+    var i;
+
+    for (i = 0; i < herds_selected[name]["quantity"]; i++) {
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.value = name;
+      input.name = "herds[]";
+      form.appendChild(input);
+    }
+  }
+
+  form.submit();
 }
 
-function updateHerdsInfo(){
-    info = document.getElementById('herd_text');
-    list = document.getElementById('herd_list');
-    list_html = ""
-    total_amount = 0;
-    for(var name in herds_selected){
-        list_html += "<p style='position:relative' class='noselect'>" //paragraph
-            + "<a onclick='removeHerd(`"+name+"`)' id='remove_"+name+"' style='cursor:pointer'>" //add button
-                + "<i class='material-icons coli-text text-orange'>remove</i></a>"
-            + "<span style='position:absolute;bottom:20%;left:10%'>" //text with herds info
-                + herds_selected[name]["quantity"] +" " + name + " - " + herds_selected[name]["amount"] + "</span>" 
-            + "<a onclick='addHerd(`"+name+"`)' id='add_"+name+"' style='cursor:pointer'>" //remove button
-                + "<i class='material-icons coli-text text-orange right'>add</i></a></p>";
-        total_amount += herds_selected[name]["amount"];
-    }
-    list.innerHTML = list_html;
-    info.innerHTML = "Összesen " + total_amount + " tevéből állnak a csordák.";
+function updateHerdsInfo() {
+  info = document.getElementById('herd_text');
+  list = document.getElementById('herd_list');
+  list_html = "";
+  total_amount = 0;
+
+  for (var name in herds_selected) {
+    list_html += "<p style='position:relative' class='noselect'>" //paragraph
+    + "<a onclick='removeHerd(`" + name + "`)' id='remove_" + name + "' style='cursor:pointer'>" //add button
+    + "<i class='material-icons coli-text text-orange'>remove</i></a>" + "<span style='position:absolute;bottom:20%;left:10%'>" //text with herds info
+    + herds_selected[name]["quantity"] + " " + name + " - " + herds_selected[name]["amount"] + "</span>" + "<a onclick='addHerd(`" + name + "`)' id='add_" + name + "' style='cursor:pointer'>" //remove button
+    + "<i class='material-icons coli-text text-orange right'>add</i></a></p>";
+    total_amount += herds_selected[name]["amount"];
+  }
+
+  list.innerHTML = list_html;
+  info.innerHTML = "Összesen " + total_amount + " tevéből állnak a csordák.";
 }
 
 function isInvalidName(name) {
-    info = document.getElementById('name_text');
-    input = document.getElementById('shepherd_name');
-    input.classList.remove("invalid");
-    info.innerHTML = "";
-    if (Object.keys(shepherd_n_id).indexOf(name) >= 0){
-        input.classList.add("invalid");
-        info.innerHTML = "Ez a név már foglalt!";
-    }
+  info = document.getElementById('name_text');
+  input = document.getElementById('shepherd_name');
+  input.classList.remove("invalid");
+  info.innerHTML = "";
+
+  if (Object.keys(shepherd_n_id).indexOf(name) >= 0) {
+    input.classList.add("invalid");
+    info.innerHTML = "Ez a név már foglalt!";
+  }
 }
 
 function isInvalidId(id) {
-    info = document.getElementById('id_text');
-    input = document.getElementById('shepherd_id');
-    input.classList.remove("invalid");
-    info.innerHTML = "";
-    if (Object.keys(id_n_shepherd).indexOf(id) >= 0){
-        input.classList.add("invalid");
-        info.innerHTML = "Ez a szám már foglalt!";
-    }
+  info = document.getElementById('id_text');
+  input = document.getElementById('shepherd_id');
+  input.classList.remove("invalid");
+  info.innerHTML = "";
+
+  if (Object.keys(id_n_shepherd).indexOf(id) >= 0) {
+    input.classList.add("invalid");
+    info.innerHTML = "Ez a szám már foglalt!";
+  }
 }
+
+/***/ }),
+
+/***/ 4:
+/*!********************************************!*\
+  !*** multi ./resources/js/camelbreeder.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/vagrant/mars/resources/js/camelbreeder.js */"./resources/js/camelbreeder.js");
+
+
+/***/ })
+
+/******/ });

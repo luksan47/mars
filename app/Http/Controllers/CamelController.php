@@ -104,7 +104,7 @@ class CamelController extends Controller
     public function add_shepherd(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:shepherds',
+            'name' => 'required|alpha|unique:shepherds',
             'id' => 'required|numeric|min:0|unique:shepherds',
         ]);
         $def_min_camels = DB::table('farmer')->first()->def_min_camels;
@@ -153,7 +153,7 @@ class CamelController extends Controller
 
             return redirect()->back()->with('message', 'Sikeres módosítás!');
         } else {
-            return redirect()->back()->with('message', 'Vendég nem adhat hozzá tevéket!');
+            return redirect()->back()->with('error', 'Vendég nem adhat hozzá tevéket!');
         }
     }
 
@@ -188,13 +188,17 @@ class CamelController extends Controller
     public function change_password(Request $request)
     {
         $hashedPassword = DB::table('farmer')->first()->password;
+        $request->validate([
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|confirmed',
+        ]);
         if (Hash::check($request->input('old_password'), $hashedPassword)) {
             DB::table('farmer')
                 ->update(['password' => Hash::make($request->input('new_password'))]);
 
             return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit', '');
         } else {
-            return redirect()->back()->with('message', 'Rossz jelszó! :(');
+            return redirect()->back()->with('error', 'Rossz jelszó! :(');
         }
     }
 

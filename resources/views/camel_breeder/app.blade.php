@@ -19,10 +19,8 @@
     <script type="text/javascript" src="{{ mix('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ mix('js/tabulator.min.js') }}" defer></script>
     <script type="text/javascript" src="{{ mix('js/materialize.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/camelbreeder.js') }}"></script>
-{{-- 
-    <script type="text/javascript" src="{{ asset('js/moment.min.js') }}"></script>
- --}}
+    <script type="text/javascript" src="{{ mix('js/camelbreeder.js') }}" defer></script>
+    <script type="text/javascript" src="{{ mix('js/moment.min.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -32,79 +30,13 @@
     <script>
     var config = {
         routes: {
-            shepherding: "{{ route('camel_breeder.shepherding') }}"
-        }
+            shepherding: "{{ route('camel_breeder.shepherding') }}",
+            send_shepherds: "{{route('camel_breeder.send_shepherds')}}",
+            send_herds: "{{route('camel_breeder.send_herds')}}",
+        },
+        preloader: `@include('utils.preloader')`,
     };
-    $(document).ready(function(){
-        $('.modal').modal();
-        $('.collapsible').collapsible({
-            onOpenEnd:function(){
-                document.getElementById("farmer_password").focus();
-            }
-        });
-
-        //request herds
-        $.ajax({
-            url: "{{route('camel_breeder.send_herds')}}",
-            type: "get",
-            success: function(response, textStatus, xhr){
-                herds = {};
-                herd_autocomplete = {};
-                //restructure data
-                response.forEach(element => {
-                    herds[element.name] = element.camel_count;
-                    herd_autocomplete[element.name] = null;
-                });
-                //initialize autocompletes
-                $('input.herd_autocomplete').autocomplete({
-                    data: herd_autocomplete
-                });
-            },
-        })
-        //request shepherds
-        $.ajax({
-            url: "{{route('camel_breeder.send_shepherds')}}",
-            type: "get",
-            success: function(response, textStatus, xhr){
-                shepherd_n_id = {};
-                id_n_shepherd = {};
-                shepherd_autocomplete = {};
-                //restructure data
-                response.forEach(element => {
-                    shepherd_n_id[element.name] = element.id;
-                    id_n_shepherd[element.id] = {name: element.name, camels: element.camels, min_camels: element.min_camels};
-                    shepherd_autocomplete[element.name] = null;
-                    shepherd_autocomplete[element.id] = null;
-                });
-                //initialize autocompletes
-                $('input.shepherd_autocomplete').autocomplete({
-                    data: shepherd_autocomplete
-                });
-                $('input.shepherd2_autocomplete').autocomplete({
-                    data: shepherd_autocomplete
-                });
-            },
-        })
-        //notification
-        @if (session('message'))
-            M.toast({html: "{{ session('message') }}", classes:"white black-text" })
-        @endif
-    });
-    $(document).ajaxError(function(){
-        alert("An ajax error occurred!");
-    });
-    //preloader
-    $(document).ajaxStart(function() {
-        preloaderHTML = `@include('preloader')`
-        M.toast({html: preloaderHTML , classes:"loader white z-depth-0"})
-        toastElement = document.querySelector('.loader');
-        window.ajaxLoadingToast = M.Toast.getInstance(toastElement);
-    });
-    //dismiss preloader
-    $(document).ajaxComplete(function() {
-        ajaxLoadingToast.dismiss();
-    });
-    </script> 
+    </script>
 </head>
 
 <body id="body">
@@ -167,18 +99,16 @@
                         <p>{{ $error }}</p>
                         @endforeach
                     </blockquote>
-                    <script>M.toast({html: '@foreach ($errors->all() as $error){{ $error }} @endforeach', classes: 'white black-text'})</script>
+                    <script>M.toast({html:`<i class='material-icons' style='margin-right:5px'>error</i> @foreach ($errors->all() as $error){{ $error }} @endforeach`})</script>
                 </div>
                 @endif
                 <div class="row"> 
-                    <form id="shepherding_form" {{-- action="{{ route('camel_breeder.shepherding') }}" --}}>
+                    <form method="POST" id="shepherding_form" action="{{ route('camel_breeder.shepherding') }}">
                         <input type="hidden" name="herds">
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
                                 <input type="text" id="shepherd" name="id" class="shepherd_autocomplete" 
-                                    onchange="shepherdInfo(this.value, 'shepherd')"
-                                    onfocusout="shepherdInfo(this.value, 'shepherd')"
                                     autofocus tabindex="1" required placeholder="Vendég">
                                 <label for="shepherd">Pásztor</label>
                                 <blockquote id="shepherd_text"><i>Válassz egy pásztort!</i></blockquote>
@@ -198,13 +128,12 @@
                         @csrf
                         <div class="row">
                             <div class="input-field col s4 offset-s1">
-                                <input type="text" id="shepherd2" name="id" class="shepherd2_autocomplete" required
-                                    onchange="shepherdInfo(this.value, 'shepherd2')" tabindex="4"/>
+                                <input type="text" id="shepherd2" name="id" class="shepherd2_autocomplete" required tabindex="4"/>
                                 <label for="shepherd2">Pásztor</label>
                                 <blockquote id="shepherd2_text"><i>Válassz egy pásztort!</i></blockquote>
                             </div>
                             <div class="input-field col s4">
-                                <input type="number" id="camels" name="camels" required tabindex="5">
+                                <input type="number" id="camels" name="camels" required tabindex="5" min="0">
                                 <label for="camels">Tevék</label>
                             </div>
                             <div class="input-field col s2">
@@ -219,6 +148,7 @@
             @endif
         </div>
     </div>
+@include('utils.toast')
 </body>
 
 </html>
