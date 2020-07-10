@@ -1,32 +1,25 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Printing Page Language Lines
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    'available_money' => 'Pecunia quae adest',
-    'available_free_pages' => 'Praeterea :number_of_free_pages paginae gratis exteri possunt',
-    'printing_account' => 'Putatio exterendi',
-    'print_document' => 'Chartam exterere',
-    'select_document' => 'Chartam legere',
-    'number_of_copies' => 'Numerus speciminis',
-    'invalid_pdf' => 'Facies fili non idonea est impleta. Sola .pdf propagatio est adjuta.',
-    'success' => 'Extritus secundus',
-    'error_printing' => 'Extritus incassus',
-    'document' => 'Charta',
-    'modify' => 'Reformare',
-    'add_free_pages' => 'Addere gratis paginas',
-    'history' => 'Antecedentes',
     'add' => 'Addere',
-    'twosided' => 'Extere in utrasque paginas',
+    'add_free_pages' => 'Addere gratis paginas',
+    'available_free_pages' => 'Praeterea :number_of_free_pages paginae gratis exteri possunt',
+    'available_money' => 'Pecunia quae adest',
+    'document' => 'Charta',
+    'error_printing' => 'Extritus incassus',
+    'free' => 'Gratis paginae',
+    'history' => 'Antecedentes',
+    'invalid_pdf' => 'Facies fili non idonea est impleta. Sola .pdf propagatio est adjuta.',
+    'modify' => 'Reformare',
+    'no_balance' => 'Non idonei numeri est in putatione pecunia',
+    'no_free_pages_left' => 'Tantae gratis paginae non sunt',
+    'number_of_copies' => 'Numerus speciminis',
     'pdf_description' => 'Solum .pdf filum exteri potest.',
     'print' => 'Exterere',
-    'free' => 'Gratis paginae',
-    'no_free_pages_left' => 'Tantae gratis paginae non sunt',
+    'print_document' => 'Chartam exterere',
+    'printing_account' => 'Putatio exterendi',
+    'select_document' => 'Chartam legere',
+    'success' => 'Extritus secundus',
+    'twosided' => 'Extere in utrasque paginas',
     'user' => 'Utens',
-    'no_balance' => 'Non idonei numeri est in putatione pecunia',
 ];

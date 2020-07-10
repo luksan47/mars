@@ -1,11 +1,9 @@
 <?php
 
 return [
-
+    'accept' => 'Aceptar',
     'admin' => 'Admin',
     'handle_registrations' => 'Manejar reistraciones',
-    'accept' => 'Aceptar',
     'reject' => 'Rechazar',
     'show' => 'Mostrar',
-
 ];
