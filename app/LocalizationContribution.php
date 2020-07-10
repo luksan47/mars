@@ -9,7 +9,7 @@ class LocalizationContribution extends Model
     protected $table = 'localization_contributions';
 
     protected $fillable = [
-        'key', 'value', 'contributor_id'
+        'key', 'value', 'contributor_id',
     ];
 
     /**
@@ -26,7 +26,8 @@ class LocalizationContribution extends Model
         return $this->belongsTo('App\User', 'contributor_id');
     }
 
-    public function approve(){
+    public function approve()
+    {
         //TODO
         //Artisan::call('...')
 
