@@ -56,4 +56,14 @@
     </script>
     <li><a href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
             <i class="material-icons left">sentiment_dissatisfied</i>@lang('general.report_bug')</a></li>
+    @if(Auth::user())
+    <li>
+        <a href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="material-icons left">login</i>@lang('general.logout')
+        </a>
+    </li>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+    @endif
 </ul>
