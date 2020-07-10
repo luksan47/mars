@@ -54,6 +54,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
     Route::get('localizations', 'LocalizationController@index')->name('localizations');
+    Route::post('localizations/add', 'LocalizationController@add')->name('localizations.add');
 
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
