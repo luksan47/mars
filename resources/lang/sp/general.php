@@ -1,15 +1,12 @@
 <?php
 
 return [
-
-    'note' => 'Nota',
-    'logout' => 'Cerrar sesión',
-    'login'=> 'Iniciar sesión',
-    'register' => 'Registración',
-    'you_are_logged_in' => 'Sesión iniciada con éxito.',
     'home' => 'Tablero de mandos',
-    'register_guest' => 'Para visitantes',
+    'login' => 'Iniciar sesión',
+    'logout' => 'Cerrar sesión',
+    'note' => 'Nota',
+    'register' => 'Registración',
     'register_collegist' => 'Para miembros del Collegium',
-    'choose_from_menu',
-
+    'register_guest' => 'Para visitantes',
+    'you_are_logged_in' => 'Sesión iniciada con éxito.',
 ];

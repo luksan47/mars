@@ -1,15 +1,12 @@
 <?php
 
 return [
-
-    'note' => 'Nota',
-    'logout' => 'Uscita',
-    'login'=> 'Accesso',
-    'register' => 'Creare un account',
-    'you_are_logged_in' => 'Sei riuscito/a a fare il login.',
     'home' => 'Barra',
-    'register_guest' => 'Per ospiti',
+    'login' => 'Accesso',
+    'logout' => 'Uscita',
+    'note' => 'Nota',
+    'register' => 'Creare un account',
     'register_collegist' => 'Per i membri del Collegio',
-    'choose_from_menu',
-
+    'register_guest' => 'Per ospiti',
+    'you_are_logged_in' => 'Sei riuscito/a a fare il login.',
 ];

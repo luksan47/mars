@@ -1,16 +1,6 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
-    */
     'accepted' => 'El kell fogadni a következőt: :attribute.',
     'active_url' => 'A(z) :attribute nem egy érvényes URL.',
     'after' => 'Egy :date utáni dátumnak kell lennie ennek: :attribute.',
@@ -19,6 +9,7 @@ return [
     'alpha_dash' => 'A(z) :attribute csak betűkből, számokból, gondolatjelből és aláhúzásból állhat.',
     'alpha_num' => 'A(z) :attribute csak betűkből és számokból állhat.',
     'array' => 'Egy tömbnek kell lennie ennek: :attribute.',
+    'attributes' => [],
     'before' => 'Egy :date előtti dátumnak kell lennie ennek: :attribute.',
     'before_or_equal' => 'Egy :date előtti vagy avval megegyező dátumnak kell lennie ennek: :attribute.',
     'between' => [
@@ -29,6 +20,11 @@ return [
     ],
     'boolean' => 'A(z) :attribute mező csak igaz vagy hamis lehet.',
     'confirmed' => 'A(z) :attribute megerősítés nem egyezik meg.',
+    'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ],
+    ],
     'date' => 'A(z) :attribute nem egy érvényes dátum.',
     'date_equals' => 'A(z) :attribute egy evvel megegyező dátumnak kell lennie: :date.',
     'date_format' => 'A(z) :attribute nem egyezik meg evvel a formátummal: :format.',
@@ -91,8 +87,8 @@ return [
     'not_in' => 'A kiválasztott :attribute érvénytelen.',
     'not_regex' => 'A(z) :attribute formátuma érvénytelen.',
     'numeric' => 'Egy számnak kell lennie: :attribute.',
-    'present' => 'A(z) :attribute mezőnek jelen kell lennie.',
     'password' => 'Rossz jelszó.',
+    'present' => 'A(z) :attribute mezőnek jelen kell lennie.',
     'regex' => 'A(z) :attribute formátuma érvénytelen.',
     'required' => 'A(z) :attribute mező kitöltése kötelező.',
     'required_if' => 'A(z) :attribute mező kitöltése kötelező, ha :other :value.',
@@ -115,30 +111,4 @@ return [
     'uploaded' => 'A(z) :attribute feltöltése sikertelen volt.',
     'url' => 'A(z) :attribute formátuma érvénytelen.',
     'uuid' => 'A(z) :attribute nem egy érvényes UUID!',
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-    ],
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap our attribute placeholder
-    | with something more reader friendly such as "E-Mail Address" instead
-    | of "email". This simply helps us make our message more expressive.
-    |
-    */
-    'attributes' => [],
 ];

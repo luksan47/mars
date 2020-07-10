@@ -1,12 +1,10 @@
 <?php
 
 return [
-
-    'name' => 'Nomen',
-    'email' => 'E-mail nomen',
-    'password' => 'Signum',
     'confirmpwd' => 'Signum confirmare',
+    'email' => 'E-mail nomen',
+    'forgotpwd' => 'Oblivisceris signi?',
+    'name' => 'Nomen',
+    'password' => 'Signum',
     'remember' => 'Memento mei',
-    'forgotpwd'=> 'Oblivisceris signi?',
-
 ];
