@@ -1,13 +1,10 @@
 <?php
 
 return [
-
-    'note' => 'Nota',
+    'home' => 'Tabula dirigendi',
+    'login' => 'Inire',
     'logout' => 'Exire',
-    'login'=> 'Inire',
+    'note' => 'Nota',
     'register' => 'Registratio',
     'you_are_logged_in' => 'Secunde inivisti.',
-    'home' => 'Tabula dirigendi',
-    'choose_from_menu',
-
 ];
