@@ -41,8 +41,16 @@
         @endif
         @endforeach
     </ul>
-    <li><a class="dropdown-trigger" href="#!" data-target="dropdownLang"><i
-                class="material-icons left">language</i>Language<i class="material-icons right">arrow_drop_down</i></a>
+    <li>
+        <a class="dropdown-trigger" href="#!" data-target="dropdownLang">
+            <i class="material-icons left">language</i>Language<i class="material-icons right">arrow_drop_down</i>
+        </a>
+    </li>
+    @if(Auth::user() && Auth::user()->verified)
+    <li>
+        <a href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
+            <i class="material-icons left">sentiment_dissatisfied</i>@lang('general.report_bug')
+        </a>
     </li>
     <li>
         <a class="dropdown-trigger" href="{{ route('locales') }}">
@@ -50,12 +58,15 @@
         </a>
     </li>
     <script>
-        //The href: mailto may not work on every device. In this case, show a notification. 
+        //The href: mailto may not work on every device. In this case, show a notification.
         var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
-    function dismiss() {M.Toast.dismissAll();};
+        function dismiss() {
+            M.Toast.dismissAll();
+        };
     </script>
     <li><a href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
             <i class="material-icons left">sentiment_dissatisfied</i>@lang('general.report_bug')</a></li>
+    @endif
     @if(Auth::user())
     <li>
         <a href="{{ route('logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -7,7 +7,7 @@ return [
     'choose_option' => 'Válassz...',
     'home' => 'Kezdőlap',
     'i_understand' => 'Értem',
-    'if_mail_not_working' => 'Néhány esetben ez a funkció nem működhet megfelelően. Ebben az esetben küldd el a hibát a root@eotvos.elte.hu-ra! Köszönjük!',
+    'if_mail_not_working' => 'Néhány esetben ez a funkció nem működhet megfelelően. Ebben az esetben küldd el a hibát a rendszergazdáknak! Köszönjük!',
     'login' => 'Belépés',
     'logout' => 'Kijelentkezés',
     'note' => 'Megjegyzés',
