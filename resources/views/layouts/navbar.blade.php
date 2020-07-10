@@ -48,11 +48,6 @@
     </li>
     @if(Auth::user() && Auth::user()->verified)
     <li>
-        <a href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
-            <i class="material-icons left">sentiment_dissatisfied</i>@lang('general.report_bug')
-        </a>
-    </li>
-    <li>
         <a class="dropdown-trigger" href="{{ route('locales') }}">
             <i class="material-icons left">translate</i>@lang('locale.contribute')
         </a>
