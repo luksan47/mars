@@ -7,7 +7,7 @@ return [
     'choose_option' => 'Choose an option...',
     'home' => 'Home',
     'i_understand' => 'I understand',
-    'if_mail_not_working' => 'In some cases, this function may not work properly. In this case, please write an email to root@eotvos.elte.hu with your issues!',
+    'if_mail_not_working' => 'In some cases, this function may not work properly. In this case, please write an email to the system administrators!',
     'login' => 'Login',
     'logout' => 'Logout',
     'note' => 'Note',

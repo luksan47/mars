@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
     {
         $user = User::create([
             'name' => 'Hapák József',
-            'email' => 'root@eotvos.elte.hu',
+            'email' => config('mail.test_mail'),
             'password' => bcrypt('asdasdasd'),
             'verified' => true,
         ]);
