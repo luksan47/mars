@@ -12,8 +12,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/materialize_custom.js', 'public/js/materialize.js') // We use our custom materialize JS
    .js('resources/js/cookieconsent-initialize.js', 'public/js/')
-   .js('resources/js/site.js', 'public/js/')
-   .js('resources/js/csrf.js', 'public/js/')
+   .scripts(['resources/js/site.js'], 'public/js/site.js')
    // We have to copy already minimized JS
    .copy('resources/js/cookieconsent.min.js', 'public/js/') // TODO: see #223
    .copy([
