@@ -9,6 +9,7 @@ use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class InternetController extends Controller
@@ -27,7 +28,7 @@ class InternetController extends Controller
 
     public function admin()
     {
-        $activationDate = env('INTERNET_ACTIVATION_DATE'); //TODO: get date for current semester
+        $activationDate = \App\EventTrigger::internetActivationDeadline();
 
         return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all()]);
     }
@@ -134,12 +135,15 @@ class InternetController extends Controller
 
     public function addMacAddress(Request $request)
     {
-        $request->validate(
-            [
-                'comment' => 'required|max:1000',
-                'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
-            ]
-        );
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required|max:1000',
+            'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
+        ]);
+        $validator->validate();
+
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
 
         $macAddress = new MacAddress();
         $macAddress->user_id = Auth::user()->id;
@@ -156,7 +160,7 @@ class InternetController extends Controller
 
         $this->autoApproveMacAddresses(Auth::user());
 
-        return redirect()->back();
+        return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
     private function autoApproveMacAddresses($user)

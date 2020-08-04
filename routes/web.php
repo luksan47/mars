@@ -23,6 +23,8 @@ Route::get('/privacy_policy', function () {
     return Storage::response('public/adatvedelmi_tajekoztato.pdf');
 })->name('privacy_policy');
 
+Route::get('/img/{filename}', 'EmailController@getPicture');
+
 Auth::routes();
 
 Route::get('/register/guest', 'Auth\RegisterController@showTenantRegistrationForm')->name('register.guest');
@@ -34,9 +36,18 @@ Route::get('/verification', function () {
 Route::middleware(['auth', 'log'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user', 'UserController@index')->name('user');
+    Route::get('/test_mails/{mail}/{send?}', 'EmailController@testEmail');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('userdata/update_password', 'UserController@updatePassword')->name('userdata.update_password');
 });
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
+    Route::get('userdata', 'UserController@showData')->name('userdata');
+    Route::post('userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
+    Route::post('userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
+
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
     Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
@@ -44,6 +55,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::put('/print/print', 'PrintController@print')->name('print.print');
     Route::get('/print/free_pages/all', 'PrintController@listFreePages')->name('print.free_pages.all');
     Route::get('/print/print_jobs/all', 'PrintController@listPrintJobs')->name('print.print_jobs.all');
+    Route::get('/print/account_history', 'PrintController@listPrintAccountHistory')->name('print.account_history')->middleware('can:print.modify');
     Route::post('/print/print_jobs/{id}/cancel', 'PrintController@cancelPrintJob')->name('print.print_jobs.cancel');
     Route::get('/print/admin', 'PrintController@admin')->name('print.admin');
 
@@ -84,4 +96,20 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/camelbreeder/change_def_min_camels', 'CamelController@change_def_min_camels')->name('camel_breeder.change_def_min_camels');
 
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
+});
+
+Route::middleware(['auth', 'verified', 'camel_breeder'])->group(function () {
+    Route::get('/camelbreeder', 'CamelController@index')->name('camel_breeder');
+    Route::post('/camelbreeder/password', 'CamelController@password')->name('camel_breeder.password');
+    Route::get('/camelbreeder/send_shepherds', 'CamelController@send_shepherds')->name('camel_breeder.send_shepherds');
+    Route::get('/camelbreeder/send_herds', 'CamelController@send_herds')->name('camel_breeder.send_herds');
+    Route::get('/camelbreeder/send_shepherdings', 'CamelController@send_shepherdings')->name('camel_breeder.send_shepherdings');
+    Route::post('/camelbreeder/shepherding', 'CamelController@shepherding')->name('camel_breeder.shepherding');
+    Route::post('/camelbreeder/add_shepherd', 'CamelController@add_shepherd')->name('camel_breeder.add_shepherd');
+    Route::post('/camelbreeder/add_herd', 'CamelController@add_herd')->name('camel_breeder.add_herd');
+    Route::post('/camelbreeder/change_herd', 'CamelController@change_herd')->name('camel_breeder.change_herd');
+    Route::post('/camelbreeder/change_shepherd', 'CamelController@change_shepherd')->name('camel_breeder.change_shepherd');
+    Route::post('/camelbreeder/add_camels', 'CamelController@add_camels')->name('camel_breeder.add_camels');
+    Route::post('/camelbreeder/change_password', 'CamelController@change_password')->name('camel_breeder.change_password');
+    Route::post('/camelbreeder/change_def_min_camels', 'CamelController@change_def_min_camels')->name('camel_breeder.change_def_min_camels');
 });

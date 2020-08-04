@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CamelController extends Controller
 {
@@ -42,7 +44,8 @@ class CamelController extends Controller
     {
         $data = DB::table('shepherding')
             ->join('shepherds', 'shepherds.id', '=', 'shepherding.shepherd')
-            ->select('shepherds.name as name', 'shepherd as id', 'herd', 'created_at')
+            ->join('herds', 'herds.name', '=', 'shepherding.herd')
+            ->select('shepherds.name as name', 'shepherd as id', 'herd', 'herds.camel_count as camels', 'created_at')
             ->get();
 
         return response()->json($data);
@@ -52,7 +55,8 @@ class CamelController extends Controller
     {
         $validatedData = $request->validate([
             'id' => 'required|numeric|exists:shepherds',
-            'herds' => 'required',
+            'herds' => 'required|array|min:1',
+            'herds.*' => 'string|exists:herds,name'
         ]);
 
         $all_camels = 0;
@@ -101,7 +105,7 @@ class CamelController extends Controller
     public function add_shepherd(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|unique:shepherds',
+            'name' => 'required|alpha|unique:shepherds',
             'id' => 'required|numeric|min:0|unique:shepherds',
         ]);
         $def_min_camels = DB::table('farmer')->first()->def_min_camels;
@@ -150,7 +154,7 @@ class CamelController extends Controller
 
             return redirect()->back()->with('message', 'Sikeres módosítás!');
         } else {
-            return redirect()->back()->with('message', 'Vendég nem adhat hozzá tevéket!');
+            return redirect()->back()->with('error', 'Vendég nem adhat hozzá tevéket!');
         }
     }
 
@@ -185,13 +189,17 @@ class CamelController extends Controller
     public function change_password(Request $request)
     {
         $hashedPassword = DB::table('farmer')->first()->password;
+        $request->validate([
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|confirmed',
+        ]);
         if (Hash::check($request->input('old_password'), $hashedPassword)) {
             DB::table('farmer')
                 ->update(['password' => Hash::make($request->input('new_password'))]);
 
             return redirect()->back()->with('message', 'Sikeres módosítás!')->with('edit', '');
         } else {
-            return redirect()->back()->with('message', 'Rossz jelszó! :(');
+            return redirect()->back()->with('error', 'Rossz jelszó! :(');
         }
     }
 

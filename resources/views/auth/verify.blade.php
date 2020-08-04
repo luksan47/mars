@@ -1,5 +1,3 @@
-<!-- is this page even shown? -->
-
 @extends('layouts.app')
 
 @section('content')

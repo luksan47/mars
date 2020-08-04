@@ -23,14 +23,12 @@ $(document).ready(function(){
                     @csrf
                     <div class="row">
                         <div class="input-field col s4">
-                            <input id="shepherd_name" name="name" type="text" 
-                                oninput="isInvalidName(this.value)" required>
+                            <input id="shepherd_name" name="name" type="text" required>
                             <label for="shepherd_name">Név</label>
                             <blockquote id="name_text"></blockquote>
                         </div>
                         <div class="input-field col s4">
-                            <input id="shepherd_id" name="id" type="number" min="1" 
-                                oninput="isInvalidId(this.value)" required>
+                            <input id="shepherd_id" name="id" type="number" min="1" required>
                             <label for="shepherd_id">Azonosító</label>
                             <blockquote id="id_text"></blockquote>
                         </div>
@@ -79,29 +77,24 @@ $(document).ready(function(){
                     @include('camel_breeder.tabulators.shepherdings')
                 </div>
             </div>
-            <a class="waves-effect waves-teal btn-flat scale-transition" id="advanced_button" onclick="toggle_advanced_settings()">További beállítások</a>
-            <script>
-                function toggle_advanced_settings(){
-                    settings = document.getElementById('advanced_settings');
-                    button = document.getElementById('advanced_button');
-                    settings.style.display = 'block';
-                    settings.classList.add("scale-in");
-                    button.classList.add('scale-out');
-                };
-            </script>
+            <a class="waves-effect waves-teal btn-flat scale-transition" id="advanced_button">További beállítások</a>
             <div id="advanced_settings" style="display:none" class="scale-transition scale-out">
                 <form method="POST" action="{{ route('camel_breeder.change_password') }}">
                     @csrf
                     <div class="row">
-                        <div class="input-field col s5">
+                        <div class="input-field col s3">
                             <input id="old_password" name="old_password" type="password" required>
                             <label for="old_password">Régi jelszó</label>
                         </div>
-                        <div class="input-field col s5">
-                            <input id="new=password" name="new_password" type="password" required>
+                        <div class="input-field col s3">
+                            <input id="new_password" name="new_password" type="password" required>
                             <label for="new_password">Új jelszó</label>
                         </div>
-                        <div class="input-field col s2">
+                        <div class="input-field col s3">
+                            <input id="new_password_confirmation" name="new_password_confirmation" type="password" required>
+                            <label for="new_password_confirmation">Új jelszó megerősítése</label>
+                        </div>
+                        <div class="input-field col s3">
                             <button type="submit" class="btn waves-effect" style="width:100%">Módosítás</button>
                         </div>
                     </div>

@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/luksan47/mars.svg?branch=uran-2.x)](https://travis-ci.com/luksan47/mars)
+[![StyleCI](https://github.styleci.io/repos/211704659/shield?branch=uran-2.x&style=plastic)](https://github.styleci.io/repos/211704659)
+
 # Mars
 
 Mars is the [Urán 2.0](https://github.com/kovacsur10/uran) unified information system for Eötvös Collegium. It's a complete 
@@ -5,7 +8,7 @@ rewrite, therefore comes under a new name and repository. Only a few resources a
 
 ## Architecture
 
-Urán is a Laravel based application. For more information, see the [official Laravel documentation](https://laravel.com/docs/6.x).
+Urán is a Laravel based application. For more information, see the [official Laravel documentation](https://laravel.com/docs).
 
 ## Contributions
 

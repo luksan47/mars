@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'log' => \App\Http\Middleware\Log::class,
         'verified' => \App\Http\Middleware\Verify::class,
+        'camel_breeder' => \App\Http\Middleware\CamelBreeder::class,
     ];
 
     /**

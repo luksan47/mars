@@ -12,7 +12,7 @@
                     {{ config('app.name', 'Urán') }} </a>
                 <!--title-->
 
-                <div class="col hide-on-med-and-down nav-title noselect" style="margin-left:310px">
+                <div class="col hide-on-med-and-down noselect" style="margin-left:310px">
                     @yield('title')
                 </div>
 

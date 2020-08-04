@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,5 +10,28 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/js/materialize_custom.js', 'public/js/materialize.js') // We use our custom materialize JS
+   .js('resources/js/cookieconsent-initialize.js', 'public/js/')
+   .js('resources/js/site.js', 'public/js/')
+   .js('resources/js/csrf.js', 'public/js/')
+   .js('resources/js/camelbreeder.js', 'public/js/')
+   // We have to copy already minimized JS
+   .copy('resources/js/cookieconsent.min.js', 'public/js/') // TODO: see #223
+   .copy([
+      'node_modules/moment/min/moment.min.js',
+      'node_modules/jquery/dist/jquery.min.js',
+      'node_modules/tabulator-tables/dist/js/tabulator.min.js'
+   ], 'public/js/')
+   // Compile SASS
+   .sass('resources/sass/materialize.scss', 'public/css/')
+   // Add common styles here
+   .styles([
+      'resources/css/tabulator_materialize.min.css', // This might cause problems if it gets ouf of sync with the JS
+      'resources/css/cookieconsent.min.css'
+   ], 'public/css/app.css')
+   // Add page specific files one by one
+   .styles('resources/css/welcome_page.css', 'public/css/welcome_page.css');
+
+if (mix.inProduction()) {
+   mix.version(); // For cache bumping
+}
