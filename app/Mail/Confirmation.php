@@ -29,7 +29,7 @@ class Confirmation extends Mailable
      */
     public function build()
     {
-        return $this->text('emails.register')
+        return $this->markdown('emails.register')
                     ->subject(__('registration.confirmed_signup'));
     }
 }
