@@ -9,7 +9,7 @@ class LocalizationContribution extends Model
     protected $table = 'localization_contributions';
 
     protected $fillable = [
-        'key', 'value', 'contributor_id',
+        'language', 'key', 'value', 'contributor_id', 'approved',
     ];
 
     /**

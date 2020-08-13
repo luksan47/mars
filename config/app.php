@@ -90,11 +90,14 @@ return [
 
     'locale' => 'hu',
     'locales' => [
-    	'en' => 'English',
-    	'hu' => 'Magyar',
-      'it' => 'Italiano',
-      'sp' => 'Spanish', 
-      'la' => 'Latina',
+        'hu' => 'Magyar',
+        'en' => 'A - English',
+        'la' => 'L - Latina',
+        'fr' => 'F - Français',
+        'it' => 'O - Italiano',
+        'de' => 'N - Deutsch',
+        'sp' => 'S - Español',
+        'gr' => 'Ó - Ελληνικά',
     ],
     
     'locale_cookie_lifespan' => 9600,

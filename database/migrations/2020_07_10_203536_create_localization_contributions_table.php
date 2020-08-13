@@ -15,6 +15,7 @@ class CreateLocalizationContributionsTable extends Migration
     {
         Schema::create('localization_contributions', function (Blueprint $table) {
             $table->id();
+            $table->string('language');
             $table->string('key');
             $table->string('value');
             $table->integer('contributor_id');
