@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\LocalizationContribution;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 
 class LocalizationController extends Controller
 {
@@ -28,6 +28,7 @@ class LocalizationController extends Controller
             'value' => $request->value,
             'contributor_id' => $user->id,
         ]);
+
         return back()->with('message', __('general.successful_modification'));
     }
 
@@ -37,13 +38,15 @@ class LocalizationController extends Controller
         $exitCode = Artisan::call('locale:add', [
             'language' => $contribution->language,
             'key' => $contribution->key,
-            'value' => $contribution->value, 
-            '--force' => 'true'
+            'value' => $contribution->value,
+            '--force' => 'true',
         ]);
-        if($exitCode==0){
+        if ($exitCode == 0) {
             $contribution->update(['approved' => true]);
+
             return back()->with('message', __('general.successful_modification'));
         }
+
         return back()->with('message', 'Something went wrong. Artisan error code: '.$exitCode);
     }
 
@@ -51,6 +54,7 @@ class LocalizationController extends Controller
     {
         $contribution = LocalizationContribution::findOrFail($request->id);
         $contribution->delete();
+
         return back()->with('message', __('general.successful_modification'));
     }
 }
