@@ -11,18 +11,16 @@
                 <div class="card-title">@lang('localizations.help_translate')</div>
                 <blockquote>@lang('localizations.help_translate_info', ['app' => config('app.name')])</blockquote>
                 <div class="row">
-                    <div class="col s3">
-                        <a class='dropdown-trigger btn' href='#' data-target='dropdownLang'>@lang('localizations.language')
+                    <div class="col s12 m3">
+                        <a class='dropdown-trigger btn' style="width: 100%" href='#' data-target='dropdownLang'>@lang('localizations.language')
                             <i class="material-icons right">arrow_drop_down</i></a>
                         <ul id='dropdownLang' class='dropdown-content'>
                             @foreach (config('app.locales') as $code => $name)
-                            @if ($code != 'hu' || $code != 'en')
                             <li><a href="{{ route('setlocale', $code) }}">{{ $name }}</a></li>
-                            @endif
                             @endforeach
                         </ul>
                     </div>
-                    <div class="col s3"><i>@lang('localizations.reference_language'):</i></div>
+                    <div class="col s6 m3"><i class="right">@lang('localizations.reference_language'):</i></div>
                     <div class="col s6">
                         <label>
                             <input class="with-gap" name="language" type="radio" checked onclick="change_language('en')" />
