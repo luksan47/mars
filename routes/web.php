@@ -53,11 +53,11 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
-    Route::get('localizations', 'LocalizationController@index')->name('localizations');
-    Route::get('localizations/admin', 'LocalizationController@indexAdmin')->name('localizations.admin');
-    Route::post('localizations/add', 'LocalizationController@add')->name('localizations.add');
-    Route::post('localizations/approve', 'LocalizationController@approve')->name('localizations.approve');
-    Route::post('localizations/delete', 'LocalizationController@delete')->name('localizations.delete');
+    Route::get('localizations', 'LocaleController@index')->name('localizations');
+    Route::get('localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin');
+    Route::post('localizations/add', 'LocaleController@add')->name('localizations.add');
+    Route::post('localizations/approve', 'LocaleController@approve')->name('localizations.approve');
+    Route::post('localizations/delete', 'LocaleController@delete')->name('localizations.delete');
 
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');

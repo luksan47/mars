@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\LocalizationContribution;
+use App\User;
 
 class LocaleController extends Controller
 {
@@ -39,7 +41,23 @@ class LocaleController extends Controller
 
     public function index()
     {
-        return view('localizations', ['contributions'=> LocalizationContribution::all()]);
+        $contributor_ids = DB::table('localization_contributions')
+            ->select('contributor_id as id')
+            ->where('approved', true)
+            ->groupBy('contributor_id')
+            ->get();
+        
+        $contributors = [];
+        foreach ($contributor_ids as $value) {
+            $contributor = User::find($value->id);
+            if ($contributor != null){
+                $contributors[] = $contributor->name;
+            }
+        }
+        return view('localizations', [
+            'contributions' => LocalizationContribution::all(),
+            'contributors' => $contributors
+        ]);
     }
 
     public function indexAdmin()
@@ -75,7 +93,7 @@ class LocaleController extends Controller
             return back()->with('message', __('general.successful_modification'));
         }
 
-        return back()->with('message', 'Something went wrong. Artisan error code: '.$exitCode);
+        return back()->with('error', 'Something went wrong. Artisan error code: '.$exitCode);
     }
 
     public function delete(Request $request)

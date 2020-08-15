@@ -13,7 +13,7 @@
                 <div class="row">
                     {{-- Change language --}}
                     <div class="col s12 m3">
-                        <a class='dropdown-trigger btn' style="width: 100%" href='#' data-target='dropdownLang'>@lang('localizations.language')
+                        <a class='dropdown-trigger btn' style="width: 100%" href='#' data-target='dropdownLang'>{{ config('app.locales')[App::getLocale()] }}
                             <i class="material-icons right">arrow_drop_down</i></a>
                         <ul id='dropdownLang' class='dropdown-content'>
                             @foreach (config('app.locales') as $code => $name)
@@ -33,6 +33,13 @@
                             <input class="with-gap" name="language" type="radio" onclick="change_language('hu')" />
                             <span>Hungarian</span>
                         </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <blockquote>
+                            @lang('localizations.thank_contribution'): <i>Szlovicsák Béla, Tóth Regina, Kovács Sára Kata, {{ implode(", ", $contributors) }}</i>!
+                        </blockquote>
                     </div>
                 </div>
                 <script>
@@ -76,9 +83,9 @@
                     @foreach ($expressions as $key => $value)
                     {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
-                    $duplicate = App\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->first();
+                    $duplicate = App\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
                     @endphp
-                    @if(is_string($value) && ($duplicate == null || $duplicate->approved))
+                    @if(is_string($value) && $duplicate == null)
                     <form method="POST" action="{{ route('localizations.add') }}">
                         @csrf
                         <input type="hidden" name="language" value="{{ App::getLocale() }}">

@@ -48,8 +48,8 @@ class AddExpression extends Command
         $expression_key = explode('.', $this->argument('key'))[1];
         $expression_value = $this->argument('value');
         $reviewed = $this->option('force');
-        $path = 'resources/lang/'.$language.'/'.$file.'.php';
-        $expressions = file_exists($path) ? require base_path($path) : [];
+        $path = '/resources/lang/'.$language.'/'.$file.'.php';
+        $expressions = file_exists(base_path($path)) ? require base_path($path) : [];
         if (! ($reviewed)) {
             if (isset($expressions[$expression_key])) {
                 if ($this->confirm('Do you want to override '.$expressions[$expression_key].' to '.$expression_value.'?')) {

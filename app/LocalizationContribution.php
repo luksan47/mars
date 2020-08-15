@@ -25,12 +25,4 @@ class LocalizationContribution extends Model
     {
         return $this->belongsTo('App\User', 'contributor_id');
     }
-
-    public function approve()
-    {
-        //TODO
-        //Artisan::call('...')
-
-        $this->approved = true;
-    }
 }
