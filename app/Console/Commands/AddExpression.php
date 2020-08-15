@@ -48,7 +48,8 @@ class AddExpression extends Command
         $expression_key = explode('.', $this->argument('key'))[1];
         $expression_value = $this->argument('value');
         $reviewed = $this->option('force');
-        $expressions = require base_path('resources/lang/'.$language.'/'.$file.'.php');
+        $path = 'resources/lang/'.$language.'/'.$file.'.php';
+        $expressions = file_exists($path) ? require base_path($path) : [];
         if (! ($reviewed)) {
             if (isset($expressions[$expression_key])) {
                 if ($this->confirm('Do you want to override '.$expressions[$expression_key].' to '.$expression_value.'?')) {
@@ -65,7 +66,7 @@ class AddExpression extends Command
             if (! (ksort($expressions))) {
                 $this->error('Sorting '.$file_in.' failed.');
             }
-            $file_write = fopen(base_path('resources/lang/'.$language.'/'.$file.'.php'), 'w');
+            $file_write = fopen(base_path($path), 'w');
             if (! (generate_file($file_write, $expressions))) {
                 $this->error('Writing to '.$file.' failed.');
             }
