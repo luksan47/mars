@@ -11,6 +11,7 @@
                 <div class="card-title">@lang('localizations.help_translate')</div>
                 <blockquote>@lang('localizations.help_translate_info', ['app' => config('app.name')])</blockquote>
                 <div class="row">
+                    {{-- Change language --}}
                     <div class="col s12 m3">
                         <a class='dropdown-trigger btn' style="width: 100%" href='#' data-target='dropdownLang'>@lang('localizations.language')
                             <i class="material-icons right">arrow_drop_down</i></a>
@@ -20,6 +21,7 @@
                             @endforeach
                         </ul>
                     </div>
+                    {{-- Change reference language: en or hu --}}
                     <div class="col s6 m3"><i class="right">@lang('localizations.reference_language'):</i></div>
                     <div class="col s6">
                         <label>
@@ -53,20 +55,26 @@
         </div>
     </div>
     @php
-    $files_en = array_diff(scandir(base_path('resources/lang/en')), ['..', '.', 'validation.php']);
-    $files_hu = array_diff(scandir(base_path('resources/lang/hu')), ['..', '.', 'validation.php']);
+    /* Require reference langugage files - except validation.php */
+    $reference_files = [
+        'en' => array_diff(scandir(base_path('resources/lang/en')), ['..', '.', 'validation.php']),
+        'hu' => array_diff(scandir(base_path('resources/lang/hu')), ['..', '.', 'validation.php'])
+    ];
     @endphp
     @if(App::getLocale() != 'hu' && App::getLocale() != 'en')
-    <div id="en">
-        @foreach ($files_en as $file)
+    @foreach ($reference_files as $lang => $files)
+    <div id="{{ $lang }}">
+        @foreach ($files as $file)
         @php
-        $fname = substr($file, 0, -4);
-        $expressions = require base_path('resources/lang/en/'.$file);
+        $fname = substr($file, 0, -4); //filename without .php, used as a part of the expression key
+        $expressions = require base_path('resources/lang/'.$lang.'/'.$file);
         @endphp
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
+                    <div class="card-title">{{ $fname }}</div>
                     @foreach ($expressions as $key => $value)
+                    {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
                     $duplicate = App\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->first();
                     @endphp
@@ -97,46 +105,7 @@
         </div>
         @endforeach
     </div>
-    <div id="hu" class="hide">
-        @foreach ($files_hu as $file)
-        @php
-        $fname = substr($file, 0, -4);
-        $expressions = require base_path('resources/lang/hu/'.$file);
-        @endphp
-        <div class="col s12">
-            <div class="card">
-                <div class="card-content">
-                    @foreach ($expressions as $key => $value)
-                    @php
-                    $duplicate = App\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->first();
-                    @endphp
-                    @if(is_string($value) && ($duplicate == null || $duplicate->approved))
-                    <form method="POST" action="{{ route('localizations.add') }}">
-                        @csrf
-                        <input type="hidden" name="language" value="{{ App::getLocale() }}">
-                        <div class="row" style="margin:0">
-                            <div class="col s5" style="padding: 0.8rem;">
-                                {{ $value }}
-                            </div>
-                            <div class="col s6">
-                                <input type="hidden" name="key" value="{{ $fname.'.'.$key }}">
-                                <textarea name="value"
-                                    class="materialize-textarea">@lang($fname.'.'.$key)</textarea>
-                            </div>
-                            <div class="col s1">
-                                <button class="btn-floating waves-effect waves-light right" type="submit">
-                                    <i class="material-icons">send</i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
+    @endforeach
     @else
     <div class="col s12">
         <div class="card">
