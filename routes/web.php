@@ -54,10 +54,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
     Route::get('localizations', 'LocaleController@index')->name('localizations');
-    Route::get('localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin');
+    Route::get('localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin')->middleware('can:approve,App\LocalizationContribution');
     Route::post('localizations/add', 'LocaleController@add')->name('localizations.add');
-    Route::post('localizations/approve', 'LocaleController@approve')->name('localizations.approve');
-    Route::post('localizations/delete', 'LocaleController@delete')->name('localizations.delete');
+    Route::post('localizations/approve', 'LocaleController@approve')->name('localizations.approve')->middleware('can:approve,App\LocalizationContribution');
+    Route::post('localizations/delete', 'LocaleController@delete')->name('localizations.delete')->middleware('can:approve,App\LocalizationContribution');
 
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
