@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateLocalizationContributionsTable extends Migration
@@ -22,6 +23,8 @@ class CreateLocalizationContributionsTable extends Migration
             $table->boolean('approved');
             $table->timestamps();
         });
+
+        DB::table('roles')->insertOrIgnore(['name' => 'locale-admin']);
     }
 
     /**
@@ -32,5 +35,6 @@ class CreateLocalizationContributionsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('localization_contributions');
+        DB::table('roles')->where('name', 'locale-admin')->delete();
     }
 }
