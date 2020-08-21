@@ -36,11 +36,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div class="col s12">
                         <blockquote>
-                            @lang('localizations.thank_contribution'): <i>Szlovicsák Béla, Tóth Regina, Kovács Sára Kata, {{ implode(", ", $contributors) }}</i>!
+                            @lang('localizations.thank_translations'): <i>Szlovicsák Béla, Tóth Regina, Kovács Sára Kata, {{ implode(", ", $contributors) }}</i>!
                         </blockquote>
                     </div>
+                    @can('approve', App\LocalizationContribution::class)
+                    <div class="col s12">
+                        <a href="{{ route('localizations.admin') }}" class="btn right waves-effect"> @lang('localizations.manage_translations')</a>
+                    </div>
+                    @endcan
                 </div>
                 <script>
                     function change_language(language){
