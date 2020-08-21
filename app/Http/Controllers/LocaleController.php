@@ -75,7 +75,7 @@ class LocaleController extends Controller
             'contributor_id' => $user->id,
         ]);
 
-        return back()->with('message', __('general.successful_modification'));
+        return redirect(url()->previous().'#'.explode('.', $request->key)[0])->with('message', __('general.successful_modification'));
     }
 
     public function approve(Request $request)

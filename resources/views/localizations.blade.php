@@ -79,7 +79,7 @@
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <div class="card-title">{{ $fname }}</div>
+                    <div class="card-title" id="{{ $fname }}">{{ $fname }}</div>
                     @foreach ($expressions as $key => $value)
                     {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
