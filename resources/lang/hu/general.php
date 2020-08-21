@@ -11,6 +11,7 @@ return [
     'login' => 'Belépés',
     'logout' => 'Kijelentkezés',
     'note' => 'Megjegyzés',
+    'other' => 'Egyebek',
     'register' => 'Regisztráció',
     'register_collegist' => 'Collegistáknak',
     'register_guest' => 'Vendégeknek',
@@ -21,6 +22,5 @@ return [
     'successful_modification' => 'Sikeres módosítás!',
     'successful_transaction' => 'Sikeres tranzakció!',
     'successfully_added' => 'Sikeres hozzáadás!',
-    'other' => 'Egyebek',
-
+    'you_are_logged_in' => 'Sikeresen bejelentkeztél!',
 ];

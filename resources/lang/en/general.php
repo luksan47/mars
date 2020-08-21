@@ -11,6 +11,7 @@ return [
     'login' => 'Login',
     'logout' => 'Logout',
     'note' => 'Note',
+    'other' => 'Other',
     'register' => 'Register',
     'register_collegist' => 'For collegists',
     'register_guest' => 'For tenants',
@@ -21,5 +22,5 @@ return [
     'successful_modification' => 'Successful modification!',
     'successful_transaction' => 'Successful transaction!',
     'successfully_added' => 'Successfully added!',
-    'other' => 'Other',
+    'you_are_logged_in' => 'You are logged in.',
 ];
