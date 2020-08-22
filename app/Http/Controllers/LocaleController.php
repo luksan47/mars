@@ -93,7 +93,7 @@ class LocaleController extends Controller
             return back()->with('message', __('general.successful_modification'));
         }
 
-        return back()->with('error', 'Something went wrong. Artisan error code: '.$exitCode);
+        return back()->with('error', 'Something went wrong. Please contact the system administrators.');
     }
 
     public function delete(Request $request)
