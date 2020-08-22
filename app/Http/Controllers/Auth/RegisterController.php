@@ -167,7 +167,7 @@ class RegisterController extends Controller
 
         // Send confirmation mail.
         if (config('mail.active')) {
-            Mail::to($user)->send(new \App\Mail\Confirmation($user->name));
+            Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
         }
 
         return $user;
