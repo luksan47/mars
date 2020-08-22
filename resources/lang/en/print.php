@@ -55,5 +55,5 @@ return [
     'use_free_pages' => 'Use free pages',
     'user' => 'User',
     'topped_up_balance' => 'Topped up print balance',
-    'topped_up_balance_descr' => 'The administrators have been added :amount HUF to your print balance. Your new balance is :balance HUF.'
+    'topped_up_balance_descr' => 'The administrators have been added :amount HUF to your print balance. Your new balance is :balance HUF.',
 ];
