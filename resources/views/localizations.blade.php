@@ -20,6 +20,9 @@
                             <li><a href="{{ route('setlocale', $code) }}">{{ $name }}</a></li>
                             @endforeach
                         </ul>
+                        <script>
+                            $('.dropdown-trigger').dropdown();
+                       </script>
                     </div>
                     {{-- Change reference language: en or hu --}}
                     <div class="col s6 m3"><i class="right">@lang('localizations.reference_language'):</i></div>

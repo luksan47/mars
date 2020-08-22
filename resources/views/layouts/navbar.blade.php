@@ -89,9 +89,7 @@
                 <div class="collapsible-body">
                     <ul>
                         @foreach (config('app.locales') as $code => $name)
-                        @if ($code != App::getLocale())
                         <li><a class="waves-effect" href="{{ route('setlocale', $code) }}">{{ $name }}</a></li>
-                        @endif
                         @endforeach
                     </ul>
                 </div>
@@ -107,7 +105,7 @@
                     <ul>
                         <!-- language contributions -->
                         <li><a href="{{ route('localizations') }}">
-                            <i class="material-icons left">sentiment_satisfied_alt</i>@lang('general.help_translate')</a></li>
+                            <i class="material-icons left">sentiment_satisfied_alt</i>@lang('localizations.help_translate')</a></li>
 
                         <!-- report a bug --> 
                         <script>
