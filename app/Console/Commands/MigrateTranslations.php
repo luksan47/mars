@@ -45,9 +45,9 @@ class MigrateTranslations extends Command
             $files = array_diff(scandir(base_path('resources/lang/'.$language)), ['..', '.', 'validation.php']);
             foreach ($files as $file) {
                 $expressions = require base_path('resources/lang/'.$language.'/'.$file);
-                $filename = substr($file, 0, (strlen ($file) - 4 ));
+                $filename = substr($file, 0, (strlen($file) - 4));
                 foreach ($expressions as $key => $value) {
-                    if(is_string($value)){
+                    if (is_string($value)) {
                         DB::table('localization_contributions')->insert([
                             'language' => $language,
                             'key' => $filename.'.'.$key,
