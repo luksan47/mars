@@ -5,6 +5,7 @@ return [
     'change_password' => 'Change password',
     'choose_from_menu' => 'Select one of the menu options!',
     'choose_option' => 'Choose an option...',
+    'failed' => 'An error occurred. Please contact system administrators!',
     'home' => 'Home',
     'i_understand' => 'I understand',
     'if_mail_not_working' => 'In some cases, this function may not work properly. In this case, please write an email to the system administrators!',

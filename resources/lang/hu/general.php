@@ -5,6 +5,7 @@ return [
     'change_password' => 'Jelszó megváltoztatása',
     'choose_from_menu' => 'Válassz egy menüpontot!',
     'choose_option' => 'Válassz...',
+    'failed' => 'Hiba történt. Kérlek, írj a rendszergazdáknak!',
     'home' => 'Kezdőlap',
     'i_understand' => 'Értem',
     'if_mail_not_working' => 'Néhány esetben ez a funkció nem működhet megfelelően. Ebben az esetben küldd el a hibát a rendszergazdáknak! Köszönjük!',

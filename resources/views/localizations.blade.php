@@ -4,6 +4,13 @@
 @endsection
 
 @section('content')
+<script>
+var config = {
+    url : "{{ route('localizations.add') }}",
+    success_msg : "@lang('general.successful_modification')",
+    error_msg : "@lang('general.failed')"
+}
+</script>
 <div class="row">
     <div class="col s12">
         <div class="card">
@@ -96,25 +103,20 @@
                     $duplicate = App\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
                     @endphp
                     @if(is_string($value) && $duplicate == null)
-                    <form method="POST" action="{{ route('localizations.add') }}">
-                        @csrf
-                        <input type="hidden" name="language" value="{{ App::getLocale() }}">
-                        <div class="row" style="margin:0">
-                            <div class="col s5" style="padding: 0.8rem;">
-                                {{ $value }}
-                            </div>
-                            <div class="col s6">
-                                <input type="hidden" name="key" value="{{ $fname.'.'.$key }}">
-                                <textarea name="value"
-                                    class="materialize-textarea">@lang($fname.'.'.$key)</textarea>
-                            </div>
-                            <div class="col s1">
-                                <button class="btn-floating waves-effect waves-light right" type="submit">
-                                    <i class="material-icons">send</i>
-                                </button>
-                            </div>
+                    <div class="row scale-transition" style="margin:0" name="{{ $fname . '.' . $key }}">
+                        <div class="col s5" style="padding: 0.8rem;">
+                            {{ $value }}
                         </div>
-                    </form>
+                        <div class="col s6">
+                            <textarea name="value"
+                                class="materialize-textarea">@lang($fname.'.'.$key)</textarea>
+                        </div>
+                        <div class="col s1">
+                            <button class="btn-floating waves-effect waves-light right" onclick="send('{{ App::getLocale() }}', '{{ $fname.'.'.$key }}', '{{ $value }}')">
+                                <i class="material-icons">send</i>
+                            </button>
+                        </div>
+                    </div>
                     @endif
                     @endforeach
                 </div>
@@ -134,4 +136,5 @@
 
     @endif
 </div>
+<script type="text/javascript" src="{{ mix('js/page_based/localizations.js') }}"></script>
 @endsection
