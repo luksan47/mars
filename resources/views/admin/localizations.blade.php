@@ -31,7 +31,7 @@
                             <td>{{ $contribution->key }}</td>
                             <td>@lang($contribution->key)</td>
                             <td>{{ $contribution->value }}</td>
-                            <td>{{ $contribution->contributor->name }}</td>
+                            <td>{{ ($contribution->contributor != null) ? $contribution->contributor->name : 'null' }}</td>
                             <td>
                                 <form method="POST" action="{{ route('localizations.delete') }}">
                                     @csrf
@@ -51,11 +51,16 @@
                     </tbody>
                 </table>
                 <div class="row">
-                    <div class="col">
+                    <div class="col s12">
                         @if(count($contributions) == 0)
                         Nothing to show.
                         @else
-                        <i class="right">*You have to change to the corresponding language.</i>
+                        <i>*You have to change to the corresponding language.</i>
+                        {{-- This should be deleted later: --}}
+                        <form method="POST" action="{{ route('localizations.approve_all') }}">
+                            @csrf
+                            <button type="submit" class="btn waves-effect right">Approve all</button>
+                        </form>
                         @endif
                     </div>
                     

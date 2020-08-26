@@ -90,7 +90,6 @@ return [
 
     'locale' => 'hu',
     'locales' => [
-        'hu' => 'Magyar',
         'en' => 'A - English',
         'la' => 'L - Latina',
         'fr' => 'F - Français',
@@ -98,6 +97,7 @@ return [
         'de' => 'N - Deutsch',
         'sp' => 'S - Español',
         'gr' => 'Ó - Ελληνικά',
+        'hu' => 'M - Magyar',
     ],
     
     'locale_cookie_lifespan' => 9600,

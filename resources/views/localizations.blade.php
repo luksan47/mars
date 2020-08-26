@@ -17,7 +17,9 @@
                             <i class="material-icons right">arrow_drop_down</i></a>
                         <ul id='dropdownLang' class='dropdown-content'>
                             @foreach (config('app.locales') as $code => $name)
+                            @if($code != 'hu' && $code != 'en')
                             <li><a href="{{ route('setlocale', $code) }}">{{ $name }}</a></li>
+                            @endif
                             @endforeach
                         </ul>
                         <script>
