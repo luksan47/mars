@@ -2,7 +2,6 @@
 
 return [
     'add' => 'Add device',
-    'admin.manage_registered_devices' => 'Manage registered devices',
     'ajax_error' => 'Server error! Please refresh the site!',
     'approve' => 'Approve',
     'approved' => 'Approved',
@@ -23,6 +22,7 @@ return [
     'internet_access' => 'Internet access',
     'laptop' => 'Laptop',
     'mac_address' => 'MAC address',
+    'manage_registered_devices' => 'Manage registered devices',
     'no_internet' => 'You are not allowed to access the internet at the moment.',
     'nothing_to_show' => 'Nothing to show',
     'ok' => 'OK',

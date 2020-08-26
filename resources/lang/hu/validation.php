@@ -1,114 +1,152 @@
 <?php
 
 return [
-    'accepted' => 'El kell fogadni a következőt: :attribute.',
-    'active_url' => 'A(z) :attribute nem egy érvényes URL.',
-    'after' => 'Egy :date utáni dátumnak kell lennie ennek: :attribute.',
-    'after_or_equal' => 'Egy :date utáni vagy avval megegyező dátumnak kell lennie ennek: :attribute.',
-    'alpha' => 'A(z) :attribute csak betűkből állhat.',
-    'alpha_dash' => 'A(z) :attribute csak betűkből, számokból, gondolatjelből és aláhúzásból állhat.',
-    'alpha_num' => 'A(z) :attribute csak betűkből és számokból állhat.',
-    'array' => 'Egy tömbnek kell lennie ennek: :attribute.',
-    'attributes' => [],
-    'before' => 'Egy :date előtti dátumnak kell lennie ennek: :attribute.',
-    'before_or_equal' => 'Egy :date előtti vagy avval megegyező dátumnak kell lennie ennek: :attribute.',
-    'between' => [
-        'numeric' => ':min és :max között kell lennie ennek: :attribute.',
-        'file' => ':min kB és :max kB között kell lennie ennek: :attribute.',
-        'string' => 'Minimum :min és maximum :max karakterből állhat ez: :attribute.',
-        'array' => 'Minimum :min és maximum :max elemből állhat ez: :attribute.',
+    /*
+    |--------------------------------------------------------------------------
+    | Validation Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines contain the default error messages used by
+    | the validator class. Some of these rules have multiple versions such
+    | as the size rules. Feel free to tweak each of these messages.
+    |
+    */
+
+    'accepted'        => 'A(z) :attribute el kell legyen fogadva!',
+    'active_url'      => 'A(z) :attribute nem érvényes url!',
+    'after'           => 'A(z) :attribute :date utáni dátum kell, hogy legyen!',
+    'after_or_equal'  => 'A(z) :attribute nem lehet korábbi dátum, mint :date!',
+    'alpha'           => 'A(z) :attribute kizárólag betűket tartalmazhat!',
+    'alpha_dash'      => 'A(z) :attribute kizárólag betűket, számokat és kötőjeleket tartalmazhat!',
+    'alpha_num'       => 'A(z) :attribute kizárólag betűket és számokat tartalmazhat!',
+    'array'           => 'A(z) :attribute egy tömb kell, hogy legyen!',
+    'before'          => 'A(z) :attribute :date előtti dátum kell, hogy legyen!',
+    'before_or_equal' => 'A(z) :attribute nem lehet későbbi dátum, mint :date!',
+    'between'         => [
+        'numeric' => 'A(z) :attribute :min és :max közötti szám kell, hogy legyen!',
+        'file'    => 'A(z) :attribute mérete :min és :max kilobájt között kell, hogy legyen!',
+        'string'  => 'A(z) :attribute hossza :min és :max karakter között kell, hogy legyen!',
+        'array'   => 'A(z) :attribute :min - :max közötti elemet kell, hogy tartalmazzon!',
     ],
-    'boolean' => 'A(z) :attribute mező csak igaz vagy hamis lehet.',
-    'confirmed' => 'A(z) :attribute megerősítés nem egyezik meg.',
+    'boolean'        => 'A(z) :attribute mező csak true vagy false értéket kaphat!',
+    'confirmed'      => 'A(z) :attribute nem egyezik a megerősítéssel.',
+    'date'           => 'A(z) :attribute nem érvényes dátum.',
+    'date_equals'    => ':attribute meg kell egyezzen a következővel: :date.',
+    'date_format'    => 'A(z) :attribute nem egyezik az alábbi dátum formátummal :format!',
+    'different'      => 'A(z) :attribute és :other értékei különbözőek kell, hogy legyenek!',
+    'digits'         => 'A(z) :attribute :digits számjegyű kell, hogy legyen!',
+    'digits_between' => 'A(z) :attribute értéke :min és :max közötti számjegy lehet!',
+    'dimensions'     => 'A(z) :attribute felbontása nem megfelelő.',
+    'distinct'       => 'A(z) :attribute értékének egyedinek kell lennie!',
+    'email'          => 'A(z) :attribute nem érvényes email formátum.',
+    'ends_with'      => 'A(z) :attribute a következővel kell végződjön: :values',
+    'exists'         => 'A(z) :attribute már létezik.',
+    'file'           => 'A(z) :attribute fájl kell, hogy legyen!',
+    'filled'         => 'A(z) :attribute megadása kötelező!',
+    'gt'             => [
+        'numeric' => 'A(z) :attribute nagyobb kell, hogy legyen, mint :value!',
+        'file'    => 'A(z) :attribute mérete nagyobb kell, hogy legyen, mint :value kilobájt.',
+        'string'  => 'A(z) :attribute hosszabb kell, hogy legyen, mint :value karakter.',
+        'array'   => 'A(z) :attribute több, mint :value elemet kell, hogy tartalmazzon.',
+    ],
+    'gte' => [
+        'numeric' => 'A(z) :attribute nagyobb vagy egyenlő kell, hogy legyen, mint :value!',
+        'file'    => 'A(z) :attribute mérete nem lehet kevesebb, mint :value kilobájt.',
+        'string'  => 'A(z) :attribute hossza nem lehet kevesebb, mint :value karakter.',
+        'array'   => 'A(z) :attribute legalább :value elemet kell, hogy tartalmazzon.',
+    ],
+    'image'    => 'A(z) :attribute képfájl kell, hogy legyen!',
+    'in'       => 'A kiválasztott :attribute érvénytelen.',
+    'in_array' => 'A(z) :attribute értéke nem található a(z) :other értékek között.',
+    'integer'  => 'A(z) :attribute értéke szám kell, hogy legyen!',
+    'ip'       => 'A(z) :attribute érvényes IP cím kell, hogy legyen!',
+    'ipv4'     => 'A(z) :attribute érvényes IPv4 cím kell, hogy legyen!',
+    'ipv6'     => 'A(z) :attribute érvényes IPv6 cím kell, hogy legyen!',
+    'json'     => 'A(z) :attribute érvényes JSON szöveg kell, hogy legyen!',
+    'lt'       => [
+        'numeric' => 'A(z) :attribute kisebb kell, hogy legyen, mint :value!',
+        'file'    => 'A(z) :attribute mérete kisebb kell, hogy legyen, mint :value kilobájt.',
+        'string'  => 'A(z) :attribute rövidebb kell, hogy legyen, mint :value karakter.',
+        'array'   => 'A(z) :attribute kevesebb, mint :value elemet kell, hogy tartalmazzon.',
+    ],
+    'lte' => [
+        'numeric' => 'A(z) :attribute kisebb vagy egyenlő kell, hogy legyen, mint :value!',
+        'file'    => 'A(z) :attribute mérete nem lehet több, mint :value kilobájt.',
+        'string'  => 'A(z) :attribute hossza nem lehet több, mint :value karakter.',
+        'array'   => 'A(z) :attribute legfeljebb :value elemet kell, hogy tartalmazzon.',
+    ],
+    'max' => [
+        'numeric' => 'A(z) :attribute értéke nem lehet nagyobb, mint :max!',
+        'file'    => 'A(z) :attribute mérete nem lehet több, mint :max kilobájt.',
+        'string'  => 'A(z) :attribute hossza nem lehet több, mint :max karakter.',
+        'array'   => 'A(z) :attribute legfeljebb :max elemet kell, hogy tartalmazzon.',
+    ],
+    'mimes'     => 'A(z) :attribute kizárólag az alábbi fájlformátumok egyike lehet: :values.',
+    'mimetypes' => 'A(z) :attribute kizárólag az alábbi fájlformátumok egyike lehet: :values.',
+    'min'       => [
+        'numeric' => 'A(z) :attribute értéke nem lehet kisebb, mint :min!',
+        'file'    => 'A(z) :attribute mérete nem lehet kevesebb, mint :min kilobájt.',
+        'string'  => 'A(z) :attribute hossza nem lehet kevesebb, mint :min karakter.',
+        'array'   => 'A(z) :attribute legalább :min elemet kell, hogy tartalmazzon.',
+    ],
+    'not_in'               => 'A(z) :attribute értéke érvénytelen.',
+    'not_regex'            => 'A(z) :attribute formátuma érvénytelen.',
+    'numeric'              => 'A(z) :attribute szám kell, hogy legyen!',
+    'password'             => 'A(z) :attribute jelszónak kell, hogy legyen!',
+    'present'              => 'A(z) :attribute mező nem található!',
+    'regex'                => 'A(z) :attribute formátuma érvénytelen.',
+    'required'             => 'A(z) :attribute megadása kötelező!',
+    'required_if'          => 'A(z) :attribute megadása kötelező, ha a(z) :other értéke :value!',
+    'required_unless'      => 'A(z) :attribute megadása kötelező, ha a(z) :other értéke nem :values!',
+    'required_with'        => 'A(z) :attribute megadása kötelező, ha a(z) :values érték létezik.',
+    'required_with_all'    => 'A(z) :attribute megadása kötelező, ha a(z) :values értékek léteznek.',
+    'required_without'     => 'A(z) :attribute megadása kötelező, ha a(z) :values érték nem létezik.',
+    'required_without_all' => 'A(z) :attribute megadása kötelező, ha egyik :values érték sem létezik.',
+    'same'                 => 'A(z) :attribute és :other mezőknek egyezniük kell!',
+    'size'                 => [
+        'numeric' => 'A(z) :attribute értéke :size kell, hogy legyen!',
+        'file'    => 'A(z) :attribute mérete :size kilobájt kell, hogy legyen!',
+        'string'  => 'A(z) :attribute hossza :size karakter kell, hogy legyen!',
+        'array'   => 'A(z) :attribute :size elemet kell tartalmazzon!',
+    ],
+    'starts_with' => ':attribute a következővel kell kezdődjön: :values',
+    'string'      => 'A(z) :attribute szöveg kell, hogy legyen.',
+    'timezone'    => 'A(z) :attribute nem létező időzona.',
+    'unique'      => 'A(z) :attribute már foglalt.',
+    'uploaded'    => 'A(z) :attribute feltöltése sikertelen.',
+    'url'         => 'A(z) :attribute érvénytelen link.',
+    'uuid'        => ':attribute érvényes UUID-val kell rendelkezzen.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify custom validation messages for attributes using the
+    | convention "attribute.rule" to name the lines. This makes it quick to
+    | specify a specific custom language line for a given attribute rule.
+    |
+    */
+
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
     ],
-    'date' => 'A(z) :attribute nem egy érvényes dátum.',
-    'date_equals' => 'A(z) :attribute egy evvel megegyező dátumnak kell lennie: :date.',
-    'date_format' => 'A(z) :attribute nem egyezik meg evvel a formátummal: :format.',
-    'different' => 'Nem egyezhetnek meg a következő értékek: :attribute és :other.',
-    'digits' => ':digits számjegyből kell állnia ennek: :attribute.',
-    'digits_between' => 'Minimum :min és maximum :max számjegyből állhat ez: :attribute.',
-    'dimensions' => 'Nem megfelelő méretei vannak ennek a képnek: :attribute.',
-    'distinct' => 'Ismétlődő értéke van a(z) :attribute mezőnek.',
-    'email' => 'Érvényes e-mail címnek kell lennie ennek: :attribute.',
-    'ends_with' => 'A(z) :attribute értékének az alábbi értékek egyikével kell végződnie: :values',
-    'exists' => 'A kiválasztott :attribute érvénytelen.',
-    'file' => 'Egy fájlnak kell lennie: :attribute.',
-    'filled' => 'A(z) :attribute mezőnek értéket kell adni.',
-    'gt' => [
-        'numeric' => 'A(z) :attribute -nak/nek nagyobbnak kell lennie ennél: :value.',
-        'file' => 'A(z) :attribute fájlnak nagyobbnak kell lennie :value kB-nál.',
-        'string' => 'A(z) :attribute szövegnek több, mint :value karakterből kell állnia.',
-        'array' => 'A(z) :attribute tömbnek :value darabnál több elemből kell állnia.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Attributes
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used to swap attribute place-holders
+    | with something more reader friendly such as E-Mail Address instead
+    | of "email". This simply helps us make messages a little cleaner.
+    |
+    */
+
+    'attributes' => [
+        'name'     => 'név',
+        'password' => 'jelszó',
     ],
-    'gte' => [
-        'numeric' => 'A(z) :attribute értékének minimum :value lehet.',
-        'file' => 'A(z) :attribute minimum :value kB lennie.',
-        'string' => 'A(z) :attribute minumum :value karakterből állhat.',
-        'array' => 'A(z) :attribute minumum :value elemből állhat.',
-    ],
-    'image' => 'Egy képnek kell lennie: :attribute.',
-    'in' => 'A kiválasztott :attribute érvénytelen.',
-    'in_array' => 'A(z) :attribute nem létezik itt: :other.',
-    'integer' => 'A(z) :attribute értéknek egész számnak kell lennie.',
-    'ip' => 'A(z) :attribute értéknek egy érvényes IP címnek kell lennie.',
-    'ipv4' => 'A(z) :attribute értéknek egy érvényes IPv4 címnek kell lennie.',
-    'ipv6' => 'A(z) :attribute értéknek egy érvényes IPv6 címnek kell lennie.',
-    'json' => 'A(z) :attribute értékének egy érvényes JSON szövegnek kell lennie.',
-    'lt' => [
-        'numeric' => 'A(z) :attribute értékének kisebbnek kell lennie ennél: :value.',
-        'file' => 'A(z) :attribute fáljnak kisebbnek kell lennie :value kB-nál.',
-        'string' => 'A(z) :attribute szövegnek kevesebb, mint :value karakterből kell állnia.',
-        'array' => 'A(z) :attribute tömbnek kevesebb, mint :value elemből kell állnia.',
-    ],
-    'lte' => [
-        'numeric' => 'A(z) :attribute értéke maximum :value lehet.',
-        'file' => 'A(z) :attribute maximum :value kB lehet.',
-        'string' => 'A(z) :attribute maximum :value karakterből állhat.',
-        'array' => 'A(z) :attribute maximum :value elemből állhat.',
-    ],
-    'max' => [
-        'numeric' => 'A(z) :attribute értéke maximum :value lehet.',
-        'file' => 'A(z) :attribute értéke maximum :value kB lehet.',
-        'string' => 'A(z) :attribute maximum :value karakterből állhat.',
-        'array' => 'A(z) :attribute maximum :value elemből állhat.',
-    ],
-    'mimes' => 'A(z) :attribute fájlnak ilyen típusúnak kell lennie: :values.',
-    'mimetypes' => 'A(z) :attribute fájlnak ilyen típusúnak kell lennie: :values.',
-    'min' => [
-        'numeric' => 'A(z) :attribute értéke minimum :value lehet.',
-        'file' => 'A(z) :attribute értékének minimum :value kB lehet.',
-        'string' => 'A(z) :attribute minimum :value karakterből állhat.',
-        'array' => 'A(z) :attribute minimum :value elemből állhat.',
-    ],
-    'not_in' => 'A kiválasztott :attribute érvénytelen.',
-    'not_regex' => 'A(z) :attribute formátuma érvénytelen.',
-    'numeric' => 'Egy számnak kell lennie: :attribute.',
-    'password' => 'Rossz jelszó.',
-    'present' => 'A(z) :attribute mezőnek jelen kell lennie.',
-    'regex' => 'A(z) :attribute formátuma érvénytelen.',
-    'required' => 'A(z) :attribute mező kitöltése kötelező.',
-    'required_if' => 'A(z) :attribute mező kitöltése kötelező, ha :other :value.',
-    'required_unless' => 'A(z) :attribute mező kitöltése kötelező, kivéve ha a(z) :other benne van ebben: :values.',
-    'required_with' => 'A(z) :attribute mező kitöltése kötelező, ha :values jelen van.',
-    'required_with_all' => 'A(z) :attribute mező kitöltése kötelező, ha :values jelen vannak.',
-    'required_without' => 'A(z) :attribute mező kitöltése kötelező, ha :values nincsenek jelen.',
-    'required_without_all' => 'A(z) :attribute mező kitöltése kötelező, ha :values közül egyik sincs jelen.',
-    'same' => ':attribute és :other értékének egyeznie kell.',
-    'size' => [
-        'numeric' => 'A(z) :attribute értéke nem :size!',
-        'file' => 'A(z) :attribute kép nem :size kB!.',
-        'string' => 'A(z) :attribute szöveg nem :size karakter hosszú!.',
-        'array' => 'A(z) :attribute tömbnek :size db elemből kell állnia!.',
-    ],
-    'starts_with' => 'A(z) :attribute az alábbiak egyikével kell kezdődnie: :values',
-    'string' => 'A(z) :attribute -nak/nek egy szövegnek kell lennie.',
-    'timezone' => 'A(z) :attribute -nak/nek egy érvényes dátumnak kell lennie.',
-    'unique' => 'A(z) :attribute már foglalt.',
-    'uploaded' => 'A(z) :attribute feltöltése sikertelen volt.',
-    'url' => 'A(z) :attribute formátuma érvénytelen.',
-    'uuid' => 'A(z) :attribute nem egy érvényes UUID!',
 ];

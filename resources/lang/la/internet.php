@@ -2,7 +2,6 @@
 
 return [
     'add' => 'Instrumentum addere',
-    'admin.manage_registered_devices' => 'Instrumentos registratos administrare',
     'ajax_error' => 'Error avius! Precor, refice hanc paginam!',
     'approve' => 'Accepta',
     'approved' => 'Acceptatum',
@@ -20,6 +19,7 @@ return [
     'internet_access' => 'Internet utendum',
     'laptop' => 'Laptop',
     'mac_address' => 'MAC-nomen',
+    'manage_registered_devices' => 'Instrumentos registratos administrare',
     'no_internet' => 'Nunc Internet utendum tibi non est permissum.',
     'ok' => 'OK',
     'registered_devices_info' => 'Tuum instrumentum regsitrare necesse est ad internet capuloso utendum. Cuiusquam numeri instrumentos sponte sua permittere potes. Si tibi magis numero opus est, post registrandum necesse est administratores hoc acceptare. Tu potes argumentationem in agro notationis scribere.',

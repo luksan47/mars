@@ -18,8 +18,8 @@ class CreateLocalizationContributionsTable extends Migration
             $table->id();
             $table->string('language');
             $table->string('key');
-            $table->string('value');
-            $table->integer('contributor_id');
+            $table->text('value');
+            $table->integer('contributor_id')->nullable();
             $table->boolean('approved');
             $table->timestamps();
         });
