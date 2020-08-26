@@ -78,22 +78,37 @@ class LocaleController extends Controller
         return redirect(url()->previous().'#'.explode('.', $request->key)[0])->with('message', __('general.successful_modification'));
     }
 
+    function addExpression($language, $key, $value)
+    {
+        return Artisan::call('locale:add', [
+            'language' => $language,
+            'key' => $key,
+            'value' => $value,
+            '--force' => 'true',
+        ]);
+    }
+
     public function approve(Request $request)
     {
         $contribution = LocalizationContribution::findOrFail($request->id);
-        $exitCode = Artisan::call('locale:add', [
-            'language' => $contribution->language,
-            'key' => $contribution->key,
-            'value' => $contribution->value,
-            '--force' => 'true',
-        ]);
-        if ($exitCode == 0) {
+        if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
             $contribution->update(['approved' => true]);
-
             return back()->with('message', __('general.successful_modification'));
+        } else {
+            return back()->with('error', 'Something went wrong. Please contact the system administrators.');
         }
+    }
 
-        return back()->with('error', 'Something went wrong. Please contact the system administrators.');
+    public function approveAll(Request $request)
+    {
+        foreach (LocalizationContribution::where('approved', false)->get() as $contribution) {
+            if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
+                $contribution->update(['approved' => true]);
+            } else {
+                return back()->with('error', 'Something went wrong with '.$contribution->key.'. Please contact the system administrators.');
+            }
+        }
+        return back()->with('message', __('general.successful_modification'));
     }
 
     public function delete(Request $request)

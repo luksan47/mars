@@ -57,6 +57,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin')->middleware('can:approve,App\LocalizationContribution');
     Route::post('localizations/add', 'LocaleController@add')->name('localizations.add');
     Route::post('localizations/approve', 'LocaleController@approve')->name('localizations.approve')->middleware('can:approve,App\LocalizationContribution');
+    Route::post('localizations/approve_all', 'LocaleController@approveAll')->name('localizations.approve_all')->middleware('can:approve,App\LocalizationContribution');
     Route::post('localizations/delete', 'LocaleController@delete')->name('localizations.delete')->middleware('can:approve,App\LocalizationContribution');
 
     Route::get('/print', 'PrintController@index')->name('print');
