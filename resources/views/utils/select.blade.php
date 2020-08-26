@@ -8,7 +8,7 @@
   <option value="{{ $element->id }}">{{ $element->name }}</option>
   @endforeach
 </select>
-<label for="{{ $element_id }}">@lang('info.name')</label>
+<label for="{{ $element_id }}">@lang($label ?? 'info.name')</label>
 @error($element_id)
 <blockquote class="error">
   {{ $message }}

@@ -50,6 +50,11 @@ class Semester extends Model
         return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
     }
 
+    public function getNameAttribute()
+    {
+        return self::tag();
+    }
+
     public function isAutumn()
     {
         return $this->part == 1;

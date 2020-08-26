@@ -10,22 +10,17 @@
     <div class="card">
       <div class="card-content">
         <span class="card-title">@lang('secretariat.reserve')</span>
+
+        <form method="POST" action="{{ route('secretariat.schedule.send') }}">
+        @csrf
         <div class="row">
-            <!-- TODO: make it a select -->
+            <!-- TODO: show for only one semester -->
             <div class="input-field col s12 m6">
-                <input type="number" id="course" name="course" class="validate" value="{{ old('course') }}" required />
-                <label for="course">@lang('secretariat.course')</label>
-                @error('course')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @include("utils/select", ['elements' => \App\Course::all(), 'element_id' => 'course', 'label' => 'secretariat.course'])
             </div>
             <!-- TODO: make it a select -->
             <div class="input-field col s12 m6">
-                <input id="classroom" name="classroom" type="number" class="validate" value="{{ old('classroom') }}" required />
-                <label for="classroom">@lang('secretariat.classroom')</label>
-                @error('classroom')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @include("utils/select", ['elements' => \App\Classroom::all(), 'element_id' => 'classroom', 'label' => 'secretariat.classroom'])
             </div>
 
             <div class="input-field col s12 m6">
@@ -52,7 +47,12 @@
                 <blockquote class="error">{{ $message }}</blockquote>
                 @enderror
             </div>
+
+            <div class="input-field col s12 m12 l12">
+                <button class="btn waves-effect right" type="submit">@lang('secretariat.reserve')</button>
+            </div>
         </div>
+        </form>
       </div>
     </div>
   </div>
