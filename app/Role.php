@@ -61,6 +61,18 @@ class Role extends Model
         return Role::where('name', $roleName)->first()->id;
     }
 
+    public function canHaveObject()
+    {
+        // TODO: PERMISSION_HANDLER could also be there
+        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN]);
+    }
+
+    public function possibleObjects()
+    {
+        // TODO
+        return \App\Workshop::all();
+    }
+
     public function color()
     {
         switch ($this->name) {
