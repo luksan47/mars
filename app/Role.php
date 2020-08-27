@@ -18,6 +18,7 @@ class Role extends Model
     const PRESIDENT = 'president';
     const STAFF = 'staff';
     const LOCALE_ADMIN = 'locale-admin';
+    const PERMISSION_HANDLER = 'permission-handler';
 
     // Module-related roles
     const PRINTER = 'printer';
@@ -38,6 +39,7 @@ class Role extends Model
         self::PRINTER,
         self::INTERNET_USER,
         self::LOCALE_ADMIN,
+        self::PERMISSION_HANDLER,
     ];
 
     protected $fillable = [
@@ -51,11 +53,62 @@ class Role extends Model
 
     public function name()
     {
-        return __('role.'.$name);
+        return __('role.'.$this->name);
     }
 
     public static function getId(string $roleName)
     {
         return Role::where('name', $roleName)->first()->id;
+    }
+
+    public function color()
+    {
+        switch ($this->name) {
+            case self::PRINT_ADMIN:
+                return "red";
+                break;
+            case self::INTERNET_ADMIN:
+                return "pink";
+                break;
+            case self::COLLEGIST:
+                return "coli";
+                break;
+            case self::TENANT:
+                return "coli blue";
+                break;
+            case self::WORKSHOP_ADMINISTRATOR:
+                return "purple";
+                break;
+            case self::WORKSHOP_LEADER:
+                return "deep-purple";
+                break;
+            case self::SECRETARY:
+                return "indigo";
+                break;
+            case self::DIRECTOR:
+                return "blue";
+                break;
+            case self::PRESIDENT:
+                return "light-blue";
+                break;
+            case self::STAFF:
+                return "cyan";
+                break;
+            case self::PRINTER:
+                return "teal";
+                break;
+            case self::INTERNET_USER:
+                return "light-green";
+                break;
+            case self::LOCALE_ADMIN:
+                return "amber";
+                break;
+            case self::PERMISSION_HANDLER:
+                return "deep-orange";
+                break;
+            default:
+                return "grey";
+                break;
+        }
     }
 }
