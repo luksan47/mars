@@ -1,6 +1,5 @@
-window.send = function (language, key, value) {
-    row_name = key;
-    document.getElementsByName(row_name).forEach(element => {
+window.send = function (language, key, lang) {
+    document.getElementsByName(key).forEach(element => {
         element.classList.add('scale-out');
     });
     $.ajax({
@@ -9,11 +8,11 @@ window.send = function (language, key, value) {
         data: {
             language: language,
             key: key,
-            value: value
+            value: document.getElementById(lang+'.'+key).value
         },
         dataType: 'json',
         success: function(){
-            document.getElementsByName(row_name).forEach(element => {
+            document.getElementsByName(key).forEach(element => {
                 element.classList.add('hide');
             });
             M.toast({html: config.success_msg});

@@ -108,11 +108,11 @@ var config = {
                             {{ $value }}
                         </div>
                         <div class="col s6">
-                            <textarea name="value"
+                            <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
                                 class="materialize-textarea">@lang($fname.'.'.$key)</textarea>
                         </div>
                         <div class="col s1">
-                            <button class="btn-floating waves-effect waves-light right" onclick="send('{{ App::getLocale() }}', '{{ $fname.'.'.$key }}', '{{ $value }}')">
+                            <button class="btn-floating waves-effect waves-light right" onclick="send('{{ App::getLocale() }}', '{{ $fname.'.'.$key }}', '{{ $lang }}')">
                                 <i class="material-icons">send</i>
                             </button>
                         </div>
