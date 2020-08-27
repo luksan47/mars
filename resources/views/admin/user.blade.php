@@ -53,7 +53,10 @@
                         @endif
                     </tbody>
                 </table>
-
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
                 <div class="card-title">@lang('info.more_user_data')</div>
                 <table>
                     <tbody>
