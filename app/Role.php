@@ -17,6 +17,7 @@ class Role extends Model
     const DIRECTOR = 'director';
     const PRESIDENT = 'president';
     const STAFF = 'staff';
+    const LOCALE_ADMIN = 'locale-admin';
 
     // Module-related roles
     const PRINTER = 'printer';
@@ -36,6 +37,7 @@ class Role extends Model
         self::STAFF,
         self::PRINTER,
         self::INTERNET_USER,
+        self::LOCALE_ADMIN,
     ];
 
     protected $fillable = [

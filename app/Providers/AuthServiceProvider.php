@@ -18,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
         \App\PrintJob::class => \App\Policies\PrintJobPolicy::class,
         \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
+        \App\LocalizationContribution::class => \App\Policies\LocalePolicy::class,
     ];
 
     /**
