@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use App\Console\Commands;
 use App\User;
 use App\PrintAccount;
@@ -110,8 +111,9 @@ class PrintController extends Controller
         }
 
         $balance = $request->balance;
+        $user = User::find($request->user_to_send);
         $from_account = Auth::user()->printAccount;
-        $to_account = User::find($request->user_to_send)->printAccount;
+        $to_account = $user->printAccount;
 
         if (!$from_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
@@ -121,6 +123,12 @@ class PrintController extends Controller
 
         $from_account->decrement('balance', $balance);
         $to_account->increment('balance', $balance);
+
+        // Send notification mail
+        if (config('mail.active')) {
+            
+            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
+        }
 
         return redirect()->back()->with('message', __('general.successful_transaction'));
     }
@@ -133,13 +141,19 @@ class PrintController extends Controller
         $validator->validate();
 
         $balance = $request->balance;
-        $print_account = User::find($request->user_id_modify)->printAccount;
+        $user = User::find($request->user_id_modify);
+        $print_account = $user->printAccount;
 
         if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
+        
+        // Send notification mail
+        if (config('mail.active')) {
+            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
+        }
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }

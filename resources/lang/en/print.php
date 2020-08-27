@@ -54,4 +54,6 @@ return [
     'upload_money' => 'You can upload money to your account at the system admins.',
     'use_free_pages' => 'Use free pages',
     'user' => 'User',
+    'changed_balance' => 'Modified print balance',
+    'changed_balance_descr' => ':modifier have been added :amount HUF to your print balance. Your new balance is :balance HUF.',
 ];
