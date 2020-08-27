@@ -25,17 +25,20 @@ class BasicTest extends TestCase
         $response = $this->get('/home');
         $response->assertStatus(302);
 
-        $user = factory(User::class)->create();
-        // Authenticated user is allowed to see the homepage.
+        $user = factory(User::class)->create(['verified' => true]);
+        // Authenticated and verified user is allowed to see the homepage.
         $response = $this->actingAs($user)->get('/home');
         $response->assertStatus(200);
 
         $this->assertAuthenticatedAs($user);
     }
 
+    // TODO: there could be more tests
     public function testVerify()
     {
-        // TODO
+        $user = factory(User::class)->create(['verified' => false]);
+        $response = $this->actingAs($user)->get('/user');
+        $response->assertStatus(302);
         $this->assertTrue(true);
     }
 }
