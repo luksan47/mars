@@ -43,7 +43,7 @@ class RegistrationsController extends Controller
 
     public function show(Request $request)
     {
-        //TODO
-        return redirect()->route('admin.registrations');
+        $user = User::find($request->id);
+        return view('admin.user')->with('user', $user);
     }
 }

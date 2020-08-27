@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'address' => 'Address',
     'city' => 'City',
     'contact' => 'Contact',
     'country' => 'Country',
@@ -10,10 +11,12 @@ return [
     'faculty_must_be_filled' => 'The faculty must be filled.',
     'high_school' => 'High school',
     'information_of_studies' => 'Information of studies',
+    'more_user_data' => 'Other user data',
     'mothers_name' => 'Mother\'s name',
     'name' => 'Name',
     'neptun' => 'Neptun code',
     'phone_number' => 'Phone number',
+    'place_and_date_of_birth' => 'Place and date of birth',
     'place_of_birth' => 'Place of birth',
     'street_and_number' => 'Street and number',
     'user_data' => 'User data',
