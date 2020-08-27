@@ -11,6 +11,7 @@ class Workshop extends Model
     const BOLLOK = 'Bollók János Klasszika-filológia műhely';
     const FILOZOFIA = 'Filozófia műhely';
     const AURELION = 'Aurélien Sauvageot Francia műhely';
+    const GAZDALKODASTUDOMANYI = 'Gazdálkodástudományi műhely';
     const GERMANISZTIKA = 'Germanisztika műhely';
     const INFORMATIKA = 'Informatika műhely';
     const MAGYAR = 'Magyar műhely';
@@ -30,6 +31,7 @@ class Workshop extends Model
         self::BOLLOK,
         self::FILOZOFIA,
         self::AURELION,
+        self::GAZDALKODASTUDOMANYI,
         self::GERMANISZTIKA,
         self::INFORMATIKA,
         self::MAGYAR,
