@@ -10,6 +10,7 @@ class Faculty extends Model
     const BGGYK = 'Bárczi Gusztáv Gyógypedagógiai Kar';
     const BTK = 'Bölcsészettudományi Kar';
     const IK = 'Informatikai Kar';
+    const GTI = 'Gazdálkodástudományi Intézet';
     const PPK = 'Pedagógiai és Pszichológiai Kar';
     const TOK = 'Tanító- és Óvóképző Kar';
     const TATK = 'Társadalomtudományi Kar';
@@ -19,6 +20,7 @@ class Faculty extends Model
         self::AJK,
         self::BGGYK,
         self::BTK,
+        self::GTI,
         self::IK,
         self::PPK,
         self::TOK,
