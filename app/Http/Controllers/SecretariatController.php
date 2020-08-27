@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Course;
 use App\EventTrigger;
 use App\Semester;
-use App\User;
-use App\Course;
 use App\Timetable;
-use Carbon\Carbon;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SecretariatController extends Controller
 {
@@ -92,6 +91,7 @@ class SecretariatController extends Controller
             'semester_id' => $request->semester,
             'teacher_id' => $request->teacher,
         ]);
+
         return self::addCourseView();
     }
 

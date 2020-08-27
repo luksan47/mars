@@ -43,9 +43,10 @@ class Course extends Model
     {
         // Return a collection that can be handled by utils/select
         $types = [];
-        for ($i=0; $i < count(self::TYPES); $i++) {
-            array_push($types, (object) ["id" => $i, "name" => __("secretariat." . self::TYPES[$i])]);
+        for ($i = 0; $i < count(self::TYPES); $i++) {
+            array_push($types, (object) ['id' => $i, 'name' => __('secretariat.'.self::TYPES[$i])]);
         }
+
         return collect($types);
     }
 }
