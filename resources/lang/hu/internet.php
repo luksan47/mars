@@ -2,7 +2,6 @@
 
 return [
     'add' => 'Hozzáadás',
-    'admin.manage_registered_devices' => 'Regisztrált eszközök kezelése',
     'ajax_error' => 'Távoli hiba történt! Kérjük frissítse az oldalt!',
     'approve' => 'Elfogad',
     'approved' => 'Elfogadott',
@@ -23,6 +22,7 @@ return [
     'internet_access' => 'Internetelérés',
     'laptop' => 'Laptop',
     'mac_address' => 'MAC-cím',
+    'manage_registered_devices' => 'Regisztrált eszközök kezelése',
     'no_internet' => 'Jelenleg nincs számodra engedélyezve az internetelérés.',
     'nothing_to_show' => 'Nincs megjeleníthető adat',
     'ok' => 'OK',
