@@ -111,8 +111,9 @@ class PrintController extends Controller
         }
 
         $balance = $request->balance;
+        $user = User::find($request->user_to_send);
         $from_account = Auth::user()->printAccount;
-        $to_account = User::find($request->user_to_send)->printAccount;
+        $to_account = $user->printAccount;
 
         if (!$from_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance($validator);
@@ -122,6 +123,12 @@ class PrintController extends Controller
 
         $from_account->decrement('balance', $balance);
         $to_account->increment('balance', $balance);
+
+        // Send notification mail
+        if (config('mail.active')) {
+            
+            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
+        }
 
         return redirect()->back()->with('message', __('general.successful_transaction'));
     }
@@ -145,7 +152,7 @@ class PrintController extends Controller
         
         // Send notification mail
         if (config('mail.active')) {
-            Mail::to($user)->queue(new \App\Mail\TopUpPrintBalance($user, $balance));
+            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
         }
 
         return redirect()->back()->with('message', __('general.successful_modification'));
