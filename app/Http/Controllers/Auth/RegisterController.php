@@ -50,9 +50,9 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         return view('auth.register', [
-            'user_type' => Role::COLLEGIST, 
-            'faculties' => Faculty::all(), 
-            'workshops' => Workshop::all(), 
+            'user_type' => Role::COLLEGIST,
+            'faculties' => Faculty::all(),
+            'workshops' => Workshop::all(),
             'countries' => require base_path('countries.php')
         ]);
     }
@@ -60,8 +60,8 @@ class RegisterController extends Controller
     public function showTenantRegistrationForm()
     {
         return view('auth.register', [
-            'user_type' => Role::TENANT, 
-            'faculties' => Faculty::all(), 
+            'user_type' => Role::TENANT,
+            'faculties' => Faculty::all(),
             'workshops' => Workshop::all(),
             'countries' => require base_path('countries.php')
         ]);
