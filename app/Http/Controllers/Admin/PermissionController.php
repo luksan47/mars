@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
 {
@@ -17,6 +18,8 @@ class PermissionController extends Controller
 
     public function index()
     {
+        $this->authorize('viewAny', User::class);
+
         $users = User::all();
 
         return view('admin.permissions.list', ['users' => $users]);
@@ -26,12 +29,17 @@ class PermissionController extends Controller
     {
         $user = User::find($id);
 
+        $this->authorize('view', $user);
+
         return view('admin.permissions.show', ['user' => $user]);
     }
 
     public function edit(Request $request, $id, $role_id)
     {
         $user = User::find($id);
+
+        $this->authorize('update', $user);
+
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
             $object_id = $request[$role->name];
@@ -50,6 +58,9 @@ class PermissionController extends Controller
     public function remove(Request $request, $id, $role_id, $object_id = null)
     {
         $user = User::find($id);
+
+        $this->authorize('delete', $user);
+
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
             $user->roles()->where('id', $role_id)->wherePivot('object_id', $object_id)->detach($role_id);

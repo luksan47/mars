@@ -48,18 +48,18 @@
                             <tr>
                                 <td>{{ $role->name() }}</td>
                                 <td>
-                                <div class="row">
+                                <div class="row" style="padding:0;margin:0">
                                 <form action="{{ route('admin.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
                                     @csrf
                                     <div class="col s10">
-                                    @if($role->canHaveObject())
-                                        @include("utils/select", ['elements' => $role->possibleObjects(), 'element_id' => $role->name, 'label' => ''])
-                                    @endif
+                                        @if($role->canHaveObject())
+                                            @include("utils/select", ['elements' => $role->possibleObjects(), 'element_id' => $role->name, 'label' => ''])
+                                        @endif
                                     </div>
                                     <div class="col s2">
-                                    <button type="submit" class="btn-floating waves-effect waves-light right green">
-                                        <i class="material-icons">add</i>
-                                    </button>
+                                        <button type="submit" class="btn-floating waves-effect waves-light right green">
+                                            <i class="material-icons">add</i>
+                                        </button>
                                     </div>
                                 </form>
                                 </div>
