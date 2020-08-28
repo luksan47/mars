@@ -3,6 +3,34 @@
 @section('content')
 <div class="row">
     <div class="col s12">
+
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title">@lang('admin.handle_registrations')</div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form  method="POST" action="{{ route('admin.registrations.accept') }}">
+                                    @csrf
+                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
+                                    <button type="submit" class="btn waves-effect">@lang('admin.accept')</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form  method="POST" action="{{ route('admin.registrations.reject') }}">
+                                    @csrf
+                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
+                                    <button type="submit" class="btn waves-effect coli blue right">@lang('admin.reject')</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
         <div class="card">
             <div class="card-content">
                 <div class="card-title">@lang('info.user_data')</div>

@@ -31,14 +31,14 @@ class RegistrationsController extends Controller
             Mail::to($user)->queue(new \App\Mail\ApprovedRegistration($user->name));
         }
 
-        return redirect()->back()->with('message', __('general.successful_modification'));
+        return redirect()->route('admin.registrations')->with('message', __('general.successful_modification'));
     }
 
     public function reject(Request $request)
     {
         User::findOrFail($request->user_id)->delete();
 
-        return redirect()->back()->with('message', __('general.successful_modification'));
+        return redirect()->route('admin.registrations')->with('message', __('general.successful_modification'));
     }
 
     public function show(Request $request)
