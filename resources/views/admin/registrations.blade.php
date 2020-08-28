@@ -18,7 +18,7 @@
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>
-                                <a href="{{ route('admin.registrations.show', $user->id) }}" type="submit" class="btn waves-effect">@lang('admin.show')</a>
+                                <a href="{{ route('admin.registrations.show', $user->id) }}" type="submit" class="btn-flat waves-effect">@lang('admin.show')</a>
                             </td>
                             <td>
                                 <form  method="POST" action="{{ route('admin.registrations.accept') }}">
