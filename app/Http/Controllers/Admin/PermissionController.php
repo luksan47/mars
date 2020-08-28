@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
-use App\User;
 use App\Role;
+use App\User;
+use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
@@ -19,12 +18,14 @@ class PermissionController extends Controller
     public function index()
     {
         $users = User::all();
+
         return view('admin.permissions.list', ['users' => $users]);
     }
 
     public function show($id)
     {
         $user = User::find($id);
+
         return view('admin.permissions.show', ['user' => $user]);
     }
 
@@ -40,6 +41,7 @@ class PermissionController extends Controller
         } else {
             $user->roles()->attach($role_id);
         }
+
         return back();
     }
 
@@ -48,10 +50,10 @@ class PermissionController extends Controller
         $user = User::find($id);
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
-
         } else {
             $user->roles()->detach($role_id);
         }
+
         return back();
     }
 }

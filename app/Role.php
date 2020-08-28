@@ -77,49 +77,49 @@ class Role extends Model
     {
         switch ($this->name) {
             case self::PRINT_ADMIN:
-                return "red";
+                return 'red';
                 break;
             case self::INTERNET_ADMIN:
-                return "pink";
+                return 'pink';
                 break;
             case self::COLLEGIST:
-                return "coli";
+                return 'coli';
                 break;
             case self::TENANT:
-                return "coli blue";
+                return 'coli blue';
                 break;
             case self::WORKSHOP_ADMINISTRATOR:
-                return "purple";
+                return 'purple';
                 break;
             case self::WORKSHOP_LEADER:
-                return "deep-purple";
+                return 'deep-purple';
                 break;
             case self::SECRETARY:
-                return "indigo";
+                return 'indigo';
                 break;
             case self::DIRECTOR:
-                return "blue";
+                return 'blue';
                 break;
             case self::PRESIDENT:
-                return "light-blue";
+                return 'light-blue';
                 break;
             case self::STAFF:
-                return "cyan";
+                return 'cyan';
                 break;
             case self::PRINTER:
-                return "teal";
+                return 'teal';
                 break;
             case self::INTERNET_USER:
-                return "light-green";
+                return 'light-green';
                 break;
             case self::LOCALE_ADMIN:
-                return "amber";
+                return 'amber';
                 break;
             case self::PERMISSION_HANDLER:
-                return "deep-orange";
+                return 'deep-orange';
                 break;
             default:
-                return "grey";
+                return 'grey';
                 break;
         }
     }
