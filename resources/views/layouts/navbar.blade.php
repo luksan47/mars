@@ -64,13 +64,13 @@
                             <!-- internet admin -->
                             <li><a class="waves-effect" href="{{ route('internet.admin') }}">@lang('internet.internet')</a></li>
                             <!-- permission admin -->
-                            @if(Auth::user()->hasRole(\App\Role::PERMISSION_HANDLER))
+                            @can('permission.handle')
                             <li>
                                 <a class="waves-effect" href="{{ route('admin.permissions.list') }}">
                                 <i class="material-icons left">lock</i>@lang('admin.permissions')
                                 </a>
                             </li>
-                            @endif
+                            @endcan
                         </ul>
                     </div>
                 </li>

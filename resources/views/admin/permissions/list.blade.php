@@ -29,7 +29,7 @@
                             <!-- TODO: show only for admins! -->
                             <td>
                                 <a href="{{ route('admin.permissions.show', $user->id) }}" 
-                                    class="btn-floating waves-effect waves-light right" @cannot('view', $user) disabled @endif>
+                                    class="btn-floating waves-effect waves-light right" @cannot('view', $user) disabled @endcan>
                                     <i class="material-icons">edit</i>
                                 </a>
                             </td>

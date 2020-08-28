@@ -35,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPrintPolicies();
         $this->registerInternetPolicies();
         $this->registerVerificationPolicies();
+        $this->registerPermissionHandlingPolicies();
         $this->registerWorkshopPolicies();
     }
 
@@ -65,6 +66,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define('registration.handle', function ($user) {
             return  $user->hasRole(Role::INTERNET_ADMIN);
+        });
+    }
+
+    public function registerPermissionHandlingPolicies()
+    {
+        Gate::define('permission.handle', function ($user) {
+            return  $user->hasRole(Role::PERMISSION_HANDLER);
         });
     }
 
