@@ -12,8 +12,7 @@ class PermissionController extends Controller
 {
     public function __construct()
     {
-        // TODO change
-        $this->middleware('can:registration.handle');
+        $this->middleware('can:permission.handle');
     }
 
     public function index()
