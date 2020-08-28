@@ -90,7 +90,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     Route::get('/admin/permissions', 'Admin\PermissionController@index')->name('admin.permissions.list');
     Route::get('/admin/permissions/{id}/show', 'Admin\PermissionController@show')->name('admin.permissions.show');
-    Route::post('/admin/permissions/edit', 'Admin\PermissionController@edit')->name('admin.permissions.edit');
+    Route::post('/admin/permissions/{id}/edit', 'Admin\PermissionController@edit')->name('admin.permissions.edit');
+    Route::post('/admin/permissions/{id}/remove', 'Admin\PermissionController@remove')->name('admin.permissions.remove');
 
     Route::get('/faults', 'FaultsController@index')->name('faults');
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');

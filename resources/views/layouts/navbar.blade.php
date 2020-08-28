@@ -63,6 +63,12 @@
                             <li><a class="waves-effect" href="{{ route('print.admin') }}">@lang('print.print')</a></li>
                             <!-- internet admin -->
                             <li><a class="waves-effect" href="{{ route('internet.admin') }}">@lang('internet.internet')</a></li>
+                            <!-- permission admin -->
+                            <li>
+                                <a class="waves-effect" href="{{ route('admin.permissions.list') }}">
+                                <i class="material-icons left">lock</i>@lang('admin.permissions')
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

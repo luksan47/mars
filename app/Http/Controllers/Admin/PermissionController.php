@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\User;
+use App\Role;
 
 class PermissionController extends Controller
 {
@@ -27,8 +28,29 @@ class PermissionController extends Controller
         return view('admin.permissions.show', ['user' => $user]);
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, $id)
     {
-        return index();
+        $user = User::find($id);
+        $role_id = $request->role;
+        $role = Role::find($role_id);
+        if ($role->canHaveObject()) {
+
+        } else {
+            $user->roles()->attach($role_id);
+        }
+        return back();
+    }
+
+    public function remove(Request $request, $id)
+    {
+        $user = User::find($id);
+        $role_id = $request->role;
+        $role = Role::find($role_id);
+        if ($role->canHaveObject()) {
+
+        } else {
+            $user->roles()->detach($role_id);
+        }
+        return back();
     }
 }
