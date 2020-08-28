@@ -62,7 +62,7 @@ class Role extends Model
             return null;
         }
 
-        return \App\Workshop::find($this->pivot->object_id);
+        return $this->possibleObjects()->where('id', $this->pivot->object_id)->first();
     }
 
     public static function getId(string $roleName)
@@ -78,8 +78,25 @@ class Role extends Model
 
     public function possibleObjects()
     {
-        // TODO
+        if (in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
+            return \App\Workshop::all();
+        }
+        if ($this->name == self::LOCALE_ADMIN) {
+            // Do we have this somewhere?
+            $locales =  collect([
+                (object) ['id' => 0, 'name' => 'Magyar'],
+                (object) ['id' => 1, 'name' => 'English'],
+                (object) ['id' => 2, 'name' => 'Latina'],
+                (object) ['id' => 3, 'name' => 'Français'],
+                (object) ['id' => 4, 'name' => 'Italiano'],
+                (object) ['id' => 5, 'name' => 'Deutsch'],
+                (object) ['id' => 6, 'name' => 'Español'],
+                (object) ['id' => 7, 'name' => 'Ελληνικά'],
+            ]);
+            return $locales;
+        }
         return \App\Workshop::all();
+
     }
 
     public function color()

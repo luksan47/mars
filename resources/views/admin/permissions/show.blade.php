@@ -43,7 +43,8 @@
                 <span class="card-title">@lang('admin.other_permissions') </span>
                 <table>
                     <tbody>
-                        @foreach (App\Role::all()->except($user->roles->modelKeys())->sortBy('name') as $role)
+                        @foreach (App\Role::all()->sortBy('name') as $role)
+                            @if(!$user->roles->contains($role) || $role->canHaveObject())
                             <tr>
                                 <td>{{ $role->name() }}</td>
                                 <td>
@@ -64,6 +65,7 @@
                                 </div>
                                 </td>
                             </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
