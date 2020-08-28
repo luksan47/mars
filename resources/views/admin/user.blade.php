@@ -106,7 +106,7 @@
                                 <th scope="row">@lang('info.address')</th>
                                 <td>
                                     {{ $user->personalInformation->country }}, <small>{{ $user->personalInformation->county }}</small>
-                                    </br>
+                                    <br>
                                     {{ $user->personalInformation->zip_code }} {{ $user->personalInformation->city }},
                                     <small>{{ $user->personalInformation->street_and_number }} </small>
                                 </td>
