@@ -18,8 +18,11 @@
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>
-                                <!-- <input type="number" name="user_id" value="{{ $user->id }}" hidden> -->
-                                <a href="{{ route('admin.registrations.show', $user->id) }}" type="submit" class="btn waves-effect coli blue">@lang('admin.show')</a>
+                                <form  method="POST" action="{{ route('admin.registrations.show') }}">
+                                    @csrf
+                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
+                                    <button type="submit" class="waves-effect btn-flat">@lang('admin.show')</button>
+                                </form>
                             </td>
                             <td>
                                 <form  method="POST" action="{{ route('admin.registrations.accept') }}">
