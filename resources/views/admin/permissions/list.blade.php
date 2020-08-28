@@ -21,7 +21,7 @@
                                 @foreach($user->roles as $role)
                                 <span class="new badge {{ $role->color() }}" data-badge-caption="">{{ $role->name() }}
                                     @if($role->pivot->object_id)
-                                        : {{ $role->pivot->object->name }}
+                                        : {{ $role->object()->name }}
                                     @endif
                                 </span>
                                 @endforeach

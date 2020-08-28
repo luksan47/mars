@@ -20,7 +20,7 @@
                             <td>{{ $role->name() }}</td>
                             <td>
                                 @if($role->canHaveObject())
-                                    {{ $role->pivot }}
+                                    {{ $role->object()->name }}
                                 @endif
                             </td>
                             <td>
@@ -44,23 +44,26 @@
                 <table>
                     <tbody>
                         @foreach (App\Role::all()->except($user->roles->modelKeys())->sortBy('name') as $role)
-                        <form action="{{ route('admin.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
-                        @csrf
                             <tr>
                                 <td>{{ $role->name() }}</td>
                                 <td>
+                                <div class="row">
+                                <form action="{{ route('admin.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
+                                    @csrf
+                                    <div class="col s10">
                                     @if($role->canHaveObject())
-                                    <!-- TODO: not working? -->
-                                        @include("utils/select", ['elements' => $role->possibleObjects(), 'element_id' => 'workshop' . $role->name, 'label' => ''])
+                                        @include("utils/select", ['elements' => $role->possibleObjects(), 'element_id' => $role->name, 'label' => ''])
                                     @endif
-                                </td>
-                                <td>
+                                    </div>
+                                    <div class="col s2">
                                     <button type="submit" class="btn-floating waves-effect waves-light right green">
                                         <i class="material-icons">add</i>
                                     </button>
+                                    </div>
+                                </form>
+                                </div>
                                 </td>
                             </tr>
-                        </form>
                         @endforeach
                     </tbody>
                 </table>

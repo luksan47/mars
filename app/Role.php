@@ -56,6 +56,12 @@ class Role extends Model
         return __('role.'.$this->name);
     }
 
+    public function object()
+    {
+        if (!$this->canHaveObject()) return null;
+        return \App\Workshop::find($this->pivot->object_id);
+    }
+
     public static function getId(string $roleName)
     {
         return Role::where('name', $roleName)->first()->id;
