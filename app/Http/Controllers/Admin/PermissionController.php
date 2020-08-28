@@ -28,23 +28,24 @@ class PermissionController extends Controller
         return view('admin.permissions.show', ['user' => $user]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $id, $role_id)
     {
         $user = User::find($id);
-        $role_id = $request->role;
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
-
+            $object_id = $request[$role->name];
+            $user->roles()->attach([
+                $role_id => ['object_id' => $object_id],
+            ]);
         } else {
             $user->roles()->attach($role_id);
         }
         return back();
     }
 
-    public function remove(Request $request, $id)
+    public function remove(Request $request, $id, $role_id)
     {
         $user = User::find($id);
-        $role_id = $request->role;
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
 

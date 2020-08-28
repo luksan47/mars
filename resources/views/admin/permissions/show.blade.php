@@ -19,14 +19,13 @@
                         <tr>
                             <td>{{ $role->name() }}</td>
                             <td>
-                                @if($role->pivot->object_id)
-                                    : {{ $role->pivot->object->name }}
+                                @if($role->canHaveObject())
+                                    {{ $role->pivot }}
                                 @endif
                             </td>
                             <td>
-                                <form action="{{ route('admin.permissions.remove', $user->id) }}" method="post">
+                                <form action="{{ route('admin.permissions.remove', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
                                 @csrf
-                                <input type="number" name="role" value="{{ $role->id }}" hidden>
                                 <button type="submit" class="btn-floating waves-effect waves-light right red">
                                     <i class="material-icons">delete</i>
                                 </button>
@@ -45,15 +44,15 @@
                 <table>
                     <tbody>
                         @foreach (App\Role::all()->except($user->roles->modelKeys())->sortBy('name') as $role)
-                        <form action="{{ route('admin.permissions.edit', $user->id) }}" method="post">
+                        <form action="{{ route('admin.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
                         @csrf
                             <tr>
                                 <td>{{ $role->name() }}</td>
                                 <td>
                                     @if($role->canHaveObject())
-                                        @include("utils/select", ['elements' => $role->possibleObjects(), 'element_id' => $role->name, 'label' => ''])
+                                    <!-- TODO: not working? -->
+                                        @include("utils/select", ['elements' => $role->possibleObjects(), 'element_id' => 'workshop' . $role->name, 'label' => ''])
                                     @endif
-                                    <input type="number" name="role" value="{{ $role->id }}" hidden>
                                 </td>
                                 <td>
                                     <button type="submit" class="btn-floating waves-effect waves-light right green">
