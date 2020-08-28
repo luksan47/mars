@@ -58,7 +58,10 @@ class Role extends Model
 
     public function object()
     {
-        if (!$this->canHaveObject()) return null;
+        if (! $this->canHaveObject()) {
+            return null;
+        }
+
         return \App\Workshop::find($this->pivot->object_id);
     }
 
