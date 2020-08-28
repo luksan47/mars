@@ -58,11 +58,23 @@
                     <div class="collapsible-body">
                         <ul>
                             <!-- registrations -->
-                            <li><a class="waves-effect" href="{{ route('admin.registrations') }}"><i class="material-icons left">accessibility_new</i> @lang('admin.handle_registrations')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('admin.registrations') }}">
+                                    <i class="material-icons left">how_to_reg</i> @lang('admin.handle_registrations')
+                                </a>
+                            </li>
                             <!-- print admin -->
-                            <li><a class="waves-effect" href="{{ route('print.admin') }}"><i class="material-icons left">local_printshop</i>@lang('print.print')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('print.admin') }}">
+                                    <i class="material-icons left">local_printshop</i>@lang('print.print')
+                                </a>
+                            </li>
                             <!-- internet admin -->
-                            <li><a class="waves-effect" href="{{ route('internet.admin') }}"><i class="material-icons left">wifi</i>@lang('internet.internet')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('internet.admin') }}">
+                                    <i class="material-icons left">wifi</i>@lang('internet.internet')
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
