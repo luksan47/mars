@@ -24,7 +24,7 @@
                                 @endif
                             </td>
                             <td>
-                                <form action="{{ route('admin.permissions.remove', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
+                                <form action="{{ route('admin.permissions.remove', ['id' => $user->id, 'role_id' => $role->id, 'object_id' => $role->pivot->object_id]) }}" method="post">
                                 @csrf
                                 <button type="submit" class="btn-floating waves-effect waves-light right red">
                                     <i class="material-icons">delete</i>

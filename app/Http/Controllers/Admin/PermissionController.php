@@ -35,9 +35,11 @@ class PermissionController extends Controller
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
             $object_id = $request[$role->name];
-            $user->roles()->attach([
-                $role_id => ['object_id' => $object_id],
-            ]);
+            if ($user->roles()->where('id', $role_id)->wherePivot('object_id', $object_id)->count() == 0) {
+                $user->roles()->attach([
+                    $role_id => ['object_id' => $object_id],
+                ]);
+            }
         } else {
             $user->roles()->attach($role_id);
         }
@@ -45,11 +47,12 @@ class PermissionController extends Controller
         return back();
     }
 
-    public function remove(Request $request, $id, $role_id)
+    public function remove(Request $request, $id, $role_id, $object_id = null)
     {
         $user = User::find($id);
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
+            $user->roles()->where('id', $role_id)->wherePivot('object_id', $object_id)->detach($role_id);
         } else {
             $user->roles()->detach($role_id);
         }
