@@ -83,7 +83,7 @@ class Role extends Model
         }
         if ($this->name == self::LOCALE_ADMIN) {
             // Do we have this somewhere?
-            $locales =  collect([
+            $locales = collect([
                 (object) ['id' => 0, 'name' => 'Magyar'],
                 (object) ['id' => 1, 'name' => 'English'],
                 (object) ['id' => 2, 'name' => 'Latina'],
@@ -93,10 +93,11 @@ class Role extends Model
                 (object) ['id' => 6, 'name' => 'Español'],
                 (object) ['id' => 7, 'name' => 'Ελληνικά'],
             ]);
+
             return $locales;
         }
-        return \App\Workshop::all();
 
+        return \App\Workshop::all();
     }
 
     public function color()

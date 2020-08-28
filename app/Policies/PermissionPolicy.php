@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
 use App\Role;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PermissionPolicy
@@ -12,7 +12,7 @@ class PermissionPolicy
 
     public function before(User $user)
     {
-        if (!$user->hasRole(Role::PERMISSION_HANDLER)) {
+        if (! $user->hasRole(Role::PERMISSION_HANDLER)) {
             return false;
         }
     }
