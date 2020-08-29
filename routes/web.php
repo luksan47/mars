@@ -117,7 +117,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
 
     /** Documents */
-    Route::get('/documents', 'LatexController@index')->name('documents');
-    Route::get('/documents/license/download', 'LatexController@downloadLicense')->name('documents.license.download');
-    Route::get('/documents/license/print', 'LatexController@printLicense')->name('documents.license.print');
+    Route::get('/documents', 'DocumentController@index')->name('documents');
+    Route::get('/documents/license/download', 'DocumentController@downloadLicense')->name('documents.license.download');
+    Route::get('/documents/license/print', 'DocumentController@printLicense')->name('documents.license.print');
 });

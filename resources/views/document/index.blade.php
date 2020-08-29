@@ -26,7 +26,9 @@
                         </tr>
                     </tbody>
                 </table>
+                @can('print.print')
                 <i>*@lang('document.clarify_print')</i>
+                @endcan
             </div>
         </div>
     </div>

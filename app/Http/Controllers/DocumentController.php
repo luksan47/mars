@@ -7,11 +7,12 @@ use App\Console\Commands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Utils\Printer;
 
-class LatexController extends Controller
+class DocumentController extends Controller
 {
 
-    // Returns .tex file in debug mode
+    // Returns the .tex file in debug mode
     public function generatePDF($path, $data)
     {
         $renderedLatex = view($path)->with($data)->render();
@@ -55,8 +56,9 @@ class LatexController extends Controller
     public function printLicense()
     {
         $license = $this->generateLicense();
-        //TODO
-        return redirect()->back();
+        $filename = __('document.license');
+        $printer = new Printer($filename, $license, /* $use_free_pages */ true);
+        return $printer->print();
     }
 
     public function downloadLicense()
