@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-<a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="#!" class="breadcrumb">@lang('admin.registrations')</a>
+<i class="material-icons left">assignment</i>@lang('document.documents')
 @endsection
 
 @section('content')
@@ -21,12 +20,13 @@
                             </td>
                             <td>
                                 @can('print.print')
-                                <a href="{{ route('documents.license.print') }}" type="submit" class="btn waves-effect coli blue">@lang('document.print')</a>
+                                <a href="{{ route('documents.license.print') }}" type="submit" class="btn waves-effect coli blue">@lang('document.print')*</a>
                                 @endcan
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <i>*@lang('document.clarify_print')</i>
             </div>
         </div>
     </div>
