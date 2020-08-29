@@ -138,8 +138,11 @@ class User extends Authenticatable
     public function hasElevatedPermissions()
     {
         foreach ($this->roles as $role) {
-            if ($role->hasElevatedPermissions()) return true;
+            if ($role->hasElevatedPermissions()) {
+                return true;
+            }
         }
+
         return false;
     }
 
