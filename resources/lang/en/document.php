@@ -5,6 +5,7 @@ return [
     'computer' => 'personal computer',
     'documents' => 'Documents',
     'download' => 'Download',
+    'left' => 'left',
     'electronic_devices' => 'other, not mentioned electronic devices (toaster, kettle)',
     'fill_out' => 'Fill out',
     'furnitures' => 'other furniture, office equipment (chair, table, etc.)',
