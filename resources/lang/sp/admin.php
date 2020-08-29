@@ -2,7 +2,7 @@
 
 return [
     'accept' => 'Aceptar',
-    'admin' => 'Admin',
+    'admin' => 'Admino',
     'handle_registrations' => 'Manejar reistraciones',
     'reject' => 'Rechazar',
     'show' => 'Mostrar',
