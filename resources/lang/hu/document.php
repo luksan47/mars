@@ -5,6 +5,7 @@ return [
     'computer' => 'személyi számítógép',
     'documents' => 'Dokumentumok',
     'download' => 'Letöltés',
+    'left' => 'maradt',
     'electronic_devices' => 'egyéb nem említett elektronikai eszközök (kenyérpirító, vízforraló)',
     'fill_out' => 'Kitöltés',
     'furnitures' => 'egyéb bútorzat, irodai eszköz (szék, asztal, tábla stb.)',

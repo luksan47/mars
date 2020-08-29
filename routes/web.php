@@ -95,8 +95,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::middleware(['can:registration.handle'])->group(function () {
         Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
         Route::get('/admin/registrations/show/{id}', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
-        Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
-        Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
+        Route::get('/admin/registrations/accept/{id}', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
+        Route::get('/admin/registrations/reject/{id}', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
     });
 
     /** Permission handling */
