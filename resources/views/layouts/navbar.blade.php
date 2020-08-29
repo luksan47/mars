@@ -42,9 +42,9 @@
         @endif
         <!-- faults page -->
         <li><a class="waves-effect" href="{{ route('faults') }}"><i class="material-icons left">build</i>@lang('faults.faults')</a></li>
-        
+
         <li><div class="divider"></div></li>
-        
+
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
@@ -58,11 +58,23 @@
                     <div class="collapsible-body">
                         <ul>
                             <!-- registrations -->
-                            <li><a class="waves-effect" href="{{ route('admin.registrations') }}"> @lang('admin.handle_registrations')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('admin.registrations') }}">
+                                    <i class="material-icons left">how_to_reg</i> @lang('admin.handle_registrations')
+                                </a>
+                            </li>
                             <!-- print admin -->
-                            <li><a class="waves-effect" href="{{ route('print.admin') }}">@lang('print.print')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('print.admin') }}">
+                                    <i class="material-icons left">local_printshop</i>@lang('print.print')
+                                </a>
+                            </li>
                             <!-- internet admin -->
-                            <li><a class="waves-effect" href="{{ route('internet.admin') }}">@lang('internet.internet')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('internet.admin') }}">
+                                    <i class="material-icons left">wifi</i>@lang('internet.internet')
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
