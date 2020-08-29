@@ -101,4 +101,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
 
     Route::get('/locale', 'LocaleController@list')->name('locales');
+
+    Route::get('/documents', 'LatexController@index')->name('documents');
+    Route::get('/documents/license/download', 'LatexController@downloadLicense')->name('documents.license.download');
+    Route::get('/documents/license/print', 'LatexController@printLicense')->name('documents.license.print');
 });

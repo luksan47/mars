@@ -60,6 +60,11 @@ return [
             'root' => storage_path('app/printing_queue'),
         ],
 
+        'latex' => [
+            'driver' => 'local',
+            'root' => storage_path('app/latex'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
