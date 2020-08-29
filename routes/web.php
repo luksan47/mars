@@ -123,6 +123,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/documents/import/show', 'DocumentController@showImport')->name('documents.import.show');
     Route::post('/documents/import/add', 'DocumentController@addImport')->name('documents.import.add');
     Route::post('/documents/import/remove', 'DocumentController@removeImport')->name('documents.import.remove');
-    //Route::get('/documents/import/download', 'DocumentController@downloadImport')->name('documents.import.download');
-    //Route::get('/documents/import/print', 'DocumentController@printImport')->name('documents.import.print');
+    Route::get('/documents/import/download', 'DocumentController@downloadImport')->name('documents.import.download');
+    Route::get('/documents/import/print', 'DocumentController@printImport')->name('documents.import.print');
 });

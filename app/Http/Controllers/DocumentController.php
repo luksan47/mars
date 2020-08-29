@@ -12,54 +12,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
-
 class DocumentController extends Controller
 {
 
-    // Returns the .tex file in debug mode
-    public function generatePDF($path, $data)
-    {
-        $renderedLatex = view($path)->with($data)->render();
-
-        $filename =  md5(rand(0, 100000) . date('c'));
-        $path = Storage::disk('latex')->put($filename . '.tex', $renderedLatex);
-        $outputDir = Storage::disk('latex')->path('/');
-
-        // TODO: figure out result
-        Commands::latexToPdf($path, $outputDir);
-
-        if (config('app.debug')) {
-            $result_file = Storage::disk('latex')->path($filename . ".tex");
-        } else {
-            $result_file = Storage::disk('latex')->path($filename . ".pdf");
-        }
-        return $result_file;
-    }
-
-    public function generateLicense()
-    {
-        $user = Auth::user();
-
-        if(!$user->hasPersonalInformation()) {
-            return back()->withInput()->with('error',  __('latex.missing_personal_info'));
-        }
-        $info = $user->personalInformation;
-
-        $pdf = $this->generatePDF('latex.license',
-            [ 'name' => $user->name,
-              'address' => $user->zip_code . ' ' . $info->getAddress(),
-              'phone' => $info->phone_number,
-              'email' => $user->email,
-              'place_and_of_birth' => $info->getPlaceAndDateOfBirth(),
-              'mothers_name' => $info->mothers_name,
-              'date' => date("Y.m.d"),
-        ]);
-        return $pdf;
-    }
-
     public function printLicense()
     {
-        $license = $this->generateLicense();
+        $result = $this->generateLicense();
+        if (!$result['success']) return $result['redirect'];
+        $license = $result['pdf'];
         $filename = __('document.license');
         $printer = new Printer($filename, $license, /* $use_free_pages */ true);
         return $printer->print();
@@ -67,7 +27,27 @@ class DocumentController extends Controller
 
     public function downloadLicense()
     {
-        $license = $this->generateLicense();
+        $result = $this->generateLicense();
+        if (!$result['success']) return $result['redirect'];
+        $license = $result['pdf'];
+        return response()->download($license);
+    }
+
+    public function printImport()
+    {
+        $result = $this->generateImport();
+        if (!$result['success']) return $result['redirect'];
+        $license = $result['pdf'];
+        $filename = __('document.import');
+        $printer = new Printer($filename, $license, /* $use_free_pages */ true);
+        return $printer->print();
+    }
+
+    public function downloadImport()
+    {
+        $result = $this->generateImport();
+        if (!$result['success']) return $result['redirect'];
+        $license = $result['pdf'];
         return response()->download($license);
     }
 
@@ -94,5 +74,72 @@ class DocumentController extends Controller
     {
         ImportItem::findOrFail($request->id)->delete();
         return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+
+    /** Private helper functions */
+
+    // Returns the .tex file in debug mode
+    private function generatePDF($path, $data)
+    {
+        $renderedLatex = view($path)->with($data)->render();
+
+        $filename =  md5(rand(0, 100000) . date('c'));
+        $path = Storage::disk('latex')->put($filename . '.tex', $renderedLatex);
+        $outputDir = Storage::disk('latex')->path('/');
+
+        // TODO: figure out result
+        Commands::latexToPdf($path, $outputDir);
+
+        if (config('app.debug')) {
+            $result_file = Storage::disk('latex')->path($filename . ".tex");
+        } else {
+            $result_file = Storage::disk('latex')->path($filename . ".pdf");
+        }
+        return $result_file;
+    }
+
+    private function generateLicense()
+    {
+        $user = Auth::user();
+
+        if(!$user->hasPersonalInformation()) {
+            return [
+                'success' => false,
+                'redirect' => back()->withInput()->with('error',  __('document.missing_personal_info'))
+            ];
+        }
+        $info = $user->personalInformation;
+
+        $pdf = $this->generatePDF('latex.license',
+            [ 'name' => $user->name,
+              'address' => $user->zip_code . ' ' . $info->getAddress(),
+              'phone' => $info->phone_number,
+              'email' => $user->email,
+              'place_and_of_birth' => $info->getPlaceAndDateOfBirth(),
+              'mothers_name' => $info->mothers_name,
+              'date' => date("Y.m.d"),
+        ]);
+        return ['success' => true, 'pdf' => $pdf];
+    }
+
+    private function generateImport()
+    {
+        $user = Auth::user();
+
+        $items = $user->importItems;
+
+        if ($items->isEmpty()) {
+            return [
+                'success' => false,
+                'redirect' => back()->withInput()->with('error',  __('document.missing_items'))
+            ];
+        }
+
+        $pdf = $this->generatePDF('latex.import',
+            [ 'name' => $user->name,
+              'items' => $items,
+              'date' => date("Y.m.d"),
+        ]);
+        return ['success' => true, 'pdf' => $pdf];
     }
 }

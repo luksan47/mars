@@ -33,11 +33,11 @@
                                 <a href="{{ route('documents.import.show') }}" type="submit" class="btn waves-effect coli">@lang('document.fill_out')</a>
                             </td>
                             <td>
-                                <a href="{{-- {{ route('documents.import.download') }} --}}" type="submit" class="btn waves-effect coli">@lang('document.download')</a>
+                                <a href="{{ route('documents.import.download') }}" type="submit" class="btn waves-effect coli">@lang('document.download')</a>
                             </td>
                             <td>
                                 @can('print.print')
-                                <a href="{{-- {{ route('documents.import.print') }} --}}" type="submit" class="btn waves-effect coli blue">@lang('document.print')</a>
+                                <a href="{{ route('documents.import.print') }}" type="submit" class="btn waves-effect coli blue">@lang('document.print')</a>
                                 @endcan
                             </td>
                         </tr>
