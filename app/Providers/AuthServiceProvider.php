@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\PrintJob::class => \App\Policies\PrintJobPolicy::class,
         \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
         \App\LocalizationContribution::class => \App\Policies\LocalePolicy::class,
+        \App\User::class => \App\Policies\PermissionPolicy::class,
     ];
 
     /**
@@ -34,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPrintPolicies();
         $this->registerInternetPolicies();
         $this->registerVerificationPolicies();
+        $this->registerPermissionHandlingPolicies();
         $this->registerWorkshopPolicies();
     }
 
@@ -63,7 +65,14 @@ class AuthServiceProvider extends ServiceProvider
     public function registerVerificationPolicies()
     {
         Gate::define('registration.handle', function ($user) {
-            return  $user->hasRole(Role::INTERNET_ADMIN);
+            return $user->hasAnyRole([Role::INTERNET_ADMIN, Role::SECRETARY, Role::PERMISSION_HANDLER]);
+        });
+    }
+
+    public function registerPermissionHandlingPolicies()
+    {
+        Gate::define('permission.handle', function ($user) {
+            return  $user->hasRole(Role::PERMISSION_HANDLER);
         });
     }
 
