@@ -20,7 +20,7 @@ return [
     'first_name' => 'First name',
     'germanisztika_muhely' => 'Germanisztika műhely',
     'handle_registrations' => 'Arrange registrations',
-    'informatika_muhely' => 'Informatika műhely',
+    'informatika_muhely' => 'Informatikai műhely',
     'informatikai_kar' => 'Informatikai Kar',
     'information_of_studies' => 'Information of studies',
     'jogtudomanyi_kar' => 'Jogtudományi Kar',
