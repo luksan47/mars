@@ -66,10 +66,10 @@
                 </div>
             </div>
             <div class="card-action">
-                <a href="{{-- {{ route('documents.import.download') }} --}}" type="submit"
+                <a href="{{ route('documents.import.download') }}" type="submit"
                     class="btn waves-effect coli">@lang('document.download')</a>
                 @can('print.print')
-                <a href="{{-- {{ route('documents.import.print') }} --}}" type="submit"
+                <a href="{{ route('documents.import.print') }}" type="submit"
                     class="btn waves-effect coli blue right">@lang('document.print')</a>
                 @endcan
             </div>
