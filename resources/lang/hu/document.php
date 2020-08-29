@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'clarify_print' => 'Nyomtasd ki a kívánt nyilatkozatot a Collegiumban kihelyezett nyomtatóval, és add le a titkárságon. A költségek levonásra kerülnek.',
+    'clarify_print' => 'Nyomtasd ki a kívánt nyilatkozatot a Collegiumban kihelyezett nyomtatóval, és add le a titkárságon/portán. A költségek levonásra kerülnek.',
     'computer' => 'személyi számítógép',
     'documents' => 'Dokumentumok',
     'download' => 'Letöltés',
@@ -16,4 +16,5 @@ return [
     'not_report' => 'Nem kell bejelenteni:',
     'print' => 'Nyomtatás',
     'report' => 'Be kell jelenteni:',
+    'serial_number' => 'Sorozatszám (számítógépeknél)',
 ];

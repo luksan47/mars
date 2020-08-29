@@ -81,7 +81,8 @@ class DocumentController extends Controller
     {
         ImportItem::create([
             'user_id' => Auth::user()->id,
-            'name' => $request->item
+            'name' => $request->item,
+            'serial_number'=> $request->serial_number ?? null
         ]);
         return redirect()->back()->with('message', __('general.successful_modification'));
     }

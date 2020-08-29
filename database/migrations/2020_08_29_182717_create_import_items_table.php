@@ -17,6 +17,7 @@ class CreateImportItemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('name');
+            $table->string('serial_number')->nullable();
             $table->timestamps();
         });
     }

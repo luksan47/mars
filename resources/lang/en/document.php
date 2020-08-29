@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'clarify_print' => 'Print the wanted document using the printer in the Collegium, and give it to the secretary. Costs will be deducted.',
+    'clarify_print' => 'Print the wanted document using the printer in the Collegium, and give it to the secretary/doorman. Costs will be deducted.',
     'computer' => 'personal computer',
     'documents' => 'Documents',
     'download' => 'Download',
@@ -16,4 +16,5 @@ return [
     'not_report' => 'You don\'t have to report:',
     'print' => 'Print',
     'report' => 'You have to report:',
+    'serial_number' => 'Serial number (for computers)',
 ];
