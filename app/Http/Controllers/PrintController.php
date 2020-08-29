@@ -232,7 +232,7 @@ class PrintController extends Controller
 
     public function listPrintAccountHistory() {
         $this->authorize('viewAny', PrintJob::class);
-        
+
         $columns = ['user.name', 'balance_change', 'free_page_change', 'deadline_change', 'modifier', 'modified_at'];
         $paginator = TabulatorPaginator::from(
             PrintAccountHistory::join('users as user', 'user.id', '=', 'user_id')
@@ -241,8 +241,8 @@ class PrintController extends Controller
                     ->with('user')
             )->sortable($columns)
             ->filterable($columns)
-            ->paginate(); 
-        return $paginator; 
+            ->paginate();
+        return $paginator;
     }
 
     public function cancelPrintJob($id) {
@@ -296,9 +296,7 @@ class PrintController extends Controller
     }
 
     private function handleNoBalance($validator) {
-
         return back()->withInput()->with('error',  __('print.no_balance'));
-    
     }
 
     private function getPages($validator, $path) {

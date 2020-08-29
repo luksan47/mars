@@ -90,6 +90,8 @@ class LocaleController extends Controller
 
     public function approve(Request $request)
     {
+        $this->authorize('approve', LocalizationContribution::class);
+
         $contribution = LocalizationContribution::findOrFail($request->id);
         if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
             $contribution->update(['approved' => true]);
@@ -101,6 +103,8 @@ class LocaleController extends Controller
 
     public function approveAll(Request $request)
     {
+        $this->authorize('approve', LocalizationContribution::class);
+
         foreach (LocalizationContribution::where('approved', false)->get() as $contribution) {
             if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
                 $contribution->update(['approved' => true]);
@@ -113,6 +117,8 @@ class LocaleController extends Controller
 
     public function delete(Request $request)
     {
+        $this->authorize('approve', LocalizationContribution::class);
+
         $contribution = LocalizationContribution::findOrFail($request->id);
         $contribution->delete();
 

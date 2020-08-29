@@ -135,4 +135,9 @@ class Role extends Model
                 return 'grey';
         }
     }
+
+    public function hasElevatedPermissions()
+    {
+        return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY]);
+    }
 }
