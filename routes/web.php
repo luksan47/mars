@@ -100,7 +100,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     });
 
     /** Permission handling */
-    Route::middleware(['can:permissions.handle'])->group(function () {
+    Route::middleware(['can:permission.handle'])->group(function () {
         Route::get('/admin/permissions', 'Admin\PermissionController@index')->name('admin.permissions.list');
         Route::get('/admin/permissions/{id}/show', 'Admin\PermissionController@show')->name('admin.permissions.show');
         Route::post('/admin/permissions/{id}/edit/{role_id}', 'Admin\PermissionController@edit')->name('admin.permissions.edit');
