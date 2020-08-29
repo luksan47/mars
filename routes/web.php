@@ -86,7 +86,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
     Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
-    Route::post('/admin/registrations/show', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
+    Route::get('/admin/registrations/show/{id}', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
 
     Route::get('/faults', 'FaultsController@index')->name('faults');
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
