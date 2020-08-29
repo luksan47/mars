@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\ImportItem;
 use App\Console\Commands;
+use App\Utils\Printer;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Utils\Printer;
+
+
 
 class DocumentController extends Controller
 {
@@ -70,5 +74,25 @@ class DocumentController extends Controller
     public function index()
     {
         return view('document.index');
+    }
+
+    public function showImport()
+    {
+        return view('document.import', ['items' => Auth::user()->importItems]);
+    }
+
+    public function addImport(Request $request)
+    {
+        ImportItem::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->item,
+            'serial_number'=> $request->serial_number ?? null
+        ]);
+        return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+    public function removeImport(Request $request)
+    {
+        ImportItem::findOrFail($request->id)->delete();
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 }
