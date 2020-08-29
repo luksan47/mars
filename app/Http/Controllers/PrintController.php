@@ -105,7 +105,7 @@ class PrintController extends Controller
             'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
-        
+
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
@@ -126,7 +126,6 @@ class PrintController extends Controller
 
         // Send notification mail
         if (config('mail.active')) {
-            
             Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
         }
 
@@ -149,7 +148,7 @@ class PrintController extends Controller
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
-        
+
         // Send notification mail
         if (config('mail.active')) {
             Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
@@ -233,7 +232,7 @@ class PrintController extends Controller
 
     public function listPrintAccountHistory() {
         $this->authorize('viewAny', PrintJob::class);
-        
+
         $columns = ['user.name', 'balance_change', 'free_page_change', 'deadline_change', 'modifier', 'modified_at'];
         $paginator = TabulatorPaginator::from(
             PrintAccountHistory::join('users as user', 'user.id', '=', 'user_id')
@@ -242,8 +241,8 @@ class PrintController extends Controller
                     ->with('user')
             )->sortable($columns)
             ->filterable($columns)
-            ->paginate(); 
-        return $paginator; 
+            ->paginate();
+        return $paginator;
     }
 
     public function cancelPrintJob($id) {
@@ -271,7 +270,6 @@ class PrintController extends Controller
                     . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ")
                     . "-n " . $number_of_copies . " "
                     . $path . " 2>&1";
-            Log::info($command);
             $result = Commands::print($command);
             if (!preg_match("/^request id is ([^\s]*) \\([0-9]* file\\(s\\)\\)$/", $result, $job)) {
                 Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). result:"
@@ -298,9 +296,7 @@ class PrintController extends Controller
     }
 
     private function handleNoBalance($validator) {
-
         return back()->withInput()->with('error',  __('print.no_balance'));
-    
     }
 
     private function getPages($validator, $path) {
