@@ -44,7 +44,7 @@ class RegistrationsController extends Controller
 
     public function reject(Request $request)
     {
-        User::findOrFail($request->user_id)->delete();
+        User::findOrFail($request->id)->delete();
 
         if($request->next){
             $next_user = User::where('verified', false)->first();
