@@ -102,7 +102,12 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     Route::get('/locale', 'LocaleController@list')->name('locales');
 
-    Route::get('/documents', 'LatexController@index')->name('documents');
-    Route::get('/documents/license/download', 'LatexController@downloadLicense')->name('documents.license.download');
-    Route::get('/documents/license/print', 'LatexController@printLicense')->name('documents.license.print');
+    Route::get('/documents', 'DocumentController@index')->name('documents');
+    Route::get('/documents/license/download', 'DocumentController@downloadLicense')->name('documents.license.download');
+    Route::get('/documents/license/print', 'DocumentController@printLicense')->name('documents.license.print');
+    Route::get('/documents/import/show', 'DocumentController@showImport')->name('documents.import.show');
+    Route::post('/documents/import/add', 'DocumentController@addImport')->name('documents.import.add');
+    Route::post('/documents/import/remove', 'DocumentController@removeImport')->name('documents.import.remove');
+    //Route::get('/documents/import/download', 'DocumentController@downloadImport')->name('documents.import.download');
+    //Route::get('/documents/import/print', 'DocumentController@printImport')->name('documents.import.print');
 });

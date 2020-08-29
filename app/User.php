@@ -116,6 +116,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Faculty::class, 'faculty_users');
     }
 
+    public function importItems()
+    {
+        return $this->hasMany('App\ImportItem');
+    }
+
     /* Role related getters */
 
     public function roles()
