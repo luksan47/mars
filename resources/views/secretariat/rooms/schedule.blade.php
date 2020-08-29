@@ -40,12 +40,10 @@
             </div>
 
             <div class="input-field col s12 m6">
-                <input type="text" class="timepicker validate" id="course_time" name="course_time"
+                <input type="text" class="timepicker validate @error('course_time') invalid @enderror" id="course_time" name="course_time"
                     value="{{ old('course_time') }}" required>
                 <label for="course_time">@lang('secretariat.course_time')</label>
-                @error('course_time')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @error('course_time') <span class="helper-text" data-error="{{ $message }}"></span> @enderror
             </div>
 
             <div class="input-field col s12 m12 l12">

@@ -93,12 +93,14 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 
-    Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
-    Route::get('/secretariat/rooms', 'SecretariatController@rooms')->name('secretariat.rooms');
-    Route::get('/secretariat/course', 'SecretariatController@addCourseView')->name('secretariat.course');
-    Route::get('/secretariat/schedule', 'SecretariatController@scheduleCourseView')->name('secretariat.rooms.schedule');
-    Route::post('/secretariat/schedule/send', 'SecretariatController@scheduleCourse')->name('secretariat.schedule.send');
-    Route::post('/secretariat/course/add', 'SecretariatController@scheduleCourse')->name('secretariat.course.add');
-
+    // tmp perm check
+    Route::middleware(['can:print.modify'])->group(function () {
+        Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
+        Route::get('/secretariat/rooms', 'SecretariatController@rooms')->name('secretariat.rooms');
+        Route::get('/secretariat/course', 'SecretariatController@addCourseView')->name('secretariat.course');
+        Route::get('/secretariat/schedule', 'SecretariatController@scheduleCourseView')->name('secretariat.rooms.schedule');
+        Route::post('/secretariat/schedule/send', 'SecretariatController@scheduleCourse')->name('secretariat.schedule.send');
+        Route::post('/secretariat/course/add', 'SecretariatController@scheduleCourse')->name('secretariat.course.add');
+    });
     Route::get('/locale', 'LocaleController@list')->name('locales');
 });

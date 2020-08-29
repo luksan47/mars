@@ -15,46 +15,36 @@
         @csrf
         <div class="row">
             <div class="input-field col s12 l6">
-                <input type="text" id="code" name="code" class="autocomplete validate" value="{{ old('code') }}" required>
+                <input type="text" id="code" name="code" class="autocomplete validate @error('code') invalid @enderror" value="{{ old('code') }}" required>
                 <label for="code">@lang('secretariat.code')</label>
-                @error('code')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @error('code') <span class="helper-text" data-error="{{ $message }}"></span> @enderror
             </div>
             <div class="input-field col s12 m12 l6">
                 @include("utils/select", ['elements' => \App\Workshop::all(), 'element_id' => 'workshop', 'label' => 'secretariat.workshop'])
             </div>
             <div class="input-field col s12">
-                <input id="name" name="name" type="text" class="validate" value="{{ old('name') }}" required>
+                <input id="name" name="name" type="text" class="validate @error('name') invalid @enderror" value="{{ old('name') }}" required>
                 <label for="name">@lang('secretariat.name')</label>
-                @error('name')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @error('name') <span class="helper-text" data-error="{{ $message }}"></span> @enderror
             </div>
             <div class="input-field col s12">
-                <input id="name_english" name="name_english" type="text" class="validate" value="{{ old('name_english') }}" required>
+                <input id="name_english" name="name_english" type="text" class="validate @error('name_english') invalid @enderror" value="{{ old('name_english') }}" required>
                 <label for="name_english">@lang('secretariat.name_english')</label>
-                @error('name_english')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @error('name_english') <span class="helper-text" data-error="{{ $message }}"></span> @enderror
             </div>
             <!-- TODO: make it a select -->
             <div class="input-field col s12 m6 l6">
             @include("utils/select", ['elements' => \App\Course::types(), 'element_id' => 'type', 'label' => 'secretariat.type'])
             </div>
             <div class="input-field col s6 m3 l3">
-                <input id="credits" name="credits" type="number" class="validate" min="0" value="{{ old('credits') }}" required>
+                <input id="credits" name="credits" type="number" class="validate @error('credits') invalid @enderror" min="0" value="{{ old('credits') }}" required>
                 <label for="credits">@lang('secretariat.credits')</label>
-                @error('credits')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @error('credits') <span class="helper-text" data-error="{{ $message }}"></span> @enderror
             </div>
             <div class="input-field col s6 m3 l3">
-                <input id="hours" name="hours" type="text" class="validate" value="{{ old('hours') }}" required>
+                <input id="hours" name="hours" type="text" class="validate @error('hours') invalid @enderror" value="{{ old('hours') }}" required>
                 <label for="hours">@lang('secretariat.hours')</label>
-                @error('hours')
-                <blockquote class="error">{{ $message }}</blockquote>
-                @enderror
+                @error('hours') <span class="helper-text" data-error="{{ $message }}"></span> @enderror
             </div>
             <div class="input-field col s12 m12 l6">
                 @include("utils/select", ['elements' => $users, 'element_id' => 'teacher', 'label' => 'secretariat.teacher'])
