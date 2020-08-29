@@ -88,6 +88,11 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
     Route::get('/admin/registrations/show/{id}', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
 
+    Route::get('/admin/permissions', 'Admin\PermissionController@index')->name('admin.permissions.list');
+    Route::get('/admin/permissions/{id}/show', 'Admin\PermissionController@show')->name('admin.permissions.show');
+    Route::post('/admin/permissions/{id}/edit/{role_id}', 'Admin\PermissionController@edit')->name('admin.permissions.edit');
+    Route::post('/admin/permissions/{id}/remove/{role_id}/{object_id?}', 'Admin\PermissionController@remove')->name('admin.permissions.remove');
+
     Route::get('/faults', 'FaultsController@index')->name('faults');
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');

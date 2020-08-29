@@ -18,6 +18,7 @@ class Role extends Model
     const PRESIDENT = 'president';
     const STAFF = 'staff';
     const LOCALE_ADMIN = 'locale-admin';
+    const PERMISSION_HANDLER = 'permission-handler';
 
     // Module-related roles
     const PRINTER = 'printer';
@@ -38,6 +39,7 @@ class Role extends Model
         self::PRINTER,
         self::INTERNET_USER,
         self::LOCALE_ADMIN,
+        self::PERMISSION_HANDLER,
     ];
 
     protected $fillable = [
@@ -51,11 +53,86 @@ class Role extends Model
 
     public function name()
     {
-        return __('role.'.$name);
+        return __('role.'.$this->name);
+    }
+
+    public function object()
+    {
+        if (! $this->canHaveObject()) {
+            return null;
+        }
+
+        return $this->possibleObjects()->where('id', $this->pivot->object_id)->first();
     }
 
     public static function getId(string $roleName)
     {
         return Role::where('name', $roleName)->first()->id;
+    }
+
+    public function canHaveObject()
+    {
+        // TODO: PERMISSION_HANDLER could also be there
+        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN]);
+    }
+
+    public function possibleObjects()
+    {
+        if (in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
+            return \App\Workshop::all();
+        }
+        if ($this->name == self::LOCALE_ADMIN) {
+            // Do we have this somewhere?
+            $locales = collect([
+                (object) ['id' => 0, 'name' => 'Magyar'],
+                (object) ['id' => 1, 'name' => 'English'],
+                (object) ['id' => 2, 'name' => 'Latina'],
+                (object) ['id' => 3, 'name' => 'Français'],
+                (object) ['id' => 4, 'name' => 'Italiano'],
+                (object) ['id' => 5, 'name' => 'Deutsch'],
+                (object) ['id' => 6, 'name' => 'Español'],
+                (object) ['id' => 7, 'name' => 'Ελληνικά'],
+            ]);
+
+            return $locales;
+        }
+
+        return \App\Workshop::all();
+    }
+
+    public function color()
+    {
+        switch ($this->name) {
+            case self::PRINT_ADMIN:
+                return 'red';
+            case self::INTERNET_ADMIN:
+                return 'pink';
+            case self::COLLEGIST:
+                return 'coli';
+            case self::TENANT:
+                return 'coli blue';
+            case self::WORKSHOP_ADMINISTRATOR:
+                return 'purple';
+            case self::WORKSHOP_LEADER:
+                return 'deep-purple';
+            case self::SECRETARY:
+                return 'indigo';
+            case self::DIRECTOR:
+                return 'blue';
+            case self::PRESIDENT:
+                return 'light-blue';
+            case self::STAFF:
+                return 'cyan';
+            case self::PRINTER:
+                return 'teal';
+            case self::INTERNET_USER:
+                return 'light-green';
+            case self::LOCALE_ADMIN:
+                return 'amber';
+            case self::PERMISSION_HANDLER:
+                return 'deep-orange';
+            default:
+                return 'grey';
+        }
     }
 }
