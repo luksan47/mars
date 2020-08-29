@@ -50,10 +50,12 @@ class AddExpression extends Command
             $expression_value = addslashes($this->argument('value'));
             if ($key == null || $language == null || $expression_value == null) {
                 $this->error('Missing argument(s).');
+
                 return 1;
             }
             if (count(explode('.', $key)) != 2) {
                 $this->error('Invalid key format.');
+
                 return 1;
             }
 
@@ -63,19 +65,21 @@ class AddExpression extends Command
             $path = '/resources/lang/'.$language.'/'.$file.'.php';
             $expressions = file_exists(base_path($path)) ? require base_path($path) : [];
 
-            if($file == 'validation'){
+            if ($file == 'validation') {
                 $expressions['attributes'][$expression_key] = $expression_value;
             } else {
                 $expressions[$expression_key] = $expression_value;
             }
-            
+
             if (! (ksort($expressions))) {
                 $this->error('Sorting '.$file.' failed.');
+
                 return 1;
             }
             $file_write = fopen(base_path($path), 'w');
             if (! (generate_file($file_write, $expressions))) {
                 $this->error('Writing to '.$file.' failed.');
+
                 return 1;
             }
             $this->comment('Set '.$expression_key.' to '.$expression_value.'.');
@@ -84,6 +88,7 @@ class AddExpression extends Command
             $key = $this->ask('What should be the key of the expression (eg. general.home)?');
             if (count(explode('.', $key)) != 2) {
                 $this->error('Invalid key format.');
+
                 return 1;
             }
             $file = explode('.', $key)[0];
@@ -94,14 +99,16 @@ class AddExpression extends Command
                 if (! file_exists(base_path($path))) {
                     if (! $this->confirm('Do you want to create a new '.($language == 'en' ? 'english' : 'hungarian').' file named '.$file.'.php?')) {
                         $this->info('Action cancelled.');
+
                         return;
                     }
                 }
                 $expressions = file_exists(base_path($path)) ? require base_path($path) : [];
-                if($file == 'validation'){
+                if ($file == 'validation') {
                     if (isset($expressions['attributes'][$expression_key])) {
                         if (! $this->confirm('Do you want to override the old '.($language == 'en' ? 'english' : 'hungarian').' translation ('.$expressions['attributes'][$expression_key].')?')) {
                             $this->info('Action cancelled.');
+
                             return;
                         }
                     }
@@ -109,25 +116,28 @@ class AddExpression extends Command
                     if (isset($expressions[$expression_key])) {
                         if (! $this->confirm('Do you want to override the old '.($language == 'en' ? 'english' : 'hungarian').' translation ('.$expressions[$expression_key].')?')) {
                             $this->info('Action cancelled.');
+
                             return;
                         }
                     }
-                } 
+                }
 
                 //save expression
                 $expression_value = addslashes($this->ask('What should be the '.($language == 'en' ? 'english' : 'hungarian').' translation?'));
-                if($file == 'validation'){
+                if ($file == 'validation') {
                     $expressions['attributes'][$expression_key] = $expression_value;
                 } else {
                     $expressions[$expression_key] = $expression_value;
                 }
                 if (! (ksort($expressions))) {
                     $this->error('Sorting the '.($language == 'en' ? 'english' : 'hungarian').' '.$file.' failed.');
+
                     return 1;
                 }
                 $file_write = fopen(base_path($path), 'w');
                 if (! (generate_file($file_write, $expressions))) {
                     $this->error('Writing to the '.($language == 'en' ? 'english' : 'hungarian').' '.$file.' failed.');
+
                     return 1;
                 }
                 $this->comment('Set '.($language == 'en' ? 'english' : 'hungarian').' '.$expression_key.' to '.$expression_value.'.');
