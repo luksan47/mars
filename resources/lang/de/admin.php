@@ -1,5 +1,3 @@
 <?php
 
-return [
-    'accept' => 'Accept3',
-];
+return [];
