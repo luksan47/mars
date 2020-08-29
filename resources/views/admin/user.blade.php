@@ -2,7 +2,8 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="#!" class="breadcrumb">@lang('admin.handle_registrations')</a>
+<a href="{{ route('admin.registrations') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.registrations')</a>
+<a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
 
 @section('content')
@@ -11,7 +12,7 @@
 
         <div class="card">
             <div class="card-content">
-                <h5><b>{{ $user->name }}</b> ({{ $users_left}} left)
+                <h5><b>{{ $user->name }}</b> ({{ $users_left}} @lang('document.left'))
                 <div class="right">
                     <a href="{{ route('admin.registrations.reject', ['id' => $user->id, 'next' => true]) }}" class="btn-floating red waves-effect">
                         <i class="material-icons">block</i></a>
