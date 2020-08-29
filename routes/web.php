@@ -47,58 +47,73 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('userdata', 'UserController@showData')->name('userdata');
+
+    /** User data */
     Route::get('/user', 'UserController@index')->name('user');
+    Route::get('/userdata', 'UserController@showData')->name('userdata');
     Route::get('/userdata', 'UserController@showData')->name('userdata');
     Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
-    Route::get('localizations', 'LocaleController@index')->name('localizations');
-    Route::get('localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin')->middleware('can:approve,App\LocalizationContribution');
-    Route::post('localizations/add', 'LocaleController@add')->name('localizations.add');
-    Route::post('localizations/approve', 'LocaleController@approve')->name('localizations.approve')->middleware('can:approve,App\LocalizationContribution');
-    Route::post('localizations/approve_all', 'LocaleController@approveAll')->name('localizations.approve_all')->middleware('can:approve,App\LocalizationContribution');
-    Route::post('localizations/delete', 'LocaleController@delete')->name('localizations.delete')->middleware('can:approve,App\LocalizationContribution');
+    /** Localization */
+    Route::get('/locale', 'LocaleController@list')->name('locales');
+    Route::get('/localizations', 'LocaleController@index')->name('localizations');
+    Route::post('/localizations/add', 'LocaleController@add')->name('localizations.add');
+    Route::middleware(['can:approve,App\LocalizationContribution'])->group(function () {
+        Route::get('/localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin');
+        Route::post('/localizations/approve', 'LocaleController@approve')->name('localizations.approve');
+        Route::post('/localizations/approve_all', 'LocaleController@approveAll')->name('localizations.approve_all');
+        Route::post('/localizations/delete', 'LocaleController@delete')->name('localizations.delete');
+    });
 
+    /** Printing */
     Route::get('/print', 'PrintController@index')->name('print');
-    Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
-    Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
-    Route::post('/print/transfer_balance', 'PrintController@transferBalance')->name('print.transfer-balance');
-    Route::put('/print/print', 'PrintController@print')->name('print.print');
     Route::get('/print/free_pages/all', 'PrintController@listFreePages')->name('print.free_pages.all');
     Route::get('/print/print_jobs/all', 'PrintController@listPrintJobs')->name('print.print_jobs.all');
-    Route::get('/print/account_history', 'PrintController@listPrintAccountHistory')->name('print.account_history')->middleware('can:print.modify');
+    Route::post('/print/transfer_balance', 'PrintController@transferBalance')->name('print.transfer-balance');
     Route::post('/print/print_jobs/{id}/cancel', 'PrintController@cancelPrintJob')->name('print.print_jobs.cancel');
-    Route::get('/print/admin', 'PrintController@admin')->name('print.admin');
+    Route::put('/print/print', 'PrintController@print')->name('print.print');
+    Route::middleware(['can:print.modify'])->group(function () {
+        Route::get('/print/account_history', 'PrintController@listPrintAccountHistory')->name('print.account_history');
+        Route::get('/print/admin', 'PrintController@admin')->name('print.admin');
+        Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify');
+    });
+    Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
 
+    /** Internet */
     Route::get('/internet', 'InternetController@index')->name('internet');
     Route::get('/internet/mac_addresses/users', 'InternetController@getUsersMacAddresses')->name('internet.mac_addresses.users');
-    Route::post('/internet/mac_addresses/{id}/delete', 'InternetController@deleteMacAddress')->name('internet.mac_addresses.delete');
-    Route::post('/internet/mac_addresses/add', 'InternetController@addMacAddress')->name('internet.mac_addresses.add');
-    Route::post('/internet/wifi_password/reset', 'InternetController@resetWifiPassword')->name('internet.wifi_password.reset');
-
     Route::get('/internet/admin/mac_addresses/all', 'InternetController@getUsersMacAddressesAdmin')->name('internet.admin.mac_addresses.all');
     Route::get('/internet/admin/internet_accesses/all', 'InternetController@getInternetAccessesAdmin')->name('internet.admin.internet_accesses.all');
     Route::get('/internet/admin', 'InternetController@admin')->name('internet.admin');
+    Route::post('/internet/mac_addresses/add', 'InternetController@addMacAddress')->name('internet.mac_addresses.add');
     Route::post('/internet/mac_addresses/{id}/edit', 'InternetController@editMacAddress')->name('internet.mac_addresses.edit');
+    Route::post('/internet/mac_addresses/{id}/delete', 'InternetController@deleteMacAddress')->name('internet.mac_addresses.delete');
+    Route::post('/internet/wifi_password/reset', 'InternetController@resetWifiPassword')->name('internet.wifi_password.reset');
     Route::post('/internet/internet_accesses/{id}/edit', 'InternetController@editInternetAccess')->name('internet.internet_accesses.edit');
 
-    Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
-    Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
-    Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
-    Route::get('/admin/registrations/show/{id}', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
+    /** Registration handling */
+    Route::middleware(['can:registration.handle'])->group(function () {
+        Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
+        Route::get('/admin/registrations/show/{id}', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
+        Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
+        Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
+    });
 
-    Route::get('/admin/permissions', 'Admin\PermissionController@index')->name('admin.permissions.list');
-    Route::get('/admin/permissions/{id}/show', 'Admin\PermissionController@show')->name('admin.permissions.show');
-    Route::post('/admin/permissions/{id}/edit/{role_id}', 'Admin\PermissionController@edit')->name('admin.permissions.edit');
-    Route::post('/admin/permissions/{id}/remove/{role_id}/{object_id?}', 'Admin\PermissionController@remove')->name('admin.permissions.remove');
+    /** Permission handling */
+    Route::middleware(['can:permissions.handle'])->group(function () {
+        Route::get('/admin/permissions', 'Admin\PermissionController@index')->name('admin.permissions.list');
+        Route::get('/admin/permissions/{id}/show', 'Admin\PermissionController@show')->name('admin.permissions.show');
+        Route::post('/admin/permissions/{id}/edit/{role_id}', 'Admin\PermissionController@edit')->name('admin.permissions.edit');
+        Route::post('/admin/permissions/{id}/remove/{role_id}/{object_id?}', 'Admin\PermissionController@remove')->name('admin.permissions.remove');
+    });
 
+    /** Faults */
     Route::get('/faults', 'FaultsController@index')->name('faults');
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');
     Route::post('/faults/add', 'FaultsController@addFault')->name('faults.add');
     Route::post('/faults/update', 'FaultsController@updateStatus')->name('faults.update');
 
+    /** WIP: Secretariat */
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
-
-    Route::get('/locale', 'LocaleController@list')->name('locales');
 });
