@@ -135,6 +135,17 @@ class User extends Authenticatable
         return $this->hasAnyRole([$roleName], $objectId);
     }
 
+    public function hasElevatedPermissions()
+    {
+        foreach ($this->roles as $role) {
+            if ($role->hasElevatedPermissions()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /* Semester related getters */
 
     public function allSemesters()
@@ -210,15 +221,5 @@ class User extends Authenticatable
         ]);
 
         return $this;
-    }
-
-    /**
-     * @deprecated use hasRole instead
-     */
-    public function isAdmin()
-    {
-        trigger_error('Method '.__METHOD__.' is deprecated', E_USER_DEPRECATED);
-
-        return $this->hasRole(['admin']);
     }
 }
