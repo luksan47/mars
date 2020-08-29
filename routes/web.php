@@ -116,7 +116,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     /** WIP: Secretariat */
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
 
-    /** Documents */  
+    /** Documents */
     Route::get('/documents', 'DocumentController@index')->name('documents');
     Route::get('/documents/license/download', 'DocumentController@downloadLicense')->name('documents.license.download');
     Route::get('/documents/license/print', 'DocumentController@printLicense')->name('documents.license.print');
