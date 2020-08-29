@@ -28,7 +28,8 @@ mix.js('resources/js/materialize_custom.js', 'public/js/materialize.js') // We u
       'resources/css/cookieconsent.min.css'
    ], 'public/css/app.css')
    // Add page specific files one by one
-   .styles('resources/css/welcome_page.css', 'public/css/welcome_page.css');
+   .styles('resources/css/welcome_page.css', 'public/css/welcome_page.css')
+   .js('resources/js/page_based/localizations.js', 'public/js/page_based/localizations.js');
 
 if (mix.inProduction()) {
    mix.version(); // For cache bumping

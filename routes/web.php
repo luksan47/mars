@@ -53,6 +53,13 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
+    Route::get('localizations', 'LocaleController@index')->name('localizations');
+    Route::get('localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin')->middleware('can:approve,App\LocalizationContribution');
+    Route::post('localizations/add', 'LocaleController@add')->name('localizations.add');
+    Route::post('localizations/approve', 'LocaleController@approve')->name('localizations.approve')->middleware('can:approve,App\LocalizationContribution');
+    Route::post('localizations/approve_all', 'LocaleController@approveAll')->name('localizations.approve_all')->middleware('can:approve,App\LocalizationContribution');
+    Route::post('localizations/delete', 'LocaleController@delete')->name('localizations.delete')->middleware('can:approve,App\LocalizationContribution');
+
     Route::get('/print', 'PrintController@index')->name('print');
     Route::post('/print/modify_balance', 'PrintController@modifyBalance')->name('print.modify')->middleware('can:print.modify');
     Route::post('/print/add_free_pages', 'PrintController@addFreePages')->name('print.free_pages')->middleware('can:print.modify-free');
@@ -79,7 +86,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
     Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
     Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
-    Route::post('/admin/registrations/show', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
+    Route::get('/admin/registrations/show/{id}', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
 
     Route::get('/faults', 'FaultsController@index')->name('faults');
     Route::get('/faults/table', 'FaultsController@GetFaultsTable')->name('faults.table');

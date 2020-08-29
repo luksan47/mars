@@ -42,9 +42,9 @@
         @endif
         <!-- faults page -->
         <li><a class="waves-effect" href="{{ route('faults') }}"><i class="material-icons left">build</i>@lang('faults.faults')</a></li>
-        
+
         <li><div class="divider"></div></li>
-        
+
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
@@ -58,11 +58,23 @@
                     <div class="collapsible-body">
                         <ul>
                             <!-- registrations -->
-                            <li><a class="waves-effect" href="{{ route('admin.registrations') }}"> @lang('admin.handle_registrations')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('admin.registrations') }}">
+                                    <i class="material-icons left">how_to_reg</i> @lang('admin.handle_registrations')
+                                </a>
+                            </li>
                             <!-- print admin -->
-                            <li><a class="waves-effect" href="{{ route('print.admin') }}">@lang('print.print')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('print.admin') }}">
+                                    <i class="material-icons left">local_printshop</i>@lang('print.print')
+                                </a>
+                            </li>
                             <!-- internet admin -->
-                            <li><a class="waves-effect" href="{{ route('internet.admin') }}">@lang('internet.internet')</a></li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('internet.admin') }}">
+                                    <i class="material-icons left">wifi</i>@lang('internet.internet')
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -79,9 +91,9 @@
         @include('layouts.navigators.user')
     </div>
 
-    <!-- language select -->
     <li>
         <ul class="collapsible collapsible-accordion">
+            <!-- language select -->
             <li>
                 <a class="collapsible-header waves-effect" style="padding-left:32px">
                     <i class="material-icons left">language</i>Language
@@ -89,28 +101,40 @@
                 <div class="collapsible-body">
                     <ul>
                         @foreach (config('app.locales') as $code => $name)
-                        @if ($code != App::getLocale())
                         <li><a class="waves-effect" href="{{ route('setlocale', $code) }}">{{ $name }}</a></li>
-                        @endif
                         @endforeach
                     </ul>
                 </div>
             </li>
+
+            <!-- other -->
+            @if(Auth::user() && Auth::user()->verified)
+            <li>
+                <a class="collapsible-header waves-effect" style="padding-left:32px">
+                    <i class="material-icons left">more_horiz</i>@lang('general.other')
+                    <i class="material-icons right">arrow_drop_down</i></a>
+                <div class="collapsible-body">
+                    <ul>
+                        <!-- language contributions -->
+                        <li><a href="{{ route('localizations') }}">
+                            <i class="material-icons left">sentiment_satisfied_alt</i>@lang('localizations.help_translate')</a></li>
+
+                        <!-- report a bug --> 
+                        <script>
+                            //The href: mailto may not work on every device. In this case, show a notification.
+                            var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
+                            function dismiss() {
+                                M.Toast.dismissAll();
+                            };
+                        </script>
+                        <li><a href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
+                            <i class="material-icons left">sentiment_very_dissatisfied</i>@lang('general.report_bug')</a></li>
+                    </ul>
+                </div>
+            </li>
+            @endif  
         </ul>
     </li>
-
-    <!-- report a bug --> 
-    @if(Auth::user() && Auth::user()->verified)
-    <script>
-        //The href: mailto may not work on every device. In this case, show a notification.
-        var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
-        function dismiss() {
-            M.Toast.dismissAll();
-        };
-    </script>
-    <li><a class="waves-effect" href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
-            <i class="material-icons left">sentiment_dissatisfied</i>@lang('general.report_bug')</a></li>
-    @endif
 
     <!-- logout -->
     @if(Auth::user())
@@ -123,4 +147,5 @@
         @csrf
     </form>
     @endif
+        
 </ul>

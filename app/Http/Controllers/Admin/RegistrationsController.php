@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\User;
 
 class RegistrationsController extends Controller
 {
@@ -22,21 +23,27 @@ class RegistrationsController extends Controller
 
     public function accept(Request $request)
     {
-        User::findOrFail($request->user_id)->update(['verified' => true]);
+        $user = User::findOrFail($request->user_id);
+        $user->update(['verified' => true]);
 
-        return redirect()->back()->with('message', __('general.successful_modification'));
+        // Send notification mail.
+        if (config('mail.active')) {
+            Mail::to($user)->queue(new \App\Mail\ApprovedRegistration($user->name));
+        }
+
+        return redirect()->route('admin.registrations')->with('message', __('general.successful_modification'));
     }
 
     public function reject(Request $request)
     {
         User::findOrFail($request->user_id)->delete();
 
-        return redirect()->back()->with('message', __('general.successful_modification'));
+        return redirect()->route('admin.registrations')->with('message', __('general.successful_modification'));
     }
 
     public function show(Request $request)
     {
-        //TODO
-        return redirect()->route('admin.registrations');
+        $user = User::find($request->id);
+        return view('admin.user')->with('user', $user);
     }
 }
