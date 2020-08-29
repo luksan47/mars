@@ -25,4 +25,14 @@ class PersonalInformation extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getAddress()
+    {
+        return $this->country . ', ' . $this->zip_code . ' ' . $this->city . ', ' . $this->street_and_number;
+    }
+
+    public function getPlaceAndDateOfBirth()
+    {
+        return $this->place_of_birth . ', ' . $this->date_of_birth;
+    }
 }

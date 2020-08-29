@@ -271,7 +271,6 @@ class PrintController extends Controller
                     . ($is_two_sided ? " -o sides=two-sided-long-edge " : " ")
                     . "-n " . $number_of_copies . " "
                     . $path . " 2>&1";
-            Log::info($command);
             $result = Commands::print($command);
             if (!preg_match("/^request id is ([^\s]*) \\([0-9]* file\\(s\\)\\)$/", $result, $job)) {
                 Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). result:"
