@@ -105,7 +105,7 @@ class PrintController extends Controller
             'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
-        
+
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
@@ -126,7 +126,6 @@ class PrintController extends Controller
 
         // Send notification mail
         if (config('mail.active')) {
-            
             Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
         }
 
@@ -149,7 +148,7 @@ class PrintController extends Controller
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
-        
+
         // Send notification mail
         if (config('mail.active')) {
             Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));

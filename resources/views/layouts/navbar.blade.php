@@ -42,9 +42,11 @@
         @endif
         <!-- faults page -->
         <li><a class="waves-effect" href="{{ route('faults') }}"><i class="material-icons left">build</i>@lang('faults.faults')</a></li>
-        
+        <!-- documents page TODO: permissions? -->
+        <li><a class="waves-effect" href="{{ route('documents') }}"><i class="material-icons left">assignment</i>@lang('document.documents')</a></li>
+
         <li><div class="divider"></div></li>
-        
+
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
