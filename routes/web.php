@@ -51,7 +51,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     /** User data */
     Route::get('/user', 'UserController@index')->name('user');
     Route::get('/userdata', 'UserController@showData')->name('userdata');
-    Route::get('/userdata', 'UserController@showData')->name('userdata');
     Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
@@ -116,4 +115,9 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** WIP: Secretariat */
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
+
+    /** Documents */
+    Route::get('/documents', 'LatexController@index')->name('documents');
+    Route::get('/documents/license/download', 'LatexController@downloadLicense')->name('documents.license.download');
+    Route::get('/documents/license/print', 'LatexController@printLicense')->name('documents.license.print');
 });

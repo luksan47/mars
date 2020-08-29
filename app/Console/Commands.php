@@ -30,6 +30,7 @@ class Commands
             $job_id = 0;
             $result = "request id is " . config('print.printer_name') . "-" . $job_id . " (1 file(s))";
         } else {
+            Log::info($command);
             $result = exec($command);
         }
         return $result;
@@ -40,7 +41,21 @@ class Commands
         if (self::isDebugMode()) {
             $result = rand(1, 10);
         } else {
-            $result = exec("pdfinfo " . $path . " | grep '^Pages' | awk '{print $2}' 2>&1");
+            $command = "pdfinfo " . $path . " | grep '^Pages' | awk '{print $2}' 2>&1";
+            Log::info($command);
+            $result = exec($command);
+        }
+        return $result;
+    }
+
+    public static function latexToPdf($path, $outputDir)
+    {
+        if (self::isDebugMode()) {
+            $result = "ok";
+        } else {
+            $command = "pdflatex " . "-interaction=nonstopmode -output-dir " . $outputDir . $path . " 2>&1";
+            Log::info($command);
+            $result = exec($command);
         }
         return $result;
     }
