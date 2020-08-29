@@ -38,7 +38,7 @@
 
 \begin{enumerate}
 @foreach($items as $item)
-    \item {{ $item->name }} ({{ $item->serial_number }})
+    \item {{ $item->name }} @if(isset($item->serial_number)) ({{ $item->serial_number }}) @endif 
 @endforeach
 \end{enumerate}
 

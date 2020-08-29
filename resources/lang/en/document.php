@@ -14,7 +14,7 @@ return [
     'kitchen' => 'kitchen utensils (eg. dishes)',
     'license' => 'Statement',
     'missing_items' => 'You have not added any items.',
-    'missing_personal_info' => 'Your personal information are missing. Please contanct a system administrator.',
+    'missing_personal_info' => 'Your personal information are missing. Please contact a system administrator.',
     'not_report' => 'You don\'t have to report:',
     'print' => 'Print',
     'report' => 'You have to report:',
