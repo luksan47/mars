@@ -54,4 +54,6 @@ return [
     'upload_money' => 'Pénzt feltölteni a rendszergazdáknál tudsz.',
     'use_free_pages' => 'Ingyenes oldalak használata',
     'user' => 'Felhasználó',
+    'changed_balance' => 'Megváltozott nyomtatási egyenleg',
+    'changed_balance_descr' => ':modifier módosította a nyomtatási egyenleged ennyivel: :amount. Az új egyenleged :balance Ft.',
 ];

@@ -2,7 +2,6 @@
 
 return [
     'add' => 'Añadir dispositivo',
-    'admin.manage_registered_devices' => 'Manejar dispositivos registrados',
     'ajax_error' => '¡Error del servidor! ¡Por favor, actualiza la página!',
     'approve' => 'Aprobar',
     'approved' => 'Aprobado',
@@ -22,6 +21,7 @@ return [
     'internet_access' => 'Acceso a Internet',
     'laptop' => 'Portátil',
     'mac_address' => 'Dirección MAC',
+    'manage_registered_devices' => 'Manejar dispositivos registrados',
     'no_internet' => 'No estás permitido a acceder a Internet en este momento.',
     'ok' => 'OK',
     'registered_devices_info' => 'Para acceder a Internet con cable, primero tienes que registrar tu dispositivo. Puedes aceptar cierto número de dispositivos automáticamente. Si necesitas más, los administradores tienen que aprobarlo tra la registración; para justificarlo puedes añadir un comentario.',

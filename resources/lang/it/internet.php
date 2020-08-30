@@ -2,7 +2,7 @@
 
 return [
     'add' => 'Aggiungere altri dispositivi',
-    'admin.manage_registered_devices' => 'Controllo dei dispositivi registrati',
+    'manage_registered_devices' => 'Controllo dei dispositivi registrati',
     'ajax_error' => 'Errore! La preghiamo di ricaricare la pagina.',
     'approve' => 'Accettare',
     'approved' => 'Accettato',

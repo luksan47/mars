@@ -66,6 +66,8 @@ class UsersTableSeeder extends Seeder
         }
         $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
         $user->roles()->attach(Role::getId(Role::INTERNET_ADMIN));
+        $user->roles()->attach(Role::getId(Role::LOCALE_ADMIN));
+        $user->roles()->attach(Role::getId(Role::PERMISSION_HANDLER));
         $user->internetAccess->setWifiUsername();
     }
 

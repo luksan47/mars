@@ -40,9 +40,7 @@
                     }
                 });
                 $('.sidenav').sidenav();
-                $(".dropdown-trigger").dropdown({
-                    hover: false
-                });
+                $('.collapsible').collapsible();
             }
         );
     </script>

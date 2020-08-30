@@ -16,30 +16,32 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <td>{{ $user->name }}</td>
                             <td>
-                                <form  method="POST" action="{{ route('admin.registrations.show') }}">
-                                    @csrf
-                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                    <button type="submit" class="waves-effect btn-flat">@lang('admin.show')</button>
-                                </form>
+                                <b>{{ $user->name }}</b><br>
+                                {{ $user->email }}
+                                @if($user->hasEducationalInformation())
+                                - {{ $user->educationalInformation->neptun ?? '' }}
+                                @endif
                             </td>
                             <td>
-                                <form  method="POST" action="{{ route('admin.registrations.accept') }}">
-                                    @csrf
-                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                    <button type="submit" class="btn waves-effect">@lang('admin.accept')</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form  method="POST" action="{{ route('admin.registrations.reject') }}">
-                                    @csrf
-                                    <input type="number" name="user_id" value="{{ $user->id }}" hidden>
-                                    <button type="submit" class="btn waves-effect coli blue">@lang('admin.reject')</button>
-                                </form>
+                                <div class="right">
+                                    <a href="{{ route('admin.registrations.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
+                                        <i class="material-icons">search</i></a>
+                                    <a href=" {{ route('admin.registrations.accept', ['id' => $user->id]) }}" class="btn-floating green waves-effect">
+                                        <i class="material-icons">done</i></a>
+                                    <a href="{{ route('admin.registrations.reject', ['id' => $user->id]) }}" class="btn-floating red waves-effect">
+                                        <i class="material-icons">block</i></a>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
+                        @if(count($users) == 0)
+                        <tr>
+                            <td>
+                                @lang('internet.nothing_to_show')
+                            </td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

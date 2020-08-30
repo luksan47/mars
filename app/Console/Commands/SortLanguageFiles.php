@@ -46,10 +46,14 @@ class SortLanguageFiles extends Command
                 $expressions = require base_path('resources/lang/'.$language.'/'.$file_in);
                 if (! (ksort($expressions))) {
                     $this->error('Sorting '.$file_in.' failed.');
+
+                    return 1;
                 }
                 $file_out = fopen(base_path('resources/lang/'.$language.'/'.$file_in), 'w');
                 if (! (generate_file($file_out, $expressions))) {
                     $this->error('Writing to '.$file_in.' failed.');
+
+                    return 1;
                 }
             }
         }
