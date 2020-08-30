@@ -5,6 +5,12 @@
 /public/storage
 /public/mix-manifest.json
 /storage/*.key
+/resources/lang/de
+/resources/lang/fr
+/resources/lang/gr
+/resources/lang/it
+/resources/lang/la
+/resources/lang/sp
 /vendor
 .env
 .env.backup
