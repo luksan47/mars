@@ -87,7 +87,7 @@ var config = {
     @endphp
     @if(App::getLocale() != 'hu' && App::getLocale() != 'en')
     @foreach ($reference_files as $lang => $files)
-    <div id="{{ $lang }}">
+    <div id="{{ $lang }}" class="{{ $lang == 'hu' ? 'hide' : ''}}">
         @foreach ($files as $file)
         @php
         $fname = substr($file, 0, -4); //filename without .php, used as a part of the expression key
