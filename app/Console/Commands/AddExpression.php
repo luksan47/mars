@@ -76,6 +76,9 @@ class AddExpression extends Command
 
                 return 1;
             }
+            if (! is_dir(base_path('/resources/lang/'.$language))) {
+                mkdir(base_path('/resources/lang/'.$language), 0755, true); // create folders if needed
+            }
             $file_write = fopen(base_path($path), 'w');
             if (! (generate_file($file_write, $expressions))) {
                 $this->error('Writing to '.$file.' failed.');

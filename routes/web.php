@@ -95,12 +95,12 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::middleware(['can:registration.handle'])->group(function () {
         Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
         Route::get('/admin/registrations/show/{id}', 'Admin\RegistrationsController@show')->name('admin.registrations.show');
-        Route::post('/admin/registrations/accept', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
-        Route::post('/admin/registrations/reject', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
+        Route::get('/admin/registrations/accept/{id}', 'Admin\RegistrationsController@accept')->name('admin.registrations.accept');
+        Route::get('/admin/registrations/reject/{id}', 'Admin\RegistrationsController@reject')->name('admin.registrations.reject');
     });
 
     /** Permission handling */
-    Route::middleware(['can:permissions.handle'])->group(function () {
+    Route::middleware(['can:permission.handle'])->group(function () {
         Route::get('/admin/permissions', 'Admin\PermissionController@index')->name('admin.permissions.list');
         Route::get('/admin/permissions/{id}/show', 'Admin\PermissionController@show')->name('admin.permissions.show');
         Route::post('/admin/permissions/{id}/edit/{role_id}', 'Admin\PermissionController@edit')->name('admin.permissions.edit');
@@ -117,7 +117,12 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/secretariat/users', 'SecretariatController@list')->name('secretariat.users');
 
     /** Documents */
-    Route::get('/documents', 'LatexController@index')->name('documents');
-    Route::get('/documents/license/download', 'LatexController@downloadLicense')->name('documents.license.download');
-    Route::get('/documents/license/print', 'LatexController@printLicense')->name('documents.license.print');
+    Route::get('/documents', 'DocumentController@index')->name('documents');
+    Route::get('/documents/license/download', 'DocumentController@downloadLicense')->name('documents.license.download');
+    Route::get('/documents/license/print', 'DocumentController@printLicense')->name('documents.license.print');
+    Route::get('/documents/import/show', 'DocumentController@showImport')->name('documents.import.show');
+    Route::post('/documents/import/add', 'DocumentController@addImport')->name('documents.import.add');
+    Route::post('/documents/import/remove', 'DocumentController@removeImport')->name('documents.import.remove');
+    Route::get('/documents/import/download', 'DocumentController@downloadImport')->name('documents.import.download');
+    Route::get('/documents/import/print', 'DocumentController@printImport')->name('documents.import.print');
 });
