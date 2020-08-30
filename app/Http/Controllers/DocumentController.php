@@ -84,18 +84,21 @@ class DocumentController extends Controller
         $renderedLatex = view($path)->with($data)->render();
 
         $filename =  md5(rand(0, 100000) . date('c'));
-        $path = Storage::disk('latex')->put($filename . '.tex', $renderedLatex);
+        Storage::disk('latex')->put($filename . '.tex', $renderedLatex);
+
         $outputDir = Storage::disk('latex')->path('/');
 
+        $pathTex = Storage::disk('latex')->path($filename . ".tex");
+        $pathPdf = Storage::disk('latex')->path($filename . ".pdf");
+
         // TODO: figure out result
-        Commands::latexToPdf($path, $outputDir);
+        Commands::latexToPdf($pathTex, $outputDir);
 
         if (config('app.debug')) {
-            $result_file = Storage::disk('latex')->path($filename . ".tex");
+            return $pathTex;
         } else {
-            $result_file = Storage::disk('latex')->path($filename . ".pdf");
+            return $pathPdf;
         }
-        return $result_file;
     }
 
     private function generateLicense()
