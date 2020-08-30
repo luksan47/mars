@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\Log;
 
 /**
  * Collection of exec commands.
