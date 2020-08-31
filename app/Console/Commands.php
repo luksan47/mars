@@ -20,7 +20,8 @@ class Commands
         if (self::isDebugMode()) {
             $result = [0];
         } else {
-            $result = exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
+            $result = [];
+            exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
         }
         return $result;
     }

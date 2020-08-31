@@ -218,9 +218,13 @@ class PrintController extends Controller
     /** Private helper functions */
 
     private function updateCompletedPrintingJobs() {
-        $result = Commands::updateCompletedPrintingJobs();
-        Log::info("Completed jobs: " . implode(', ', $result));
-        PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
+        try {
+            $result = Commands::updateCompletedPrintingJobs();
+            Log::info("Completed jobs: " . implode(', ', $result));
+            PrintJob::whereIn('job_id', $result)->update(['state' => PrintJob::SUCCESS]);
+        } catch (\Exception $e) {
+            Log::error("Printing error at line: " . __FILE__ . ":" . __LINE__ . " (in function " . __FUNCTION__ . "). " . $e->getMessage());
+        }
     }
 
     private function storeFile($file)
