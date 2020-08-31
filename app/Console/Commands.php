@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\Log;
 
 /**
  * Collection of exec commands.
@@ -53,7 +54,7 @@ class Commands
         if (self::isDebugMode()) {
             $result = "ok";
         } else {
-            $command = "pdflatex " . "-interaction=nonstopmode -output-dir " . $outputDir . $path . " 2>&1";
+            $command = "pdflatex " . "-interaction=nonstopmode -output-dir " . $outputDir . " " . $path . " 2>&1";
             Log::info($command);
             $result = exec($command);
         }
