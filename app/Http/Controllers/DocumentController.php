@@ -70,6 +70,7 @@ class DocumentController extends Controller
         ]);
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
+
     public function removeImport(Request $request)
     {
         ImportItem::findOrFail($request->id)->delete();
