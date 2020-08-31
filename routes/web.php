@@ -50,12 +50,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** User data */
     Route::get('/user', 'UserController@index')->name('user');
-    Route::get('/userdata', 'UserController@showData')->name('userdata');
     Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
 
     /** Localization */
-    Route::get('/locale', 'LocaleController@list')->name('locales');
     Route::get('/localizations', 'LocaleController@index')->name('localizations');
     Route::post('/localizations/add', 'LocaleController@add')->name('localizations.add');
     Route::middleware(['can:approve,App\LocalizationContribution'])->group(function () {
