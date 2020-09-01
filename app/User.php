@@ -2,10 +2,8 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -38,11 +36,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function printAccount() {
+    public function printAccount()
+    {
         return $this->hasOne('App\PrintAccount');
     }
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->permission == 1;
     }
 }

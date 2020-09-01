@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
         });
-        
+
         Gate::define('print.print', function ($user) {
             return true;
         });
@@ -43,6 +43,5 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('print.free_pages', function ($user) {
             return false;
         });
-
     }
 }

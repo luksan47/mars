@@ -20,10 +20,11 @@ class PrintAccount extends Model
      */
     protected $attributes = [
         'balance' => 0,
-        'free_pages' => 0
+        'free_pages' => 0,
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 }
