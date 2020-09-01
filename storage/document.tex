@@ -11,7 +11,7 @@
 \usepackage{atbegshi}
 \usepackage{tikz}
 \usepackage[left=2cm, right=2cm, top=5cm, bottom=1cm]{geometry}
-
+\definecolor{darkblue}{rgb}{0.2, 0.2, 0.7}
 \title{Igazolás önkéntes tevékenységről\vspace{-1.0cm}}
 \date{}
 \author{}
@@ -33,25 +33,29 @@
 }
 
 \newcommand\Footer{
+
 	{\footnotesize 
 	\begin{minipage}[t]{0.4\textwidth}
 		\begin{flushright}
+		\textsc{{\color{darkblue} 
 			ELTE EÖTVÖS JÓZSEF\\
-			COLLEGIUM\\
-			Dr. Horváth László\\
+			COLLEGIUM}\\
+		    {\scriptsize 
+		    Dr. Horváth László\\
 			igazgató\\
-			Kocsis Ábel\\
-			választmányi elnök
+%			Rémai Martin\\
+%			választmányi elnök\\
+            }}
 		\end{flushright}
 	\end{minipage}
 	\hspace{1em}
 	\begin{minipage}[t]{0.45\textwidth}
 		\begin{flushleft}
-			H-1118 Budapest, Ménesi út 11-13\\
+			{\scriptsize H-1118 Budapest, Ménesi út 11-13\\
 			Tel.: +36 1 460 4481 • Fax.: +36 1 209 2044\\
 			E-mail:	titkarsag@eotvos.elte.hu • horvathl@eotvos.elte.hu
-			ejc.valasztmany@gmail.com • elnok@eotvos.elte.hu\\
-			Honlap: http://www.honlap.eotvos.elte.hu/
+		%	valasztmany@eotvos.elte.hu • elnok@eotvos.elte.hu\\
+			Honlap: http://www.eotvos.elte.hu/ }
 		\end{flushleft}
 	\end{minipage}
 	}
@@ -77,11 +81,8 @@ Ezúton hivatalosan igazoljuk, hogy <NAME> (Neptun-kód: <NEPTUN>) az ELTE Eötv
 Alelnökként
 \begin{itemize}
 	\itemsep0em 
-	\item elősegíti a Collegium gördülékeny belső működését;
-	\item felügyeli a Választmány bizottságainak munkáját;
-	\item rendszeresen munkakapcsolatot tart fent a gondnoksággal;
-	\item felügyeli a Collegium programjainak szervezését;
-	\item a választmányi elnök akadályoztatása esetén ellátja annak feladatkörét.
+	\item items...
+	\item items...
 \end{itemize}
 
 
@@ -89,13 +90,13 @@ Alelnökként
 Budapest, \today
 \vspace{5em}
 
-\begin{flushright}
-	\begin{minipage}[t]{0.4\textwidth}
-		\signiture{Kocsis Ábel}{elnök}{Eötvös József Collegium Választmány}
-	\end{minipage}
-\end{flushright}
+% \begin{flushright}
+% 	\begin{minipage}[t]{0.4\textwidth}
+% 		\signiture{Kocsis Ábel}{elnök}{Eötvös József Collegium Választmány}
+% 	\end{minipage}
+% \end{flushright}
 
-\vspace{5em}
+% \vspace{5em}
 
 \begin{flushright}
 \begin{minipage}[t]{0.4\textwidth}
