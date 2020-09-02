@@ -27,6 +27,27 @@ class LocaleTest extends TestCase
             $hu_keys = array_keys($hu_expressions);
             // Having the same keys in each file for both locales.
             $this->assertEquals($en_keys, $hu_keys);
+            // Having the same keys in validation.attributes for both locales.
+            if($file_in == 'validation.php') {
+                $this->assertEquals(array_keys($en_expressions['attributes']), array_keys($hu_expressions['attributes']));
+            }
+            // The key names do not contain any points.
+            foreach ($en_expressions as $key => $value) {
+                $this->assertFalse(strpos($key, '.'));
+                if($file_in == 'validation.php') {
+                    foreach ($en_expressions['attributes'] as $key2 => $value2) {
+                        $this->assertFalse(strpos($key2, '.'));
+                    }
+                }
+            }
+            foreach ($hu_expressions as $key => $value) {
+                $this->assertFalse(strpos($key, '.'));
+                if($file_in == 'validation.php') {
+                    foreach ($en_expressions['attributes'] as $key2 => $value2) {
+                        $this->assertFalse(strpos($key2, '.'));
+                    }
+                }
+            }
         }
     }
 }
