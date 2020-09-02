@@ -64,6 +64,7 @@ class Semester extends Model
     {
         $year = $this->year + 1; // end of semester is always in the next year
         $month = $this->isAutumn() ? self::END_OF_AUTUMN_SEMESTER + 1 : self::END_OF_SPRING_SEMESTER + 1;
+
         return Carbon::createFromDate($year, $month, 1)->endOfWeek();
     }
 
