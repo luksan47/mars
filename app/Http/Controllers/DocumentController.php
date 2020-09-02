@@ -10,9 +10,9 @@ use App\Utils\Printer;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-
 
 class DocumentController extends Controller
 {
@@ -23,7 +23,7 @@ class DocumentController extends Controller
         return $this->printDocument($result, __('document.license'));
     }
 
-    public function downloadLicense() 
+    public function downloadLicense()
     {
         $result = $this->generateLicense();
         return $this->downloadDocument($result);
@@ -49,6 +49,8 @@ class DocumentController extends Controller
 
     public function showStatusCertificate($id)
     {
+        Gate::authorize('document.status-certificate.viewAny');
+
         $user = User::findOrFail($id);
         $result = $this->generateStatusCertificate($user);
         return $this->downloadDocument($result);
