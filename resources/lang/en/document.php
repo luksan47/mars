@@ -2,10 +2,10 @@
 
 return [
     'clarify_print' => 'Print the wanted document using the printer in the Collegium, and give it to the secretary/doorman. Costs will be deducted.',
+    'clarify_request' => 'You can request certificates from the secretariat by clicking on the "request" button. This way the secretariat will be notified. You will find the signed and seald certificate at the secretariat on the next workday. Only the signed and sealed certificates are valid!',
     'computer' => 'personal computer',
     'documents' => 'Documents',
     'download' => 'Download',
-    'left' => 'left',
     'electronic_devices' => 'other, not mentioned electronic devices (toaster, kettle)',
     'fill_out' => 'Fill out',
     'furnitures' => 'other furniture, office equipment (chair, table, etc.)',
@@ -13,11 +13,16 @@ return [
     'import' => 'Import license',
     'item' => 'Item',
     'kitchen' => 'kitchen utensils (eg. dishes)',
+    'left' => 'left',
     'license' => 'Statement',
+    'missing_educational_info' => 'Your educational information are missing. Please contact a system administrator.',
     'missing_items' => 'You have not added any items.',
     'missing_personal_info' => 'Your personal information are missing. Please contact a system administrator.',
     'not_report' => 'You don\'t have to report:',
     'print' => 'Print',
     'report' => 'You have to report:',
+    'request' => 'Request',
     'serial_number' => 'Serial number (for computers)',
+    'status-cert' => 'Status certificate',
+    'successful_request' => 'Your request was successful. You will find the signed certificate at the secretariat.',
 ];
