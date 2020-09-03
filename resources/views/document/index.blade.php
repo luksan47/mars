@@ -12,6 +12,7 @@
             <div class="card-content">
                 <span class="card-title">@lang('document.documents')</span>
                 <blockquote>@lang('document.clarify_print')</blockquote>
+                <blockquote>@lang('document.clarify_request')</blockquote>
                 {{-- TODO: show printing errors --}}
                 <table>
                     <tbody>

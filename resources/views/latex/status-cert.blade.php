@@ -12,7 +12,7 @@
 \usepackage{tikz}
 \usepackage[left=2cm, right=2cm, top=5cm, bottom=1cm]{geometry}
 \definecolor{darkblue}{rgb}{0.2, 0.2, 0.7}
-\title{Igazolás önkéntes tevékenységről\vspace{-1.0cm}}
+\title{Tagsági igazolás\vspace{-1.0cm}}
 \date{}
 \author{}
 \pagenumbering{gobble}

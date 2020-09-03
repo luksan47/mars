@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'clarify_print' => 'Nyomtasd ki a kívánt nyilatkozatot a Collegiumban kihelyezett nyomtatóval, és add le a titkárságon/portán. A költségek levonásra kerülnek.',
+    'clarify_print' => 'Nyomtasd ki a kívánt dokumentumot a Collegiumban kihelyezett nyomtatóval, és add le a titkárságon/portán. A költségek levonásra kerülnek.',
+    'clarify_request' => 'Igazolásokat a titkárságtól tudsz igényelni az "Igénylés" gombra kattintva, erről a titkárság értesítést kap. Az igazolásokat a következő munkanapon veheted át. Figyelem! Csak az aláírt és lepecsételt igazolások érvényesek!',
     'computer' => 'személyi számítógép',
     'documents' => 'Dokumentumok',
     'download' => 'Letöltés',
@@ -23,5 +24,5 @@ return [
     'request' => 'Igénylés',
     'serial_number' => 'Sorozatszám (számítógépeknél)',
     'status-cert' => 'Tagsági igazolás',
-    'successful_request' => 'Sikeres igénylés. Az igazolást hamarosan megtalálhatod a titkárásgon.',
+    'successful_request' => 'Sikeres igénylés. Az igazolást hamarosan megtalálhatod a titkárságon.',
 ];
