@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Semester;
 use App\ImportItem;
 use App\Console\Commands;
 use App\Utils\Printer;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-
 
 class DocumentController extends Controller
 {
@@ -18,37 +20,54 @@ class DocumentController extends Controller
     public function printLicense()
     {
         $result = $this->generateLicense();
-        if (!$result['success']) return $result['redirect'];
-        $license = $result['pdf'];
-        $filename = __('document.license');
-        $printer = new Printer($filename, $license, /* $use_free_pages */ true);
-        return $printer->print();
+        return $this->printDocument($result, __('document.license'));
     }
 
     public function downloadLicense()
     {
         $result = $this->generateLicense();
-        if (!$result['success']) return $result['redirect'];
-        $license = $result['pdf'];
-        return response()->download($license);
+        return $this->downloadDocument($result);
     }
 
     public function printImport()
     {
         $result = $this->generateImport();
-        if (!$result['success']) return $result['redirect'];
-        $license = $result['pdf'];
-        $filename = __('document.import');
-        $printer = new Printer($filename, $license, /* $use_free_pages */ true);
-        return $printer->print();
+        return $this->printDocument($result, __('document.import'));
     }
 
     public function downloadImport()
     {
         $result = $this->generateImport();
-        if (!$result['success']) return $result['redirect'];
-        $license = $result['pdf'];
-        return response()->download($license);
+        return $this->downloadDocument($result);
+    }
+
+    public function downloadStatusCertificate()
+    {
+        $result = $this->generateStatusCertificate(Auth::user());
+        return $this->downloadDocument($result);
+    }
+
+    public function showStatusCertificate($id)
+    {
+        Gate::authorize('document.status-certificate.viewAny');
+
+        $user = User::findOrFail($id);
+        $result = $this->generateStatusCertificate($user);
+        return $this->downloadDocument($result);
+    }
+
+    public function requestStatusCertificate()
+    {
+        $url = route('documents.status-cert.show', ['id' => Auth::user()->id]);
+        if (config('mail.active')) {
+            $secretaries = User::whereHas('roles', function($q){
+                $q->where('name', \App\Role::SECRETARY);
+            })->get();
+            foreach ($secretaries as $recipient) {
+                Mail::to($recipient)->queue(new \App\Mail\StateCertificateRequest($recipient->name, Auth::user()->name, $url));
+            }
+        }
+        return redirect()->back()->with('message', __('document.successful_request'));
     }
 
     public function index()
@@ -129,7 +148,6 @@ class DocumentController extends Controller
     private function generateImport()
     {
         $user = Auth::user();
-
         $items = $user->importItems;
 
         if ($items->isEmpty()) {
@@ -145,5 +163,51 @@ class DocumentController extends Controller
               'date' => date("Y.m.d"),
         ]);
         return ['success' => true, 'pdf' => $pdf];
+    }
+
+    private function generateStatusCertificate($user)
+    {
+        if(!$user->hasPersonalInformation()) {
+            return [
+                'success' => false,
+                'redirect' => back()->withInput()->with('error',  __('document.missing_personal_info'))
+            ];
+        }
+
+        if(!$user->hasEducationalInformation()) {
+            return [
+                'success' => false,
+                'redirect' => back()->withInput()->with('error',  __('document.missing_educational_info'))
+            ];
+        }
+        $personalInfo = $user->personalInformation;
+        $educationalInfo = $user->educationalInformation;
+
+        $pdf = $this->generatePDF('latex.status-cert',
+            [ 'name' => $user->name,
+              'address' => $user->zip_code . ' ' . $personalInfo->getAddress(),
+              'place_and_date_of_birth' => $personalInfo->getPlaceAndDateOfBirth(),
+              'mothers_name' => $personalInfo->mothers_name,
+              'neptun' => $educationalInfo->neptun,
+              'from' => $educationalInfo->year_of_acceptance,
+              'until' => Semester::current()->getEndDate()->format('Y.m.d.'), // TODO: check active semesters
+              // TODO: add status
+        ]);
+        return ['success' => true, 'pdf' => $pdf];
+    }
+
+    private function downloadDocument($result)
+    {
+        if (!$result['success']) return $result['redirect'];
+        $document = $result['pdf'];
+        return response()->download($document);
+    }
+
+    private function printDocument($result, $filename)
+    {
+        if (!$result['success']) return $result['redirect'];
+        $document = $result['pdf'];
+        $printer = new Printer($filename, $document, /* $use_free_pages */ true);
+        return $printer->print();
     }
 }

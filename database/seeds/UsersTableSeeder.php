@@ -64,10 +64,9 @@ class UsersTableSeeder extends Seeder
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
         }
-        $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
-        $user->roles()->attach(Role::getId(Role::INTERNET_ADMIN));
-        $user->roles()->attach(Role::getId(Role::LOCALE_ADMIN));
-        $user->roles()->attach(Role::getId(Role::PERMISSION_HANDLER));
+        foreach (Role::ALL as $role) {
+            $user->roles()->attach(Role::getId($role));
+        }
         $user->internetAccess->setWifiUsername();
     }
 
