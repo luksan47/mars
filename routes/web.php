@@ -89,6 +89,11 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/internet/wifi_password/reset', 'InternetController@resetWifiPassword')->name('internet.wifi_password.reset');
     Route::post('/internet/internet_accesses/{id}/edit', 'InternetController@editInternetAccess')->name('internet.internet_accesses.edit');
 
+    Route::get('/routers', 'RouterController@index')->name('routers');
+    Route::get('/routers/test', function() {
+        \App\Jobs\PingRouter::dispatch(\App\Router::where('ip', '97.118.149.120')->first());
+    })->name('routers.test');
+
     /** Registration handling */
     Route::middleware(['can:registration.handle'])->group(function () {
         Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');

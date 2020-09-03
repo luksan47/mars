@@ -50,6 +50,18 @@ class Commands
         return $result;
     }
 
+    public static function pingRouter($router)
+    {
+        if (!self::isDebugMode()) {
+            $result = rand(1, 10) > 9 ? "error" : '';
+        } else {
+            $command = "ping " . $router->ip . " -c 1 | grep 'error\|unreachable'";
+            Log::info($command);
+            $result = exec($command);
+        }
+        return $result;
+    }
+
     public static function latexToPdf($path, $outputDir)
     {
         if (self::isDebugMode()) {
