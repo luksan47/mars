@@ -29,7 +29,11 @@
                         <tr>
                             <td>{{ $contribution->language }}</td>
                             <td>{{ $contribution->key }}</td>
-                            <td>@lang($contribution->key)</td>
+                            @php
+                            $fname = explode('.', $contribution->key)[0];
+                            $key = explode('.', $contribution->key)[1];
+                            @endphp
+                            <td>@lang($fname . ($fname == 'validation' ? '.attributes.' : '.') . $key)</td>
                             <td>{{ $contribution->value }}</td>
                             <td>{{ ($contribution->contributor != null) ? $contribution->contributor->name : 'null' }}</td>
                             <td>
