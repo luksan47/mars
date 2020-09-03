@@ -123,4 +123,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/documents/import/remove', 'DocumentController@removeImport')->name('documents.import.remove');
     Route::get('/documents/import/download', 'DocumentController@downloadImport')->name('documents.import.download');
     Route::get('/documents/import/print', 'DocumentController@printImport')->name('documents.import.print');
+    Route::get('/documents/status-cert/download', 'DocumentController@downloadStatusCertificate')->name('documents.status-cert.download');
+    Route::get('/documents/status-cert/request', 'DocumentController@requestStatusCertificate')->name('documents.status-cert.request');
+    Route::get('/documents/status-cert/{id}/show', 'DocumentController@showStatusCertificate')->name('documents.status-cert.show');
 });

@@ -35,6 +35,7 @@ class BasicTest extends TestCase
         'userdata/update_phone',
         'documents/import/show',
         'documents/license/print',
+        'documents/status-cert/request',
     ];
 
     private $protected_localization_routes = [
@@ -46,6 +47,7 @@ class BasicTest extends TestCase
 
 
     // In debug mode, the URIs are printed and can be checked what causes the problem.
+    // Use phpunit for debugging.
     protected function tearDown() :void
     {
         if (config('app.debug')) {
@@ -115,7 +117,8 @@ class BasicTest extends TestCase
             'documents/import/remove',
             'documents/import/download',
             'documents/import/print',
-            'documents/license/download'
+            'documents/license/download',
+            'documents/status-cert/download',
         ];
 
         $routeCollection = Route::getRoutes();

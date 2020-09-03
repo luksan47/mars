@@ -12,6 +12,7 @@
             <div class="card-content">
                 <span class="card-title">@lang('document.documents')</span>
                 <blockquote>@lang('document.clarify_print')</blockquote>
+                <blockquote>@lang('document.clarify_request')</blockquote>
                 {{-- TODO: show printing errors --}}
                 <table>
                     <tbody>
@@ -41,6 +42,18 @@
                                 @endcan
                             </td>
                         </tr>
+                        @if(Auth::user()->hasRole(\App\Role::COLLEGIST))
+                        <tr>
+                            <td>@lang('document.status-cert')</td>
+                            <td></td>
+                            <td>
+                                <a href="{{ route('documents.status-cert.download') }}" type="submit" class="btn waves-effect coli">@lang('document.download')</a>
+                            </td>
+                            <td>
+                                <a href="{{ route('documents.status-cert.request') }}" type="submit" class="btn waves-effect coli blue">@lang('document.request')</a>
+                            </td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>

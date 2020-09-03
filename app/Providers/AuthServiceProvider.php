@@ -34,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         // General policies without models
         $this->registerPrintPolicies();
         $this->registerInternetPolicies();
+        $this->registerDocumentPolicies();
         $this->registerVerificationPolicies();
         $this->registerPermissionHandlingPolicies();
         $this->registerWorkshopPolicies();
@@ -59,6 +60,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define('internet.internet', function ($user) {
             return $user->hasAnyRole([Role::INTERNET_ADMIN, Role::INTERNET_USER]);
+        });
+    }
+
+    public function registerDocumentPolicies()
+    {
+        // TODO: replace by policies
+        Gate::define('document.status-certificate.viewAny', function ($user) {
+            return $user->hasRole(Role::SECRETARY);
         });
     }
 
