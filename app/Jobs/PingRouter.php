@@ -2,9 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Router;
 use App\Console\Commands;
-
+use App\Router;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,7 +36,7 @@ class PingRouter implements ShouldQueue
         $result = Commands::pingRouter($this->router);
         if ($result == '') {
             $this->router->update([
-                'failed_for' => 0
+                'failed_for' => 0,
             ]);
         } else {
             $this->router->increment('failed_for');

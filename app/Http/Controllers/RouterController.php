@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Router;
-use App\User;
 
 class RouterController extends Controller
 {
@@ -12,6 +11,7 @@ class RouterController extends Controller
         $this->authorize('viewAny', Router::class);
 
         $routers = Router::all()->sortBy('room');
+
         return view('admin.routers')->with('routers', $routers);
     }
 }

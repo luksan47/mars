@@ -13,7 +13,7 @@ class Router extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'ip', 'room', 'failed_for' // TODO: add more properties
+        'ip', 'room', 'failed_for', // TODO: add more properties
     ];
 
     public function isDown()
