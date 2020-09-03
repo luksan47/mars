@@ -31,20 +31,26 @@ class LocaleTest extends TestCase
             if($file_in == 'validation.php') {
                 $this->assertEquals(array_keys($en_expressions['attributes']), array_keys($hu_expressions['attributes']));
             }
-            // The key names do not contain any points.
-            foreach ($en_expressions as $key => $value) {
-                $this->assertFalse(strpos($key, '.'));
-                if($file_in == 'validation.php') {
-                    foreach ($en_expressions['attributes'] as $key2 => $value2) {
-                        $this->assertFalse(strpos($key2, '.'));
-                    }
-                }
-            }
-            foreach ($hu_expressions as $key => $value) {
-                $this->assertFalse(strpos($key, '.'));
-                if($file_in == 'validation.php') {
-                    foreach ($en_expressions['attributes'] as $key2 => $value2) {
-                        $this->assertFalse(strpos($key2, '.'));
+        }
+    }
+
+    /**
+     * This test is to ensure that hungarian and english locale keys do not contain any point.
+     *
+     * @return void
+     */
+    public function testLocaleKeyFormats()
+    {
+        foreach (['hu', 'en'] as $lang){
+            $files = array_diff(scandir(base_path('resources/lang/'.$lang)), ['..', '.']);
+            foreach ($files as $file) {
+                $expressions = require base_path('resources/lang/'.$lang.'/'.$file);
+                foreach ($expressions as $key => $value) {
+                    $this->assertFalse(strpos($key, '.'));
+                    if($file == 'validation.php') {
+                        foreach ($expressions['attributes'] as $key2 => $value2) {
+                            $this->assertFalse(strpos($key2, '.'));
+                        }
                     }
                 }
             }
