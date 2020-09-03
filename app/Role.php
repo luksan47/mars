@@ -98,19 +98,21 @@ class Role extends Model
         }
         if ($this->name = 'student-council') {
             $student_council_members = [
-                'Elnök', 
+                'Elnök',
                 'Alelnök',
                 'Gazdasági Bizottság',
                 'Kommunikációs Bizottság',
                 'Közösségi Bizottság',
                 'Kulturális Bizottság',
                 'Sportbizottság',
-                'Tudományos Bizottság'
+                'Tudományos Bizottság',
             ];
-            $objects = []; $id = 1;
+            $objects = [];
+            $id = 1;
             foreach ($student_council_members as $name) {
                 $objects[] = (object) ['id' => $id++, 'name' => $name];
             }
+
             return collect($objects);
         }
 
