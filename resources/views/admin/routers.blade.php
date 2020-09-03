@@ -11,7 +11,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">@lang('admin.handle_registrations')</span>
+                <span class="card-title">@lang('router.router_monitor')</span>
                 <table>
                     <thead>
                         <tr>
