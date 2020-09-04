@@ -16,8 +16,7 @@ class PrintAccountHistory extends Model
     protected $fillable = [
         'user_id',
         'balance_change',
-        'free_pages_change',
-        'balance_change',
+        'free_page_change',
         'modified_by',
         'modified_at',
     ];

@@ -89,4 +89,9 @@ class UserController extends Controller
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
+
+    public function list()
+    {
+        return view('admin.users')->with('user', Auth::user());
+    }
 }

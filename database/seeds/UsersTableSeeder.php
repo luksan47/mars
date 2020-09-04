@@ -55,6 +55,7 @@ class UsersTableSeeder extends Seeder
             'verified' => true,
         ]);
         factory(App\MacAddress::class, 3)->create(['user_id' => $user->id]);
+        factory(\App\FreePages::class, 5)->create(['user_id' => $user->id]);
         factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
         factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);

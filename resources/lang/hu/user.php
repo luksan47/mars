@@ -14,6 +14,7 @@ return [
     'change_outdated_data' => 'Ha a fenti információk elavultak, kérjük, vedd fel a kapcsolatot a titkársággal vagy a rendszergazdákkal.',
     'city' => 'City',
     'date_and_place_of_birth' => 'Date and place of birth',
+    'educational_information' => 'Tanulmányi adatok',
     'email' => 'E-mail',
     'faculty' => 'Faculty',
     'filozofia_muhely' => 'Filozófia műhely',

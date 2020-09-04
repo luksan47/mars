@@ -68,6 +68,16 @@
                                 </a>
                             </li>
                             @endcan
+
+                            <!-- user management -->
+                            @can('registration.handle')
+                            <li>
+                                <a class="waves-effect" href="{{ route('admin.users') }}">
+                                    <i class="material-icons left">supervisor_account</i> @lang('admin.user_management')
+                                </a>
+                            </li>
+                            @endcan
+
                             <!-- print admin -->
                             @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN))
                             <li>
@@ -76,6 +86,7 @@
                                 </a>
                             </li>
                             @endif
+
                             <!-- internet admin -->
                             @if(Auth::user()->hasRole(\App\Role::INTERNET_ADMIN))
                             <li>
@@ -84,6 +95,7 @@
                                 </a>
                             </li>
                             @endif
+
                             <!-- permission admin -->
                             @can('permission.handle')
                             <li>

@@ -13,6 +13,7 @@ return [
     'created_at' => 'Created',
     'deactivate' => 'Deactivate',
     'delete' => 'Delete',
+    'disabled' => 'Disabled',
     'edit_warning_auto_approve' => 'Due to automatic approvement after editing, the state might remain unchanged.',
     'error' => 'Error',
     'extend' => 'Extend',

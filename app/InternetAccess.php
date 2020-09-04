@@ -20,6 +20,11 @@ class InternetAccess extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function isActive()
+    {
+        return $this->has_internet_until != null && $this->has_internet_until > date('Y-m-d');
+    }
+
     public function setWifiUsername($username = null)
     {
         if ($username === null) {
