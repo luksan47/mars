@@ -70,9 +70,9 @@
                             @endcan
 
                             <!-- user management -->
-                            @can('registration.handle')
+                            @can('viewAny', \App\User::class)
                             <li>
-                                <a class="waves-effect" href="{{ route('admin.users') }}">
+                                <a class="waves-effect" href="{{ route('admin.user.list') }}">
                                     <i class="material-icons left">supervisor_account</i> @lang('admin.user_management')
                                 </a>
                             </li>

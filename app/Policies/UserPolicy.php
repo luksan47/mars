@@ -10,6 +10,16 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+    public function viewAny(User $user)
+    {
+        return $user->hasAnyRole([Role::INTERNET_ADMIN, Role::SECRETARY, Role::PERMISSION_HANDLER]);
+    }
+
+    public function view(User $user, User $target)
+    {
+        return $user->hasAnyRole([Role::INTERNET_ADMIN, Role::SECRETARY, Role::PERMISSION_HANDLER]) || $user->id == $target->id;
+    }
+
     public function viewPersonalInformation(User $user, User $target)
     {
         // TODO: later internet admins should be removed

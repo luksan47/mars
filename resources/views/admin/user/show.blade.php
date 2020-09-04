@@ -2,7 +2,7 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="{{ route('admin.users') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
+<a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
 <a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
 
