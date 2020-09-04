@@ -1,4 +1,5 @@
 {{-- Educational information --}}
+@can('viewEducationalInformation', $user)
 @if($user->hasEducationalInformation())
 <div class="card">
     <div class="card-content">
@@ -46,3 +47,4 @@
     </div>
 </div>
 @endif
+@endcan

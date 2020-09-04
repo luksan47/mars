@@ -1,5 +1,6 @@
 {{-- Internet --}}
 @if($user->hasRole(\App\Role::INTERNET_USER))
+@can('view', $user->internetAccess)
 <div class="card">
     <div class="card-content">
         <div class="card-title">@lang('internet.internet')</div>
@@ -30,6 +31,7 @@
                     <td>
                         <ul>
                             @foreach ($user->macAddresses as $mac)
+                                @can('view', $mac)
                                 <li>
                                 <span class="new badge
                                     @if($mac->state == \App\MacAddress::APPROVED)
@@ -43,6 +45,7 @@
                                     </span>
                                     <small><i>{{ $mac->comment }} </i></small>
                                 </li>
+                                @endcan
                             @endforeach
                         </ul>
                     </td>
@@ -51,4 +54,5 @@
         </table>
     </div>
 </div>
+@endcan
 @endif

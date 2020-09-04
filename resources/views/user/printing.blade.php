@@ -1,5 +1,6 @@
 {{-- Printing --}}
 @if($user->hasRole(\App\Role::PRINTER))
+@can('view', $user->printAccount)
 <div class="card">
     <div class="card-content">
         <div class="card-title">@lang('print.print')</div>
@@ -45,4 +46,5 @@
         </table>
     </div>
 </div>
+@endcan
 @endif
