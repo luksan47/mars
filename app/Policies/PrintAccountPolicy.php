@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\PrintAccount;
-use App\User;
 use App\Role;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PrintAccountPolicy
