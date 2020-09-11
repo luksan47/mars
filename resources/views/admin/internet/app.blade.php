@@ -24,4 +24,13 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+            @include('admin.internet.wifi_connections.app')
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

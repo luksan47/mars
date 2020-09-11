@@ -36,6 +36,7 @@ return [
     'update' => 'Frissítés',
     'user_id' => 'Felhasználó id',
     'username' => 'Felhasználónév',
+    'wifi_connections' => 'WiFi csatlakozások',
     'wifi_password' => 'Wifi jelszó',
     'wifi_password_info' => 'Az ejc_wifi hálózatra a lenti adatokkal jelentkezhetsz be. Lehetőséged van a jelszavadat egy másik véletlenszerű jelszóra megváltoztatni, ezt a rendszergazdák bizonyos időnként meg is fogják tenni, amiről előre értesítenek.',
     'wifi_password_null' => 'Jelenleg nincs wifi jelszavad. Generálhatsz lent.',

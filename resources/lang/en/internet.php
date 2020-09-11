@@ -36,6 +36,7 @@ return [
     'update' => 'Update',
     'user_id' => 'User id',
     'username' => 'Username',
+    'wifi_connections' => 'WiFi Connections',
     'wifi_password' => 'Wifi password',
     'wifi_password_info' => 'You can connect to ejc_wifi with the credentials listed below. You can change your password to a randomly generated one. The administrators will do this regularly, but you will be notified in advance.',
     'wifi_password_null' => 'You have no wifi password at the moment. You can generate one below.',

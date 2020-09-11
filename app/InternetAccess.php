@@ -31,4 +31,9 @@ class InternetAccess extends Model
         }
         $this->update(['wifi_username' => $username]);
     }
+
+    public function wifiConnection()
+    {
+        return $this->hasMany('App\WifiConnection', 'wifi_username', 'wifi_username');
+    }
 }

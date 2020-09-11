@@ -1,4 +1,4 @@
-<div id="mac-addresses-table"></div>
+<div id="wifi-connections-table"></div>
 <script type="application/javascript">
     $(document).ready(function () {
         var actions = function (cell, formatterParams, onRendered) {
@@ -53,7 +53,7 @@
             })[0];
         };
 
-        var table = new Tabulator("#mac-addresses-table", {
+        var table = new Tabulator("#wifi-connections-table", {
             paginationSize: 10,
             pagination: "remote", //enable remote pagination
             ajaxURL: "{{ route('internet.admin.mac_addresses.all') }}", //set url for ajax request
@@ -69,28 +69,22 @@
                     headerFilter: 'input'
                 },
                 {
+                    title: "@lang('internet.wifi_user')",
+                    field: "wifi_username",
+                    sorter: "string",
+                    headerFilter: 'input'
+                },
+                {
                     title: "@lang('internet.mac_address')",
                     field: "mac_address",
                     sorter: "string",
                     headerFilter: 'input'
                 },
-                {title: "@lang('internet.comment')", field: "comment", sorter: "string", headerFilter: 'input'},
                 {
-                    title: "@lang('internet.created_at')",
-                    field: "created_at",
-                    sorter: "datetime",
-                    headerFilter: 'input'
+                    title: "@lang('£1')",
+                    field: "number_of_connections",
+                    sorter: "string",
                 },
-                {
-                    title: "@lang('internet.state')", field: "state", sorter: "string", headerFilter: 'select',
-                    headerFilterParams: {
-                        "rejected": "@lang('internet.rejected')",
-                        "approved": "@lang('internet.approved')",
-                        "requested": "@lang('internet.requested')"
-                    }
-                },
-                {title: "", field: "state", width:"130", headerSort: false, formatter: actions},
-                {title: "", field: "id", headerSort: false, formatter: deleteButton},
             ],
         });
     });
