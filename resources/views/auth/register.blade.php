@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col s12 l12 xl8 offset-xl2">
+    <div class="col s12 l8 xl6 offset-l2 offset-xl3">
         <div class="card">
             <div class="card-image">
                 <img src="/img/EC_building.jpg">
