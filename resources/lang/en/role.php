@@ -19,6 +19,7 @@ return [
     'secretary' => 'Secretary',
     'sport-committee' => 'Sport Committee',
     'staff' => 'Staff',
+    'student-council' => 'Student Council',
     'tenant' => 'Tenant',
     'vice_president' => 'Vice president',
     'workshop-administrator' => 'Workshop administrator',

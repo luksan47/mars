@@ -149,7 +149,7 @@ class Role extends Model
             case self::PERMISSION_HANDLER:
                 return 'deep-orange';
             case self::STUDENT_COUNCIL:
-                return 'coli orange'; //light-blue?
+                return 'green darken-4'; 
             default:
                 return 'grey';
         }

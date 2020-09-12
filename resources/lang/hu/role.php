@@ -19,6 +19,7 @@ return [
     'secretary' => 'Titkár',
     'sport-committee' => 'Sportbizottság',
     'staff' => 'Gondnokság',
+    'student-council' => 'Választmány',
     'tenant' => 'Vendég',
     'vice_president' => 'Alelnök',
     'workshop-administrator' => 'Műhelytitkár',
