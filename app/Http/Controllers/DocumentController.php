@@ -17,32 +17,82 @@ use Illuminate\Support\Facades\Storage;
 class DocumentController extends Controller
 {
 
-    public function printLicense()
+    public function index()
     {
-        $result = $this->generateLicense();
-        return $this->printDocument($result, __('document.license'));
+        Gate::authorize('document.any');
+
+        return view('document.index');
     }
 
-    public function downloadLicense()
+    /** Register statement */
+
+    public function printRegisterStatement()
     {
-        $result = $this->generateLicense();
+        Gate::authorize('document.status-certificate');
+
+        $result = $this->generateRegisterStatement();
+        return $this->printDocument($result, __('document.register-statement'));
+    }
+
+    public function downloadRegisterStatement()
+    {
+        Gate::authorize('document.status-certificate');
+
+        $result = $this->generateRegisterStatement();
         return $this->downloadDocument($result);
     }
 
+    /** Import license */
+
     public function printImport()
     {
+        Gate::authorize('document.import-license');
+
         $result = $this->generateImport();
         return $this->printDocument($result, __('document.import'));
     }
 
     public function downloadImport()
     {
+        Gate::authorize('document.import-license');
+
         $result = $this->generateImport();
         return $this->downloadDocument($result);
     }
 
+    public function showImport()
+    {
+        Gate::authorize('document.import-license');
+
+        return view('document.import', ['items' => Auth::user()->importItems]);
+    }
+
+    public function addImport(Request $request)
+    {
+        Gate::authorize('document.import-license');
+
+        ImportItem::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->item,
+            'serial_number'=> $request->serial_number ?? null
+        ]);
+        return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+
+    public function removeImport(Request $request)
+    {
+        Gate::authorize('document.import-license');
+
+        ImportItem::findOrFail($request->id)->delete();
+        return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+
+    /** Status certificate */
+
     public function downloadStatusCertificate()
     {
+        Gate::authorize('document.status-certificate');
+
         $result = $this->generateStatusCertificate(Auth::user());
         return $this->downloadDocument($result);
     }
@@ -58,6 +108,8 @@ class DocumentController extends Controller
 
     public function requestStatusCertificate()
     {
+        Gate::authorize('document.status-certificate');
+
         $url = route('documents.status-cert.show', ['id' => Auth::user()->id]);
         if (config('mail.active')) {
             $secretaries = User::whereHas('roles', function($q){
@@ -70,33 +122,23 @@ class DocumentController extends Controller
         return redirect()->back()->with('message', __('document.successful_request'));
     }
 
-    public function index()
-    {
-        return view('document.index');
-    }
-
-    public function showImport()
-    {
-        return view('document.import', ['items' => Auth::user()->importItems]);
-    }
-
-    public function addImport(Request $request)
-    {
-        ImportItem::create([
-            'user_id' => Auth::user()->id,
-            'name' => $request->item,
-            'serial_number'=> $request->serial_number ?? null
-        ]);
-        return redirect()->back()->with('message', __('general.successful_modification'));
-    }
-
-    public function removeImport(Request $request)
-    {
-        ImportItem::findOrFail($request->id)->delete();
-        return redirect()->back()->with('message', __('general.successful_modification'));
-    }
-
     /** Private helper functions */
+
+
+    private function downloadDocument($result)
+    {
+        if (!$result['success']) return $result['redirect'];
+        $document = $result['pdf'];
+        return response()->download($document);
+    }
+
+    private function printDocument($result, $filename)
+    {
+        if (!$result['success']) return $result['redirect'];
+        $document = $result['pdf'];
+        $printer = new Printer($filename, $document, /* $use_free_pages */ true);
+        return $printer->print();
+    }
 
     // Returns the .tex file in debug mode
     private function generatePDF($path, $data)
@@ -121,7 +163,7 @@ class DocumentController extends Controller
         }
     }
 
-    private function generateLicense()
+    private function generateRegisterStatement()
     {
         $user = Auth::user();
 
@@ -133,7 +175,7 @@ class DocumentController extends Controller
         }
         $info = $user->personalInformation;
 
-        $pdf = $this->generatePDF('latex.license',
+        $pdf = $this->generatePDF('latex.register-statement',
             [ 'name' => $user->name,
               'address' => $user->zip_code . ' ' . $info->getAddress(),
               'phone' => $info->phone_number,
@@ -194,20 +236,5 @@ class DocumentController extends Controller
               // TODO: add status
         ]);
         return ['success' => true, 'pdf' => $pdf];
-    }
-
-    private function downloadDocument($result)
-    {
-        if (!$result['success']) return $result['redirect'];
-        $document = $result['pdf'];
-        return response()->download($document);
-    }
-
-    private function printDocument($result, $filename)
-    {
-        if (!$result['success']) return $result['redirect'];
-        $document = $result['pdf'];
-        $printer = new Printer($filename, $document, /* $use_free_pages */ true);
-        return $printer->print();
     }
 }

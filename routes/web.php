@@ -116,8 +116,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Documents */
     Route::get('/documents', 'DocumentController@index')->name('documents');
-    Route::get('/documents/license/download', 'DocumentController@downloadLicense')->name('documents.license.download');
-    Route::get('/documents/license/print', 'DocumentController@printLicense')->name('documents.license.print');
+    Route::get('/documents/register-statement/download', 'DocumentController@downloadRegisterStatement')->name('documents.register-statement.download');
+    Route::get('/documents/register-statement/print', 'DocumentController@printRegisterStatement')->name('documents.register-statement.print');
     Route::get('/documents/import/show', 'DocumentController@showImport')->name('documents.import.show');
     Route::post('/documents/import/add', 'DocumentController@addImport')->name('documents.import.add');
     Route::post('/documents/import/remove', 'DocumentController@removeImport')->name('documents.import.remove');
