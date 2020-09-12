@@ -67,7 +67,7 @@ class Role extends Model
 
     public static function getUsers(string $roleName)
     {
-        return Role::where('name', $roleName)->first()->users;
+        return Role::firstWhere('name', $roleName)->users;
     }
 
     public static function getId(string $roleName)
