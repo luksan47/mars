@@ -19,7 +19,6 @@ class BasicTest extends TestCase
         'faults',
         'faults/table',
         'faults/update',
-        'documents',
         // 200 routes
         '/',
         'setlocale/{locale}',
@@ -33,9 +32,6 @@ class BasicTest extends TestCase
         'userdata/update_password',
         'userdata/update_email',
         'userdata/update_phone',
-        'documents/import/show',
-        'documents/license/print',
-        'documents/status-cert/request',
     ];
 
     private $protected_localization_routes = [
@@ -113,12 +109,6 @@ class BasicTest extends TestCase
             'localizations/add',
             'faults/add',
             'secretariat/users',
-            'documents/import/add',
-            'documents/import/remove',
-            'documents/import/download',
-            'documents/import/print',
-            'documents/license/download',
-            'documents/status-cert/download',
         ];
 
         $routeCollection = Route::getRoutes();

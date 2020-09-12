@@ -42,8 +42,10 @@
         @endif
         <!-- faults page -->
         <li><a class="waves-effect" href="{{ route('faults') }}"><i class="material-icons left">build</i>@lang('faults.faults')</a></li>
-        <!-- documents page TODO: permissions? -->
+        <!-- documents page -->
+        @can('document.any')
         <li><a class="waves-effect" href="{{ route('documents') }}"><i class="material-icons left">assignment</i>@lang('document.documents')</a></li>
+        @endcan
 
         <li><div class="divider"></div></li>
 
@@ -92,6 +94,11 @@
                             <li>
                                 <a class="waves-effect" href="{{ route('internet.admin') }}">
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')
+                                </a>
+                            </li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('routers') }}">
+                                    <i class="material-icons left">router</i>@lang('router.router_monitor')
                                 </a>
                             </li>
                             @endif
