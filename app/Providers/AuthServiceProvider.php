@@ -65,9 +65,26 @@ class AuthServiceProvider extends ServiceProvider
 
     public function registerDocumentPolicies()
     {
-        // TODO: replace by policies
         Gate::define('document.status-certificate.viewAny', function ($user) {
             return $user->hasRole(Role::SECRETARY);
+        });
+        Gate::define('document.status-certificate', function ($user) {
+            return $user->hasRole(Role::COLLEGIST);
+        });
+        Gate::define('document.register-statement', function ($user) {
+            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+        });
+        Gate::define('document.import-license', function ($user) {
+            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+        });
+
+        Gate::define('document.any', function ($user) {
+            return Gate::any([
+                'document.status-certificate.viewAny',
+                'document.status-certificate',
+                'document.register-statement',
+                'document.import-license',
+            ]);
         });
     }
 
