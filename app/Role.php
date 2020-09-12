@@ -15,10 +15,10 @@ class Role extends Model
     const WORKSHOP_LEADER = 'workshop-leader';
     const SECRETARY = 'secretary';
     const DIRECTOR = 'director';
-    const PRESIDENT = 'president';
     const STAFF = 'staff';
     const LOCALE_ADMIN = 'locale-admin';
     const PERMISSION_HANDLER = 'permission-handler';
+    const STUDENT_COUNCIL = 'student-council';
 
     // Module-related roles
     const PRINTER = 'printer';
@@ -34,12 +34,12 @@ class Role extends Model
         self::WORKSHOP_LEADER,
         self::SECRETARY,
         self::DIRECTOR,
-        self::PRESIDENT,
         self::STAFF,
         self::PRINTER,
         self::INTERNET_USER,
         self::LOCALE_ADMIN,
         self::PERMISSION_HANDLER,
+        self::STUDENT_COUNCIL,
     ];
 
     protected $fillable = [
@@ -73,7 +73,7 @@ class Role extends Model
     public function canHaveObject()
     {
         // TODO: PERMISSION_HANDLER could also be there
-        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN]);
+        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL]);
     }
 
     public function possibleObjects()
@@ -95,6 +95,25 @@ class Role extends Model
             ]);
 
             return $locales;
+        }
+        if ($this->name = 'student-council') {
+            $student_council_members = [
+                'president',
+                'vice_president',
+                'economic-committee',
+                'communication-committee',
+                'community-committee',
+                'cultural-committee',
+                'sport-committee',
+                'science-committee',
+            ];
+            $objects = [];
+            $id = 1;
+            foreach ($student_council_members as $name) {
+                $objects[] = (object) ['id' => $id++, 'name' => __('role.'.$name)];
+            }
+
+            return collect($objects);
         }
 
         return \App\Workshop::all();
@@ -119,8 +138,6 @@ class Role extends Model
                 return 'indigo';
             case self::DIRECTOR:
                 return 'blue';
-            case self::PRESIDENT:
-                return 'light-blue';
             case self::STAFF:
                 return 'cyan';
             case self::PRINTER:
@@ -131,6 +148,8 @@ class Role extends Model
                 return 'amber';
             case self::PERMISSION_HANDLER:
                 return 'deep-orange';
+            case self::STUDENT_COUNCIL:
+                return 'green darken-4';
             default:
                 return 'grey';
         }
