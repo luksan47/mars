@@ -26,10 +26,6 @@
                                     <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
                                         <i class="material-icons">remove_red_eye</i></a>
                                     @endcan
-                                    @can('viewPermissionFor', $user)
-                                    <a href="{{ route('admin.permissions.show', ['id' => $user->id]) }}" class="btn-floating red waves-effect">
-                                        <i class="material-icons">lock</i></a>
-                                    @endcan
                                 </div>
                             </td>
                         </tr>

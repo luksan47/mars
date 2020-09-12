@@ -9,8 +9,10 @@
     @endforeach
 </td>
 <td>
+@can('viewPermissionFor', $user)
     <a href="{{ route('admin.permissions.show', $user->id) }}"
-        class="btn-floating waves-effect waves-light right" @cannot('viewPermissionFor', $user) disabled @endcan>
+        class="btn-floating waves-effect waves-light right">
         <i class="material-icons">edit</i>
     </a>
+@endcan
 </td>
