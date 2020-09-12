@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -88,5 +89,23 @@ class UserController extends Controller
         ]);
 
         return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+
+    public function list()
+    {
+        $this->authorize('viewAny', User::class);
+
+        $users = User::all();
+
+        return view('admin.user.list')->with('users', $users);
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+
+        $this->authorize('view', $user);
+
+        return view('admin.user.show')->with('user', $user);
     }
 }

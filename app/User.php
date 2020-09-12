@@ -77,6 +77,28 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasMany('App\PrintJob');
     }
 
+    public function numberOfPrintedDocuments()
+    {
+        return $this->hasMany('App\PrintAccountHistory')
+            ->where('balance_change', '<', 0)
+            ->orWhere('free_page_change', '<', 0)
+            ->count();
+    }
+
+    public function spentBalance()
+    {
+        return abs($this->hasMany('App\PrintAccountHistory')
+            ->where('balance_change', '<', 0)
+            ->sum('balance_change'));
+    }
+
+    public function spentFreePages()
+    {
+        return abs($this->hasMany('App\PrintAccountHistory')
+            ->where('free_page_change', '<', 0)
+            ->sum('free_page_change'));
+    }
+
     /* Internet module related getters */
 
     public function internetAccess()

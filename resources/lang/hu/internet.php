@@ -13,6 +13,7 @@ return [
     'created_at' => 'Létrehozva',
     'deactivate' => 'Deaktivál',
     'delete' => 'Törlés',
+    'disabled' => 'Deaktivált',
     'edit_warning_auto_approve' => 'Szerkesztés után lefut az automatikus elfogadás az adott felhasználónál, emiatt lehetséges, hogy nem változik az állapot.',
     'error' => 'Hiba',
     'extend' => 'Meghosszabbít',

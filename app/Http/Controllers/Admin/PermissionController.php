@@ -16,8 +16,6 @@ class PermissionController extends Controller
 
     public function index()
     {
-        $this->authorize('viewAny', User::class);
-
         $users = User::all();
 
         return view('admin.permissions.list', ['users' => $users]);
@@ -27,7 +25,7 @@ class PermissionController extends Controller
     {
         $user = User::find($id);
 
-        $this->authorize('view', $user);
+        $this->authorize('viewPermissionFor', $user);
 
         return view('admin.permissions.show', ['user' => $user]);
     }
@@ -36,7 +34,7 @@ class PermissionController extends Controller
     {
         $user = User::find($id);
 
-        $this->authorize('update', $user);
+        $this->authorize('updatePermission', [$user, $role_id]);
 
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {
@@ -57,7 +55,7 @@ class PermissionController extends Controller
     {
         $user = User::find($id);
 
-        $this->authorize('delete', $user);
+        $this->authorize('deletePermission', [$user, $role_id]);
 
         $role = Role::find($role_id);
         if ($role->canHaveObject()) {

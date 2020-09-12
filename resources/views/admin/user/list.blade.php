@@ -1,0 +1,46 @@
+@extends('layouts.app')
+
+@section('title')
+<a href="#!" class="breadcrumb">@lang('admin.admin')</a>
+<a href="#!" class="breadcrumb">@lang('admin.user_management')</a>
+@endsection
+
+@section('content')
+
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">@lang('admin.user_management')</span>
+                <table>
+                    <tbody>
+                        @foreach ($users as $user)
+                        <tr>
+                            <td>
+                                <b>{{ $user->name }}</b><br>
+                                {{ $user->email }}
+                            </td>
+                            <td>
+                                <div class="right">
+                                    @can('view', $user)
+                                    <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
+                                        <i class="material-icons">remove_red_eye</i></a>
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @if(count($users) == 0)
+                        <tr>
+                            <td>
+                                @lang('internet.nothing_to_show')
+                            </td>
+                        </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

@@ -9,4 +9,5 @@ return [
     'registrations' => 'Regisztrációk',
     'reject' => 'Elutasít',
     'show' => 'Mutat',
+    'user_management' => 'Felhasználók kezelése',
 ];

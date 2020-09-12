@@ -14,6 +14,7 @@ return [
     'change_outdated_data' => 'If your listed informations are outdated, please contact the secretariat or the admins.',
     'city' => 'City',
     'date_and_place_of_birth' => 'Date and place of birth',
+    'educational_information' => 'Educational information',
     'email' => 'E-mail',
     'faculty' => 'Faculty',
     'filozofia_muhely' => 'Filozófia műhely',
