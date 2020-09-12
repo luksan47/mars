@@ -85,6 +85,11 @@
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')
                                 </a>
                             </li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('routers') }}">
+                                    <i class="material-icons left">router</i>@lang('router.router_monitor')
+                                </a>
+                            </li>
                             @endif
                             <!-- permission admin -->
                             @can('permission.handle')

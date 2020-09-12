@@ -65,6 +65,11 @@ class Role extends Model
         return $this->possibleObjects()->where('id', $this->pivot->object_id)->first();
     }
 
+    public static function getUsers(string $roleName)
+    {
+        return Role::firstWhere('name', $roleName)->users;
+    }
+
     public static function getId(string $roleName)
     {
         return Role::where('name', $roleName)->first()->id;
