@@ -14,7 +14,7 @@ return [
     'item' => 'Eszköz',
     'kitchen' => 'konyhai eszközök (pl. edények)',
     'left' => 'maradt',
-    'license' => 'Beköltözési nyilatkozat',
+    'register-statement' => 'Beköltözési nyilatkozat',
     'missing_educational_info' => 'A tanulmányi adataid hiányoznak a dokumentum kitöltéséhez. Kérj segítséget egy rendszergazdától.',
     'missing_items' => 'Még nem adtad meg a tárgyakat, amiket behoznál.',
     'missing_personal_info' => 'A személyes adataid hiányoznak a dokumentum kitöltéséhez. Kérj segítséget egy rendszergazdától.',

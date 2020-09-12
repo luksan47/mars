@@ -14,7 +14,7 @@ return [
     'item' => 'Item',
     'kitchen' => 'kitchen utensils (eg. dishes)',
     'left' => 'left',
-    'license' => 'Statement',
+    'register-statement' => 'Register Statement',
     'missing_educational_info' => 'Your educational information are missing. Please contact a system administrator.',
     'missing_items' => 'You have not added any items.',
     'missing_personal_info' => 'Your personal information are missing. Please contact a system administrator.',
