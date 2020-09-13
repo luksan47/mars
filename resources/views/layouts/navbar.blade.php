@@ -47,14 +47,13 @@
         <li><a class="waves-effect" href="{{ route('documents') }}"><i class="material-icons left">assignment</i>@lang('document.documents')</a></li>
         @endcan
 
-        <li><div class="divider"></div></li>
-
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <!-- admin module -->
                 @if(Auth::user()->hasElevatedPermissions())
-                <li>
+                <li><div class="divider"></div></li>
+                <li class="@yield('admin_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">
                         <i class="material-icons left">edit</i>
                         @lang('admin.admin')
