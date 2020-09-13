@@ -9,4 +9,5 @@ return [
     'registrations' => 'Registrations',
     'reject' => 'Reject',
     'show' => 'Show',
+    'user_management' => 'User management',
 ];

@@ -28,4 +28,14 @@ class FreePages extends Model
     {
         return $this->belongsTo('App\PrintAccount', 'user_id', 'user_id');
     }
+
+    public function available()
+    {
+        return $this->deadline > date('Y-m-d');
+    }
+
+    public function lastModifiedBy()
+    {
+        return User::findOrFail($this->last_modified_by);
+    }
 }

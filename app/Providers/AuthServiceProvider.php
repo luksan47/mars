@@ -17,9 +17,10 @@ class AuthServiceProvider extends ServiceProvider
         \App\MacAddress::class => \App\Policies\MacAddressPolicy::class,
         \App\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
         \App\PrintJob::class => \App\Policies\PrintJobPolicy::class,
+        \App\PrintAccount::class => \App\Policies\PrintAccountPolicy::class,
         \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
         \App\LocalizationContribution::class => \App\Policies\LocalePolicy::class,
-        \App\User::class => \App\Policies\PermissionPolicy::class,
+        \App\User::class => \App\Policies\UserPolicy::class,
     ];
 
     /**
@@ -65,9 +66,26 @@ class AuthServiceProvider extends ServiceProvider
 
     public function registerDocumentPolicies()
     {
-        // TODO: replace by policies
         Gate::define('document.status-certificate.viewAny', function ($user) {
             return $user->hasRole(Role::SECRETARY);
+        });
+        Gate::define('document.status-certificate', function ($user) {
+            return $user->hasRole(Role::COLLEGIST);
+        });
+        Gate::define('document.register-statement', function ($user) {
+            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+        });
+        Gate::define('document.import-license', function ($user) {
+            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+        });
+
+        Gate::define('document.any', function ($user) {
+            return Gate::any([
+                'document.status-certificate.viewAny',
+                'document.status-certificate',
+                'document.register-statement',
+                'document.import-license',
+            ]);
         });
     }
 

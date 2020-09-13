@@ -4,6 +4,7 @@ return [
     'administrators' => 'The administrators',
     'approved_registration' => 'Your registration have been approved.',
     'dear' => 'Dear',
+    'router_status_warning' => 'Router down!',
     'show' => 'Show',
     'status_cert_request' => ':user requested a certificate to be signed:',
     'status_certificate_request_subject' => 'Status certificate request',

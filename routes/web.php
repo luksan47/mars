@@ -52,6 +52,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/user', 'UserController@index')->name('user');
     Route::post('/userdata/update_email', 'UserController@updateEmail')->name('userdata.update_email');
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
+    Route::get('/admin/user/list', 'UserController@list')->name('admin.user.list');
+    Route::get('/admin/user/show/{id}', 'UserController@show')->name('admin.user.show');
 
     /** Localization */
     Route::get('/localizations', 'LocaleController@index')->name('localizations');
@@ -89,6 +91,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/internet/wifi_password/reset', 'InternetController@resetWifiPassword')->name('internet.wifi_password.reset');
     Route::post('/internet/internet_accesses/{id}/edit', 'InternetController@editInternetAccess')->name('internet.internet_accesses.edit');
 
+    Route::get('/routers', 'RouterController@index')->name('routers');
+
     /** Registration handling */
     Route::middleware(['can:registration.handle'])->group(function () {
         Route::get('/admin/registrations', 'Admin\RegistrationsController@index')->name('admin.registrations');
@@ -116,8 +120,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Documents */
     Route::get('/documents', 'DocumentController@index')->name('documents');
-    Route::get('/documents/license/download', 'DocumentController@downloadLicense')->name('documents.license.download');
-    Route::get('/documents/license/print', 'DocumentController@printLicense')->name('documents.license.print');
+    Route::get('/documents/register-statement/download', 'DocumentController@downloadRegisterStatement')->name('documents.register-statement.download');
+    Route::get('/documents/register-statement/print', 'DocumentController@printRegisterStatement')->name('documents.register-statement.print');
     Route::get('/documents/import/show', 'DocumentController@showImport')->name('documents.import.show');
     Route::post('/documents/import/add', 'DocumentController@addImport')->name('documents.import.add');
     Route::post('/documents/import/remove', 'DocumentController@removeImport')->name('documents.import.remove');

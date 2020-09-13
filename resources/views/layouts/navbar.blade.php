@@ -42,8 +42,10 @@
         @endif
         <!-- faults page -->
         <li><a class="waves-effect" href="{{ route('faults') }}"><i class="material-icons left">build</i>@lang('faults.faults')</a></li>
-        <!-- documents page TODO: permissions? -->
+        <!-- documents page -->
+        @can('document.any')
         <li><a class="waves-effect" href="{{ route('documents') }}"><i class="material-icons left">assignment</i>@lang('document.documents')</a></li>
+        @endcan
 
         <li><div class="divider"></div></li>
 
@@ -68,6 +70,16 @@
                                 </a>
                             </li>
                             @endcan
+
+                            <!-- user management -->
+                            @can('viewAny', \App\User::class)
+                            <li>
+                                <a class="waves-effect" href="{{ route('admin.user.list') }}">
+                                    <i class="material-icons left">supervisor_account</i> @lang('admin.user_management')
+                                </a>
+                            </li>
+                            @endcan
+
                             <!-- print admin -->
                             @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN))
                             <li>
@@ -76,6 +88,7 @@
                                 </a>
                             </li>
                             @endif
+
                             <!-- internet admin -->
                             @if(Auth::user()->hasRole(\App\Role::INTERNET_ADMIN))
                             <li>
@@ -83,7 +96,13 @@
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')
                                 </a>
                             </li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('routers') }}">
+                                    <i class="material-icons left">router</i>@lang('router.router_monitor')
+                                </a>
+                            </li>
                             @endif
+
                             <!-- permission admin -->
                             @can('permission.handle')
                             <li>
