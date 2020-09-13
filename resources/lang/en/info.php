@@ -18,6 +18,7 @@ return [
     'phone_number' => 'Phone number',
     'place_and_date_of_birth' => 'Place and date of birth',
     'place_of_birth' => 'Place of birth',
+    'semesters' => 'Semesters',
     'street_and_number' => 'Street and number',
     'user_data' => 'User data',
     'workshop' => 'Workshop',

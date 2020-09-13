@@ -31,4 +31,5 @@ $factory->afterCreating(User::class, function ($user, $faker) {
     $user->printAccount()->save(factory(\App\PrintAccount::class)->make(['user_id' => $user->id]));
     $user->personalInformation()->save(factory(\App\PersonalInformation::class)->make(['user_id' => $user->id]));
     $user->educationalInformation()->save(factory(\App\EducationalInformation::class)->make(['user_id' => $user->id]));
+    $user->setStatus($faker->randomElement(\App\Semester::STATUSES));
 });
