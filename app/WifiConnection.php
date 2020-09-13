@@ -13,7 +13,7 @@ class WifiConnection extends Model
     protected $fillable = [
         'ip',
         'mac_address',
-        'wifi_username'
+        'wifi_username',
     ];
 
     public function internetAccess()
