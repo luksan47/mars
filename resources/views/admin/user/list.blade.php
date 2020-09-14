@@ -4,6 +4,7 @@
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
 <a href="#!" class="breadcrumb">@lang('admin.user_management')</a>
 @endsection
+@section('admin_module') active @endsection
 
 @section('content')
 
