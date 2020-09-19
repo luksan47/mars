@@ -29,7 +29,6 @@ return [
         'place_of_birth' => 'place of birth',
         'date_of_birth' => 'date of birth',
         'mothers_name' => 'mother\'s name',
-        'phone_number' => 'phone number',
         'country' => 'country',
         'county' => 'county',
         'zip_code' => 'zip code',

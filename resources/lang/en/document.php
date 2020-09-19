@@ -2,7 +2,7 @@
 
 return [
     'clarify_print' => 'Print the wanted document using the printer in the Collegium, and give it to the secretary/doorman. Costs will be deducted.',
-    'clarify_request' => 'You can request certificates from the secretariat by clicking on the "request" button. This way the secretariat will be notified. You will find the signed and seald certificate at the secretariat on the next workday. Only the signed and sealed certificates are valid!',
+    'clarify_request' => 'You can request certificates from the secretariat by clicking on the \"request\" button. This way the secretariat will be notified. You will find the signed and seald certificate at the secretariat on the next workday. Only the signed and sealed certificates are valid!',
     'computer' => 'personal computer',
     'documents' => 'Documents',
     'download' => 'Download',
@@ -14,12 +14,12 @@ return [
     'item' => 'Item',
     'kitchen' => 'kitchen utensils (eg. dishes)',
     'left' => 'left',
-    'register-statement' => 'Register Statement',
     'missing_educational_info' => 'Your educational information are missing. Please contact a system administrator.',
     'missing_items' => 'You have not added any items.',
     'missing_personal_info' => 'Your personal information are missing. Please contact a system administrator.',
     'not_report' => 'You don\'t have to report:',
     'print' => 'Print',
+    'register-statement' => 'Register Statement',
     'report' => 'You have to report:',
     'request' => 'Request',
     'serial_number' => 'Serial number (for computers)',

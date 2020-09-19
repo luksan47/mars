@@ -23,7 +23,7 @@
                             <td>
                                 @if($user->hasRole(\App\Role::COLLEGIST))
                                 <span class="new badge {{ \App\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
-                                    {{ $user->getStatus() }}
+                                    @lang("user." . $user->getStatus())
                                 </span>
                                 @endif
                             </td>

@@ -16,53 +16,14 @@
                 <table>
                     <tbody>
                         @foreach ($semesters as $semester)
-                        <tr>
-                            <td>
-                                <b>{{ $semester->tag() }}</b>
-                            </td>
-                            <td>
-                                <span class="new badge {{ \App\Semester::colorForStatus($user->getStatusIn($semester)) }}" data-badge-caption="">
-                                    {{ $user->getStatusIn($semester) }}
-                                </span>
-                            </td>
-                            <td>
-                                <div class="right">
-                                    <a href="{{ route('admin.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Semester::ACTIVE]) }}" class="btn-floating green waves-effect">
-                                        <i class="material-icons">rowing</i></a>
-                                    <a href="{{ route('admin.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Semester::INACTIVE]) }}" class="btn-floating grey waves-effect">
-                                        <i class="material-icons">power</i></a>
-                                    <a href="{{ route('admin.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Semester::DEACTIVATED]) }}" class="btn-floating red waves-effect">
-                                        <i class="material-icons">directions_run</i></a>
-                                    <a href="{{ route('admin.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Semester::PASSIVE]) }}" class="btn-floating waves-effect">
-                                        <i class="material-icons">self_improvement</i></a>
-                                </div>
-                            </td>
-                        </tr>
+                            @include('admin.user.semester', ['user' => $user, 'semester' => $semester])
                         @endforeach
                         <!-- TODO: make above template and use it -->
                         @if(!$semesters->contains(\App\Semester::current()))
-                        <tr>
-                            <td>
-                                {{ \App\Semester::current()->tag() }}
-                            </td>
-                            <td>
-                                {{ \App\Semester::INACTIVE }}
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
+                            @include('admin.user.semester', ['user' => $user, 'semester' => \App\Semester::current()])
                         @endif
                         @if(!$semesters->contains(\App\Semester::next()))
-                        <tr>
-                            <td>
-                                {{ \App\Semester::next()->tag() }}
-                            </td>
-                            <td>
-                                {{ \App\Semester::INACTIVE }}
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
+                            @include('admin.user.semester', ['user' => $user, 'semester' => \App\Semester::next()])
                         @endif
                     </tbody>
                 </table>
