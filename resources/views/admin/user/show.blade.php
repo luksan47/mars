@@ -5,6 +5,7 @@
 <a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
 <a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
+@section('admin_module') active @endsection
 
 @section('content')
 <div class="row">
