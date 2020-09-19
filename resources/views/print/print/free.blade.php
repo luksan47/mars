@@ -6,8 +6,16 @@
         <blockquote>@lang('print.free_pages_description')</blockquote>
     </div>
 </div>
+<script type="text/javascript" src="{{ mix('js/moment.min.js') }}"></script>
 <script type="application/javascript">
     $(document).ready(function () {
+        var dateFormatter = function(cell, formatterParams){
+                var value = cell.getValue();
+                if(value){
+                    value = moment(value).format("YYYY. MM. DD. HH:mm");
+                }
+                return value;
+            }
         var table = new Tabulator("#free-page-table", {
             paginationSize: 10,
             layout: "fitColumns",
@@ -24,6 +32,7 @@
                     title: "@lang('internet.created_at')",
                     field: "created_at",
                     sorter: "datetime",
+                    formatter:dateFormatter,
                     headerFilter: 'input'
                 },
                 {
