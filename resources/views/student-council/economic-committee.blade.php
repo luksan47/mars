@@ -51,10 +51,10 @@
                 <div class="row">
                     <div class="col s12">
                     <table><tbody>
-                        @foreach($transactions as $transaction)
+                        @foreach($my_transactions as $transaction)
                         <tr>
                             <td>{{ $transaction->payer->name }}</td>
-                            @if($transaction->type)
+                            @if(in_array($transaction->type->name, ['NETREG', 'KKT']))
                             <td>{{ $transaction->type->name }}</td>
                             @else
                             <td>{{ $transaction->comment ?? ''}}</td>
@@ -72,7 +72,7 @@
                             <b>@lang('checkout.sum')</b>
                         </div>
                         <div class="col s4">
-                            <b>{{ $sum }} Ft</b>
+                            <b>{{ $sum_my_transactions }} Ft</b>
                         </div>
                         <div class="col s8">
                             <div class="input-field">
@@ -110,6 +110,39 @@
             </div>
         </div>
     </div>              
-    
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">@lang('print.history')</span>
+                <table><tbody>
+                    <tr>
+                        <td>@lang('general.semester')<td>
+                        <td>@lang('checkout.date')</td>
+                        <td>@lang('checkout.payed_by')</td>
+                        <td>@lang('checkout.collected_by')</td>
+                        <td>@lang('checkout.details')</td>
+                        <td>@lang('checkout.amount')</td>
+                        <td>@lang('checkout.in_checkout')</td>                           
+                    </tr>
+                    @foreach($all_transactions as $transaction)
+                    <tr>
+                        <td>{{ $transaction->semester->tag()}}<td>
+                        <td>{{ $transaction->created_at }}</td>
+                        <td>{{ $transaction->payer->name }}</td>
+                        <td>{{ $transaction->receiver->name }}</td>
+                        @if($transaction->type)
+                        <td>{{ $transaction->type->name }}</td>
+                        @else
+                        <td>{{ $transaction->comment ?? ''}}</td>
+                        @endif
+                        <td>{{ $transaction->amount }} Ft</td>
+                        <td>{{ $transaction->moved_to_checkout ?? '-'}}
+                    </tr>
+                    @endforeach
+                </tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

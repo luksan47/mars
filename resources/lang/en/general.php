@@ -18,6 +18,7 @@ return [
     'register_guest' => 'For tenants',
     'report_bug' => 'Report a bug',
     'search' => 'Search...',
+    'semester' => 'Semester',
     'settings' => 'Settings',
     'success' => 'Success!',
     'successful_modification' => 'Successful modification!',

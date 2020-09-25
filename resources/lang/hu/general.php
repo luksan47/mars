@@ -18,6 +18,7 @@ return [
     'register_guest' => 'Vendégeknek',
     'report_bug' => 'Hiba bejelentése',
     'search' => 'Keresés...',
+    'semester' => 'Szemeszter',
     'settings' => 'Beállítások',
     'success' => 'Siker!',
     'successful_modification' => 'Sikeres módosítás!',

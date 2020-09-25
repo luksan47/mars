@@ -20,16 +20,16 @@ class CreateCheckoutsTables extends Migration
             $table->unsignedBigInteger('payer_id')->nullable();
             $table->unsignedSmallInteger('semester_id');
             $table->integer('amount');
-            $table->string('payment_type_id')->nullable();
+            $table->string('payment_type_id');
             $table->string('comment')->nullable();
-            $table->boolean('in_checkout')->default(false);
+            $table->timestamp('moved_to_checkout')->nullable();
             $table->timestamps();
         });
 
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('password'); //required to set in_checkout to true
+            $table->string('password'); //required to move transaction to checkout
         });
 
         DB::table('checkouts')->insertOrIgnore([
@@ -44,7 +44,8 @@ class CreateCheckoutsTables extends Migration
         });
 
         DB::table('payment_types')->insertOrIgnore([
-            ['name' => 'KKT'], ['name' => 'NETREG'], //, ['name' => 'OTHER']...
+            ['name' => 'KKT'], ['name' => 'NETREG'], 
+            ['name' => 'INCOME'], ['name' => 'EXPENSE']
         ]);
     }
 
