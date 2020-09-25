@@ -24,7 +24,7 @@ class EconomicController extends Controller
                 ->where('checkout_id', $checkout->id)
                 ->where('payment_type_id', PaymentType::where('name', 'INCOME')->firstOrFail()->id)
                 ->get();
-            
+
             $transactions[$semester->tag()]['expense'] = $semester->transactions()
                 ->where('checkout_id', $checkout->id)
                 ->where('payment_type_id', PaymentType::where('name', 'EXPENSE')->firstOrFail()->id)
@@ -33,15 +33,15 @@ class EconomicController extends Controller
             $transactions[$semester->tag()]['sum'] = $semester->transactions()
                 ->where('checkout_id', $checkout->id)
                 ->sum('amount');
-        };
-        if($redirected){
-            return view('student-council.economic-committee.app',['transactions' => $transactions])
+        }
+        if ($redirected) {
+            return view('student-council.economic-committee.app', ['transactions' => $transactions])
                 ->with('message', __('general.successfully_added'));
         } else {
-            return view('student-council.economic-committee.app',['transactions' => $transactions]);
+            return view('student-council.economic-committee.app', ['transactions' => $transactions]);
         }
     }
-    
+
     public function indexKKTNetreg()
     {
         $user = Auth::user();
