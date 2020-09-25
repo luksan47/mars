@@ -42,6 +42,20 @@
                         <th scope="row">@lang('info.year_of_acceptance')</th>
                         <td>{{ $user->educationalInformation->year_of_acceptance }}</td>
                     </tr>
+                    <tr>
+                        <th scope="row">@lang('info.semesters')</th>
+                        <td>
+                            <ul>
+                                @foreach ($user->allSemesters as $semester)
+                                <li>
+                                    <span class="new badge {{ \App\Semester::colorForStatus($user->getStatusIn($semester)) }}" data-badge-caption="">
+                                        {{ $semester->tag() }}
+                                    </span>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </td>
+                    </tr>
             </tbody>
         </table>
     </div>
