@@ -25,15 +25,15 @@ class EconomicController extends Controller
 
         $semester = Semester::current();
         $all_kktnetreg_transaction = Transaction::where(function ($query) {
-                $query->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
+            $query->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
                     ->orWhere('payment_type_id', PaymentType::where('name', 'NETREG')->firstOrFail()->id);
-            })->get();
+        })->get();
 
         return view('student-council.economic-committee', [
             'users' => $users,
             'my_transactions' => $my_transactions_not_in_checkout,
             'sum_my_transactions' => $sum,
-            'all_transactions' => $all_kktnetreg_transaction
+            'all_transactions' => $all_kktnetreg_transaction,
         ]);
     }
 
@@ -53,9 +53,8 @@ class EconomicController extends Controller
         $admin_checkout = Checkout::firstWhere('name', 'ADMIN');
 
         /** Creating transactions even if amount is 0.
-         * Paying 0 means that the user payed their netreg+kkt depts (which is 0 in this case)
-        */
-    
+         * Paying 0 means that the user payed their netreg+kkt depts (which is 0 in this case).
+         */
         $kkt = Transaction::create([
             'checkout_id' => $valasztmany_checkout->id,
             'receiver_id' => $user->id,
@@ -66,7 +65,7 @@ class EconomicController extends Controller
             'comment' => null,
             'moved_to_checkout' => null,
         ]);
-        
+
         $netreg = Transaction::create([
             'checkout_id' => $admin_checkout->id,
             'receiver_id' => $user->id,
@@ -101,11 +100,12 @@ class EconomicController extends Controller
 
         $transactions = Transaction::where('receiver_id', $user->id)
             ->where('moved_to_checkout', null)->get();
-        
+
         foreach ($transactions as $transaction) {
             $transaction->moved_to_checkout = \Carbon\Carbon::now();
             $transaction->save();
         }
+
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
 }
