@@ -236,7 +236,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function getStatus()
     {
-        return getStatusIn(Semester::current());
+        return $this->getStatusIn(Semester::current());
     }
 
     public function setStatusFor($semester, $status, $comment = null)

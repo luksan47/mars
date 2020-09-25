@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'ACTIVE' => 'Active',
+    'DEACTIVATED' => 'Deactivated',
+    'INACTIVE' => 'Inactive',
+    'PASSIVE' => 'Passive',
+    'PENDING' => 'Pending',
     'accept' => 'Accept',
     'address' => 'Address',
     'address_information' => 'Address information',

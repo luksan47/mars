@@ -29,7 +29,6 @@ return [
         'place_of_birth' => 'születés helye',
         'date_of_birth' => 'születés ideje',
         'mothers_name' => 'anyja neve',
-        'phone_number' => 'telefonszám',
         'country' => 'ország',
         'county' => 'megye',
         'zip_code' => 'irányítószám',

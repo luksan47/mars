@@ -22,7 +22,18 @@
                                 {{ $user->email }}
                             </td>
                             <td>
+                                @if($user->hasRole(\App\Role::COLLEGIST))
+                                <span class="new badge {{ \App\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
+                                    @lang("user." . $user->getStatus())
+                                </span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="right">
+                                    @can('view', $user)
+                                    <a href="{{ route('admin.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect">
+                                        <i class="material-icons">school</i></a>
+                                    @endcan
                                     @can('view', $user)
                                     <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
                                         <i class="material-icons">remove_red_eye</i></a>

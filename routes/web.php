@@ -54,6 +54,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/userdata/update_phone', 'UserController@updatePhone')->name('userdata.update_phone');
     Route::get('/admin/user/list', 'UserController@list')->name('admin.user.list');
     Route::get('/admin/user/show/{id}', 'UserController@show')->name('admin.user.show');
+    Route::get('/admin/semesters/{id}', 'UserController@semesters')->name('admin.user.semesters');
+    Route::get('/admin/semesters/update/{id}/{semester}/{status}', 'UserController@updateSemesterStatus')->name('admin.user.semesters.update');
 
     /** Localization */
     Route::get('/localizations', 'LocaleController@index')->name('localizations');
