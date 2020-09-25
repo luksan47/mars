@@ -45,8 +45,8 @@ class CreateCheckoutsTables extends Migration
         });
 
         DB::table('payment_types')->insertOrIgnore([
-            ['name' => 'KKT'], ['name' => 'NETREG'], 
-            ['name' => 'INCOME'], ['name' => 'EXPENSE']
+            ['name' => 'KKT'], ['name' => 'NETREG'],
+            ['name' => 'INCOME'], ['name' => 'EXPENSE'],
         ]);
     }
 

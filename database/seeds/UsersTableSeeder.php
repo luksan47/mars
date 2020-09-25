@@ -69,6 +69,7 @@ class UsersTableSeeder extends Seeder
             $user->roles()->attach(Role::getId($role));
         }
         $user->internetAccess->setWifiUsername();
+        $user->setStatus(\App\Semester::ACTIVE);
     }
 
     private function createCollegist()
@@ -92,6 +93,7 @@ class UsersTableSeeder extends Seeder
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
         }
+        $user->setStatus(\App\Semester::ACTIVE);
     }
 
     private function createTenant()

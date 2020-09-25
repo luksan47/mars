@@ -28,11 +28,13 @@ class Semester extends Model
     const PARTS = [1, 2];
     const ACTIVE = 'ACTIVE';
     const INACTIVE = 'INACTIVE';
+    const DEACTIVATED = 'DEACTIVATED';
     const PASSIVE = 'PASSIVE';
     const PENDING = 'PENDING';
     const STATUSES = [
         self::ACTIVE,
         self::INACTIVE,
+        self::DEACTIVATED,
         self::PASSIVE,
         self::PENDING,
     ];
@@ -164,6 +166,24 @@ class Semester extends Model
         }
 
         return $semester;
+    }
+
+    public static function colorForStatus($status)
+    {
+        switch ($status) {
+            case self::ACTIVE:
+                return 'green';
+            case self::INACTIVE:
+                return 'grey';
+            case self::DEACTIVATED:
+                return 'brown';
+            case self::PASSIVE:
+                return 'orange';
+            case self::PENDING:
+                return 'lime';
+            default:
+                return 'black';
+        }
     }
 
     /* Helpers for testing */
