@@ -73,6 +73,11 @@ class Semester extends Model
         return $this->belongsToMany(User::class, 'semester_status')->withPivot(['status', 'verified', 'comment']);
     }
 
+    public function transactions()
+    {
+        return $this->hasMany('App\Transaction', 'semester_id');
+    }
+
     public function usersWithStatus($status)
     {
         return $this->belongsToMany(User::class, 'semester_status')

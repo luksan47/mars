@@ -2,7 +2,7 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('role.student-council')</a>
-<a href="#!" class="breadcrumb">@lang('role.economic-committee')</a>
+<a href="{{ route('economic_committee') }}" class="breadcrumb" style="cursor: pointer">@lang('role.economic-committee')</a>
 <a href="#!" class="breadcrumb">@lang('checkout.kktnetreg')</a>
 @endsection
 @section('student_council_module') active @endsection
@@ -53,7 +53,9 @@
                     <table><tbody>
                         @foreach($my_transactions as $transaction)
                         <tr>
+                            @if($transaction->payer)
                             <td>{{ $transaction->payer->name }}</td>
+                            @else <td></td> @endif
                             @if(in_array($transaction->type->name, ['NETREG', 'KKT']))
                             <td>{{ $transaction->type->name }}</td>
                             @else
@@ -128,9 +130,13 @@
                     <tr>
                         <td>{{ $transaction->semester->tag()}}<td>
                         <td>{{ $transaction->created_at }}</td>
+                        @if($transaction->payer)
                         <td>{{ $transaction->payer->name }}</td>
+                        @else <td></td> @endif
+                        @if($transaction->receiver)
                         <td>{{ $transaction->receiver->name }}</td>
-                        @if($transaction->type)
+                        @else <td></td> @endif
+                        @if(in_array($transaction->type->name, ['NETREG', 'KKT']))
                         <td>{{ $transaction->type->name }}</td>
                         @else
                         <td>{{ $transaction->comment ?? ''}}</td>

@@ -36,6 +36,7 @@ class CreateCheckoutsTables extends Migration
             ['name' => 'ADMIN', 'password' => 'admin'],
             ['name' => 'VALASZTMANY', 'password' => 'valasztmany'],
             //passwords will be changed
+            //not encrypted for easier reset
         ]);
 
         Schema::create('payment_types', function (Blueprint $table) {
