@@ -34,17 +34,17 @@ class CreateCheckoutsTables extends Migration
 
         DB::table('checkouts')->insertOrIgnore([
             ['name' => 'ADMIN', 'password' => 'admin'],
-            ['name' => 'VALASZTMANY', 'password' => 'valasztmany']
+            ['name' => 'VALASZTMANY', 'password' => 'valasztmany'],
             //passwords will be changed
         ]);
-        
+
         Schema::create('payment_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
         });
 
         DB::table('payment_types')->insertOrIgnore([
-            ['name' => 'KKT'], ['name' => 'NETREG']//, ['name' => 'OTHER']...
+            ['name' => 'KKT'], ['name' => 'NETREG'], //, ['name' => 'OTHER']...
         ]);
     }
 
@@ -58,6 +58,5 @@ class CreateCheckoutsTables extends Migration
         Schema::dropIfExists('balances');
         Schema::dropIfExists('checkouts');
         Schema::dropIfExists('payment_types');
-
     }
 }

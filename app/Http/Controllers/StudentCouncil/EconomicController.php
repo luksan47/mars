@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\StudentCouncil;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Transaction;
 use App\Checkout;
+use App\Http\Controllers\Controller;
 use App\PaymentType;
 use App\Semester;
+use App\Transaction;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class EconomicController extends Controller
 {
@@ -19,7 +18,7 @@ class EconomicController extends Controller
     {
         $user = Auth::user();
         $users = User::all();
-        
+
         $my_transactions_not_in_checkout = Transaction::where('receiver_id', $user->id)
             ->where('in_checkout', false)->get();
         $sum = $my_transactions_not_in_checkout->sum('amount');
@@ -27,7 +26,7 @@ class EconomicController extends Controller
         return view('student-council.economic-committee', [
             'users' => $users,
             'transactions' => $my_transactions_not_in_checkout,
-            'sum' => $sum
+            'sum' => $sum,
         ]);
     }
 
@@ -37,7 +36,7 @@ class EconomicController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'kkt' => 'required|integer|min:0',
-            'netreg' => 'required|integer|min:0'
+            'netreg' => 'required|integer|min:0',
         ]);
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
@@ -54,7 +53,7 @@ class EconomicController extends Controller
             'amount' => $request->kkt,
             'payment_type_id' => PaymentType::where('name', 'KKT')->firstOrFail()->id,
             'comment' => null,
-            'in_checkout' => false
+            'in_checkout' => false,
         ]);
         $kkt = Transaction::create([
             'checkout_id' => $admin_checkout->id,
@@ -64,9 +63,9 @@ class EconomicController extends Controller
             'amount' => $request->netreg,
             'payment_type_id' => PaymentType::where('name', 'NETREG')->firstOrFail()->id,
             'comment' => null,
-            'in_checkout' => false
+            'in_checkout' => false,
         ]);
-        
+
         //TODO email
 
         return redirect()->back()->with('message', __('general.successfully_added'));

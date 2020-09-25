@@ -283,7 +283,7 @@ class User extends Authenticatable implements HasLocalePreference
                 $query->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
                       ->orWhere('payment_type_id', PaymentType::where('name', 'NETREG')->firstOrFail()->id);
             })->get();
-        
+
         return $payed_kktnetreg->count() == 0;
     }
 }
