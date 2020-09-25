@@ -188,4 +188,11 @@ class InternetController extends Controller
             return $data;
         };
     }
+
+    public function showCheckout()
+    {
+        $users = User::where('verified', false)->get();
+
+        return view('admin.checkout', ['users' => $users]);
+    }
 }

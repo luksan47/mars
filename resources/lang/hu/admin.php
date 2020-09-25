@@ -3,6 +3,7 @@
 return [
     'accept' => 'Elfogad',
     'admin' => 'Admin',
+    'checkout' => 'Rendszergazdai kassza',
     'handle_registrations' => 'Regisztrációk kezelése',
     'other_permissions' => 'További jogosultságok',
     'permissions' => 'Jogosultságok',
