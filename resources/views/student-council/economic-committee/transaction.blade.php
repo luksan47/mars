@@ -14,6 +14,7 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('checkout.pay')</span>
+                <blockquote>@lang('checkout.add_transaction_descr')</blockquote>
                 <form method="POST" action="{{ route('economic_committee.transaction.add') }}">
                     @csrf
                     <div class="row">

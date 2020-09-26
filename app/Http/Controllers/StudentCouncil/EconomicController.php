@@ -47,28 +47,9 @@ class EconomicController extends Controller
             $transactions['sum'] = $semester->transactionsInCheckout($checkout)
                 ->sum('amount');
             
-            $workshop_balances = [];
-            foreach ($semester->workshopBalances as $workshop_balance) {
-                $payed_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
-                    return ($user->isActiveIn($workshop_balance->semester)
-                         && !$user->haveToPayKKTNetregInSemester($workshop_balance->semester));
-                    })->count();
-                $remaining_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
-                    return ($user->haveToPayKKTNetregInSemester($workshop_balance->semester));
-                    })->count();;
-
-                $workshop_balances[$workshop_balance->workshop->name] = [
-                    'payed_member_num' => $payed_member_num,
-                    'remaining_members_num' => $remaining_member_num,
-                    'allocated_balance' => $workshop_balance->allocated_balance,
-                    'used_balance' => $workshop_balance->used_balance,
-                    'remaining_balance' => $workshop_balance->allocated_balance - $workshop_balance->used_balance
-                ];
-            }
-            
-            $data[$semester->tag().' ('.$semester->getStartDate()->format('Y-m-d').' / '.$semester->getEndDate()->format('Y-m-d').')'] = [
+            $data[$semester->tag().' ('.$semester->getStartDate()->format('Y.m.d').'-'.$semester->getEndDate()->format('Y.m.d').')'] = [
                 'transactions' => $transactions,
-                'workshop_balances' => $workshop_balances
+                'workshop_balances' => $semester->workshopBalances
             ];
         };
         
@@ -258,6 +239,14 @@ class EconomicController extends Controller
         //for every active member in a workshop
         //payed kkt * (if resident: 0.6, if day-boarder: 0.45) / user's workshops' count
         //or the proportions should be edited?
+
+        /* $payed_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
+                return ($user->isActiveIn($workshop_balance->semester)
+                        && !$user->haveToPayKKTNetregInSemester($workshop_balance->semester));
+                })->count();
+        $remaining_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
+                return ($user->haveToPayKKTNetregInSemester($workshop_balance->semester));
+                })->count(); */
 
     }
 }

@@ -15,9 +15,9 @@
                 <span class="card-title">@lang('checkout.checkout')</span>
                 <blockquote>
                     @lang('checkout.current_balance'): 
-                    <b class="coli-text text-orange"> {{ $current_balance }} Ft</b>.<br>
+                    <b class="coli-text text-orange"> {{ number_format($current_balance, 0, '.', ' ') }} Ft</b>.<br>
                     @lang('checkout.current_balance_in_checkout'): 
-                    <b class="coli-text text-orange"> {{ $current_balance_in_checkout }} Ft</b>.<br>
+                    <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
                 @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
                 <div class="row">
@@ -56,39 +56,39 @@
                                 <td>
                                     @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
                                     <a href="{{ route('kktnetreg') }}" class="btn-flat waves-effect">
-                                        @lang('checkout.details')</a></td>
+                                        @lang('checkout.details')</a>
                                     @endif
-                                <td class="right">{{ $row['transactions']['kkt'] }} Ft</td>
+                                </td>
+                                <td class="right"><nobr>{{ number_format($row['transactions']['kkt'], 0, '.', ' ') }} Ft</nobr></td>
                             </tr>
                             @foreach($row['transactions']['income'] as $transaction)
                             <tr>
                                 <td>{{ $transaction->comment }}</td>
-                                <td>{{ $transaction->created_at }}</td>
-                                <td class="right">{{ $transaction->amount }}</td>
+                                <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
+                                <td class="right"><nobr>{{ number_format($transaction->amount, 0, '.', ' ') }} Ft</nobr></td>
                             </tr>
                             @endforeach
                             <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
                             @foreach($row['transactions']['expense'] as $transaction)
                             <tr>
                                 <td>{{ $transaction->comment }}</td>
-                                <td>{{ $transaction->created_at->format('Y-m-d') }}</td>
-                                <td class="right">{{ $transaction->amount }}</td>
+                                <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
+                                <td class="right"><nobr>{{ number_format($transaction->amount, 0, '.', ' ') }} Ft</nobr></td>
                             </tr>
                             @endforeach
                             <tr>
                                 <th colspan="2">@lang('checkout.sum')</th>
-                                <th class="right">{{ $row['transactions']['sum'] }} Ft</th>
+                                <th class="right"><nobr>{{ number_format($row['transactions']['sum'], 0, '.', ' ') }} Ft</nobr></th>
                             </tr>
                         </tbody></table>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <table class="responsive-table centered">
+                        <table class="centered">
                         <thead>
                             <tr>
                                 <th>@lang('checkout.workshop_balances')*</th>
-                                <th>@lang('general.members')</th>
                                 <th>
                                     @lang('checkout.allocated_balance')
                                     @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
@@ -99,20 +99,14 @@
                                 </th>
                                 <th>@lang('checkout.used_balance')</th>
                                 <th>@lang('checkout.remaining_balance')</th>
-                            @foreach($row['workshop_balances'] as $workshop => $workshop_balance)</th>
+                            @foreach($row['workshop_balances'] as $workshop_balance)</th>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ $workshop }}</td>
-                                <td>
-                                    {{ $workshop_balance['payed_member_num'] }} 
-                                    @if($workshop_balance['remaining_members_num'] > 0)
-                                    (+{{ $workshop_balance['remaining_members_num'] }}) 
-                                    @endif
-                                </td>
-                                <td>{{ $workshop_balance['allocated_balance'] }}</td>
-                                <td>{{ $workshop_balance['used_balance'] }}</td>
-                                <td>{{ $workshop_balance['remaining_balance'] }}</td>
+                                <td>{{ $workshop_balance->workshop->name }}</td>
+                                <td>{{ $workshop_balance->allocated_balance }}</td>
+                                <td>{{ $workshop_balance->used_balance }}</td>
+                                <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>
                             </tr>
                             @endforeach
                         </tbody></table>

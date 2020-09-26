@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="col s12 m6 push-m6">
+    <div class="col s12 xl6 push-xl6">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('checkout.gathered_transactions')</span>
@@ -89,7 +89,7 @@
                         <div class="col s12">
                             <blockquote>@lang('checkout.collecting_kktnetreg_description')</blockquote>
                         </div>
-                        <div class="col s8">
+                        <div class="col s7 xl8">
                             <div class="input-field">
                                 <input id="password" name="password" type="password" class="validate @error('checkout_pwd') invalid @enderror" required>
                                 <label for="password">@lang('checkout.password')</label>
@@ -98,7 +98,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col s4">
+                        <div class="col s5 xl4">
                             <div class="input-field">
                                 <button type="submit" class="btn waves-effect">
                                     <i class="material-icons right">forward</i>
@@ -111,7 +111,7 @@
             </div>
         </div>
     </div>
-    <div class="col s12 m6 pull-m6">
+    <div class="col s12 xl6 pull-xl6">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('checkout.users_have_to_pay') ({{ $current_semester }}) </span>
