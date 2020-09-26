@@ -89,7 +89,7 @@ class EconomicController extends Controller
                 'current_balance_in_checkout' => $current_balance_in_checkout]);
         }
     }
-    
+
     public function indexKKTNetreg()
     {
         $user = Auth::user();
