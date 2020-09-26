@@ -5,6 +5,7 @@ return [
     'amount' => 'Amount',
     'checkout' => 'Checkout',
     'collected_by' => 'Collected by',
+    'collecting_kktnetreg_description' => 'You owe the checkout with this money. You can add this to the checkout with the Committee leader\'s password. After this, you won\'t be able to delete these transactions.',
     'current_balance' => 'Current balance',
     'current_balance_in_checkout' => 'Current balance in the checkout',
     'date' => 'Date',
@@ -20,7 +21,7 @@ return [
     'netreg' => 'Netreg',
     'new_transaction' => 'New transaction',
     'other_transaction' => 'Other expense or income',
-    'password' => 'Checkout\\\'s password',
+    'password' => 'Checkout\'s password',
     'pay' => 'Pay',
     'pay_kktnetreg' => 'Pay KKT and Netreg',
     'payed_by' => 'Payed by',
@@ -35,5 +36,5 @@ return [
     'used_balance' => 'Used balance',
     'users_have_to_pay' => 'Users who have to pay',
     'workshop_balance_descr' => 'Under development.',
-    'workshop_balances' => 'Workshops\\\' balance',
+    'workshop_balances' => 'Workshops\' balance',
 ];

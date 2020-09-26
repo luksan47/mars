@@ -244,6 +244,14 @@ class EconomicController extends Controller
         );
     }
 
+    public function deleteTransaction(Transaction $transaction)
+    {
+        $user = Auth::user();
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        $transaction->delete();
+        return redirect()->back()->with('message', __('general.successfully_deleted'));
+    }
+
     public function calculateWorkshopBalance(Semester $semester)
     {
         //TODO (#382) 

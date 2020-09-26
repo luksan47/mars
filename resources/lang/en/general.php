@@ -26,5 +26,6 @@ return [
     'successful_modification' => 'Successful modification!',
     'successful_transaction' => 'Successful transaction!',
     'successfully_added' => 'Successfully added!',
+    'successfully_deleted' => 'Successfully deleted',
     'you_are_logged_in' => 'You are logged in.',
 ];

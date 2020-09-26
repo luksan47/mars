@@ -64,7 +64,7 @@
                             <!-- economic committee -->
                             <li>
                                 <a class="waves-effect" href="{{ route('economic_committee') }}">
-                                    <i class="material-icons left">euro_symbol</i> @lang('role.economic-committee')
+                                    <i class="material-icons left">attach_money</i> @lang('role.economic-committee')
                                 </a>
                             </li>
                         </ul>
@@ -135,7 +135,7 @@
                             <!-- TODO can -->
                             <li>
                             <a class="waves-effect" href="{{ route('admin.checkout') }}">
-                                <i class="material-icons left">euro_symbol</i> @lang('admin.checkout')
+                                <i class="material-icons left">credit_card</i> @lang('admin.checkout')
                             </a>
                             </li>
                         </ul>

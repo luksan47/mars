@@ -21,7 +21,7 @@
                             <div class="input-field col s12 m12 l4">
                                 @include("utils.select", [
                                     'elements' => $users->filter(function ($value, $key) {
-                                            return true;// $value->haveToPayKKTNetreg(); //all user will be better for now
+                                            return true;// $value->haveToPayKKTNetreg(); //all user will be better for now TODO change this later
                                         }), 
                                     'element_id' => 'user_id',
                                     'required' => true])
@@ -67,6 +67,11 @@
                             <td>{{ $transaction->comment ?? ''}}</td>
                             @endif
                             <td>{{ $transaction->amount }} Ft</td>
+                            <td>
+                                <a href="{{ route('economic_committee.transaction.delete', ['transaction' => $transaction->id]) }}" 
+                                    class="btn-floating waves-effect right red">
+                                    <i class="material-icons">delete</i></a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody></table>
@@ -80,6 +85,9 @@
                         </div>
                         <div class="col s4">
                             <b>{{ $sum_my_transactions }} Ft</b>
+                        </div>
+                        <div class="col s12">
+                            <blockquote>@lang('checkout.collecting_kktnetreg_description')</blockquote>
                         </div>
                         <div class="col s8">
                             <div class="input-field">

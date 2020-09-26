@@ -5,6 +5,7 @@ return [
     'amount' => 'Összeg',
     'checkout' => 'Kassza',
     'collected_by' => 'Átvette',
+    'collecting_kktnetreg_description' => 'Ennyivel tartozol a kassza felé. A kasszába az összeget a bizottsági elnök jelszavával tudod betenni. Ezután már nem lehet törölni a fenti tranzakciókat.',
     'current_balance' => 'Aktuális egyenleg',
     'current_balance_in_checkout' => 'Aktuális egyenleg a kasszában',
     'date' => 'Dátum',
