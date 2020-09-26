@@ -104,7 +104,7 @@ class Semester extends Model
     public function workshopBalances()
     {
         //create fields for the semester if not exist
-        //TODO find a better way
+        //TODO find a better way (#381)
         if (DB::table('workshop_balances')->select('*')->where('semester_id', $this->id)->count() == 0) {
             foreach (Workshop::all() as $workshop) {
                 WorkshopBalance::create([

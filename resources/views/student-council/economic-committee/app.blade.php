@@ -87,8 +87,8 @@
                         <table class="responsive-table centered">
                         <thead>
                             <tr>
-                                <th>@lang('checkout.workshop_balances')</th>
-                                <th>@lang('general.members')*</th>
+                                <th>@lang('checkout.workshop_balances')*</th>
+                                <th>@lang('general.members')</th>
                                 <th>
                                     @lang('checkout.allocated_balance')
                                     @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
@@ -116,6 +116,7 @@
                             </tr>
                             @endforeach
                         </tbody></table>
+                        <blockquote>*@lang('checkout.workshop_balance_descr')</blockquote>
                     </div>
                 </div>
             </div>

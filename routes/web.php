@@ -93,7 +93,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/internet/wifi_password/reset', 'InternetController@resetWifiPassword')->name('internet.wifi_password.reset');
     Route::post('/internet/internet_accesses/{id}/edit', 'InternetController@editInternetAccess')->name('internet.internet_accesses.edit');
 
-    /** Admin Checkout **/
+    /** WIP: Admin Checkout **/
     Route::get('/admin/checkout', 'InternetController@showCheckout')->name('admin.checkout');
 
     /** Routers */

@@ -34,5 +34,6 @@ return [
     'transactions_payed' => 'Az alábbi tranzakciókat fizetted be',
     'used_balance' => 'Felhasznált egyenleg',
     'users_have_to_pay' => 'Még nem fizettek',
+    'workshop_balance_descr' => 'Fejlesztés alatt.',
     'workshop_balances' => 'Műhelyek egyenlegei',
 ];

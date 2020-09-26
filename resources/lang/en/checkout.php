@@ -34,5 +34,6 @@ return [
     'transactions_payed' => 'You payed the following transaction(s)',
     'used_balance' => 'Used balance',
     'users_have_to_pay' => 'Users who have to pay',
+    'workshop_balance_descr' => 'Under development.',
     'workshop_balances' => 'Workshops\\\' balance',
 ];
