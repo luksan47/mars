@@ -36,12 +36,14 @@ class UserPolicy
     public function viewPermissionFor(User $user, User $target)
     {
         return true;
+
         return $user->hasRole(Role::PERMISSION_HANDLER) && $user->id !== $target->id;
     }
 
     public function updatePermission(User $user, User $target, int $role_id)
     {
         $role = Role::find($role_id);
+
         return true;
 
         return $user->hasRole(Role::PERMISSION_HANDLER) && $user->id !== $target->id && $role->name != Role::PERMISSION_HANDLER;
@@ -50,6 +52,7 @@ class UserPolicy
     public function deletePermission(User $user, User $target, int $role_id)
     {
         $role = Role::find($role_id);
+
         return true;
 
         return $user->hasRole(Role::PERMISSION_HANDLER) && $user->id !== $target->id && $role->name != Role::PERMISSION_HANDLER;

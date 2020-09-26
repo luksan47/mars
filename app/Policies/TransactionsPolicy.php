@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Role;
 use App\User;
-use App\Transaction;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TransactionsPolicy
