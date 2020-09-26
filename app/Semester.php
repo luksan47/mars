@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /** A semester is identified by a year and by it's either autumn or spring.
  * ie. a spring semester starting in february 2020 will be (2019, 2) since we write 2019/20/2.
@@ -46,6 +47,13 @@ class Semester extends Model
     const START_OF_AUTUMN_SEMESTER = 8;
     const END_OF_AUTUMN_SEMESTER = 1;
 
+    public static function allUntilCurrent()
+    {
+        return Semester::all()->filter(function ($value, $key) {
+            return $value->getStartDate() < Carbon::now();
+        });
+    }
+    
     // For displaying semesters
     public function tag()
     {
@@ -60,6 +68,14 @@ class Semester extends Model
     public function isSpring()
     {
         return $this->part == 2;
+    }
+
+    public function getStartDate()
+    {
+        $year = $this->year; // end of semester is always in the next year
+        $month = $this->isAutumn() ? self::START_OF_AUTUMN_SEMESTER + 1 : self::START_OF_SPRING_SEMESTER + 1;
+
+        return Carbon::createFromDate($year, $month, 1)->endOfWeek();
     }
 
     public function getEndDate()
@@ -78,6 +94,28 @@ class Semester extends Model
     public function transactions()
     {
         return $this->hasMany('App\Transaction', 'semester_id');
+    }
+
+    public function transactionsInCheckout(Checkout $checkout)
+    {
+        return $this->transactions()->where('checkout_id', $checkout->id);
+    }
+
+    public function workshopBalances()
+    {
+        //create fields for the semester if not exist
+        //TODO find a better way
+        if (DB::table('workshop_balances')->select('*')->where('semester_id', $this->id)->count() == 0){
+            foreach (Workshop::all() as $workshop) {
+                WorkshopBalance::create([
+                    'semester_id' => $this->id,
+                    'workshop_id' => $workshop->id,
+                    'allocated_balance' => 0,
+                    'used_balance' => 0
+                ]);
+            }
+        }
+        return $this->hasMany('App\WorkshopBalance');
     }
 
     public function usersWithStatus($status)

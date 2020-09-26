@@ -274,9 +274,13 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function haveToPayKKTNetreg()
     {
-        //if (!$this->isActive()) return false; //buggy
+        return $this->haveToPayKKTNetregInSemester(Semester::current());
+    }
 
-        $semester = Semester::current();
+    public function haveToPayKKTNetregInSemester($semester)
+    {
+        if (!$this->isActiveIn($semester)) return false;
+
         $payed_kktnetreg = $this->transactions_payed()
             ->where('semester_id', $semester->id)
             ->where(function ($query) {
@@ -285,5 +289,17 @@ class User extends Authenticatable implements HasLocalePreference
             })->get();
 
         return $payed_kktnetreg->count() == 0;
+    }
+
+    public function KKTPayedInSemester($semester)
+    {
+        if($this->haveToPayKKTNetregInSemester($semester)){
+            return 0;
+        }
+
+        return $semester->transactions()
+            ->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
+            ->where('payer_id', $this->id)
+            ->first();
     }
 }

@@ -16,6 +16,7 @@ return [
     'disabled' => 'Deaktivált',
     'edit_warning_auto_approve' => 'Szerkesztés után lefut az automatikus elfogadás az adott felhasználónál, emiatt lehetséges, hogy nem változik az állapot.',
     'error' => 'Hiba',
+    'expiration_extended' => 'Az internetes eszközeid lejárati idejei meg lettek hosszabbítva.',
     'extend' => 'Meghosszabbít',
     'generate_new_pwd' => 'Új jelszó generálása',
     'has_internet' => 'Az internetelérésed aktív eddig: :ends',

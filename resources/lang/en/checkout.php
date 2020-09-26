@@ -1,8 +1,12 @@
 <?php
 
 return [
+    'allocated_balance' => 'Allocated balance',
     'amount' => 'Amount',
+    'checkout' => 'Checkout',
     'collected_by' => 'Collected by',
+    'current_balance' => 'Current balance',
+    'current_balance_in_checkout' => 'Current balance in the checkout',
     'date' => 'Date',
     'description' => 'Description',
     'details' => 'Details',
@@ -20,8 +24,15 @@ return [
     'pay' => 'Pay',
     'pay_kktnetreg' => 'Pay KKT and Netreg',
     'payed_by' => 'Payed by',
+    'payed_kkt' => 'Payed KKT',
+    'receipts' => 'Receipts',
+    'remaining_balance' => 'Remaining balance',
     'sum' => 'Sum',
     'to_checkout' => 'Add to checkout',
+    'transaction_for_workshop' => 'Pay to workshops',
     'transactions' => 'Transactions',
+    'transactions_payed' => 'You payed the following transaction(s)',
+    'used_balance' => 'Used balance',
     'users_have_to_pay' => 'Users who have to pay',
+    'workshop_balances' => 'Workshops\\\' balance',
 ];

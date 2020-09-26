@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\StudentCouncil;
 
-use App\Checkout;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+
+use App\Checkout;
 use App\PaymentType;
 use App\Semester;
 use App\Transaction;
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use App\Workshop;
+
 
 class EconomicController extends Controller
 {
@@ -18,27 +22,71 @@ class EconomicController extends Controller
     {
         $transactions = [];
         $checkout = Checkout::where('name', 'VALASZTMANY')->firstOrFail();
-        foreach (Semester::all() as $semester) {
-            $transactions[$semester->tag()] = [];
-            $transactions[$semester->tag()]['income'] = $semester->transactions()
-                ->where('checkout_id', $checkout->id)
+        $semesters = Semester::allUntilCurrent()
+            ->sortByDesc(function ($semester, $key) {
+                return $semester->getStartDate();
+            })->filter(function ($semester, $key){
+                return $semester->transactions()->count()>0;
+            });
+
+        $data = [];
+        foreach ($semesters as $semester) {
+            //transactions
+            $transactions = [];
+            $transactions['income'] = $semester->transactionsInCheckout($checkout)
                 ->where('payment_type_id', PaymentType::where('name', 'INCOME')->firstOrFail()->id)
                 ->get();
             
-            $transactions[$semester->tag()]['expense'] = $semester->transactions()
-                ->where('checkout_id', $checkout->id)
+            $transactions['expense'] = $semester->transactionsInCheckout($checkout)
                 ->where('payment_type_id', PaymentType::where('name', 'EXPENSE')->firstOrFail()->id)
                 ->get();
-            $transactions[$semester->tag()]['kkt'] = $checkout->kktSum($semester);
-            $transactions[$semester->tag()]['sum'] = $semester->transactions()
-                ->where('checkout_id', $checkout->id)
+            $transactions['kkt'] = $checkout->kktSum($semester);
+            $transactions['sum'] = $semester->transactionsInCheckout($checkout)
                 ->sum('amount');
+            
+            $workshop_balances = [];
+            foreach ($semester->workshopBalances as $workshop_balance) {
+                //TODO create getters in workshop model
+                $payed_member_num = 0;
+                $remaining_member_num = 0;
+                foreach ($workshop_balance->workshop->users as $user) {
+                    if($user->isActiveIn($semester) && !$user->haveToPayKKTNetregInSemester($semester))
+                        $payed_member_num++;
+                    if($user->haveToPayKKTNetregInSemester($semester))
+                        $remaining_member_num++;
+                }
+
+                $workshop_balances[$workshop_balance->workshop->name] = [
+                    'payed_member_num' => $payed_member_num,
+                    'remaining_members_num' => $remaining_member_num,
+                    'allocated_balance' => $workshop_balance->allocated_balance,
+                    'used_balance' => $workshop_balance->used_balance,
+                    'remaining_balance' => $workshop_balance->allocated_balance - $workshop_balance->used_balance
+                ];
+            }
+            
+            
+            $data[$semester->tag().' ('.$semester->getStartDate()->format('Y-m-d').' / '.$semester->getEndDate()->format('Y-m-d').')'] = [
+                'transactions' => $transactions,
+                'workshop_balances' => $workshop_balances
+            ];
         };
+        
+        //checkout balances
+        $current_balance = $checkout->balance();
+        $current_balance_in_checkout = $checkout->balanceInCheckout();
+
         if($redirected){
-            return view('student-council.economic-committee.app',['transactions' => $transactions])
-                ->with('message', __('general.successfully_added'));
+            return view('student-council.economic-committee.app',[
+                'data' => $data,
+                'current_balance' => $current_balance,
+                'current_balance_in_checkout' => $current_balance_in_checkout,
+                ])->with('message', __('general.successfully_added'));
         } else {
-            return view('student-council.economic-committee.app',['transactions' => $transactions]);
+            return view('student-council.economic-committee.app',[
+                'data' => $data,
+                'current_balance' => $current_balance,
+                'current_balance_in_checkout' => $current_balance_in_checkout]);
         }
     }
     
@@ -62,6 +110,7 @@ class EconomicController extends Controller
             'my_transactions' => $my_transactions_not_in_checkout,
             'sum_my_transactions' => $sum,
             'all_transactions' => $all_kktnetreg_transaction,
+            'current_semester' => $semester->tag()
         ]);
     }
 
@@ -110,8 +159,13 @@ class EconomicController extends Controller
             'moved_to_checkout' => null,
         ]);
 
-        //TODO email
+
         //TODO activate internet
+
+        $payer = User::find($request->user_id);
+        if (config('mail.active')) {
+            Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], __('internet.expiration_extended')));
+        }
 
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
@@ -123,7 +177,7 @@ class EconomicController extends Controller
         /* Moving the Netreg amount from Valasztmany to Admins is not tracked (yet) */
         $checkout_password = Checkout::where('name', 'VALASZTMANY')->firstOrFail()->password;
         $validator = Validator::make($request->all(), [
-            'checkout_pwd' => 'required|in:'.$checkout_password,
+            'password' => 'required|in:'.$checkout_password, //TODO bug on wrong pwd
         ]);
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
@@ -149,7 +203,7 @@ class EconomicController extends Controller
         $validator = Validator::make($request->all(), [
             'comment' => 'required|string',
             'amount' => 'required|integer',
-            'password' => 'required|in:'.$checkout_password,
+            'password' => 'required|in:'.$checkout_password, //TODO bug on wrong pwd
         ]);
         $validator->validate();
         if ($validator->fails()) {
@@ -172,5 +226,14 @@ class EconomicController extends Controller
         return redirect()->action(
             [EconomicController::class, 'index'], ['redirected' => true]
         );
+    }
+
+    public function calculateWorkshopBalance(Semester $semester)
+    {
+        //TODO (#382) 
+        //for every active member in a workshop
+        //payed kkt * (if resident: 0.6, if day-boarder: 0.45) / user's workshops' count
+        //or the proportions should be edited?
+
     }
 }

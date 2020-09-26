@@ -19,7 +19,11 @@
                     <div class="row">
                         <div class="col s12">
                             <div class="input-field col s12 m12 l4">
-                                @include("utils.select", ['elements' => $users, 'element_id' => 'user_id'])
+                                @include("utils.select", [
+                                    'elements' => $users->filter(function ($value, $key) {
+                                            return true;// $value->haveToPayKKTNetreg(); //all user will be better for now
+                                        }), 
+                                    'element_id' => 'user_id'])
                             </div>
                             <div class="input-field col s12 m6 l4">
                                 <input id="kkt" name="kkt" type="number" required min="0"
@@ -78,9 +82,9 @@
                         </div>
                         <div class="col s8">
                             <div class="input-field">
-                                <input id="checkout_pwd" name="checkout_pwd" class="validate @error('checkout_pwd') invalid @enderror" required>
-                                <label for="checkout_pwd">@lang('checkout.password')</label>
-                                @error('checkout_pwd')
+                                <input id="password" name="password" type="password" class="validate @error('checkout_pwd') invalid @enderror" required>
+                                <label for="password">@lang('checkout.password')</label>
+                                @error('password')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                                 @enderror
                             </div>
@@ -101,7 +105,7 @@
     <div class="col s12 m6 pull-m6">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">@lang('checkout.users_have_to_pay')</span>
+                <span class="card-title">@lang('checkout.users_have_to_pay') ({{ $current_semester }}) </span>
                 <table><tbody>
                     @foreach($users as $user)
                     @if($user->haveToPayKKTNetreg())
@@ -111,7 +115,37 @@
                 </tbody></table>
             </div>
         </div>
-    </div>              
+    </div>    
+    {{-- Temporary solution while generating workshop balances does not work (#382) --}}
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">@lang('checkout.payed_kkt') ({{\App\Semester::current()->tag()}})</span>
+                <table><tbody>
+                    <tr>
+                        <th>@lang('print.user')</th>
+                        <th>@lang('info.workshop')</th>
+                        <th>@lang('checkout.amount')</th>                          
+                    </tr>
+                    @foreach($all_transactions as $transaction)
+                    @if($transaction->semester == \App\Semester::current())
+                    @if(in_array($transaction->type->name, ['KKT']))
+                    <tr>
+                        <td>{{ $transaction->payer->name}}</td>
+                        <td>
+                            @foreach($transaction->payer->workshops as $workshop)
+                            {{ $workshop->name }}<br>
+                            @endforeach
+                        </td>
+                        <td>{{ $transaction->amount }}</td>
+                    </tr>
+                    @endif
+                    @endif
+                    @endforeach
+                </tbody></table>
+            </div>
+        </div>
+    </div>          
     <div class="col s12">
         <div class="card">
             <div class="card-content">

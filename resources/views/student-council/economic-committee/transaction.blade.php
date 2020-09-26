@@ -33,7 +33,7 @@
                                 @enderror
                             </div>
                             <div class="input-field col s12 m4 l4">
-                                <input id="password" name="password" type="text" required>
+                                <input id="password" name="password" type="password" required>
                                 <label for="password">@lang('checkout.password')</label>
                                 @error('password')
                                 <span class="helper-text" data-error="{{ $message }}"></span>

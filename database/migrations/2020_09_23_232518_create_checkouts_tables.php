@@ -47,7 +47,16 @@ class CreateCheckoutsTables extends Migration
         DB::table('payment_types')->insertOrIgnore([
             ['name' => 'KKT'], ['name' => 'NETREG'],
             ['name' => 'INCOME'], ['name' => 'EXPENSE'],
+            //receipt?
         ]);
+
+        Schema::create('workshop_balances', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedSmallInteger('semester_id');
+            $table->unsignedSmallInteger('workshop_id');
+            $table->integer('allocated_balance')->default(0);
+            $table->integer('used_balance')->default(0);
+        });
     }
 
     /**

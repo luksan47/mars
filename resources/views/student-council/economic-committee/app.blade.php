@@ -10,46 +10,107 @@
 
 <div class="row">
     <div class="col s12">
-        <p>
-        <a href="{{ route('kktnetreg') }}" class="btn btn-large waves-effect">
-            @lang('checkout.pay_kktnetreg')</a>
-        <a href="{{ route('economic_committee.transaction') }}" class="btn btn-large waves-effect">
-            @lang('checkout.other_transaction')</a>
-        </p>
+        <div class="card">   
+            <div class="card-content">
+                <span class="card-title">@lang('checkout.checkout')</span>
+                <blockquote>
+                    @lang('checkout.current_balance'): 
+                    <b class="coli-text text-orange"> {{ $current_balance }} Ft</b>.<br>
+                    @lang('checkout.current_balance_in_checkout'): 
+                    <b class="coli-text text-orange"> {{ $current_balance_in_checkout }} Ft</b>.<br>
+                </blockquote>
+                <div class="row">
+                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
+                        <a href="{{ route('kktnetreg') }}" class="btn waves-effect" style="width:100%">
+                            @lang('checkout.pay_kktnetreg')</a>
+                    </div>
+                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
+                        <a href="#" class="btn waves-effect" disabled style="width:100%">
+                            @lang('checkout.transaction_for_workshop')</a>
+                    </div>
+                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
+                        <a href="{{ route('economic_committee.transaction') }}" class="btn waves-effect" style="width:100%">
+                            @lang('checkout.other_transaction')</a>
+                    </div>
+                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
+                        <a href="#" class="btn waves-effect" disabled style="width:100%">
+                            @lang('checkout.receipts')</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    @foreach($transactions as $semester => $data)
+    @foreach($data as $semester => $row)
     <div class="col s12">
         <div class="card">
             <div class="card-content">  
                 <span class="card-title">{{ $semester }}</span>
-                <table><tbody>
-                    <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
-                    <tr>
-                        <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
-                        <td><a href="{{ route('kktnetreg') }}" class="btn-flat waves-effect">
-                           @lang('checkout.details')</a></td>
-                        <td class="right">{{ $data['kkt'] }} Ft</td>
-                    </tr>
-                    @foreach($data['income'] as $transaction)
-                    <tr>
-                        <td>{{ $transaction->comment }}</td>
-                        <td>{{ $transaction->created_at }}</td>
-                        <td class="right">{{ $transaction->amount }}</td>
-                    </tr>
-                    @endforeach
-                    <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
-                    @foreach($data['expense'] as $transaction)
-                    <tr>
-                        <td>{{ $transaction->comment }}</td>
-                        <td>{{ $transaction->created_at }}</td>
-                        <td class="right">{{ $transaction->amount }}</td>
-                    </tr>
-                    @endforeach
-                    <tr>
-                        <th colspan="2">@lang('checkout.sum')</th>
-                        <th class="right">{{ $data['sum'] }} Ft</th>
-                    </tr>
-                </tbody></table>
+                <div class="row">
+                    <div class="col s12">
+                        <table><tbody>
+                            <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
+                            <tr>
+                                <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
+                                <td><a href="{{ route('kktnetreg') }}" class="btn-flat waves-effect">
+                                @lang('checkout.details')</a></td>
+                                <td class="right">{{ $row['transactions']['kkt'] }} Ft</td>
+                            </tr>
+                            @foreach($row['transactions']['income'] as $transaction)
+                            <tr>
+                                <td>{{ $transaction->comment }}</td>
+                                <td>{{ $transaction->created_at }}</td>
+                                <td class="right">{{ $transaction->amount }}</td>
+                            </tr>
+                            @endforeach
+                            <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
+                            @foreach($row['transactions']['expense'] as $transaction)
+                            <tr>
+                                <td>{{ $transaction->comment }}</td>
+                                <td>{{ $transaction->created_at->format('Y-m-d') }}</td>
+                                <td class="right">{{ $transaction->amount }}</td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <th colspan="2">@lang('checkout.sum')</th>
+                                <th class="right">{{ $row['transactions']['sum'] }} Ft</th>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <table class="responsive-table centered">
+                        <thead>
+                            <tr>
+                                <th>@lang('checkout.workshop_balances')</th>
+                                <th>@lang('general.members')*</th>
+                                <th>
+                                    @lang('checkout.allocated_balance')
+                                    <a href="#" class="btn-floating btn-small grey waves-effect">
+                                        <i class="material-icons">refresh</i>
+                                    </a>
+                                </th>
+                                <th>@lang('checkout.used_balance')</th>
+                                <th>@lang('checkout.remaining_balance')</th>
+                            @foreach($row['workshop_balances'] as $workshop => $workshop_balance)</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ $workshop }}</td>
+                                <td>
+                                    {{ $workshop_balance['payed_member_num'] }} 
+                                    @if($workshop_balance['remaining_members_num'] > 0)
+                                    (+{{ $workshop_balance['remaining_members_num'] }}) 
+                                    @endif
+                                </td>
+                                <td>{{ $workshop_balance['allocated_balance'] }}</td>
+                                <td>{{ $workshop_balance['used_balance'] }}</td>
+                                <td>{{ $workshop_balance['remaining_balance'] }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody></table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

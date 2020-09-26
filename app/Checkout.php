@@ -14,6 +14,18 @@ class Checkout extends Model
         return $this->hasMany('App\Transaction');
     }
 
+    public function balance()
+    {
+        return $this->transactions->sum('amount');
+    }
+
+    public function balanceInCheckout()
+    {
+        return $this->transactions
+            ->where('moved_to_checkout', '<>', null)
+            ->sum('amount');
+    }
+
     public function kktSum(Semester $semester)
     {
         return $this->transactions

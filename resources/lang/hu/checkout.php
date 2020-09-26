@@ -1,8 +1,12 @@
 <?php
 
 return [
+    'allocated_balance' => 'Kiosztott egyenleg',
     'amount' => 'Összeg',
+    'checkout' => 'Kassza',
     'collected_by' => 'Átvette',
+    'current_balance' => 'Aktuális egyenleg',
+    'current_balance_in_checkout' => 'Aktuális egyenleg a kasszában',
     'date' => 'Dátum',
     'description' => 'Leírás',
     'details' => 'Részletek',
@@ -20,8 +24,15 @@ return [
     'pay' => 'Fizetés',
     'pay_kktnetreg' => 'KKT és Netreg fizetése',
     'payed_by' => 'Fizette',
+    'payed_kkt' => 'KKT-t fizettek',
+    'receipts' => 'Átvételi elismervények',
+    'remaining_balance' => 'Felhasználható egyenleg',
     'sum' => 'Összesen',
     'to_checkout' => 'Kasszába',
+    'transaction_for_workshop' => 'Fizetés műhelynek',
     'transactions' => 'Tranzakciók',
+    'transactions_payed' => 'Az alábbi tranzakciókat fizetted be',
+    'used_balance' => 'Felhasznált egyenleg',
     'users_have_to_pay' => 'Még nem fizettek',
+    'workshop_balances' => 'Műhelyek egyenlegei',
 ];

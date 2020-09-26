@@ -16,6 +16,7 @@ return [
     'disabled' => 'Disabled',
     'edit_warning_auto_approve' => 'Due to automatic approvement after editing, the state might remain unchanged.',
     'error' => 'Error',
+    'expiration_extended' => 'Your devices\\\' internet expiration time have been extended.',
     'extend' => 'Extend',
     'generate_new_pwd' => 'Generate new password',
     'has_internet' => 'Your internet access is active until: :ends',

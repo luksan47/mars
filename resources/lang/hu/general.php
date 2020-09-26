@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'active_members' => 'Aktív tagok',
     'change_email' => 'Email megváltoztatása',
     'change_password' => 'Jelszó megváltoztatása',
     'choose_from_menu' => 'Válassz egy menüpontot!',
@@ -11,6 +12,7 @@ return [
     'if_mail_not_working' => 'Néhány esetben ez a funkció nem működhet megfelelően. Ebben az esetben küldd el a hibát a rendszergazdáknak! Köszönjük!',
     'login' => 'Belépés',
     'logout' => 'Kijelentkezés',
+    'members' => 'Tagok',
     'note' => 'Megjegyzés',
     'other' => 'Egyebek',
     'register' => 'Regisztráció',
