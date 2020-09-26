@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
+use App\Http\Controllers\InternetController;
+
 use App\Checkout;
 use App\PaymentType;
 use App\Semester;
@@ -161,13 +163,21 @@ class EconomicController extends Controller
             'comment' => null,
             'moved_to_checkout' => null,
         ]);
-
-
-        //TODO activate internet
-
         $payer = User::find($request->user_id);
+        
+        $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
         if (config('mail.active')) {
-            Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], __('internet.expiration_extended')));
+            if ($new_internet_expire_date == null){
+                Mail::to($payer)
+                    ->queue(new \App\Mail\PayedTransaction(
+                        $payer->name, [$kkt, $netreg]));
+            } else {
+                Mail::to($payer)
+                    ->queue(new \App\Mail\PayedTransaction(
+                        $payer->name, [$kkt, $netreg], 
+                        __('internet.expiration_extended', 
+                            ['new_date' => $new_internet_expire_date->format('Y-m-d')])));
+            }
         }
 
         return redirect()->back()->with('message', __('general.successfully_added'));

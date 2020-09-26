@@ -133,6 +133,16 @@ class InternetController extends Controller
             ->where('user_id', '=', $internetAccess->user_id)->first();
     }
 
+    public static function extendUsersInternetAccess(User $user)
+    {
+        $internetAccess = $user->internetAccess;
+        if($internetAccess != null){
+            $internetAccess->has_internet_until = \App\EventTrigger::internetActivationDeadline();
+            $internetAccess->save();
+            return $internetAccess->has_internet_until;
+        } else return null;
+    }
+
     public function addMacAddress(Request $request)
     {
         $validator = Validator::make($request->all(), [
