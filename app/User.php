@@ -279,7 +279,9 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function haveToPayKKTNetregInSemester($semester)
     {
-        if (!$this->isActiveIn($semester)) return false;
+        if (! $this->isActiveIn($semester)) {
+            return false;
+        }
 
         $payed_kktnetreg = $this->transactions_payed()
             ->where('semester_id', $semester->id)
@@ -293,7 +295,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function KKTPayedInSemester($semester)
     {
-        if($this->haveToPayKKTNetregInSemester($semester)){
+        if ($this->haveToPayKKTNetregInSemester($semester)) {
             return 0;
         }
 

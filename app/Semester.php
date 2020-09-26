@@ -53,7 +53,7 @@ class Semester extends Model
             return $value->getStartDate() < Carbon::now();
         });
     }
-    
+
     // For displaying semesters
     public function tag()
     {
@@ -105,16 +105,17 @@ class Semester extends Model
     {
         //create fields for the semester if not exist
         //TODO find a better way
-        if (DB::table('workshop_balances')->select('*')->where('semester_id', $this->id)->count() == 0){
+        if (DB::table('workshop_balances')->select('*')->where('semester_id', $this->id)->count() == 0) {
             foreach (Workshop::all() as $workshop) {
                 WorkshopBalance::create([
                     'semester_id' => $this->id,
                     'workshop_id' => $workshop->id,
                     'allocated_balance' => 0,
-                    'used_balance' => 0
+                    'used_balance' => 0,
                 ]);
             }
         }
+
         return $this->hasMany('App\WorkshopBalance');
     }
 
