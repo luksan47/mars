@@ -23,7 +23,8 @@
                                     'elements' => $users->filter(function ($value, $key) {
                                             return true;// $value->haveToPayKKTNetreg(); //all user will be better for now
                                         }), 
-                                    'element_id' => 'user_id'])
+                                    'element_id' => 'user_id',
+                                    'required' => true])
                             </div>
                             <div class="input-field col s12 m6 l4">
                                 <input id="kkt" name="kkt" type="number" required min="0"

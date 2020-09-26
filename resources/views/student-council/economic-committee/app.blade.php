@@ -19,6 +19,7 @@
                     @lang('checkout.current_balance_in_checkout'): 
                     <b class="coli-text text-orange"> {{ $current_balance_in_checkout }} Ft</b>.<br>
                 </blockquote>
+                @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
                 <div class="row">
                     <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
                         <a href="{{ route('kktnetreg') }}" class="btn waves-effect" style="width:100%">
@@ -37,6 +38,7 @@
                             @lang('checkout.receipts')</a>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -51,8 +53,11 @@
                             <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
                             <tr>
                                 <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
-                                <td><a href="{{ route('kktnetreg') }}" class="btn-flat waves-effect">
-                                @lang('checkout.details')</a></td>
+                                <td>
+                                    @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
+                                    <a href="{{ route('kktnetreg') }}" class="btn-flat waves-effect">
+                                        @lang('checkout.details')</a></td>
+                                    @endif
                                 <td class="right">{{ $row['transactions']['kkt'] }} Ft</td>
                             </tr>
                             @foreach($row['transactions']['income'] as $transaction)
@@ -86,9 +91,11 @@
                                 <th>@lang('general.members')*</th>
                                 <th>
                                     @lang('checkout.allocated_balance')
+                                    @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
                                     <a href="#" class="btn-floating btn-small grey waves-effect">
                                         <i class="material-icons">refresh</i>
                                     </a>
+                                    @endif
                                 </th>
                                 <th>@lang('checkout.used_balance')</th>
                                 <th>@lang('checkout.remaining_balance')</th>

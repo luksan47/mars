@@ -51,7 +51,7 @@
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <!-- student council module -->
-                @if(Auth::user()->isInStudentCouncil())
+                @if(Auth::user()->hasRole(\App\Role::COLLEGIST))
                 <li><div class="divider"></div></li>
                 <li class="@yield('student_council_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">

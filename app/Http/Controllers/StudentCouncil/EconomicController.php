@@ -4,6 +4,7 @@ namespace App\Http\Controllers\StudentCouncil;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -93,6 +94,7 @@ class EconomicController extends Controller
     public function indexKKTNetreg()
     {
         $user = Auth::user();
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
         $users = User::all();
 
         $my_transactions_not_in_checkout = Transaction::where('receiver_id', $user->id)
@@ -112,16 +114,20 @@ class EconomicController extends Controller
             'all_transactions' => $all_kktnetreg_transaction,
             'current_semester' => $semester->tag()
         ]);
-    }
+}
 
     public function indexTransaction()
     {
+        $user = Auth::user();
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
         return view('student-council.economic-committee.transaction');
+
     }
 
     public function payKKTNetreg(Request $request)
     {
         $user = Auth::user();
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'kkt' => 'required|integer|min:0',
@@ -173,6 +179,7 @@ class EconomicController extends Controller
     public function KKTNetregToCheckout(Request $request)
     {
         $user = Auth::user();
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
 
         /* Moving the Netreg amount from Valasztmany to Admins is not tracked (yet) */
         $checkout_password = Checkout::where('name', 'VALASZTMANY')->firstOrFail()->password;
@@ -199,6 +206,8 @@ class EconomicController extends Controller
     public function addTransaction(Request $request)
     {
         $user = Auth::user();
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        
         $checkout_password = Checkout::where('name', 'VALASZTMANY')->firstOrFail()->password;
         $validator = Validator::make($request->all(), [
             'comment' => 'required|string',
