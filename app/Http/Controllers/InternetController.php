@@ -136,11 +136,14 @@ class InternetController extends Controller
     public static function extendUsersInternetAccess(User $user)
     {
         $internetAccess = $user->internetAccess;
-        if($internetAccess != null){
+        if ($internetAccess != null) {
             $internetAccess->has_internet_until = \App\EventTrigger::internetActivationDeadline();
             $internetAccess->save();
+
             return $internetAccess->has_internet_until;
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     public function addMacAddress(Request $request)
