@@ -47,15 +47,13 @@ class EconomicController extends Controller
             
             $workshop_balances = [];
             foreach ($semester->workshopBalances as $workshop_balance) {
-                //TODO create getters in workshop model
-                $payed_member_num = 0;
-                $remaining_member_num = 0;
-                foreach ($workshop_balance->workshop->users as $user) {
-                    if($user->isActiveIn($semester) && !$user->haveToPayKKTNetregInSemester($semester))
-                        $payed_member_num++;
-                    if($user->haveToPayKKTNetregInSemester($semester))
-                        $remaining_member_num++;
-                }
+                $payed_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
+                    return ($user->isActiveIn($workshop_balance->semester)
+                         && !$user->haveToPayKKTNetregInSemester($workshop_balance->semester));
+                    })->count();
+                $remaining_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
+                    return ($user->haveToPayKKTNetregInSemester($workshop_balance->semester));
+                    })->count();;
 
                 $workshop_balances[$workshop_balance->workshop->name] = [
                     'payed_member_num' => $payed_member_num,
@@ -65,7 +63,6 @@ class EconomicController extends Controller
                     'remaining_balance' => $workshop_balance->allocated_balance - $workshop_balance->used_balance
                 ];
             }
-            
             
             $data[$semester->tag().' ('.$semester->getStartDate()->format('Y-m-d').' / '.$semester->getEndDate()->format('Y-m-d').')'] = [
                 'transactions' => $transactions,
