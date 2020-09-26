@@ -12,7 +12,7 @@ class WorkshopBalance extends Model
         'semester_id',
         'workshop_id',
         'allocated_balance',
-        'used_balance'
+        'used_balance',
     ];
 
     public function workshop()
