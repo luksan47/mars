@@ -185,6 +185,11 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
+    public function isInStudentCouncil()
+    {
+        return $this->hasRole('student-council');
+    }
+
     /* Semester related getters */
 
     public function allSemesters()
@@ -260,5 +265,43 @@ class User extends Authenticatable implements HasLocalePreference
         ]);
 
         return $this;
+    }
+
+    public function transactions_payed()
+    {
+        return $this->hasMany('App\Transaction', 'payer_id');
+    }
+
+    public function haveToPayKKTNetreg()
+    {
+        return $this->haveToPayKKTNetregInSemester(Semester::current());
+    }
+
+    public function haveToPayKKTNetregInSemester($semester)
+    {
+        if (! $this->isActiveIn($semester)) {
+            return false;
+        }
+
+        $payed_kktnetreg = $this->transactions_payed()
+            ->where('semester_id', $semester->id)
+            ->where(function ($query) {
+                $query->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
+                      ->orWhere('payment_type_id', PaymentType::where('name', 'NETREG')->firstOrFail()->id);
+            })->get();
+
+        return $payed_kktnetreg->count() == 0;
+    }
+
+    public function KKTPayedInSemester($semester)
+    {
+        if ($this->haveToPayKKTNetregInSemester($semester)) {
+            return 0;
+        }
+
+        return $semester->transactions()
+            ->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
+            ->where('payer_id', $this->id)
+            ->first();
     }
 }

@@ -20,7 +20,7 @@
                             <td>{{ $role->name() }}</td>
                             <td>
                                 @if($role->canHaveObject())
-                                    {{ $role->object()->name }}
+                                    {{ $role->object()->name ?? ''}}
                                 @endif
                             </td>
                             <td>

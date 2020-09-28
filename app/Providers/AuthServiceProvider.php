@@ -21,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
         \App\LocalizationContribution::class => \App\Policies\LocalePolicy::class,
         \App\User::class => \App\Policies\UserPolicy::class,
+        \App\Trsansaction::class => \App\Policies\TransactionPolicy::class,
     ];
 
     /**

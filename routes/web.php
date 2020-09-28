@@ -93,6 +93,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/internet/wifi_password/reset', 'InternetController@resetWifiPassword')->name('internet.wifi_password.reset');
     Route::post('/internet/internet_accesses/{id}/edit', 'InternetController@editInternetAccess')->name('internet.internet_accesses.edit');
 
+    /** WIP: Admin Checkout **/
+    //Route::get('/admin/checkout', 'InternetController@showCheckout')->name('admin.checkout');
+
+    /** Routers */
     Route::get('/routers', 'RouterController@index')->name('routers');
 
     /** Registration handling */
@@ -132,4 +136,13 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/documents/status-cert/download', 'DocumentController@downloadStatusCertificate')->name('documents.status-cert.download');
     Route::get('/documents/status-cert/request', 'DocumentController@requestStatusCertificate')->name('documents.status-cert.request');
     Route::get('/documents/status-cert/{id}/show', 'DocumentController@showStatusCertificate')->name('documents.status-cert.show');
+
+    /** Student Council */
+    Route::get('/economic_committee', 'StudentCouncil\EconomicController@index')->name('economic_committee');
+    Route::get('/economic_committee/transaction', 'StudentCouncil\EconomicController@indexTransaction')->name('economic_committee.transaction');
+    Route::post('/economic_committee/transaction/add', 'StudentCouncil\EconomicController@addTransaction')->name('economic_committee.transaction.add');
+    Route::get('/economic_committee/transaction/delete/{transaction}', 'StudentCouncil\EconomicController@deleteTransaction')->name('economic_committee.transaction.delete');
+    Route::get('/economic_committee/kktnetreg', 'StudentCouncil\EconomicController@indexKKTNetreg')->name('kktnetreg');
+    Route::post('/economic_committee/kktnetreg/pay', 'StudentCouncil\EconomicController@payKKTNetreg')->name('kktnetreg.pay');
+    Route::post('/economic_committee/kktnetreg/to_checkout', 'StudentCouncil\EconomicController@KKTNetregToCheckout')->name('kktnetreg.to_checkout');
 });

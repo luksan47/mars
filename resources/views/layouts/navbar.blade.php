@@ -50,6 +50,27 @@
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
+                <!-- student council module -->
+                @if(Auth::user()->hasRole(\App\Role::COLLEGIST))
+                <li><div class="divider"></div></li>
+                <li class="@yield('student_council_module')">
+                    <a class="collapsible-header waves-effect" style="padding-left:32px">
+                        <i class="material-icons left">groups</i> <!-- star icon? -->
+                        @lang('role.student-council')
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <!-- economic committee -->
+                            <li>
+                                <a class="waves-effect" href="{{ route('economic_committee') }}">
+                                    <i class="material-icons left">attach_money</i> @lang('role.economic-committee')
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endif
                 <!-- admin module -->
                 @if(Auth::user()->hasElevatedPermissions())
                 <li><div class="divider"></div></li>
@@ -110,12 +131,18 @@
                                 </a>
                             </li>
                             @endcan
+
+                            {{-- TODO checkout 
+                            <li>
+                            <a class="waves-effect" href="{{ route('admin.checkout') }}">
+                                <i class="material-icons left">credit_card</i> @lang('admin.checkout')
+                            </a>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
                 @endif
-                {{-- Paste other collapsible option groups here eg. secretariat module, commitee modules --}}
-            </ul>
+             </ul>
         </li>
     @endif
 
