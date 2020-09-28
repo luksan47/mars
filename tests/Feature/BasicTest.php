@@ -19,6 +19,7 @@ class BasicTest extends TestCase
         'faults',
         'faults/table',
         'faults/update',
+        
         // 200 routes
         '/',
         'setlocale/{locale}',
@@ -109,6 +110,7 @@ class BasicTest extends TestCase
             'localizations/add',
             'faults/add',
             'secretariat/users',
+            'economic_committee/kktnetreg/to_checkout'
         ];
 
         $routeCollection = Route::getRoutes();
