@@ -132,12 +132,12 @@
                             </li>
                             @endcan
 
-                            <!-- TODO checkout 
+                            {{-- TODO checkout 
                             <li>
                             <a class="waves-effect" href="{{ route('admin.checkout') }}">
                                 <i class="material-icons left">credit_card</i> @lang('admin.checkout')
                             </a>
-                            </li> -->
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
