@@ -24,6 +24,7 @@ class CreateCheckoutsTables extends Migration
             $table->string('comment')->nullable();
             $table->timestamp('moved_to_checkout')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('checkouts', function (Blueprint $table) {

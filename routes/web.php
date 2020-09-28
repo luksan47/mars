@@ -94,7 +94,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/internet/internet_accesses/{id}/edit', 'InternetController@editInternetAccess')->name('internet.internet_accesses.edit');
 
     /** WIP: Admin Checkout **/
-    Route::get('/admin/checkout', 'InternetController@showCheckout')->name('admin.checkout');
+    //Route::get('/admin/checkout', 'InternetController@showCheckout')->name('admin.checkout');
 
     /** Routers */
     Route::get('/routers', 'RouterController@index')->name('routers');

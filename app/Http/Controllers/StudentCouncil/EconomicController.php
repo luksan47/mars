@@ -23,6 +23,7 @@ class EconomicController extends Controller
 {
     public function index($redirected = false)
     {
+        if(!Auth::user()->hasRole(\App\Role::COLLEGIST)) abort(403); //TODO make policy
         $transactions = [];
         $checkout = Checkout::where('name', 'VALASZTMANY')->firstOrFail();
         $semesters = Semester::allUntilCurrent()
@@ -74,7 +75,7 @@ class EconomicController extends Controller
     public function indexKKTNetreg()
     {
         $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
         $users = User::all();
 
         $my_transactions_not_in_checkout = Transaction::where('receiver_id', $user->id)
@@ -99,7 +100,7 @@ class EconomicController extends Controller
     public function indexTransaction()
     {
         $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
         return view('student-council.economic-committee.transaction');
 
     }
@@ -107,7 +108,7 @@ class EconomicController extends Controller
     public function payKKTNetreg(Request $request)
     {
         $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'kkt' => 'required|integer|min:0',
@@ -167,7 +168,7 @@ class EconomicController extends Controller
     public function KKTNetregToCheckout(Request $request)
     {
         $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
 
         /* Moving the Netreg amount from Valasztmany to Admins is not tracked (yet) */
         $checkout_password = Checkout::where('name', 'VALASZTMANY')->firstOrFail()->password;
@@ -194,7 +195,7 @@ class EconomicController extends Controller
     public function addTransaction(Request $request)
     {
         $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
         
         $checkout_password = Checkout::where('name', 'VALASZTMANY')->firstOrFail()->password;
         $validator = Validator::make($request->all(), [
@@ -228,7 +229,7 @@ class EconomicController extends Controller
     public function deleteTransaction(Transaction $transaction)
     {
         $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) return response(403); //TODO make policy
+        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
         $transaction->delete();
         return redirect()->back()->with('message', __('general.successfully_deleted'));
     }
