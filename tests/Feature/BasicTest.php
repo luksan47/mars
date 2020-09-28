@@ -109,8 +109,7 @@ class BasicTest extends TestCase
             'localizations',
             'localizations/add',
             'faults/add',
-            'secretariat/users',
-            'economic_committee/kktnetreg/to_checkout'
+            'secretariat/users'
         ];
 
         $routeCollection = Route::getRoutes();
