@@ -32,7 +32,7 @@ class Router extends Model
 
     public function getFailStartDate()
     {
-        return Carbon::now()->subMinutes($this->failed_for * 5);
+        return Carbon::now()->subMinutes($this->failed_for * 5)->roundMinute(5)->format('Y-m-d H:i');
     }
 
     public function sendWarning()
