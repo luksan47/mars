@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function() {
+        $schedule->call(function () {
             \App\EventTrigger::listen();
         })->hourly();
         foreach (\App\Router::all() as $router) {

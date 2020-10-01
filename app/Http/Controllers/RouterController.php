@@ -23,6 +23,7 @@ class RouterController extends Controller
     public function view($ip)
     {
         $router = Router::findOrFail($ip);
+
         return view('admin.routers.view')->with('router', $router);
     }
 }
