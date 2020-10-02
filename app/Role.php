@@ -73,12 +73,12 @@ class Role extends Model
 
     public static function getUsers(string $roleName)
     {
-        return Role::firstWhere('name', $roleName)->users;
+        return self::firstWhere('name', $roleName)->users;
     }
 
     public static function getId(string $roleName)
     {
-        return Role::where('name', $roleName)->first()->id;
+        return self::where('name', $roleName)->first()->id;
     }
 
     public function canHaveObject()
@@ -104,18 +104,8 @@ class Role extends Model
         }
         if ($name == self::LOCALE_ADMIN) {
             // Do we have this somewhere?
-            $locales = collect([
-                (object) ['id' => 0, 'name' => 'hu'],
-                (object) ['id' => 1, 'name' => 'en'],
-                (object) ['id' => 2, 'name' => 'la'],
-                (object) ['id' => 3, 'name' => 'fr'],
-                (object) ['id' => 4, 'name' => 'it'],
-                (object) ['id' => 5, 'name' => 'de'],
-                (object) ['id' => 6, 'name' => 'sp'],
-                (object) ['id' => 7, 'name' => 'gr'],
-            ]);
-
-            return $locales;
+            $locales = [ 'hu', 'en', 'la', 'fr', 'it', 'de', 'sp', 'gr' ];
+            return self::toSelectableCollection($locales);
         }
         if ($name = 'student-council') {
             $student_council_members = [
@@ -128,13 +118,7 @@ class Role extends Model
                 'sport-committee',
                 'science-committee',
             ];
-            $objects = [];
-            $id = 1;
-            foreach ($student_council_members as $name) {
-                $objects[] = (object) ['id' => $id++, 'name' => __('role.'.$name)];
-            }
-
-            return collect($objects);
+            return self::toSelectableCollection($student_council_members);
         }
 
         return [];
@@ -179,5 +163,15 @@ class Role extends Model
     public function hasElevatedPermissions()
     {
         return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
+    }
+
+    private static function toSelectableCollection(array $items)
+    {
+        $objects = [];
+        $id = 1;
+        foreach ($items as $name) {
+            $objects[] = (object) ['id' => $id++, 'name' => $name];
+        }
+        return collect($objects);
     }
 }
