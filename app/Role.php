@@ -68,6 +68,7 @@ class Role extends Model
     public static function getObjectIdByName($role, $objectName)
     {
         $objects = self::possibleObjectsFor($role);
+
         return $objects->where('name', $objectName)->first()->id;
     }
 
@@ -104,7 +105,8 @@ class Role extends Model
         }
         if ($name == self::LOCALE_ADMIN) {
             // Do we have this somewhere?
-            $locales = [ 'hu', 'en', 'la', 'fr', 'it', 'de', 'sp', 'gr' ];
+            $locales = ['hu', 'en', 'la', 'fr', 'it', 'de', 'sp', 'gr'];
+
             return self::toSelectableCollection($locales);
         }
         if ($name = 'student-council') {
@@ -118,6 +120,7 @@ class Role extends Model
                 'sport-committee',
                 'science-committee',
             ];
+
             return self::toSelectableCollection($student_council_members);
         }
 
@@ -172,6 +175,7 @@ class Role extends Model
         foreach ($items as $name) {
             $objects[] = (object) ['id' => $id++, 'name' => $name];
         }
+
         return collect($objects);
     }
 }
