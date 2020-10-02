@@ -2,7 +2,9 @@
 
 namespace App\Policies;
 
+use App\LocalizationContribution;
 use App\User;
+use App\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LocalePolicy
@@ -19,8 +21,14 @@ class LocalePolicy
         //
     }
 
-    public function approve(User $user)
+    public function viewAny(User $user)
     {
-        return $user->hasRole(\App\Role::LOCALE_ADMIN);
+        return $user->hasRoleBase(Role::LOCALE_ADMIN);
+    }
+
+    public function approve(User $user, LocalizationContribution $contribution)
+    {
+        $objectId = Role::getObjectIdByName(Role::LOCALE_ADMIN, $contribution->language);
+        return $user->hasRole(Role::LOCALE_ADMIN, $objectId);
     }
 }

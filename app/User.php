@@ -174,6 +174,16 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasAnyRole([$roleName], $objectId);
     }
 
+    // Has any role with all possible object ID
+    public function hasRoleBase(string $roleName)
+    {
+        $objects = Role::possibleObjectsFor($roleName);
+        foreach ($objects as $key => $value) {
+            if ($this->hasRole($roleName, $key)) return true;
+        }
+        return false;
+    }
+
     public function hasElevatedPermissions()
     {
         foreach ($this->roles as $role) {

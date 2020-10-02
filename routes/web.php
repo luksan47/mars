@@ -60,7 +60,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     /** Localization */
     Route::get('/localizations', 'LocaleController@index')->name('localizations');
     Route::post('/localizations/add', 'LocaleController@add')->name('localizations.add');
-    Route::middleware(['can:approve,App\LocalizationContribution'])->group(function () {
+    Route::middleware(['can:viewAny,App\LocalizationContribution'])->group(function () {
         Route::get('/localizations/admin', 'LocaleController@indexAdmin')->name('localizations.admin');
         Route::post('/localizations/approve', 'LocaleController@approve')->name('localizations.approve');
         Route::post('/localizations/approve_all', 'LocaleController@approveAll')->name('localizations.approve_all');
