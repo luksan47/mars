@@ -105,17 +105,23 @@ class Role extends Model
             $student_council_members = [
                 'president',
                 'vice_president',
-                'economic-committee',
-                'communication-committee',
-                'community-committee',
-                'cultural-committee',
-                'sport-committee',
-                'science-committee',
+                'economic-leader',
+                'communication-leader',
+                'community-leader',
+                'cultural-leader',
+                'sport-leader',
+                'science-leader',
+                'economic-member',
+                'communication-member',
+                'community-member',
+                'cultural-member',
+                'sport-member',
+                'science-member',
             ];
             $objects = [];
             $id = 1;
             foreach ($student_council_members as $name) {
-                $objects[] = (object) ['id' => $id++, 'name' => __('role.'.$name)];
+                $objects[] = (object) ['id' => $id++, 'name' => 'role.'.$name];
             }
 
             return collect($objects);
