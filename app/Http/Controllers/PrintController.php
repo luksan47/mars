@@ -44,6 +44,11 @@ class PrintController extends Controller
             'file_to_upload' => 'required|file|mimes:pdf|max:' . config('print.pdf_size_limit'),
             'number_of_copies' => 'required|integer|min:1'
         ]);
+        $validator->validate();
+
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
 
         $is_two_sided = $request->has('two_sided');
         $number_of_copies = $request->number_of_copies;
@@ -52,9 +57,6 @@ class PrintController extends Controller
         $filename = $file->getClientOriginalName();
         $path = $this->storeFile($file);
 
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
         $printer = new Printer($filename, $path, $use_free_pages, $is_two_sided, $number_of_copies);
 
         return $printer->print();
@@ -65,6 +67,7 @@ class PrintController extends Controller
             'balance' => 'required|integer|min:1',
             'user_to_send' => 'required|integer|exists:users,id'
         ]);
+        $validator->validate();
 
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();

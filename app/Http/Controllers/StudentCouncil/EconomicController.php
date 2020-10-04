@@ -82,18 +82,17 @@ class EconomicController extends Controller
             ->where('moved_to_checkout', null)->get();
         $sum = $my_transactions_not_in_checkout->sum('amount');
 
-        $semester = Semester::current();
-        $all_kktnetreg_transaction = Transaction::where(function ($query) {
-            $query->where('payment_type_id', PaymentType::kkt()->id)
-                    ->orWhere('payment_type_id', PaymentType::netreg()->id);
-        })->get();
+        $all_kktnetreg_transaction = Transaction::whereIn(
+            'payment_type_id',
+            [PaymentType::kkt()->id, PaymentType::netreg()->id]
+        )->get();
 
         return view('student-council.economic-committee.kktnetreg', [
             'users' => User::all(),
             'my_transactions' => $my_transactions_not_in_checkout,
             'sum_my_transactions' => $sum,
             'all_transactions' => $all_kktnetreg_transaction,
-            'current_semester' => $semester->tag()
+            'current_semester' => Semester::current()->tag()
         ]);
 }
 
@@ -116,6 +115,7 @@ class EconomicController extends Controller
             'kkt' => 'required|integer|min:0',
             'netreg' => 'required|integer|min:0',
         ]);
+        $validator->validate();
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
@@ -129,17 +129,13 @@ class EconomicController extends Controller
 
         $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
         if (config('mail.active')) {
-            if ($new_internet_expire_date == null){
-                Mail::to($payer)
-                    ->queue(new \App\Mail\PayedTransaction(
-                        $payer->name, [$kkt, $netreg]));
-            } else {
-                Mail::to($payer)
-                    ->queue(new \App\Mail\PayedTransaction(
-                        $payer->name, [$kkt, $netreg],
-                        __('internet.expiration_extended',
-                            ['new_date' => $new_internet_expire_date->format('Y-m-d')])));
+            $internet_expiration_message = null;
+            if ($new_internet_expire_date !== null){
+                $internet_expiration_message = __('internet.expiration_extended', [
+                    'new_date' => $new_internet_expire_date->format('Y-m-d')
+                ]);
             }
+            Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
         }
 
         return redirect()->back()->with('message', __('general.successfully_added'));
@@ -162,8 +158,9 @@ class EconomicController extends Controller
             ->where('moved_to_checkout', null)->get();
 
         foreach ($transactions as $transaction) {
-            $transaction->moved_to_checkout = \Carbon\Carbon::now();
-            $transaction->save();
+            $transaction->update([
+                'moved_to_checkout' => Carbon::now(),
+            ]);
         }
 
         return redirect()->back()->with('message', __('general.successfully_added'));
@@ -179,6 +176,7 @@ class EconomicController extends Controller
             'amount' => 'required|integer',
             'password' => 'required|in:'.$checkout->password, //TODO bug on wrong pwd
         ]);
+        $validator->validate();
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
