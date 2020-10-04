@@ -78,7 +78,7 @@ class Role extends Model
     public function canHaveObject()
     {
         // TODO: PERMISSION_HANDLER could also be there
-        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL]);
+        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL, self::COLLEGIST]);
     }
 
     public function possibleObjects()
@@ -101,7 +101,7 @@ class Role extends Model
 
             return $locales;
         }
-        if ($this->name = 'student-council') {
+        if ($this->name == 'student-council') {
             $student_council_members = [
                 'president',
                 'vice_president',
@@ -115,6 +115,20 @@ class Role extends Model
             $objects = [];
             $id = 1;
             foreach ($student_council_members as $name) {
+                $objects[] = (object) ['id' => $id++, 'name' => __('role.'.$name)];
+            }
+
+            return collect($objects);
+        }
+
+        if($this->name == 'collegist'){
+            $collegists = [
+                'resident',
+                'extern',
+            ];
+            $objects = [];
+            $id = 1;
+            foreach ($collegists as $name) {
                 $objects[] = (object) ['id' => $id++, 'name' => __('role.'.$name)];
             }
 
