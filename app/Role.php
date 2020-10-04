@@ -191,6 +191,7 @@ class Role extends Model
         foreach ($items as $name) {
             $objects[] = (object) ['id' => $id++, 'name' => $name];
         }
+
         return collect($objects);
     }
 }

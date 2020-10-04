@@ -189,6 +189,7 @@ class User extends Authenticatable implements HasLocalePreference
                 return true;
             }
         }
+
         return false;
     }
 
