@@ -121,7 +121,7 @@ class Role extends Model
             return collect($objects);
         }
 
-        if($this->name == 'collegist'){
+        if ($this->name == 'collegist') {
             $collegists = [
                 'resident',
                 'extern',
