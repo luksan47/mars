@@ -11,16 +11,6 @@ class LocalePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     public function viewAny(User $user)
     {
         return $user->hasRoleBase(Role::LOCALE_ADMIN);
@@ -28,8 +18,6 @@ class LocalePolicy
 
     public function approve(User $user, LocalizationContribution $contribution)
     {
-        $objectId = Role::getObjectIdByName(Role::LOCALE_ADMIN, $contribution->language);
-
-        return $user->hasRole(Role::LOCALE_ADMIN, $objectId);
+        return $user->hasRoleWithObjectName(Role::LOCALE_ADMIN, $contribution->language);
     }
 }
