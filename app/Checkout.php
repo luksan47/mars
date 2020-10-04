@@ -9,8 +9,8 @@ class Checkout extends Model
     protected $fillable = ['name', 'password'];
     protected $hidden = ['password'];
 
-    const STUDENTS_COUNCIL = "VALASZTMANY";
-    const ADMIN = "ADMIN";
+    const STUDENTS_COUNCIL = 'VALASZTMANY';
+    const ADMIN = 'ADMIN';
     const TYPES = [
         self::STUDENTS_COUNCIL,
         self::ADMIN,
