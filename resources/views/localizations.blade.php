@@ -53,7 +53,7 @@ var config = {
                             @lang('localizations.thank_translations'): <i>Szlovicsák Béla, Tóth Regina, Kovács Sára Kata, {{ implode(", ", $contributors) }}</i>!
                         </blockquote>
                     </div>
-                    @can('approve', App\LocalizationContribution::class)
+                    @can('viewAny', App\LocalizationContribution::class)
                     <div class="col s12">
                         <a href="{{ route('localizations.admin') }}" class="btn right waves-effect"> @lang('localizations.manage_translations')</a>
                     </div>

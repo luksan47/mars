@@ -17,6 +17,7 @@
                     <thead>
                         <tr>
                             <th>@lang('router.ip')</th>
+                            <th>@lang('router.port')</th>
                             <th>@lang('router.room')</th>
                             <th>@lang('router.state')</th>
                             <th>@lang('router.failing_since')</th>
@@ -27,6 +28,9 @@
                         <tr>
                             <td>
                                 {{ $router->ip }}
+                            </td>
+                            <td>
+                                {{ $router->port }}
                             </td>
                             <td>
                                 {{ $router->room }}
@@ -43,6 +47,11 @@
                                 {{ $router->getFailStartDate() }}
                                 @endif
                             </td>
+                            <td>
+                                <a href="{{ route('routers.view', $router->ip) }}" class="btn-floating waves-effect waves-light right">
+                                    <i class="material-icons">remove_red_eye</i>
+                                </a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -51,4 +60,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('.tooltipped').tooltip();
+    });
+</script>
 @endsection
