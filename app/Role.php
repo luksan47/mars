@@ -65,43 +65,52 @@ class Role extends Model
         return $this->possibleObjects()->where('id', $this->pivot->object_id)->first();
     }
 
+    public static function getObjectIdByName($role, $objectName)
+    {
+        $objects = self::possibleObjectsFor($role);
+
+        return $objects->where('name', $objectName)->first()->id;
+    }
+
     public static function getUsers(string $roleName)
     {
-        return Role::firstWhere('name', $roleName)->users;
+        return self::firstWhere('name', $roleName)->users;
     }
 
     public static function getId(string $roleName)
     {
-        return Role::where('name', $roleName)->first()->id;
+        return self::where('name', $roleName)->first()->id;
     }
 
     public function canHaveObject()
     {
+        return self::canHaveObjectFor($this->name);
+    }
+
+    public static function canHaveObjectFor($name)
+    {
         // TODO: PERMISSION_HANDLER could also be there
-        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL, self::COLLEGIST]);
+        return in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL, self::COLLEGIST]);
     }
 
     public function possibleObjects()
     {
-        if (in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
+        return self::possibleObjectsFor($this->name);
+    }
+
+    public static function possibleObjectsFor($name)
+    {
+        if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
             return \App\Workshop::all();
         }
-        if ($this->name == self::LOCALE_ADMIN) {
+        if ($name == self::LOCALE_ADMIN) {
             // Do we have this somewhere?
-            $locales = collect([
-                (object) ['id' => 0, 'name' => 'Magyar'],
-                (object) ['id' => 1, 'name' => 'English'],
-                (object) ['id' => 2, 'name' => 'Latina'],
-                (object) ['id' => 3, 'name' => 'Français'],
-                (object) ['id' => 4, 'name' => 'Italiano'],
-                (object) ['id' => 5, 'name' => 'Deutsch'],
-                (object) ['id' => 6, 'name' => 'Español'],
-                (object) ['id' => 7, 'name' => 'Ελληνικά'],
-            ]);
+            $locales = ['hu', 'en', 'la', 'fr', 'it', 'de', 'sp', 'gr'];
 
-            return $locales;
+            return self::toSelectableCollection($locales);
         }
-        if ($this->name == 'student-council') {
+
+        if ($name == 'student-council') {
             $student_council_members = [
                 'president',
                 'vice_president',
@@ -112,30 +121,20 @@ class Role extends Model
                 'sport-committee',
                 'science-committee',
             ];
-            $objects = [];
-            $id = 1;
-            foreach ($student_council_members as $name) {
-                $objects[] = (object) ['id' => $id++, 'name' => __('role.'.$name)];
-            }
 
-            return collect($objects);
+            return self::toSelectableCollection($student_council_members);
         }
 
-        if ($this->name == 'collegist') {
+        if ($name == 'collegist') {
             $collegists = [
                 'resident',
                 'extern',
             ];
-            $objects = [];
-            $id = 1;
-            foreach ($collegists as $name) {
-                $objects[] = (object) ['id' => $id++, 'name' => __('role.'.$name)];
-            }
 
-            return collect($objects);
+            return self::toSelectableCollection($collegists);
         }
 
-        return \App\Workshop::all();
+        return [];
     }
 
     public function color()
@@ -176,6 +175,17 @@ class Role extends Model
 
     public function hasElevatedPermissions()
     {
-        return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY]);
+        return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
+    }
+
+    private static function toSelectableCollection(array $items)
+    {
+        $objects = [];
+        $id = 1;
+        foreach ($items as $name) {
+            $objects[] = (object) ['id' => $id++, 'name' => $name];
+        }
+
+        return collect($objects);
     }
 }
