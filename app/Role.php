@@ -114,12 +114,18 @@ class Role extends Model
             $student_council_members = [
                 'president',
                 'vice_president',
-                'economic-committee',
-                'communication-committee',
-                'community-committee',
-                'cultural-committee',
-                'sport-committee',
-                'science-committee',
+                'economic-leader',
+                'communication-leader',
+                'community-leader',
+                'cultural-leader',
+                'sport-leader',
+                'science-leader',
+                'economic-member',
+                'communication-member',
+                'community-member',
+                'cultural-member',
+                'sport-member',
+                'science-member',
             ];
 
             return self::toSelectableCollection($student_council_members);

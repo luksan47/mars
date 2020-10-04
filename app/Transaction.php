@@ -45,8 +45,3 @@ class Transaction extends Model
         return $this->belongsTo('App\PaymentType', 'payment_type_id');
     }
 }
-
-class PaymentType extends Model
-{
-    protected $fillable = ['name'];
-}

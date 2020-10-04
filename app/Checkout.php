@@ -9,6 +9,13 @@ class Checkout extends Model
     protected $fillable = ['name', 'password'];
     protected $hidden = ['password'];
 
+    const STUDENTS_COUNCIL = 'VALASZTMANY';
+    const ADMIN = 'ADMIN';
+    const TYPES = [
+        self::STUDENTS_COUNCIL,
+        self::ADMIN,
+    ];
+
     public function transactions()
     {
         return $this->hasMany('App\Transaction');
@@ -26,10 +33,20 @@ class Checkout extends Model
             ->sum('amount');
     }
 
+    public static function admin()
+    {
+        return self::where('name', self::ADMIN)->firstOrFail();
+    }
+
+    public static function studentsCouncil()
+    {
+        return self::where('name', self::STUDENTS_COUNCIL)->firstOrFail();
+    }
+
     public function kktSum(Semester $semester)
     {
         return $this->transactions
-            ->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
+            ->where('payment_type_id', PaymentType::kkt()->id)
             ->where('semester_id', $semester->id)
             ->sum('amount');
     }
