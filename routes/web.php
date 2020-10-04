@@ -98,6 +98,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Routers */
     Route::get('/routers', 'RouterController@index')->name('routers');
+    Route::get('/routers/{ip}', 'RouterController@view')->name('routers.view');
 
     /** Registration handling */
     Route::middleware(['can:registration.handle'])->group(function () {

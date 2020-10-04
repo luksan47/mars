@@ -90,7 +90,7 @@ class Role extends Model
     public static function canHaveObjectFor($name)
     {
         // TODO: PERMISSION_HANDLER could also be there
-        return in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL]);
+        return in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL, self::COLLEGIST]);
     }
 
     public function possibleObjects()
@@ -109,7 +109,8 @@ class Role extends Model
 
             return self::toSelectableCollection($locales);
         }
-        if ($name = 'student-council') {
+
+        if ($name == 'student-council') {
             $student_council_members = [
                 'president',
                 'vice_president',
@@ -122,6 +123,15 @@ class Role extends Model
             ];
 
             return self::toSelectableCollection($student_council_members);
+        }
+
+        if ($name == 'collegist') {
+            $collegists = [
+                'resident',
+                'extern',
+            ];
+
+            return self::toSelectableCollection($collegists);
         }
 
         return [];
