@@ -178,6 +178,7 @@ class User extends Authenticatable implements HasLocalePreference
     {
         $objects = Role::possibleObjectsFor($roleName);
         $objectId = $objects->firstWhere('name', $objectName)->id;
+
         return $this->hasAnyRole([$roleName], $objectId);
     }
 
