@@ -148,8 +148,9 @@ class EconomicController extends Controller
 
         /* Moving the Netreg amount from Valasztmany to Admins is not tracked (yet) */
         $validator = Validator::make($request->all(), [
-            'password' => 'required|in:'.$checkout->password, //TODO bug on wrong pwd
+            'password' => 'required|in:'.$checkout->password,
         ]);
+        $validator->validate();
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
@@ -174,7 +175,7 @@ class EconomicController extends Controller
         $validator = Validator::make($request->all(), [
             'comment' => 'required|string',
             'amount' => 'required|integer',
-            'password' => 'required|in:'.$checkout->password, //TODO bug on wrong pwd
+            'password' => 'required|in:'.$checkout->password,
         ]);
         $validator->validate();
         if ($validator->fails()) {
