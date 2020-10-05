@@ -13,10 +13,10 @@ class AddExpression extends Command
      *
      * @var string
      */
-    protected $signature = 'locale:add 
-                            {language? : the language to add eg. en} 
-                            {key? : the key of the expression eg. general.home} 
-                            {value? : the localized value of the expression} 
+    protected $signature = 'locale:add
+                            {language? : the language to add eg. en}
+                            {key? : the key of the expression eg. general.home}
+                            {value? : the localized value of the expression}
                             {--F|force : Whether the arguments are provided and the action can be automated. If not, the arguments are prompted from the user.}';
 
     /**
@@ -59,16 +59,15 @@ class AddExpression extends Command
                 return 1;
             }
 
-            $file = explode('.', $key)[0];
-            $expression_key = explode('.', $key)[1];
+            list($file, $expression_key) = explode('.', $key);
 
             $path = '/resources/lang/'.$language.'/'.$file.'.php';
             $expressions = file_exists(base_path($path)) ? require base_path($path) : [];
 
             if ($file == 'validation') {
-                $expressions['attributes'][$expression_key] = $expression_value;
+                $expressions['attributes'][$expression_key] = stripslashes($expression_value);
             } else {
-                $expressions[$expression_key] = $expression_value;
+                $expressions[$expression_key] = stripslashes($expression_value);
             }
 
             if (! (ksort($expressions))) {
@@ -94,8 +93,8 @@ class AddExpression extends Command
 
                 return 1;
             }
-            $file = explode('.', $key)[0];
-            $expression_key = explode('.', $key)[1];
+
+            list($file, $expression_key) = explode('.', $key);
 
             foreach (['en', 'hu'] as $language) {
                 $path = '/resources/lang/'.$language.'/'.$file.'.php';
@@ -103,7 +102,7 @@ class AddExpression extends Command
                     if (! $this->confirm('Do you want to create a new '.($language == 'en' ? 'english' : 'hungarian').' file named '.$file.'.php?')) {
                         $this->info('Action cancelled.');
 
-                        return;
+                        return 1;
                     }
                 }
                 $expressions = file_exists(base_path($path)) ? require base_path($path) : [];
@@ -112,7 +111,7 @@ class AddExpression extends Command
                         if (! $this->confirm('Do you want to override the old '.($language == 'en' ? 'english' : 'hungarian').' translation ('.$expressions['attributes'][$expression_key].')?')) {
                             $this->info('Action cancelled.');
 
-                            return;
+                            return 1;
                         }
                     }
                 } else {
@@ -120,7 +119,7 @@ class AddExpression extends Command
                         if (! $this->confirm('Do you want to override the old '.($language == 'en' ? 'english' : 'hungarian').' translation ('.$expressions[$expression_key].')?')) {
                             $this->info('Action cancelled.');
 
-                            return;
+                            return 1;
                         }
                     }
                 }
@@ -128,9 +127,9 @@ class AddExpression extends Command
                 //save expression
                 $expression_value = addslashes($this->ask('What should be the '.($language == 'en' ? 'english' : 'hungarian').' translation?'));
                 if ($file == 'validation') {
-                    $expressions['attributes'][$expression_key] = $expression_value;
+                    $expressions['attributes'][$expression_key] = stripslashes($expression_value);
                 } else {
-                    $expressions[$expression_key] = $expression_value;
+                    $expressions[$expression_key] = stripslashes($expression_value);
                 }
                 if (! (ksort($expressions))) {
                     $this->error('Sorting the '.($language == 'en' ? 'english' : 'hungarian').' '.$file.' failed.');
@@ -143,8 +142,11 @@ class AddExpression extends Command
 
                     return 1;
                 }
+
                 $this->comment('Set '.($language == 'en' ? 'english' : 'hungarian').' '.$expression_key.' to '.$expression_value.'.');
             }
         }
+
+        return 0;
     }
 }
