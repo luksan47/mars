@@ -2,7 +2,7 @@
 
 return [
     'clarify_print' => 'Nyomtasd ki a kívánt dokumentumot a Collegiumban kihelyezett nyomtatóval, és add le a titkárságon/portán. A költségek levonásra kerülnek.',
-    'clarify_request' => 'Igazolásokat a titkárságtól tudsz igényelni az \"Igénylés\" gombra kattintva, erről a titkárság értesítést kap. Az igazolásokat a következő munkanapon veheted át. Figyelem! Csak az aláírt és lepecsételt igazolások érvényesek!',
+    'clarify_request' => 'Igazolásokat a titkárságtól tudsz igényelni az "Igénylés" gombra kattintva, erről a titkárság értesítést kap. Az igazolásokat a következő munkanapon veheted át. Figyelem! Csak az aláírt és lepecsételt igazolások érvényesek!',
     'computer' => 'személyi számítógép',
     'documents' => 'Dokumentumok',
     'download' => 'Letöltés',
