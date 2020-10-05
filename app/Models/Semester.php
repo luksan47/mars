@@ -96,7 +96,7 @@ class Semester extends Model
 
     public function transactions()
     {
-        return $this->hasMany('App\Transaction', 'semester_id');
+        return $this->hasMany('App\Models\Transaction', 'semester_id');
     }
 
     public function transactionsInCheckout(Checkout $checkout)
@@ -119,7 +119,7 @@ class Semester extends Model
             }
         }
 
-        return $this->hasMany('App\WorkshopBalance');
+        return $this->hasMany('App\Models\WorkshopBalance');
     }
 
     public function usersWithStatus($status)

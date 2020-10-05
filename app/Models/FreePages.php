@@ -24,12 +24,12 @@ class FreePages extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function printAccount()
     {
-        return $this->belongsTo('App\PrintAccount', 'user_id', 'user_id');
+        return $this->belongsTo('App\Models\PrintAccount', 'user_id', 'user_id');
     }
 
     public function available()

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\StudentCouncil;
 
-use App\Checkout;
-use App\PaymentType;
-use App\Semester;
-use App\Transaction;
-use App\User;
-use App\Workshop;
+use App\Models\Checkout;
+use App\Models\PaymentType;
+use App\Models\Semester;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Models\Workshop;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\InternetController;
 

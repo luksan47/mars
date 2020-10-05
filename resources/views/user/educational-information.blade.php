@@ -48,7 +48,7 @@
                             <ul>
                                 @foreach ($user->allSemesters as $semester)
                                 <li>
-                                    <span class="new badge {{ \App\Semester::colorForStatus($user->getStatusIn($semester)) }}" data-badge-caption="">
+                                    <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatusIn($semester)) }}" data-badge-caption="">
                                         {{ $semester->tag() }}
                                     </span>
                                 </li>

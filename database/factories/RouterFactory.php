@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Router;
+use App\Models\Router;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

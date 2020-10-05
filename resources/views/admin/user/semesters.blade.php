@@ -19,11 +19,11 @@
                             @include('admin.user.semester', ['user' => $user, 'semester' => $semester])
                         @endforeach
                         <!-- TODO: make above template and use it -->
-                        @if(!$semesters->contains(\App\Semester::current()))
-                            @include('admin.user.semester', ['user' => $user, 'semester' => \App\Semester::current()])
+                        @if(!$semesters->contains(\App\Models\Semester::current()))
+                            @include('admin.user.semester', ['user' => $user, 'semester' => \App\Models\Semester::current()])
                         @endif
-                        @if(!$semesters->contains(\App\Semester::next()))
-                            @include('admin.user.semester', ['user' => $user, 'semester' => \App\Semester::next()])
+                        @if(!$semesters->contains(\App\Models\Semester::next()))
+                            @include('admin.user.semester', ['user' => $user, 'semester' => \App\Models\Semester::next()])
                         @endif
                     </tbody>
                 </table>

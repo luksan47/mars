@@ -17,11 +17,11 @@ class WorkshopBalance extends Model
 
     public function workshop()
     {
-        return $this->belongsTo('App\Workshop');
+        return $this->belongsTo('App\Models\Workshop');
     }
 
     public function semester()
     {
-        return $this->belongsTo('App\Semester');
+        return $this->belongsTo('App\Models\Semester');
     }
 }

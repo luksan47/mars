@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\EducationalInformation;
+use App\Models\EducationalInformation;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

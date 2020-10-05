@@ -1,6 +1,6 @@
 <?php
 
-use App\EventTrigger;
+use App\Models\EventTrigger;
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\FaultsTable;
-use App\Role;
+use App\Models\FaultsTable;
+use App\Models\Role;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

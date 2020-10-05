@@ -53,12 +53,12 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function printAccount()
     {
-        return $this->hasOne('App\PrintAccount');
+        return $this->hasOne('App\Models\PrintAccount');
     }
 
     public function freePages()
     {
-        return $this->hasMany('App\FreePages');
+        return $this->hasMany('App\Models\FreePages');
     }
 
     public function sumOfActiveFreePages()
@@ -70,17 +70,17 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function printHistory()
     {
-        return $this->hasMany('App\PrintAccountHistory');
+        return $this->hasMany('App\Models\PrintAccountHistory');
     }
 
     public function printJobs()
     {
-        return $this->hasMany('App\PrintJob');
+        return $this->hasMany('App\Models\PrintJob');
     }
 
     public function numberOfPrintedDocuments()
     {
-        return $this->hasMany('App\PrintAccountHistory')
+        return $this->hasMany('App\Models\PrintAccountHistory')
             ->where('balance_change', '<', 0)
             ->orWhere('free_page_change', '<', 0)
             ->count();
@@ -88,14 +88,14 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function spentBalance()
     {
-        return abs($this->hasMany('App\PrintAccountHistory')
+        return abs($this->hasMany('App\Models\PrintAccountHistory')
             ->where('balance_change', '<', 0)
             ->sum('balance_change'));
     }
 
     public function spentFreePages()
     {
-        return abs($this->hasMany('App\PrintAccountHistory')
+        return abs($this->hasMany('App\Models\PrintAccountHistory')
             ->where('free_page_change', '<', 0)
             ->sum('free_page_change'));
     }
@@ -104,12 +104,12 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function internetAccess()
     {
-        return $this->hasOne('App\InternetAccess');
+        return $this->hasOne('App\Models\InternetAccess');
     }
 
     public function macAddresses()
     {
-        return $this->hasMany('App\MacAddress');
+        return $this->hasMany('App\Models\MacAddress');
     }
 
     /* Basic information of the user */
@@ -123,7 +123,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function personalInformation()
     {
-        return $this->hasOne('App\PersonalInformation');
+        return $this->hasOne('App\Models\PersonalInformation');
     }
 
     public function hasPersonalInformation()
@@ -133,7 +133,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function educationalInformation()
     {
-        return $this->hasOne('App\EducationalInformation');
+        return $this->hasOne('App\Models\EducationalInformation');
     }
 
     public function hasEducationalInformation()
@@ -153,7 +153,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function importItems()
     {
-        return $this->hasMany('App\ImportItem');
+        return $this->hasMany('App\Models\ImportItem');
     }
 
     /* Role related getters */
@@ -291,7 +291,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function transactions_payed()
     {
-        return $this->hasMany('App\Transaction', 'payer_id');
+        return $this->hasMany('App\Models\Transaction', 'payer_id');
     }
 
     public function haveToPayKKTNetreg()

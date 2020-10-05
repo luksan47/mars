@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Semester;
+use App\Models\Semester;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

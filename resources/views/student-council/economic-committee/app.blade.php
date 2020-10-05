@@ -19,7 +19,7 @@
                     @lang('checkout.current_balance_in_checkout'): 
                     <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
-                @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
+                @if(Auth::user()->hasRole(\App\Models\Role::STUDENT_COUNCIL))
                 <div class="row">
                     <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
                         <a href="{{ route('kktnetreg') }}" class="btn waves-effect" style="width:100%">
@@ -54,7 +54,7 @@
                             <tr>
                                 <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
                                 <td>
-                                    @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
+                                    @if(Auth::user()->hasRole(\App\Models\Role::STUDENT_COUNCIL))
                                     <a href="{{ route('kktnetreg') }}" class="btn-flat waves-effect">
                                         @lang('checkout.details')</a>
                                     @endif
@@ -91,7 +91,7 @@
                                 <th>@lang('checkout.workshop_balances')*</th>
                                 <th>
                                     @lang('checkout.allocated_balance')
-                                    @if(Auth::user()->hasRole(\App\Role::STUDENT_COUNCIL))
+                                    @if(Auth::user()->hasRole(\App\Models\Role::STUDENT_COUNCIL))
                                     <a href="#" class="btn-floating btn-small grey waves-effect">
                                         <i class="material-icons">refresh</i>
                                     </a>

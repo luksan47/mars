@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\PersonalInformation;
+use App\Models\PersonalInformation;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

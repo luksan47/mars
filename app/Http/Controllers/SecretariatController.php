@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\EventTrigger;
-use App\Semester;
-use App\User;
+use App\Models\EventTrigger;
+use App\Models\Semester;
+use App\Models\User;
 
 class SecretariatController extends Controller
 {

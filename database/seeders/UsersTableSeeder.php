@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Faculty;
-use App\FreePages;
-use App\Workshop;
-use App\Role;
-use App\User;
-use App\MacAddress;
-use App\PrintJob;
-use App\PersonalInformation;
-use App\EducationalInformation;
-use App\Semester;
+use App\Models\Faculty;
+use App\Models\FreePages;
+use App\Models\Workshop;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\MacAddress;
+use App\Models\PrintJob;
+use App\Models\PersonalInformation;
+use App\Models\EducationalInformation;
+use App\Models\Semester;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder

@@ -32,12 +32,12 @@ class PrintAccount extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function freePages()
     {
-        return $this->hasMany('App\FreePages', 'user_id', 'user_id');
+        return $this->hasMany('App\Models\FreePages', 'user_id', 'user_id');
     }
 
     public function hasEnoughMoney($balance)
