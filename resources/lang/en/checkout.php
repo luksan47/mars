@@ -27,6 +27,7 @@ return [
     'pay_kktnetreg' => 'Pay KKT and Netreg',
     'payed_by' => 'Payed by',
     'payed_kkt' => 'Payed KKT',
+    'print' => 'Printing',
     'receipts' => 'Receipts',
     'remaining_balance' => 'Remaining balance',
     'sum' => 'Sum',
