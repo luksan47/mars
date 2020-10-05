@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Checkout;
+use App\Http\Controllers\Controller;
 use App\PaymentType;
 use App\Semester;
 use App\Transaction;
@@ -14,9 +14,7 @@ use Carbon\Carbon;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class AdminCheckoutController extends Controller
 {
