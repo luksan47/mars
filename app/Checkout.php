@@ -58,6 +58,7 @@ class Checkout extends Model
             ->where('semester_id', $semester->id)
             ->sum('amount');
     }
+
     public function printSum(Semester $semester)
     {
         return $this->transactions
