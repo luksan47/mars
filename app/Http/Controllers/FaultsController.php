@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\FaultsTable;
 use App\Models\Role;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FaultsController extends Controller
 {

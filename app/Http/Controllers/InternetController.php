@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventTrigger;
 use App\Models\InternetAccess;
 use App\Models\MacAddress;
 use App\Models\User;
@@ -28,7 +29,7 @@ class InternetController extends Controller
 
     public function admin()
     {
-        $activationDate = \App\Models\EventTrigger::internetActivationDeadline();
+        $activationDate = EventTrigger::internetActivationDeadline();
 
         return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all()]);
     }
@@ -137,7 +138,7 @@ class InternetController extends Controller
     {
         $internetAccess = $user->internetAccess;
         if ($internetAccess != null) {
-            $internetAccess->has_internet_until = \App\Models\EventTrigger::internetActivationDeadline();
+            $internetAccess->has_internet_until = EventTrigger::internetActivationDeadline();
             $internetAccess->save();
 
             return $internetAccess->has_internet_until;
