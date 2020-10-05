@@ -1,5 +1,9 @@
 <?php
 
+namespace Database\Seeders;
+
+use App\Semester;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class SemesterSeeder extends Seeder
@@ -12,16 +16,16 @@ class SemesterSeeder extends Seeder
     public function run()
     {
         // TODO: there could be more semesters
-        $semester = \App\Semester::create([
+        $semester = Semester::create([
             'year' => 2019,
             'part' => 2,
         ]);
 
-        $users = \App\User::all();
+        $users = User::all();
 
         //TODO: this could be more random
         foreach ($users as $key => $user) {
-            $user->allSemesters()->attach($semester, ['status' => \App\Semester::ACTIVE]);
+            $user->allSemesters()->attach($semester, ['status' => Semester::ACTIVE]);
         }
     }
 }

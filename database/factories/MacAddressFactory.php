@@ -1,14 +1,20 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\MacAddress;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\MacAddress::class, function (Faker $faker) {
-    return [
-        'mac_address' => $faker->macAddress,
-        'comment' => $faker->text,
-        'state' => $faker->randomElement(MacAddress::STATES),
-    ];
-});
+class MacAddressFactory extends Factory {
+
+    protected $model = MacAddress::class;
+
+    public function definition() {
+        return [
+            'mac_address' => $this->faker->macAddress,
+            'comment' => $this->faker->text,
+            'state' => $this->faker->randomElement(MacAddress::STATES),
+        ];
+    }
+}

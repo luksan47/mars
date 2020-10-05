@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class FreePages extends Model
 {
+    use HasFactory;
+
     protected $table = 'printing_free_pages';
     protected $primaryKey = 'id';
     public $incrementing = false;

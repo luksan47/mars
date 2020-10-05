@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PrintAccount extends Model
 {
+    use HasFactory;
+
     protected $table = 'print_accounts';
     protected $primaryKey = 'user_id';
     public $incrementing = false;

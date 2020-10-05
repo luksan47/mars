@@ -1,20 +1,26 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\PersonalInformation;
 use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(PersonalInformation::class, function (Faker $faker) {
-    return [
-        'place_of_birth' => $faker->city,
-        'date_of_birth' =>$faker->date($format = 'Y-m-d', $max = 'now'),
-        'mothers_name' => $faker->name($gender = 'female'),
-        'phone_number' => $faker->numerify('+36 (##) ###-####'),
-        'country' => $faker->country,
-        'county' => $faker->state,
-        'zip_code' => $faker->postcode,
-        'city' => $faker->city,
-        'street_and_number' => $faker->streetAddress,
-    ];
-});
+class PersonalInformationFactory extends Factory {
+
+    protected $model = PersonalInformation::class;
+
+    public function definition() {
+        return [
+            'place_of_birth' => $this->faker->city,
+            'date_of_birth' =>$this->faker->date($format = 'Y-m-d', $max = 'now'),
+            'mothers_name' => $this->faker->name($gender = 'female'),
+            'phone_number' => $this->faker->numerify('+36 (##) ###-####'),
+            'country' => $this->faker->country,
+            'county' => $this->faker->state,
+            'zip_code' => $this->faker->postcode,
+            'city' => $this->faker->city,
+            'street_and_number' => $this->faker->streetAddress,
+        ];
+    }
+}

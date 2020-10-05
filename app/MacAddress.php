@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MacAddress extends Model
 {
+    use HasFactory;
+
     const REQUESTED = 'REQUESTED';
     const APPROVED = 'APPROVED';
     const REJECTED = 'REJECTED';
