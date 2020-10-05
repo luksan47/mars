@@ -78,7 +78,9 @@ class EconomicController extends Controller
         $this->authorize('handleAny', Checkout::class);
 
         $my_transactions_not_in_checkout = Transaction::where('receiver_id', Auth::user()->id)
-            ->where('moved_to_checkout', null)->get();
+            ->where('moved_to_checkout', null)
+            ->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id])
+            ->get();
         $sum = $my_transactions_not_in_checkout->sum('amount');
 
         $all_kktnetreg_transaction = Transaction::whereIn(
@@ -155,7 +157,8 @@ class EconomicController extends Controller
         }
 
         $transactions = Transaction::where('receiver_id', Auth::user()->id)
-            ->where('moved_to_checkout', null)->get();
+            ->where('moved_to_checkout', null)
+            ->get();
 
         foreach ($transactions as $transaction) {
             $transaction->update([

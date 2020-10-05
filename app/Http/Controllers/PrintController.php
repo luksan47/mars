@@ -123,7 +123,7 @@ class PrintController extends Controller
             'payer_id' => $user->id,
             'semester_id' => Semester::current()->id,
             'amount' => $request->balance,
-            'payment_type_id' => PaymentType::where('name', 'PRINT')->firstOrFail()->id,
+            'payment_type_id' => PaymentType::print()->id,
             'comment' => null,
             'moved_to_checkout' => null,
         ]);

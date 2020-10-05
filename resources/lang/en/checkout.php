@@ -23,7 +23,7 @@ return [
     'new_transaction' => 'New transaction',
     'other_transaction' => 'Other expense or income',
     'password' => 'Checkout\'s password',
-    'pay' => 'Pay',
+    'pay' => 'Payment',
     'pay_kktnetreg' => 'Pay KKT and Netreg',
     'payed_by' => 'Payed by',
     'payed_kkt' => 'Payed KKT',

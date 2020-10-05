@@ -12,11 +12,13 @@ class PaymentType extends Model
     const EXPENSE = 'EXPENSE';
     const KKT = 'KKT';
     const NETREG = 'NETREG';
+    const PRINT = 'PRINT';
     const TYPES = [
         self::INCOME,
         self::EXPENSE,
         self::KKT,
         self::NETREG,
+        self::PRINT,
     ];
 
     public static function income()
@@ -37,5 +39,9 @@ class PaymentType extends Model
     public static function netreg()
     {
         return self::where('name', self::NETREG)->firstOrFail();
+    }
+    public static function print()
+    {
+        return self::where('name', self::PRINT)->firstOrFail();
     }
 }

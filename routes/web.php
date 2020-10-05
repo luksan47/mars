@@ -95,7 +95,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** WIP: Admin Checkout **/
     Route::get('/admin/checkout', 'Admin\AdminCheckoutController@showCheckout')->name('admin.checkout');
-
+    Route::post('admin/checkout/print_to_checkout', 'Admin\AdminCheckoutController@printToCheckout')->name('admin.checkout.print_to_checkout');
+    Route::post('/admin/checkout/transaction/add', 'Admin\AdminCheckoutController@addTransaction')->name('admin.checkout.transaction.add');
     /** Routers */
     Route::get('/routers', 'RouterController@index')->name('routers');
     Route::get('/routers/{ip}', 'RouterController@view')->name('routers.view');

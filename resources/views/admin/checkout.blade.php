@@ -21,11 +21,89 @@
                 </blockquote>
                 @if(Auth::user()->isSysAdmin())
                 <div class="row">
-                    <div class="col s12 xl6 push-xl6">
-                        <span class="card-title">@lang('checkout.print')</span>
+                    <div class="col s12 xl6">
+                        <span class="card-title">@lang('checkout.new_transaction')</span>
+                        <blockquote>@lang('checkout.add_transaction_descr')</blockquote>
+                        <form method="POST" action="{{ route('admin.checkout.transaction.add') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="input-field col s12 m4 l4">
+                                        <input id="comment" name="comment" type="text" required>
+                                        <label for="comment">@lang('checkout.description')</label>
+                                        @error('comment')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+                                        <input id="amount" name="amount" type="number" required>
+                                        <label for="amount">@lang('checkout.amount')</label>
+                                        @error('amount')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
+                                    </div>
+                                    <div class="input-field col s12 m4 l4">
+                                        <input id="password" name="password" type="password" required>
+                                        <label for="password">@lang('checkout.password')</label>
+                                        @error('password')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="center-align">
+                                <button type="submit" class="btn waves-effect">@lang('print.add')</button>   
+                            </div>
+                        </form>
                     </div>
-                    <div class="col s12 xl6 pull-xl6">
-                        <span class="card-title">@lang('checkout.pay')</span>
+                    <div class="col s12 xl6">
+                        <span class="card-title">@lang('checkout.print')</span>
+                        <div class="row">
+                            <div class="col s12">
+                            <table>
+                                <tbody>
+                                    @foreach($my_transactions as $transaction)
+                                    <tr>
+                                        @if($transaction->payer)
+                                        <td>{{ $transaction->payer->name }}</td>
+                                        @else <td></td> @endif
+                                        <td class="right">{{ $transaction->amount }} Ft</td>
+                                    </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td>
+                                            <b>@lang('checkout.sum')</b>
+                                        </td>
+                                        <td>
+                                            <b class="right">{{ $sum_my_transactions }} Ft</b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        <form method="POST" action="{{ route('admin.checkout.print_to_checkout') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col s7 xl8">
+                                    <div class="input-field">
+                                        <input id="password2" name="password" type="password" class="validate @error('checkout_pwd') invalid @enderror" required>
+                                        <label for="password2">@lang('checkout.password')</label>
+                                        @error('password')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col s5 xl4">
+                                    <div class="input-field">
+                                        <button type="submit" class="btn waves-effect">
+                                            <i class="material-icons right">forward</i>
+                                            @lang('checkout.to_checkout')
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 @endif

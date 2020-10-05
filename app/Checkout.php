@@ -54,14 +54,14 @@ class Checkout extends Model
     public function netregSum(Semester $semester)
     {
         return $this->transactions
-            ->where('payment_type_id', PaymentType::where('name', 'NETREG')->firstOrFail()->id)
+            ->where('payment_type_id', PaymentType::netreg()->id)
             ->where('semester_id', $semester->id)
             ->sum('amount');
     }
     public function printSum(Semester $semester)
     {
         return $this->transactions
-            ->where('payment_type_id', PaymentType::where('name', 'PRINT')->firstOrFail()->id)
+            ->where('payment_type_id', PaymentType::print()->id)
             ->where('semester_id', $semester->id)
             ->sum('amount');
     }
