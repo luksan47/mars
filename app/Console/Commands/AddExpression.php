@@ -59,7 +59,7 @@ class AddExpression extends Command
                 return 1;
             }
 
-            list($file, $expression_key) = explode('.', $key);
+            [$file, $expression_key] = explode('.', $key);
 
             $path = '/resources/lang/'.$language.'/'.$file.'.php';
             $expressions = file_exists(base_path($path)) ? require base_path($path) : [];
@@ -94,7 +94,7 @@ class AddExpression extends Command
                 return 1;
             }
 
-            list($file, $expression_key) = explode('.', $key);
+            [$file, $expression_key] = explode('.', $key);
 
             foreach (['en', 'hu'] as $language) {
                 $path = '/resources/lang/'.$language.'/'.$file.'.php';
