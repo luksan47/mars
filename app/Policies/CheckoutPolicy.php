@@ -57,6 +57,7 @@ class CheckoutPolicy
                 return true;
             }
         }
+
         return false;
     }
 }
