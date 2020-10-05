@@ -16,7 +16,12 @@ With these steps you should be able to run Mars on your machine:
 
 1. Clone Mars: `git clone git@github.com:luksan47/mars.git`.
 2. Install [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/). (Or other virtualization platforms supported by Vagrant. Don't forget to reconfigure the `provider` in the steps below if you do so.)
-3. Follow the instructions in the [First steps](https://laravel.com/docs/8.x/homestead#first-steps) section.
+3. Follow the instructions in the [First steps](https://laravel.com/docs/8.x/homestead#first-steps) section:
+    * `vagrant box add laravel/homestead`
+    * `git clone https://github.com/laravel/homestead.git` from a folder where you want to set up Homestead
+    * go into this new directory
+    * `git checkout release`
+    * `init.bat` (`bash init.sh` on Linux)
 4. Set up Homestead: Copy `Homestead.yaml.example` from this repo to `homestead.yaml` in the Homestead directory. Modify this file by changing `folders: - map: /your/local/path/to/mars` .
 5. Set up Mars: Copy and rename `.env.example` to `.env`, and change these settings: 
 `DB_DATABASE=homestead
@@ -44,6 +49,8 @@ Most of the above setup is a one-time thing to do. However, whenever you start w
 
  * `npm run dev`: In case of recent UI changes (ie. JS or CSS), this will generate the new assets from `webpack.mix.js`. For frontend developers, `npm watch` might be useful -- it does the same, but also updates on change.
  * `php artisan migrate:fresh --seed`: This will migrate everything from scratch (useful if you work on changes in parallel) and seeds the database.
+
+You can log in to our seeded admin user with email `MAIL_TEST_ADMIN` (`example@eotvos.elte.hu` by default - you can find this in your .env file) and with password `asdasdasd`. 
 
 ## Keep it minimal
 
