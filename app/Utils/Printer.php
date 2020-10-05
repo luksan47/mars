@@ -141,7 +141,7 @@ class Printer
         return $state == PrintJob::QUEUED;
     }
 
-    private function setPages(Type $var = null)
+    private function setPages()
     {
         try {
             $this->pages = Commands::getPages($this->path);

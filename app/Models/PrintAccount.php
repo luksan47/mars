@@ -45,14 +45,6 @@ class PrintAccount extends Model
         return $this->balance >= abs($balance);
     }
 
-    public function getFreePageCost($pages)
-    {
-        $free_pages_to_use = 0;
-        if ($use_free_pages) {
-            $free_pages_to_use = min($this->free_pages, $pages);
-        }
-    }
-
     public static function getCost($pages, $is_two_sided, $number_of_copies)
     {
         if (! $is_two_sided) {
