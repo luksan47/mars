@@ -206,12 +206,14 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
-    public function isSysAdmin(){
-        foreach($this->roles as $role){
-            if($role->isSysAdmin()){
+    public function isSysAdmin()
+    {
+        foreach ($this->roles as $role) {
+            if ($role->isSysAdmin()) {
                 return true;
             }
         }
+
         return false;
     }
 
