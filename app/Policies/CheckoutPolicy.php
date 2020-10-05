@@ -16,19 +16,48 @@ class CheckoutPolicy
      */
     public function view(User $user, Checkout $checkout)
     {
-        return $user->hasRole(Role::COLLEGIST);
+        return $user->hasRoleBase(Role::COLLEGIST);
     }
 
-    /**
-     * Determine whether the user can create and handle transactions.
-     */
-    public function handle(User $user, Checkout $checkout)
+    public function viewAny(User $user)
     {
-        return $user->hasRole(Role::STUDENT_COUNCIL);
+        return $user->hasRoleBase(Role::COLLEGIST);
+    }
+
+    public function addPayment(User $user, Checkout $checkout)
+    {
+        if ($checkout->name === Checkout::STUDENTS_COUNCIL) {
+            return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['economic-member', 'economic-leader']);
+        }
+        if ($checkout->name === Checkout::ADMIN) {
+            return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['economic-member', 'economic-leader'])
+                || $user->hasRole(Role::INTERNET_ADMIN);
+        }
+
+        return false;
+    }
+
+    public function administrate(User $user, Checkout $checkout)
+    {
+        if ($checkout->name === Checkout::STUDENTS_COUNCIL) {
+            return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['economic-leader']);
+        }
+        if ($checkout->name === Checkout::ADMIN) {
+            return $user->hasRole(Role::INTERNET_ADMIN);
+        }
+
+        return false;
     }
 
     public function handleAny(User $user)
     {
-        return $user->hasRole(Role::STUDENT_COUNCIL);
+        $checkouts = Checkout::all();
+        foreach ($checkouts as $checkout) {
+            if ($this->addPayment($user, $checkout)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

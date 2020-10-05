@@ -22,7 +22,7 @@
                                 {{ $user->email }}
                             </td>
                             <td>
-                                @if($user->hasRole(\App\Role::COLLEGIST))
+                                @if($user->hasRoleBase(\App\Role::COLLEGIST))
                                 <span class="new badge {{ \App\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
                                     @lang("user." . $user->getStatus())
                                 </span>
