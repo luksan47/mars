@@ -40,6 +40,7 @@ class PaymentType extends Model
     {
         return self::where('name', self::NETREG)->firstOrFail();
     }
+
     public static function print()
     {
         return self::where('name', self::PRINT)->firstOrFail();
