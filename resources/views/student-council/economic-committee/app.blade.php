@@ -45,7 +45,7 @@
     @foreach($data as $semester => $row)
     <div class="col s12">
         <div class="card">
-            <div class="card-content">  
+            <div class="card-content">
                 <span class="card-title">{{ $semester }}</span>
                 <div class="row">
                     <div class="col s12">
@@ -54,8 +54,8 @@
                             <tr>
                                 <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
                                 <td>
-                                    @can('administrate', \App\Checkout::class)
-                                    <a href="{{ route('kktnetreg') }}" class="btn-flat waves-effect">
+                                    @can('administrate', \App\Checkout::studentsCouncil())
+                                    <a href="{{ route('kktnetreg') }}" class="btn waves-effect">
                                         @lang('checkout.details')</a>
                                     @endcan
                                 </td>
@@ -91,7 +91,7 @@
                                 <th>@lang('checkout.workshop_balances')*</th>
                                 <th>
                                     @lang('checkout.allocated_balance')
-                                    @can('handleAny', \App\Checkout::class)
+                                    @can('administrate', \App\Checkout::studentsCouncil())
                                     <a href="#" class="btn-floating btn-small grey waves-effect">
                                         <i class="material-icons">refresh</i>
                                     </a>
