@@ -22,6 +22,7 @@ Route::get('/', function () {
 })->name('index');
 
 Route::get('/setlocale/{locale}', 'LocaleController@set')->name('setlocale');
+Route::get('/color/{mode}', 'HomeController@colorMode')->name('set-color-mode');
 
 Route::get('/privacy_policy', function () {
     return Storage::response('public/adatvedelmi_tajekoztato.pdf');

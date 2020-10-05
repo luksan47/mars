@@ -2,6 +2,12 @@
 
 return [
 
+    'colormode' => [
+        'light',
+        'dark',
+    ],
+    'colormode_cookie_lifespan' => 9600,
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -99,7 +105,7 @@ return [
         'gr' => 'Ó - Ελληνικά',
         'hu' => 'M - Magyar',
     ],
-    
+
     'locale_cookie_lifespan' => 9600,
 
     /*

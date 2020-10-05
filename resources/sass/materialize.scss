@@ -37,6 +37,49 @@ blockquote {
   margin: 0;
 }
 
+// Settings for dark mode
+$transition-effects: color 1s ease, background-color 1s ease;
+
+body {
+	transition: $transition-effects;
+	&.dark {
+		background-color: #202123;
+		color: #fff;
+		.card {
+			background-color: rgba(255,255,255,0.2);
+		}
+		.divider {
+			opacity: 0.2;
+		}
+		.sidenav {
+			background-color: #2D2D31;
+			li {
+				a {
+					&:not(.subheader){
+						color: #fff;
+						&:hover {
+							background-color: #3B4043;
+						}
+					}
+					&.subheader {
+						color:#9AA0A6;
+					}
+					.material-icons {
+						color: #9AA0A6;
+					}
+				}
+			}
+        }
+		.collection {
+			border: 1px solid rgba(255,255,255,0.2);
+			.collection-item {
+				background-color: rgba(255,255,255,0.2);
+				border-bottom: 1px solid rgba(255,255,255,0.2);;
+			}
+		}
+	}
+}
+
 //other, custom classes
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -47,4 +90,3 @@ blockquote {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Opera and Firefox */
 }
-
