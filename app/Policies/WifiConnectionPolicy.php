@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\User;
-use App\Role;
-use App\WifiConnection;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\WifiConnection;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class WifiConnectionPolicy
@@ -14,7 +14,7 @@ class WifiConnectionPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -25,8 +25,8 @@ class WifiConnectionPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\WifiConnection  $wifiConnection
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\WifiConnection  $wifiConnection
      * @return mixed
      */
     public function view(User $user, WifiConnection $wifiConnection)

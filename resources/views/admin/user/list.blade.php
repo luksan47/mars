@@ -4,6 +4,7 @@
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
 <a href="#!" class="breadcrumb">@lang('admin.user_management')</a>
 @endsection
+@section('admin_module') active @endsection
 
 @section('content')
 
@@ -22,8 +23,8 @@
                             </td>
                             {{-- Column for warnings --}}
                             <td>
-                                @can('viewAny', \App\WifiConnection::class)
-                                    @if($user->wifiConnections->count() > \App\WifiConnection::WARNING_THRESHOLD)
+                                @can('viewAny', \App\Models\WifiConnection::class)
+                                    @if($user->wifiConnections->count() > \App\Models\WifiConnection::WARNING_THRESHOLD)
                                     <span class="new badge red" data-badge-caption="{{ $user->wifiConnections->count() }}">
                                         @lang('internet.wifi_connections') :
                                     </span>
@@ -31,7 +32,18 @@
                                 @endcan
                             </td>
                             <td>
+                                @if($user->hasRoleBase(\App\Models\Role::COLLEGIST))
+                                <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
+                                    @lang("user." . $user->getStatus())
+                                </span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="right">
+                                    @can('view', $user)
+                                    <a href="{{ route('admin.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect">
+                                        <i class="material-icons">school</i></a>
+                                    @endcan
                                     @can('view', $user)
                                     <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
                                         <i class="material-icons">remove_red_eye</i></a>

@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'ACTIVE' => 'Aktív',
+    'DEACTIVATED' => 'Deaktivált',
+    'INACTIVE' => 'Inaktív',
+    'PASSIVE' => 'Passzív',
+    'PENDING' => 'Függőben',
     'accept' => 'Elfogad',
     'address' => 'Address',
     'address_information' => 'Address information',

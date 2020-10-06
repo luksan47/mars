@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Console\Commands;
-use App\User;
-use App\PrintAccount;
-use App\FreePages;
-use App\PrintJob;
-use App\PrintAccountHistory;
+use App\Models\User;
+use App\Models\FreePages;
+use App\Models\PrintJob;
+use App\Models\PrintAccountHistory;
+use App\Models\Role;
 use App\Utils\Printer;
 use App\Utils\TabulatorPaginator;
 
@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
 
 class PrintController extends Controller
 {
@@ -46,6 +45,10 @@ class PrintController extends Controller
         ]);
         $validator->validate();
 
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
+
         $is_two_sided = $request->has('two_sided');
         $number_of_copies = $request->number_of_copies;
         $use_free_pages = $request->use_free_pages;
@@ -53,9 +56,6 @@ class PrintController extends Controller
         $filename = $file->getClientOriginalName();
         $path = $this->storeFile($file);
 
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
         $printer = new Printer($filename, $path, $use_free_pages, $is_two_sided, $number_of_copies);
 
         return $printer->print();
@@ -145,7 +145,7 @@ class PrintController extends Controller
         $this->updateCompletedPrintingJobs();
 
         $columns = ['created_at', 'filename', 'cost', 'state'];
-        if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
+        if (Auth::user()->hasRole(Role::PRINT_ADMIN)) {
             array_push($columns, 'user.name');
             $paginator = TabulatorPaginator::from(
                     PrintJob::join('users as user', 'user.id', '=', 'user_id')
@@ -167,7 +167,7 @@ class PrintController extends Controller
         $this->authorize('viewAny', FreePages::class);
 
         $columns = ['amount', 'deadline', 'modifier', 'comment'];
-        if (Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) {
+        if (Auth::user()->hasRole(Role::PRINT_ADMIN)) {
             array_push($columns, 'user.name');
             array_push($columns, 'created_at');
             $paginator = TabulatorPaginator::from(

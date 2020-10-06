@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\User;
+use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +19,7 @@ class BasicTest extends TestCase
         'faults',
         'faults/table',
         'faults/update',
+        
         // 200 routes
         '/',
         'setlocale/{locale}',
@@ -69,7 +70,7 @@ class BasicTest extends TestCase
         $response = $this->get('/home');
         $response->assertStatus(302);
 
-        $user = factory(User::class)->create(['verified' => true]);
+        $user = User::factory()->create(['verified' => true]);
         // Authenticated and verified user is allowed to see the homepage.
         $response = $this->actingAs($user)->get('/home');
         $response->assertStatus(200);
@@ -80,7 +81,7 @@ class BasicTest extends TestCase
     // TODO: there could be more tests
     public function testUnverifiedUser()
     {
-        $user = factory(User::class)->create(['verified' => false]);
+        $user = User::factory()->create(['verified' => false]);
 
         $working_routes = ['verification'];
         $skipped_routes = ['privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}'];
@@ -101,14 +102,14 @@ class BasicTest extends TestCase
 
     public function testVerifiedUser()
     {
-        $user = factory(User::class)->create(['verified' => true]);
+        $user = User::factory()->create(['verified' => true]);
 
         $skipped_routes = ['privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}',
             // These cause some problem... TODO: figure them out
             'localizations',
             'localizations/add',
             'faults/add',
-            'secretariat/users',
+            'secretariat/users'
         ];
 
         $routeCollection = Route::getRoutes();

@@ -1,13 +1,19 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Semester;
-use Faker\Generator as Faker;
+use App\Models\Semester;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Semester::class, function (Faker $faker) {
-    return [
-        'year' => $faker->numberBetween(2020, 2030),
-        'part' => $faker->randomElements(Semester::PARTS),
-    ];
-});
+class SemesterFactory extends Factory
+{
+    protected $model = Semester::class;
+
+    public function definition()
+    {
+        return [
+            'year' => $this->faker->numberBetween(2020, 2030),
+            'part' => $this->faker->randomElements(Semester::PARTS),
+        ];
+    }
+}

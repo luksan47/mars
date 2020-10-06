@@ -1,5 +1,5 @@
 {{-- Internet --}}
-@if($user->hasRole(\App\Role::INTERNET_USER))
+@if($user->hasRole(\App\Models\Role::INTERNET_USER))
 @can('view', $user->internetAccess)
 <div class="card">
     <div class="card-content">
@@ -26,7 +26,7 @@
                     <th scope="row">@lang('internet.wifi_password')</th>
                     <td>{{ $user->internetAccess->wifi_password }}</td>
                 </tr>
-                @can('viewAny', \App\WifiConnection::class)
+                @can('viewAny', \App\Models\WifiConnection::class)
                 <tr>
                     <th scope="row">@lang('internet.wifi_connections')</th>
                     <td>
@@ -53,9 +53,9 @@
                                 @can('view', $mac)
                                 <li>
                                 <span class="new badge
-                                    @if($mac->state == \App\MacAddress::APPROVED)
+                                    @if($mac->state == \App\Models\MacAddress::APPROVED)
                                         green
-                                    @elseif($mac->state == \App\MacAddress::REQUESTED)
+                                    @elseif($mac->state == \App\Models\MacAddress::REQUESTED)
                                         orange
                                     @else
                                         red

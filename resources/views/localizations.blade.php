@@ -53,7 +53,7 @@ var config = {
                             @lang('localizations.thank_translations'): <i>Szlovicsák Béla, Tóth Regina, Kovács Sára Kata, {{ implode(", ", $contributors) }}</i>!
                         </blockquote>
                     </div>
-                    @can('approve', App\LocalizationContribution::class)
+                    @can('viewAny', App\Models\LocalizationContribution::class)
                     <div class="col s12">
                         <a href="{{ route('localizations.admin') }}" class="btn right waves-effect"> @lang('localizations.manage_translations')</a>
                     </div>
@@ -105,7 +105,7 @@ var config = {
                     @foreach ($expressions as $key => $value)
                     {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
-                    $duplicate = App\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
+                    $duplicate = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
                     @endphp
                     @if(is_string($value) && $duplicate == null)
                     <div class="row scale-transition" style="margin:0" name="{{ $fname . '.' . $key }}">

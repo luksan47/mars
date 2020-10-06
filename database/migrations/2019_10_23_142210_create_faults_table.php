@@ -1,6 +1,6 @@
 <?php
 
-use App\FaultsTable;
+use App\Models\FaultsTable;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

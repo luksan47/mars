@@ -4,6 +4,7 @@
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
 <a href="#!" class="breadcrumb">@lang('print.print')</a>
 @endsection
+@section('admin_module') active @endsection
 
 @section('content')
 <div class="row">

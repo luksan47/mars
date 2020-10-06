@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Role;
+use App\Models\Role;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,13 +14,15 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        \App\MacAddress::class => \App\Policies\MacAddressPolicy::class,
-        \App\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
-        \App\PrintJob::class => \App\Policies\PrintJobPolicy::class,
-        \App\PrintAccount::class => \App\Policies\PrintAccountPolicy::class,
-        \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
-        \App\LocalizationContribution::class => \App\Policies\LocalePolicy::class,
-        \App\User::class => \App\Policies\UserPolicy::class,
+        \App\Models\MacAddress::class => \App\Policies\MacAddressPolicy::class,
+        \App\Models\InternetAccess::class => \App\Policies\InternetAccessPolicy::class,
+        \App\Models\PrintJob::class => \App\Policies\PrintJobPolicy::class,
+        \App\Models\PrintAccount::class => \App\Policies\PrintAccountPolicy::class,
+        \App\Models\FreePages::class => \App\Policies\FreePagesPolicy::class,
+        \App\Models\LocalizationContribution::class => \App\Policies\LocalePolicy::class,
+        \App\Models\User::class => \App\Policies\UserPolicy::class,
+        \App\Models\Checkout::class => \App\Policies\CheckoutPolicy::class,
+        \App\Models\Transaction::class => \App\Policies\TransactionPolicy::class,
     ];
 
     /**
@@ -38,7 +40,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerDocumentPolicies();
         $this->registerVerificationPolicies();
         $this->registerPermissionHandlingPolicies();
-        $this->registerWorkshopPolicies();
     }
 
     public function registerPrintPolicies()
@@ -70,13 +71,15 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole(Role::SECRETARY);
         });
         Gate::define('document.status-certificate', function ($user) {
-            return $user->hasRole(Role::COLLEGIST);
+            return $user->hasRoleBase(Role::COLLEGIST);
         });
         Gate::define('document.register-statement', function ($user) {
-            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+            return $user->hasRoleBase(Role::COLLEGIST)
+                || $user->hasRole(Role::TENANT);
         });
         Gate::define('document.import-license', function ($user) {
-            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+            return $user->hasRoleBase(Role::COLLEGIST)
+                || $user->hasRole(Role::TENANT);
         });
 
         Gate::define('document.any', function ($user) {
@@ -100,15 +103,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define('permission.handle', function ($user) {
             return  $user->hasRole(Role::PERMISSION_HANDLER);
-        });
-    }
-
-    // TODO: this is only an example only to show the possibilities of the Role-based permission system
-    // DELETEME when workshops are added
-    public function registerWorkshopPolicies()
-    {
-        Gate::define('workshop.access', function ($user, $workshopId) {
-            return $user->hasRole(Role::WORKSHOP_ADMINISTRATOR, $workshopId);
         });
     }
 }

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="{{ mix('js/moment.min.js') }}"></script>
 <div class="card">
     <div class="card-content">
         <span class="card-title">@lang('print.history')</span>
@@ -29,7 +30,13 @@
                     //});
                 })[0];
             };
-
+            var dateFormatter = function(cell, formatterParams){
+                var value = cell.getValue();
+                if(value){
+                    value = moment(value).format("YYYY. MM. DD. HH:mm");
+                }
+                return value;
+            }
             var table = new Tabulator("#print-history-table", {
                 paginationSize: 10,
                 layout: "fitColumns",
@@ -43,9 +50,10 @@
                         title: "@lang('internet.created_at')",
                         field: "created_at",
                         sorter: "datetime",
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        formatter:dateFormatter,
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
                     },
-                    @if(Auth::user() -> hasRole(\App\ Role::PRINT_ADMIN)) {
+                    @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) {
                         title: "@lang('print.user')",
                         field: "user.name",
                         sorter: "string",
@@ -56,21 +64,21 @@
                         title: "@lang('print.document')",
                         field: "filename",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
                     },
                     {
                         title: "@lang('print.cost')",
                         field: "cost",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
                     },
                     {
                         title: "@lang('print.state')",
                         field: "state",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN))
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN))
                         headerFilterParams: {
-                            @foreach(\App\ PrintJob::STATES as $key => $state)
+                            @foreach(\App\Models\PrintJob::STATES as $key => $state)
                             "{{ $state }}": "@lang('print.' . $state)",
                             @endforeach
                         }

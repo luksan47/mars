@@ -18,6 +18,7 @@ return [
     'phone_number' => 'Telefonszám',
     'place_and_date_of_birth' => 'Születési hely, idő',
     'place_of_birth' => 'Születés helye',
+    'semesters' => 'Szemeszterek',
     'street_and_number' => 'Utca, házszám',
     'user_data' => 'Felhasználói adatok',
     'workshop' => 'Műhely',

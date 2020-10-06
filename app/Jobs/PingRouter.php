@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Console\Commands;
-use App\Router;
+use App\Models\Router;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

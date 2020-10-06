@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\LocalizationContribution;
-use App\User;
+use App\Models\LocalizationContribution;
+use App\Models\User;
 
 class LocaleController extends Controller
 {
@@ -45,6 +45,8 @@ class LocaleController extends Controller
 
     public function indexAdmin()
     {
+        $this->authorize('viewAny', LocalizationContribution::class);
+
         return view('admin.localizations', ['contributions'=> LocalizationContribution::where('approved', false)->get()]);
     }
 
@@ -73,9 +75,10 @@ class LocaleController extends Controller
 
     public function approve(Request $request)
     {
-        $this->authorize('approve', LocalizationContribution::class);
-
         $contribution = LocalizationContribution::findOrFail($request->id);
+
+        $this->authorize('approve', $contribution);
+
         if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
             $contribution->update(['approved' => true]);
             return back()->with('message', __('general.successful_modification'));
@@ -86,9 +89,12 @@ class LocaleController extends Controller
 
     public function approveAll(Request $request)
     {
-        $this->authorize('approve', LocalizationContribution::class);
 
         foreach (LocalizationContribution::where('approved', false)->get() as $contribution) {
+            if(Auth::user()->cannot('approve', $contribution)) {
+                continue;
+            }
+
             if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
                 $contribution->update(['approved' => true]);
             } else {
@@ -100,9 +106,10 @@ class LocaleController extends Controller
 
     public function delete(Request $request)
     {
-        $this->authorize('approve', LocalizationContribution::class);
-
         $contribution = LocalizationContribution::findOrFail($request->id);
+
+        $this->authorize('approve', $contribution);
+
         $contribution->delete();
 
         return back()->with('message', __('general.successful_modification'));
