@@ -21,7 +21,8 @@ class AuthServiceProvider extends ServiceProvider
         \App\FreePages::class => \App\Policies\FreePagesPolicy::class,
         \App\LocalizationContribution::class => \App\Policies\LocalePolicy::class,
         \App\User::class => \App\Policies\UserPolicy::class,
-        \App\Trsansaction::class => \App\Policies\TransactionPolicy::class,
+        \App\Checkout::class => \App\Policies\CheckoutPolicy::class,
+        \App\Transaction::class => \App\Policies\TransactionPolicy::class,
     ];
 
     /**
@@ -39,7 +40,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerDocumentPolicies();
         $this->registerVerificationPolicies();
         $this->registerPermissionHandlingPolicies();
-        $this->registerWorkshopPolicies();
     }
 
     public function registerPrintPolicies()
@@ -71,13 +71,15 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole(Role::SECRETARY);
         });
         Gate::define('document.status-certificate', function ($user) {
-            return $user->hasRole(Role::COLLEGIST);
+            return $user->hasRoleBase(Role::COLLEGIST);
         });
         Gate::define('document.register-statement', function ($user) {
-            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+            return $user->hasRoleBase(Role::COLLEGIST)
+                || $user->hasRole(Role::TENANT);
         });
         Gate::define('document.import-license', function ($user) {
-            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+            return $user->hasRoleBase(Role::COLLEGIST)
+                || $user->hasRole(Role::TENANT);
         });
 
         Gate::define('document.any', function ($user) {
@@ -101,15 +103,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define('permission.handle', function ($user) {
             return  $user->hasRole(Role::PERMISSION_HANDLER);
-        });
-    }
-
-    // TODO: this is only an example only to show the possibilities of the Role-based permission system
-    // DELETEME when workshops are added
-    public function registerWorkshopPolicies()
-    {
-        Gate::define('workshop.access', function ($user, $workshopId) {
-            return $user->hasRole(Role::WORKSHOP_ADMINISTRATOR, $workshopId);
         });
     }
 }

@@ -2,30 +2,32 @@
 
 namespace App\Http\Controllers\StudentCouncil;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
-
-use App\Http\Controllers\InternetController;
-
 use App\Checkout;
 use App\PaymentType;
 use App\Semester;
 use App\Transaction;
 use App\User;
 use App\Workshop;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\InternetController;
+
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 
 class EconomicController extends Controller
 {
     public function index($redirected = false)
     {
-        if(!Auth::user()->hasRole(\App\Role::COLLEGIST)) abort(403); //TODO make policy
+        $checkout = Checkout::studentsCouncil();
+
+        $this->authorize('view', $checkout);
+
         $transactions = [];
-        $checkout = Checkout::where('name', 'VALASZTMANY')->firstOrFail();
         $semesters = Semester::allUntilCurrent()
             ->sortByDesc(function ($semester, $key) {
                 return $semester->getStartDate();
@@ -38,22 +40,21 @@ class EconomicController extends Controller
             //transactions
             $transactions = [];
             $transactions['income'] = $semester->transactionsInCheckout($checkout)
-                ->where('payment_type_id', PaymentType::where('name', 'INCOME')->firstOrFail()->id)
+                ->where('payment_type_id', PaymentType::income()->id)
                 ->get();
-            
+
             $transactions['expense'] = $semester->transactionsInCheckout($checkout)
-                ->where('payment_type_id', PaymentType::where('name', 'EXPENSE')->firstOrFail()->id)
+                ->where('payment_type_id', PaymentType::expense()->id)
                 ->get();
             $transactions['kkt'] = $checkout->kktSum($semester);
-            $transactions['sum'] = $semester->transactionsInCheckout($checkout)
-                ->sum('amount');
-            
+            $transactions['sum'] = $semester->transactionsInCheckout($checkout)->sum('amount');
+
             $data[$semester->tag().' ('.$semester->getStartDate()->format('Y.m.d').'-'.$semester->getEndDate()->format('Y.m.d').')'] = [
                 'transactions' => $transactions,
                 'workshop_balances' => $semester->workshopBalances
             ];
         };
-        
+
         //checkout balances
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();
@@ -74,92 +75,66 @@ class EconomicController extends Controller
 
     public function indexKKTNetreg()
     {
-        $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
-        $users = User::all();
+        $this->authorize('handleAny', Checkout::class);
 
-        $my_transactions_not_in_checkout = Transaction::where('receiver_id', $user->id)
+        $my_transactions_not_in_checkout = Transaction::where('receiver_id', Auth::user()->id)
             ->where('moved_to_checkout', null)->get();
         $sum = $my_transactions_not_in_checkout->sum('amount');
 
-        $semester = Semester::current();
-        $all_kktnetreg_transaction = Transaction::where(function ($query) {
-            $query->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
-                    ->orWhere('payment_type_id', PaymentType::where('name', 'NETREG')->firstOrFail()->id);
-        })->get();
+        $all_kktnetreg_transaction = Transaction::whereIn(
+            'payment_type_id',
+            [PaymentType::kkt()->id, PaymentType::netreg()->id]
+        )->get();
 
         return view('student-council.economic-committee.kktnetreg', [
-            'users' => $users,
+            'users' => User::all(),
             'my_transactions' => $my_transactions_not_in_checkout,
             'sum_my_transactions' => $sum,
             'all_transactions' => $all_kktnetreg_transaction,
-            'current_semester' => $semester->tag()
+            'current_semester' => Semester::current()->tag()
         ]);
 }
 
     public function indexTransaction()
     {
-        $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
+        $this->authorize('handleAny', Checkout::class);
         return view('student-council.economic-committee.transaction');
-
     }
 
     public function payKKTNetreg(Request $request)
     {
-        $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
+        $valasztmany_checkout = Checkout::studentsCouncil();
+        $admin_checkout = Checkout::admin();
+
+        $this->authorize('addPayment', $valasztmany_checkout);
+        $this->authorize('addPayment', $admin_checkout);
+
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
             'kkt' => 'required|integer|min:0',
             'netreg' => 'required|integer|min:0',
         ]);
+        $validator->validate();
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
 
-        $valasztmany_checkout = Checkout::where('name', 'VALASZTMANY')->firstOrFail();
-        $admin_checkout = Checkout::where('name', 'ADMIN')->firstOrFail();
+        $payer = User::findOrFail($request->user_id);
 
-        /** Creating transactions even if amount is 0.
-         * Paying 0 means that the user payed their netreg+kkt depts (which is 0 in this case).
-         */
-        $kkt = Transaction::create([
-            'checkout_id' => $valasztmany_checkout->id,
-            'receiver_id' => $user->id,
-            'payer_id' => $request->user_id,
-            'semester_id' => Semester::current()->id,
-            'amount' => $request->kkt,
-            'payment_type_id' => PaymentType::where('name', 'KKT')->firstOrFail()->id,
-            'comment' => null,
-            'moved_to_checkout' => null,
-        ]);
+        // Creating transactions even if amount is 0.
+        // Paying 0 means that the user payed their netreg+kkt depts (which is 0 in this case).
+        $kkt = $this->createTransaction($valasztmany_checkout, Auth::user()->id, $payer->id, $request->kkt, PaymentType::KKT);
+        $netreg = $this->createTransaction($admin_checkout, Auth::user()->id, $payer->id, $request->netreg, PaymentType::NETREG);
 
-        $netreg = Transaction::create([
-            'checkout_id' => $admin_checkout->id,
-            'receiver_id' => $user->id,
-            'payer_id' => $request->user_id,
-            'semester_id' => Semester::current()->id,
-            'amount' => $request->netreg,
-            'payment_type_id' => PaymentType::where('name', 'NETREG')->firstOrFail()->id,
-            'comment' => null,
-            'moved_to_checkout' => null,
-        ]);
-        $payer = User::find($request->user_id);
-        
         $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
         if (config('mail.active')) {
-            if ($new_internet_expire_date == null){
-                Mail::to($payer)
-                    ->queue(new \App\Mail\PayedTransaction(
-                        $payer->name, [$kkt, $netreg]));
-            } else {
-                Mail::to($payer)
-                    ->queue(new \App\Mail\PayedTransaction(
-                        $payer->name, [$kkt, $netreg], 
-                        __('internet.expiration_extended', 
-                            ['new_date' => $new_internet_expire_date->format('Y-m-d')])));
+            $internet_expiration_message = null;
+            if ($new_internet_expire_date !== null){
+                $internet_expiration_message = __('internet.expiration_extended', [
+                    'new_date' => $new_internet_expire_date->format('Y-m-d')
+                ]);
             }
+            Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
         }
 
         return redirect()->back()->with('message', __('general.successfully_added'));
@@ -167,26 +142,25 @@ class EconomicController extends Controller
 
     public function KKTNetregToCheckout(Request $request)
     {
-        $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
+        $checkout = Checkout::studentsCouncil();
+        $this->authorize('addPayment', $checkout);
 
         /* Moving the Netreg amount from Valasztmany to Admins is not tracked (yet) */
-        $checkout_password = Checkout::where('name', 'VALASZTMANY')->firstOrFail()->password;
         $validator = Validator::make($request->all(), [
-            'password' => 'required|in:'.$checkout_password, //TODO bug on wrong pwd
+            'password' => 'required|in:'.$checkout->password,
         ]);
+        $validator->validate();
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
 
-        //TODO log? (because the password is not encrypted)
-
-        $transactions = Transaction::where('receiver_id', $user->id)
+        $transactions = Transaction::where('receiver_id', Auth::user()->id)
             ->where('moved_to_checkout', null)->get();
 
         foreach ($transactions as $transaction) {
-            $transaction->moved_to_checkout = \Carbon\Carbon::now();
-            $transaction->save();
+            $transaction->update([
+                'moved_to_checkout' => Carbon::now(),
+            ]);
         }
 
         return redirect()->back()->with('message', __('general.successfully_added'));
@@ -194,32 +168,22 @@ class EconomicController extends Controller
 
     public function addTransaction(Request $request)
     {
-        $user = Auth::user();
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
-        
-        $checkout_password = Checkout::where('name', 'VALASZTMANY')->firstOrFail()->password;
+        $checkout = Checkout::studentsCouncil();
+        $this->authorize('administrate', $checkout);
+
         $validator = Validator::make($request->all(), [
             'comment' => 'required|string',
             'amount' => 'required|integer',
-            'password' => 'required|in:'.$checkout_password, //TODO bug on wrong pwd
+            'password' => 'required|in:'.$checkout->password,
         ]);
         $validator->validate();
         if ($validator->fails()) {
             return back()->withErros($validator)->withInput();
         }
 
-        $checkout = Checkout::firstWhere('name', 'VALASZTMANY');
-        $type = ($request->amount > 0 ? 'INCOME' : 'EXPENSE');
-        Transaction::create([
-            'checkout_id' => $checkout->id,
-            'receiver_id' => null,
-            'payer_id' => $user->id,  //null would be enough, just store for logging
-            'semester_id' => Semester::current()->id,
-            'amount' => $request->amount,
-            'payment_type_id' => PaymentType::where('name', $type)->firstOrFail()->id,
-            'comment' => $request->comment,
-            'moved_to_checkout' => \Carbon\Carbon::now(), //TODO? option to add to checkout later
-        ]);
+        $type = $request->amount > 0 ? PaymentType::INCOME : PaymentType::EXPENSE;
+
+        $this->createTransaction($checkout, null, Auth::user()->id, $request->amount, $type, Carbon::now(), $request->comment);
 
         return redirect()->action(
             [EconomicController::class, 'index'], ['redirected' => true]
@@ -228,16 +192,17 @@ class EconomicController extends Controller
 
     public function deleteTransaction(Request $request)
     {
-        $user = Auth::user();
         $transaction = Transaction::findOrFail($request->transaction);
-        if(!$user->hasRole(\App\Role::STUDENT_COUNCIL)) abort(403); //TODO make policy
+
+        $this->authorize('delete', $transaction);
+
         $transaction->delete();
         return redirect()->back()->with('message', __('general.successfully_deleted'));
     }
 
     public function calculateWorkshopBalance(Semester $semester)
     {
-        //TODO (#382) 
+        //TODO (#382)
         //for every active member in a workshop
         //payed kkt * (if resident: 0.6, if day-boarder: 0.45) / user's workshops' count
         //or the proportions should be edited?
@@ -250,5 +215,20 @@ class EconomicController extends Controller
                 return ($user->haveToPayKKTNetregInSemester($workshop_balance->semester));
                 })->count(); */
 
+    }
+
+    private function createTransaction($checkout, $receiver_id, $payer_id, $amount, $type, $moved_to_checkout = null, $comment = null)
+    {
+        $transaction = Transaction::create([
+            'checkout_id' => $checkout->id,
+            'receiver_id' => $receiver_id,
+            'payer_id' => $payer_id,
+            'semester_id' => Semester::current()->id,
+            'amount' => $amount,
+            'payment_type_id' => PaymentType::where('name', $type)->firstOrFail()->id,
+            'comment' => $comment,
+            'moved_to_checkout' => $moved_to_checkout,
+        ]);
+        return $transaction;
     }
 }

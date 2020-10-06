@@ -46,6 +46,10 @@ class PrintController extends Controller
         ]);
         $validator->validate();
 
+        if ($validator->fails()) {
+            return back()->withErros($validator)->withInput();
+        }
+
         $is_two_sided = $request->has('two_sided');
         $number_of_copies = $request->number_of_copies;
         $use_free_pages = $request->use_free_pages;
@@ -53,9 +57,6 @@ class PrintController extends Controller
         $filename = $file->getClientOriginalName();
         $path = $this->storeFile($file);
 
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
         $printer = new Printer($filename, $path, $use_free_pages, $is_two_sided, $number_of_copies);
 
         return $printer->print();

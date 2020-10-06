@@ -66,7 +66,14 @@ class UsersTableSeeder extends Seeder
             $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
         }
         foreach (Role::ALL as $role) {
-            $user->roles()->attach(Role::getId($role));
+            if (Role::canHaveObjectFor($role)) {
+                $objects = Role::possibleObjectsFor($role);
+                foreach ($objects as $key => $value) {
+                    $user->roles()->attach(Role::getId($role), ['object_id' => $key]);
+                }
+            } else {
+                $user->roles()->attach(Role::getId($role));
+            }
         }
         $user->internetAccess->setWifiUsername();
         $user->setStatus(\App\Semester::ACTIVE);
