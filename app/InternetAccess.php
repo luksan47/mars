@@ -35,6 +35,7 @@ class InternetAccess extends Model
             }
         }
         $this->update(['wifi_username' => $username]);
+        return $username;
     }
 
     public function wifiConnection()

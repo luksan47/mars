@@ -20,6 +20,14 @@
                                 <b>{{ $user->name }}</b><br>
                                 {{ $user->email }}
                             </td>
+                            {{-- Column for warnings --}}
+                            <td>
+                                @if($user->wifiConnections->count() > \App\WifiConnection::WARNING_THRESHOLD)
+                                <span class="new badge red" data-badge-caption="{{ $user->wifiConnections->count() }}">
+                                    @lang('internet.wifi_connections') :
+                                </span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="right">
                                     @can('view', $user)

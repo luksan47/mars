@@ -6,6 +6,7 @@ use App\InternetAccess;
 use App\MacAddress;
 use App\User;
 use App\Utils\TabulatorPaginator;
+use App\WifiConnection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -64,8 +65,8 @@ class InternetController extends Controller
         $this->authorize('viewAny', InternetAccess::class);
 
         $paginator = TabulatorPaginator::from(InternetAccess::join('users as user', 'user.id', '=', 'user_id')->select('internet_accesses.*')->with('user'))
-            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
-            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
+            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
+            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
             ->paginate();
 
         return $paginator;
@@ -166,6 +167,21 @@ class InternetController extends Controller
     private function autoApproveMacAddresses($user)
     {
         DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
+    }
+
+    public function getWifiConnectionsAdmin()
+    {
+        //ar_dump(WifiConnection::first()->user->first()->wifi_username); die();
+        $this->authorize('viewAny', MacAddress::class);
+
+        $paginator = TabulatorPaginator::from(WifiConnection::join('internet_accesses as i', 'i.wifi_username', 'wifi_connections.wifi_username')
+            ->join('users as user', 'user.id', '=', 'i.user_id')
+            ->select('wifi_connections.*')->with('user'))
+            ->sortable(['user.name', 'wifi_username', 'mac_address'])
+            ->filterable(['user.name', 'wifi_username', 'mac_address'])
+            ->paginate();
+
+        return $paginator;
     }
 
     public function translateStates(): \Closure

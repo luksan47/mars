@@ -27,6 +27,21 @@
                     <td>{{ $user->internetAccess->wifi_password }}</td>
                 </tr>
                 <tr>
+                    <th scope="row">@lang('internet.wifi_connections')</th>
+                    <td>
+                        <ul>
+                            @foreach ($user->wifiConnections as $wifiConnection)
+                                <li>
+                                    <span class="new badge {{ $wifiConnection->getColor() }}" data-badge-caption="">
+                                        {{ $wifiConnection->ip }} : {{ $wifiConnection->mac_address }}
+                                    </span>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <small>*@lang('user.wifi_connections_color_tooltip')</small>
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row">@lang('internet.mac_address')</th>
                     <td>
                         <ul>

@@ -42,7 +42,8 @@ class UsersTableSeeder extends Seeder
             factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::TENANT));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            $user->internetAccess->setWifiUsername();
+            $wifi_username = $user->internetAccess->setWifiUsername();
+            factory(App\WifiConnection::class, $user->id % 5)->create(['wifi_username' => $wifi_username]);
         });
     }
 
@@ -68,7 +69,8 @@ class UsersTableSeeder extends Seeder
         foreach (Role::ALL as $role) {
             $user->roles()->attach(Role::getId($role));
         }
-        $user->internetAccess->setWifiUsername();
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        factory(App\WifiConnection::class, $user->id % 5)->create(['wifi_username' => $wifi_username]);
     }
 
     private function createCollegist()
@@ -83,7 +85,8 @@ class UsersTableSeeder extends Seeder
         $user->roles()->attach(Role::getId(Role::COLLEGIST));
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-        $user->internetAccess->setWifiUsername();
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        factory(App\WifiConnection::class, $user->id % 5)->create(['wifi_username' => $wifi_username]);
         factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
         for ($x = 0; $x < rand(1, 3); $x++) {
@@ -104,7 +107,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user->roles()->attach(Role::getId(Role::TENANT));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-        $user->internetAccess->setWifiUsername();
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        factory(App\WifiConnection::class, $user->id % 5)->create(['wifi_username' => $wifi_username]);
         factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
     }
 

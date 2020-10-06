@@ -1,3 +1,4 @@
+<span class="card-title">@lang('internet.wifi_connections')</span>
 <div id="wifi-connections-table"></div>
 <script type="application/javascript">
     $(document).ready(function () {
@@ -55,8 +56,8 @@
 
         var table = new Tabulator("#wifi-connections-table", {
             paginationSize: 10,
-            pagination: "remote", //enable remote pagination
-            ajaxURL: "{{ route('internet.admin.mac_addresses.all') }}", //set url for ajax request
+            pagination: "remote",
+            ajaxURL: "{{ route('internet.admin.wifi_connections.all') }}",
             ajaxSorting: true,
             ajaxFiltering: true,
             layout:"fitColumns",
@@ -79,11 +80,6 @@
                     field: "mac_address",
                     sorter: "string",
                     headerFilter: 'input'
-                },
-                {
-                    title: "@lang('£1')",
-                    field: "number_of_connections",
-                    sorter: "string",
                 },
             ],
         });

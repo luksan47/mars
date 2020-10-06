@@ -28,7 +28,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-            @include('admin.internet.wifi_connections.app')
+            @include('admin.internet.wifi_connections.list')
             </div>
         </div>
     </div>
