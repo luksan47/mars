@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class FreePages extends Model
 {
+    use HasFactory;
+
     protected $table = 'printing_free_pages';
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -21,12 +24,12 @@ class FreePages extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function printAccount()
     {
-        return $this->belongsTo('App\PrintAccount', 'user_id', 'user_id');
+        return $this->belongsTo('App\Models\PrintAccount', 'user_id', 'user_id');
     }
 
     public function available()

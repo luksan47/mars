@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\LocalizationContribution;
-use App\User;
+use App\Models\LocalizationContribution;
+use App\Models\User;
 
 class LocaleController extends Controller
 {

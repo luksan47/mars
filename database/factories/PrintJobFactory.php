@@ -1,16 +1,22 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\PrintJob;
-use Faker\Generator as Faker;
+use App\Models\PrintJob;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(PrintJob::class, function (Faker $faker) {
-    return [
-        'filename' => $faker->text,
-        'filepath' => $faker->text,
-        'state' => $faker->randomElement(PrintJob::STATES),
-        'job_id' => $faker->randomNumber,
-        'cost' => $faker->numberBetween(8, 1000),
-    ];
-});
+class PrintJobFactory extends Factory
+{
+    protected $model = PrintJob::class;
+
+    public function definition()
+    {
+        return [
+            'filename' => $this->faker->text,
+            'filepath' => $this->faker->text,
+            'state' => $this->faker->randomElement(PrintJob::STATES),
+            'job_id' => $this->faker->randomNumber,
+            'cost' => $this->faker->numberBetween(8, 1000),
+        ];
+    }
+}

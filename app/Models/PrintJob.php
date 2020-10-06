@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PrintJob extends Model
 {
+    use HasFactory;
+
     protected $table = 'print_jobs';
     protected $primaryKey = 'id';
     public $incrementing = true;
@@ -28,7 +31,7 @@ class PrintJob extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public static function translateStates(): \Closure

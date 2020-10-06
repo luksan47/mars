@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PrintAccount extends Model
 {
+    use HasFactory;
+
     protected $table = 'print_accounts';
     protected $primaryKey = 'user_id';
     public $incrementing = false;
@@ -29,25 +32,17 @@ class PrintAccount extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function freePages()
     {
-        return $this->hasMany('App\FreePages', 'user_id', 'user_id');
+        return $this->hasMany('App\Models\FreePages', 'user_id', 'user_id');
     }
 
     public function hasEnoughMoney($balance)
     {
         return $this->balance >= abs($balance);
-    }
-
-    public function getFreePageCost($pages)
-    {
-        $free_pages_to_use = 0;
-        if ($use_free_pages) {
-            $free_pages_to_use = min($this->free_pages, $pages);
-        }
     }
 
     public static function getCost($pages, $is_two_sided, $number_of_copies)

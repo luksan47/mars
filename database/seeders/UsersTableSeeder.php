@@ -1,7 +1,17 @@
 <?php
 
-use App\Role;
-use App\User;
+namespace Database\Seeders;
+
+use App\Models\Faculty;
+use App\Models\FreePages;
+use App\Models\Workshop;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\MacAddress;
+use App\Models\PrintJob;
+use App\Models\PersonalInformation;
+use App\Models\EducationalInformation;
+use App\Models\Semester;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -19,27 +29,27 @@ class UsersTableSeeder extends Seeder
         $this->createStaff();
 
         //generate random collegists
-        factory(App\User::class, 50)->create()->each(function ($user) {
-            factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
-            factory(App\PrintJob::class, $user->id % 5)->create(['user_id' => $user->id]);
-            factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
-            factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
+        User::factory()->count(50)->create()->each(function ($user) {
+            MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+            PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+            PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+            EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::COLLEGIST));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
             for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->faculties()->attach(rand(1, count(App\Faculty::ALL)));
+                $user->faculties()->attach(rand(1, count(Faculty::ALL)));
             }
             for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
+                $user->workshops()->attach(rand(1, count(Workshop::ALL)));
             }
             $user->internetAccess->setWifiUsername();
         });
 
         //generate random tenants
-        factory(App\User::class, 5)->create()->each(function ($user) {
-            factory(App\MacAddress::class, $user->id % 5)->create(['user_id' => $user->id]);
-            factory(App\PrintJob::class, $user->id % 5)->create(['user_id' => $user->id]);
-            factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
+        User::factory()->count(5)->create()->each(function ($user) {
+            MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+            PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+            PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::TENANT));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
             $user->internetAccess->setWifiUsername();
@@ -54,16 +64,16 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true,
         ]);
-        factory(App\MacAddress::class, 3)->create(['user_id' => $user->id]);
-        factory(\App\FreePages::class, 5)->create(['user_id' => $user->id]);
-        factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
-        factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
-        factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
+        MacAddress::factory()->count(3)->create(['user_id' => $user->id]);
+        FreePages::factory()->count(5)->create(['user_id' => $user->id]);
+        PrintJob::factory()->count(5)->create(['user_id' => $user->id]);
+        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->faculties()->attach(rand(1, count(App\Faculty::ALL)));
+            $user->faculties()->attach(rand(1, count(Faculty::ALL)));
         }
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
+            $user->workshops()->attach(rand(1, count(Workshop::ALL)));
         }
         foreach (Role::ALL as $role) {
             if (Role::canHaveObjectFor($role)) {
@@ -76,7 +86,7 @@ class UsersTableSeeder extends Seeder
             }
         }
         $user->internetAccess->setWifiUsername();
-        $user->setStatus(\App\Semester::ACTIVE);
+        $user->setStatus(Semester::ACTIVE);
     }
 
     private function createCollegist()
@@ -87,20 +97,20 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true,
         ]);
-        factory(App\PrintJob::class, 5)->create(['user_id' => $user->id]);
+        PrintJob::factory()->count(5)->create(['user_id' => $user->id]);
         $user->roles()->attach(Role::getId(Role::COLLEGIST));
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $user->internetAccess->setWifiUsername();
-        factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
-        factory(App\EducationalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
+        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->faculties()->attach(rand(1, count(App\Faculty::ALL)));
+            $user->faculties()->attach(rand(1, count(Faculty::ALL)));
         }
         for ($x = 0; $x < rand(1, 3); $x++) {
-            $user->workshops()->attach(rand(1, count(App\Workshop::ALL)));
+            $user->workshops()->attach(rand(1, count(Workshop::ALL)));
         }
-        $user->setStatus(\App\Semester::ACTIVE);
+        $user->setStatus(Semester::ACTIVE);
     }
 
     private function createTenant()
@@ -114,7 +124,7 @@ class UsersTableSeeder extends Seeder
         $user->roles()->attach(Role::getId(Role::TENANT));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $user->internetAccess->setWifiUsername();
-        factory(App\PersonalInformation::class, $user->id % 5)->create(['user_id' => $user->id]);
+        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
     }
 
     private function createStaff()

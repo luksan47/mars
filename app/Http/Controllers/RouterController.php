@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Router;
+use App\Models\Router;
 
 class RouterController extends Controller
 {

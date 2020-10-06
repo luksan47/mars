@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -101,7 +101,7 @@ class Role extends Model
     public static function possibleObjectsFor($name)
     {
         if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
-            return \App\Workshop::all();
+            return Workshop::all();
         }
         if ($name == self::LOCALE_ADMIN) {
             // Do we have this somewhere?

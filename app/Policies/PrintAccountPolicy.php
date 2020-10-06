@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\PrintAccount;
-use App\Role;
-use App\User;
+use App\Models\PrintAccount;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PrintAccountPolicy
