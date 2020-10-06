@@ -1,22 +1,29 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\Course;
-use Faker\Generator as Faker;
+use App\Models\Course;
+use App\Models\Semester;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(App\Course::class, function (Faker $faker) {
-    return [
-        'code' => $faker->slug,
-        'workshop_id' => \App\Workshop::find(1)->id, //TODO: $faker->
-        'name' => $faker->catchPhrase,
-        'name_english' => $faker->bs,
-        'type' => $faker->randomElement(Course::TYPES),
-        'credits' => $faker->randomDigit,
-        'hours' => $faker->numberBetween(1, 3),
-        'semester_id' => \App\Semester::find(1)->id, //TODO: $faker->
-        'teacher_id' => \App\Semester::find(1)->id, //TODO: $faker->
-        'updated_at' => now(),
-        'created_at' => now(),
-    ];
-});
+class CourseFactory extends Factory
+{
+    protected $model = Course::class;
+
+    public function definition()
+    {
+        return [
+            'code' => $this->faker->slug,
+            'workshop_id' => \App\Models\Workshop::find(1)->id, //TODO: $faker->
+            'name' => $this->faker->catchPhrase,
+            'name_english' => $this->faker->bs,
+            'type' => $this->faker->randomElement(Course::TYPES),
+            'credits' => $this->faker->randomDigit,
+            'hours' => $this->faker->numberBetween(1, 3),
+            'semester_id' => Semester::find(1)->id, //TODO: $faker->
+            'teacher_id' => Semester::find(1)->id, //TODO: $faker->
+            'updated_at' => now(),
+            'created_at' => now(),
+        ];
+    }
+}

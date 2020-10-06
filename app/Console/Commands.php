@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Illuminate\Support\Facades\Log;
 
 /**
  * Collection of exec commands.
@@ -19,7 +20,8 @@ class Commands
         if (self::isDebugMode()) {
             $result = [0];
         } else {
-            $result = exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
+            $result = [];
+            exec("lpstat -W completed -o " . config('print.printer_name') . " | awk '{print $1}'", $result);
         }
         return $result;
     }
@@ -48,12 +50,24 @@ class Commands
         return $result;
     }
 
+    public static function pingRouter($router)
+    {
+        if (self::isDebugMode()) {
+            $result = rand(1, 10) > 9 ? "error" : '';
+        } else {
+            // This happens too often to log.
+            $command = "ping " . $router->ip . " -c 1 | grep 'error\|unreachable'";
+            $result = exec($command);
+        }
+        return $result;
+    }
+
     public static function latexToPdf($path, $outputDir)
     {
         if (self::isDebugMode()) {
             $result = "ok";
         } else {
-            $command = "pdflatex " . "-interaction=nonstopmode -output-dir " . $outputDir . $path . " 2>&1";
+            $command = "pdflatex " . "-interaction=nonstopmode -output-dir " . $outputDir . " " . $path . " 2>&1";
             Log::info($command);
             $result = exec($command);
         }

@@ -53,7 +53,7 @@ var config = {
                             @lang('localizations.thank_translations'): <i>Szlovicsák Béla, Tóth Regina, Kovács Sára Kata, {{ implode(", ", $contributors) }}</i>!
                         </blockquote>
                     </div>
-                    @can('approve', App\LocalizationContribution::class)
+                    @can('viewAny', App\Models\LocalizationContribution::class)
                     <div class="col s12">
                         <a href="{{ route('localizations.admin') }}" class="btn right waves-effect"> @lang('localizations.manage_translations')</a>
                     </div>
@@ -81,17 +81,22 @@ var config = {
     @php
     /* Require reference langugage files - except validation.php */
     $reference_files = [
-        'en' => array_diff(scandir(base_path('resources/lang/en')), ['..', '.', 'validation.php']),
-        'hu' => array_diff(scandir(base_path('resources/lang/hu')), ['..', '.', 'validation.php'])
+        'en' => array_diff(scandir(base_path('resources/lang/en')), ['..', '.']),
+        'hu' => array_diff(scandir(base_path('resources/lang/hu')), ['..', '.'])
     ];
     @endphp
     @if(App::getLocale() != 'hu' && App::getLocale() != 'en')
     @foreach ($reference_files as $lang => $files)
-    <div id="{{ $lang }}">
+    <div id="{{ $lang }}" class="{{ $lang == 'hu' ? 'hide' : ''}}">
         @foreach ($files as $file)
         @php
         $fname = substr($file, 0, -4); //filename without .php, used as a part of the expression key
-        $expressions = require base_path('resources/lang/'.$lang.'/'.$file);
+        if($fname == 'validation') {
+            $expressions_all = require base_path('resources/lang/'.$lang.'/'.$file);
+            $expressions = $expressions_all['attributes'];
+        } else {
+            $expressions = require base_path('resources/lang/'.$lang.'/'.$file);
+        }
         @endphp
         <div class="col s12">
             <div class="card">
@@ -100,7 +105,7 @@ var config = {
                     @foreach ($expressions as $key => $value)
                     {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
-                    $duplicate = App\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
+                    $duplicate = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
                     @endphp
                     @if(is_string($value) && $duplicate == null)
                     <div class="row scale-transition" style="margin:0" name="{{ $fname . '.' . $key }}">
@@ -109,7 +114,7 @@ var config = {
                         </div>
                         <div class="col s6">
                             <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
-                                class="materialize-textarea">@lang($fname.'.'.$key)</textarea>
+                                class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea>
                         </div>
                         <div class="col s1">
                             <button class="btn-floating waves-effect waves-light right" onclick="send('{{ App::getLocale() }}', '{{ $fname.'.'.$key }}', '{{ $lang }}')">

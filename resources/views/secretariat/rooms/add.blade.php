@@ -20,7 +20,7 @@
                 @error('code') <span class="helper-text" data-error="{{ $message }}"></span> @enderror
             </div>
             <div class="input-field col s12 m12 l6">
-                @include("utils/select", ['elements' => \App\Workshop::all(), 'element_id' => 'workshop', 'label' => 'secretariat.workshop'])
+                @include("utils/select", ['elements' => \App\Models\Workshop::all(), 'element_id' => 'workshop', 'label' => 'secretariat.workshop'])
             </div>
             <div class="input-field col s12">
                 <input id="name" name="name" type="text" class="validate @error('name') invalid @enderror" value="{{ old('name') }}" required>
@@ -34,7 +34,7 @@
             </div>
             <!-- TODO: make it a select -->
             <div class="input-field col s12 m6 l6">
-            @include("utils/select", ['elements' => \App\Course::types(), 'element_id' => 'type', 'label' => 'secretariat.type'])
+            @include("utils/select", ['elements' => \App\Models\Course::types(), 'element_id' => 'type', 'label' => 'secretariat.type'])
             </div>
             <div class="input-field col s6 m3 l3">
                 <input id="credits" name="credits" type="number" class="validate @error('credits') invalid @enderror" min="0" value="{{ old('credits') }}" required>
@@ -50,7 +50,7 @@
                 @include("utils/select", ['elements' => $users, 'element_id' => 'teacher', 'label' => 'secretariat.teacher'])
             </div>
             <div class="input-field col s12 m12 l3">
-                @include("utils/select", ['elements' => \App\Semester::all(), 'element_id' => 'semester', 'label' => 'secretariat.semester'])
+                @include("utils/select", ['elements' => \App\Models\Semester::all(), 'element_id' => 'semester', 'label' => 'secretariat.semester'])
             </div>
             <div class="input-field col s12 m12 l3">
                 <button class="btn waves-effect right" type="submit">@lang('secretariat.create_course')</button>

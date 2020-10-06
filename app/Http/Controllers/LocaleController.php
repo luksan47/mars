@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\LocalizationContribution;
-use App\User;
+use App\Models\LocalizationContribution;
+use App\Models\User;
 
 class LocaleController extends Controller
 {
@@ -18,26 +18,9 @@ class LocaleController extends Controller
         return redirect()->back()->cookie('locale', $locale, config('app.locale_cookie_lifespan'));
     }
 
-    public function list()
-    {
-        $locale = [];
-        $languages = array_diff(scandir(base_path('resources/lang/')), ['..', '.']);
-        foreach ($languages as $language) {
-            $files = array_diff(scandir(base_path('resources/lang/'.$language)), ['..', '.']);
-            foreach ($files as $file_in) {
-                if ($file_in != 'validation.php') {
-                    $name = substr($file_in, 0, strlen($file_in) - 4);
-                    $expressions = require base_path('resources/lang/'.$language.'/'.$file_in);
-                    $locale[$language][$name] = $expressions;
-                }
-            }
-        }
-        return view('locale.app')->with('locale', $locale);
-    }
-
     /**
-     * Localization Contributions 
-     */ 
+     * Localization Contributions
+     */
 
     public function index()
     {
@@ -46,7 +29,7 @@ class LocaleController extends Controller
             ->where('approved', true)
             ->groupBy('contributor_id')
             ->get();
-        
+
         $contributors = [];
         foreach ($contributor_ids as $value) {
             $contributor = User::find($value->id);
@@ -62,6 +45,8 @@ class LocaleController extends Controller
 
     public function indexAdmin()
     {
+        $this->authorize('viewAny', LocalizationContribution::class);
+
         return view('admin.localizations', ['contributions'=> LocalizationContribution::where('approved', false)->get()]);
     }
 
@@ -90,9 +75,10 @@ class LocaleController extends Controller
 
     public function approve(Request $request)
     {
-        $this->authorize('approve', LocalizationContribution::class);
-
         $contribution = LocalizationContribution::findOrFail($request->id);
+
+        $this->authorize('approve', $contribution);
+
         if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
             $contribution->update(['approved' => true]);
             return back()->with('message', __('general.successful_modification'));
@@ -103,9 +89,12 @@ class LocaleController extends Controller
 
     public function approveAll(Request $request)
     {
-        $this->authorize('approve', LocalizationContribution::class);
 
         foreach (LocalizationContribution::where('approved', false)->get() as $contribution) {
+            if(Auth::user()->cannot('approve', $contribution)) {
+                continue;
+            }
+
             if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
                 $contribution->update(['approved' => true]);
             } else {
@@ -117,9 +106,10 @@ class LocaleController extends Controller
 
     public function delete(Request $request)
     {
-        $this->authorize('approve', LocalizationContribution::class);
-
         $contribution = LocalizationContribution::findOrFail($request->id);
+
+        $this->authorize('approve', $contribution);
+
         $contribution->delete();
 
         return back()->with('message', __('general.successful_modification'));

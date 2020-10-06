@@ -1,6 +1,6 @@
 <span class="card-title">@lang('internet.internet_access')</span>
 <div id="net_accesses-table"></div>
-
+<script type="text/javascript" src="{{ mix('js/moment.min.js') }}"></script>
 <script type="application/javascript">
     $(document).ready(function () {
         var activation_date = new Date("{{ $activation_date }}");
@@ -39,7 +39,15 @@
 
         var editCallback = function (cell) {
             saveData(cell);
-        };
+        };        
+        
+        var dateFormatter = function(cell, formatterParams){
+            var value = cell.getValue();
+            if(value){
+                value = moment(value).format("YYYY. MM. DD. HH:mm");
+            }
+            return value;
+        }
 
         var table = new Tabulator("#net_accesses-table", {
             paginationSize: 10,
@@ -73,6 +81,7 @@
                     title: "@lang('internet.internet_access')",
                     field: "has_internet_until",
                     sorter: "datetime",
+                    formatter: dateFormatter,
                     editor: 'dateEditor'
                 },
                 {
@@ -80,6 +89,7 @@
                     field: "auto_approved_mac_slots",
                     sorter: "number",
                     editor: 'number',
+                    validator: "min:0"
                 },
                 {title: "", field: "state", headerSort: false, formatter: actions},
             ],

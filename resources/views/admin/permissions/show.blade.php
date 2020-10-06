@@ -4,9 +4,9 @@
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
 <a href="#!" class="breadcrumb">@lang('admin.permissions')</a>
 @endsection
+@section('admin_module') active @endsection
 
 @section('content')
-
 <div class="row">
     <div class="col s12">
     {{-- Roles of user --}}
@@ -20,7 +20,7 @@
                             <td>{{ $role->name() }}</td>
                             <td>
                                 @if($role->canHaveObject())
-                                    {{ $role->object()->name }}
+                                    {{ $role->object()->name ?? ''}}
                                 @endif
                             </td>
                             <td>
@@ -43,7 +43,7 @@
                 <span class="card-title">@lang('admin.other_permissions') </span>
                 <table>
                     <tbody>
-                        @foreach (App\Role::all()->sortBy('name') as $role)
+                        @foreach (App\Models\Role::all()->sortBy('name') as $role)
                             @if(!$user->roles->contains($role) || $role->canHaveObject())
                             <tr>
                                 <td>{{ $role->name() }}</td>

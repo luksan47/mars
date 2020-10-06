@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\FaultsTable;
-use App\Role;
-use DB;
+use App\Models\FaultsTable;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FaultsController extends Controller
 {

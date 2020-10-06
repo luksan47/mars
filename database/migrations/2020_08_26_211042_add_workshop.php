@@ -11,8 +11,8 @@ class AddWorkshop extends Migration
      */
     public function up()
     {
-        DB::table('workshops')->insertOrIgnore(['name' => \App\Workshop::GAZDALKODASTUDOMANYI]);
-        DB::table('faculties')->insertOrIgnore(['name' => \App\Faculty::GTI]);
+        DB::table('workshops')->insertOrIgnore(['name' => \App\Models\Workshop::GAZDALKODASTUDOMANYI]);
+        DB::table('faculties')->insertOrIgnore(['name' => \App\Models\Faculty::GTI]);
     }
 
     /**

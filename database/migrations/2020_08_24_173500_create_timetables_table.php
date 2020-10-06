@@ -20,7 +20,7 @@ class CreateTimetablesTable extends Migration
             $table->timestamps();
         });
 
-        App\Classroom::insert([[
+        App\Models\Classroom::insert([[
             'name' => '012',
             'capacity' => 10,
         ], [

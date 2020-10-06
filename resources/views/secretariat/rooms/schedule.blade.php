@@ -16,11 +16,11 @@
         <div class="row">
             <!-- TODO: show for only one semester -->
             <div class="input-field col s12 m6">
-                @include("utils/select", ['elements' => \App\Course::all(), 'element_id' => 'course', 'label' => 'secretariat.course'])
+                @include("utils/select", ['elements' => \App\Models\Course::all(), 'element_id' => 'course', 'label' => 'secretariat.course'])
             </div>
             <!-- TODO: make it a select -->
             <div class="input-field col s12 m6">
-                @include("utils/select", ['elements' => \App\Classroom::all(), 'element_id' => 'classroom', 'label' => 'secretariat.classroom'])
+                @include("utils/select", ['elements' => \App\Models\Classroom::all(), 'element_id' => 'classroom', 'label' => 'secretariat.classroom'])
             </div>
 
             <div class="input-field col s12 m6">

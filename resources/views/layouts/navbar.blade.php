@@ -42,17 +42,39 @@
         @endif
         <!-- faults page -->
         <li><a class="waves-effect" href="{{ route('faults') }}"><i class="material-icons left">build</i>@lang('faults.faults')</a></li>
-        <!-- documents page TODO: permissions? -->
+        <!-- documents page -->
+        @can('document.any')
         <li><a class="waves-effect" href="{{ route('documents') }}"><i class="material-icons left">assignment</i>@lang('document.documents')</a></li>
-
-        <li><div class="divider"></div></li>
+        @endcan
 
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
+                <!-- student council module -->
+                @can('viewAny', \App\Models\Checkout::class)
+                <li><div class="divider"></div></li>
+                <li class="@yield('student_council_module')">
+                    <a class="collapsible-header waves-effect" style="padding-left:32px">
+                        <i class="material-icons left">groups</i> <!-- star icon? -->
+                        @lang('role.student-council')
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <!-- economic committee -->
+                            <li>
+                                <a class="waves-effect" href="{{ route('economic_committee') }}">
+                                    <i class="material-icons left">attach_money</i> @lang('role.economic-committee')
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                @endcan
                 <!-- admin module -->
                 @if(Auth::user()->hasElevatedPermissions())
-                <li>
+                <li><div class="divider"></div></li>
+                <li class="@yield('admin_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">
                         <i class="material-icons left">edit</i>
                         @lang('admin.admin')
@@ -68,22 +90,39 @@
                                 </a>
                             </li>
                             @endcan
+
+                            <!-- user management -->
+                            @can('viewAny', \App\Models\User::class)
+                            <li>
+                                <a class="waves-effect" href="{{ route('admin.user.list') }}">
+                                    <i class="material-icons left">supervisor_account</i> @lang('admin.user_management')
+                                </a>
+                            </li>
+                            @endcan
+
                             <!-- print admin -->
-                            @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN))
+                            @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN))
                             <li>
                                 <a class="waves-effect" href="{{ route('print.admin') }}">
                                     <i class="material-icons left">local_printshop</i>@lang('print.print')
                                 </a>
                             </li>
                             @endif
+
                             <!-- internet admin -->
-                            @if(Auth::user()->hasRole(\App\Role::INTERNET_ADMIN))
+                            @if(Auth::user()->hasRole(\App\Models\Role::INTERNET_ADMIN))
                             <li>
                                 <a class="waves-effect" href="{{ route('internet.admin') }}">
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')
                                 </a>
                             </li>
+                            <li>
+                                <a class="waves-effect" href="{{ route('routers') }}">
+                                    <i class="material-icons left">router</i>@lang('router.router_monitor')
+                                </a>
+                            </li>
                             @endif
+
                             <!-- permission admin -->
                             @can('permission.handle')
                             <li>
@@ -92,12 +131,18 @@
                                 </a>
                             </li>
                             @endcan
+
+                            {{-- TODO checkout 
+                            <li>
+                            <a class="waves-effect" href="{{ route('admin.checkout') }}">
+                                <i class="material-icons left">credit_card</i> @lang('admin.checkout')
+                            </a>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
                 @endif
-                {{-- Paste other collapsible option groups here eg. secretariat module, commitee modules --}}
-            </ul>
+             </ul>
         </li>
     @endif
 

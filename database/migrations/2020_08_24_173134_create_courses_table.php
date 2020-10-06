@@ -19,7 +19,7 @@ class CreateCoursesTable extends Migration
             $table->unsignedTinyInteger('workshop_id');
             $table->text('name');
             $table->text('name_english');
-            $table->set('type', \App\Course::TYPES);
+            $table->set('type', \App\Models\Course::TYPES);
             $table->unsignedTinyInteger('credits');
             $table->unsignedTinyInteger('hours');
             $table->unsignedSmallInteger('semester_id');

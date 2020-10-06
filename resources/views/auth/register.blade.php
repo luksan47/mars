@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col s12 l12 xl8 offset-xl2">
+    <div class="col s12 l8 xl6 offset-l2 offset-xl3">
         <div class="card">
             <div class="card-image">
                 <img src="/img/EC_building.jpg">
@@ -12,7 +12,7 @@
                 @csrf
                 <div class="card-content">
                     <blockquote>
-                        @if($user_type == \App\Role::COLLEGIST)
+                        @if($user_type == \App\Models\Role::COLLEGIST)
                         <a href="{{ route('register.guest') }}">
                             @lang('registration.collegist_to_tenant')</a>
                         @else
@@ -35,7 +35,7 @@
                     <div class="card-title">@lang('info.contact')</div>
                         @include("auth.register.contact")
                     </div>
-                    @if($user_type == \App\Role::COLLEGIST)
+                    @if($user_type == \App\Models\Role::COLLEGIST)
                     <div class="divider"></div>
                     <div class="section">
                         <div class="card-title">@lang('info.information_of_studies')</div>

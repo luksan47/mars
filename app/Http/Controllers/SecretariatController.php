@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
-use App\EventTrigger;
-use App\Semester;
-use App\Timetable;
-use App\User;
+use App\Models\Course;
+use App\Models\Semester;
+use App\Models\Timetable;
+use App\Models\User;
+use App\Models\EventTrigger;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,19 +21,19 @@ class SecretariatController extends Controller
     public function rooms()
     {
         return view('secretariat.rooms')
-            ->with('timetable', \App\Timetable::all());
+            ->with('timetable', Timetable::all());
     }
 
     public function addCourseView()
     {
         return view('secretariat.rooms.add')
-            ->with('users', \App\User::all());
+            ->with('users', User::all());
     }
 
     public function scheduleCourseView()
     {
         return view('secretariat.rooms.schedule')
-            ->with('users', \App\User::all());
+            ->with('users', User::all());
     }
 
     public static function isStatementAvailable()

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'active_members' => 'Active members',
     'change_email' => 'Change email',
     'change_password' => 'Change password',
     'choose_from_menu' => 'Select one of the menu options!',
@@ -11,6 +12,7 @@ return [
     'if_mail_not_working' => 'In some cases, this function may not work properly. In this case, please write an email to the system administrators!',
     'login' => 'Login',
     'logout' => 'Logout',
+    'members' => 'Members',
     'note' => 'Note',
     'other' => 'Other',
     'register' => 'Register',
@@ -18,11 +20,13 @@ return [
     'register_guest' => 'For tenants',
     'report_bug' => 'Report a bug',
     'search' => 'Search...',
+    'semester' => 'Semester',
     'settings' => 'Settings',
     'success' => 'Success!',
     'successful_modification' => 'Successful modification!',
     'successful_transaction' => 'Successful transaction!',
     'successfully_added' => 'Successfully added!',
+    'successfully_deleted' => 'Successfully deleted',
     'you_are_logged_in' => 'You are logged in.',
     'monday' => 'Monday',
     'tuesday' => 'Tuesday',

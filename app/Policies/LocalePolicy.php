@@ -2,25 +2,22 @@
 
 namespace App\Policies;
 
-use App\User;
+use App\Models\LocalizationContribution;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LocalePolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function viewAny(User $user)
     {
-        //
+        return $user->hasRoleBase(Role::LOCALE_ADMIN);
     }
 
-    public function approve(User $user)
+    public function approve(User $user, LocalizationContribution $contribution)
     {
-        return $user->hasRole(\App\Role::LOCALE_ADMIN);
+        return $user->hasRoleWithObjectName(Role::LOCALE_ADMIN, $contribution->language);
     }
 }
