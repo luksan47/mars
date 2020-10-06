@@ -20,7 +20,7 @@ class SemesterSeeder extends Seeder
             'part' => 1,
         ]);
 
-        while($semester != Semester::next()) {
+        while ($semester != Semester::next()) {
             // This creates the semester if it does not exists
             $semester = $semester->succ();
         }
