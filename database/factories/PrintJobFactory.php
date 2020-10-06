@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\PrintJob;
-use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PrintJobFactory extends Factory {
-
+class PrintJobFactory extends Factory
+{
     protected $model = PrintJob::class;
 
-    public function definition() {
+    public function definition()
+    {
         return [
             'filename' => $this->faker->text,
             'filepath' => $this->faker->text,
@@ -20,4 +20,3 @@ class PrintJobFactory extends Factory {
         ];
     }
 }
-

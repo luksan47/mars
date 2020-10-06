@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Router;
-use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RouterFactory extends Factory {
-
+class RouterFactory extends Factory
+{
     protected $model = Router::class;
 
-    public function definition() {
+    public function definition()
+    {
         $date_of_deployment = $this->faker->dateTime();
 
         return [

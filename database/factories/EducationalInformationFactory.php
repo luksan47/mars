@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\EducationalInformation;
-use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EducationalInformationFactory extends Factory {
-
+class EducationalInformationFactory extends Factory
+{
     protected $model = EducationalInformation::class;
 
-    public function definition() {
+    public function definition()
+    {
         return [
             'year_of_graduation' => $this->faker->numberBetween($min = 1895, $max = date('Y')),
             'high_school' => $this->faker->company,

@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\MacAddress;
-use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MacAddressFactory extends Factory {
-
+class MacAddressFactory extends Factory
+{
     protected $model = MacAddress::class;
 
-    public function definition() {
+    public function definition()
+    {
         return [
             'mac_address' => $this->faker->macAddress,
             'comment' => $this->faker->text,

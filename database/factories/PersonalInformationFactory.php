@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\PersonalInformation;
-use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PersonalInformationFactory extends Factory {
-
+class PersonalInformationFactory extends Factory
+{
     protected $model = PersonalInformation::class;
 
-    public function definition() {
+    public function definition()
+    {
         return [
             'place_of_birth' => $this->faker->city,
             'date_of_birth' =>$this->faker->date($format = 'Y-m-d', $max = 'now'),
