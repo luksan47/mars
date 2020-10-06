@@ -26,7 +26,8 @@ With these steps you should be able to run Mars on your machine:
 5. Set up Mars: Copy and rename `.env.example` to `.env`, and change these settings: 
 `DB_DATABASE=homestead
 DB_USERNAME=homestead
-DB_PASSWORD=secret`
+DB_PASSWORD=secret
+APP_URL=http://mars.local`.
 If you want to set up emails, change `MAIL_TEST_ADMIN` to your email (after seeding, you will be able to log in to the admin user with this email address) and set your email credentials (`MAIL_USERNAME` and `MAIL_PASSWORD`) - you might have to enable third party access to your email account. 
 5. Create ssh keys to `~/.ssh/homestead_rsa.pub` and `~/.ssh/homestead_rsa`. (You can use something like `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`.)
 6. On Windows add the `192.168.10.10  mars.local` host entry to `C:\Windows\System32\drivers\etc\hosts`.
