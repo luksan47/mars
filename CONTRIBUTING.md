@@ -22,7 +22,7 @@ With these steps you should be able to run Mars on your machine:
     * go into this new directory
     * `git checkout release`
     * `init.bat` (`bash init.sh` on Linux)
-4. Set up Homestead: Copy and rename `Homestead.yaml.example` from this repository to `Homestead.yaml` in the Homestead directory. Modify this file by changing `folders: - map: /your/local/path/to/mars` .
+4. Set up Homestead: Copy and rename `Homestead.yaml.example` from this repository to `Homestead.yaml` in the Homestead directory (overwrite if needed). Modify this file by changing `folders: - map: /your/local/path/to/mars` .
 5. Set up Mars: Copy and rename `.env.example` to `.env`, and change these settings: 
 `DB_DATABASE=homestead
 DB_USERNAME=homestead
