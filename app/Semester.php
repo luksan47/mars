@@ -196,13 +196,10 @@ class Semester extends Model
 
     public static function getOrCreate($year, $part)
     {
-        $semester = Semester::all()->where('year', $year)->where('part', $part)->first();
-        if ($semester === null) {
-            $semester = Semester::create([
-                'year' => $year,
-                'part' => $part,
-            ]);
-        }
+        $semester = Semester::updateOrCreate([
+            'year' => $year,
+            'part' => $part,
+        ]);
 
         return $semester;
     }
