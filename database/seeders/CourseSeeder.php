@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Classroom;
 use App\Models\Course;
-
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 

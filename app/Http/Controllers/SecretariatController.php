@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\EventTrigger;
 use App\Models\Semester;
 use App\Models\Timetable;
 use App\Models\User;
-use App\Models\EventTrigger;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
