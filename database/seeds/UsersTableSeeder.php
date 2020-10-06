@@ -68,8 +68,8 @@ class UsersTableSeeder extends Seeder
         foreach (Role::ALL as $role) {
             if (Role::canHaveObjectFor($role)) {
                 $objects = Role::possibleObjectsFor($role);
-                foreach ($objects as $key => $value) {
-                    $user->roles()->attach(Role::getId($role), ['object_id' => $key]);
+                foreach ($objects as $object) {
+                    $user->roles()->attach(Role::getId($role), ['object_id' => $object->id]);
                 }
             } else {
                 $user->roles()->attach(Role::getId($role));
