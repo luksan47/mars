@@ -184,6 +184,11 @@ class Role extends Model
         return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
     }
 
+    public function hasTranslatedName()
+    {
+        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER]);
+    }
+
     private static function toSelectableCollection(array $items)
     {
         $objects = [];
