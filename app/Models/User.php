@@ -183,6 +183,17 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasAnyRole([$roleName], $objectId);
     }
 
+    public function hasRoleWithObjectNames(string $roleName, array $objectNames)
+    {
+        foreach ($objectNames as $objectName) {
+            if ($this->hasRoleWithObjectName($roleName, $objectName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // Has any role with all possible object ID
     public function hasRoleBase(string $roleName)
     {

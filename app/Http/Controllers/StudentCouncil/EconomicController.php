@@ -75,8 +75,7 @@ class EconomicController extends Controller
 
     public function indexKKTNetreg()
     {
-        $checkout = Checkout::studentsCouncil();
-        $this->authorize('handle', $checkout);
+        $this->authorize('handleAny', Checkout::class);
 
         $my_transactions_not_in_checkout = Transaction::where('receiver_id', Auth::user()->id)
             ->where('moved_to_checkout', null)->get();
@@ -107,8 +106,8 @@ class EconomicController extends Controller
         $valasztmany_checkout = Checkout::studentsCouncil();
         $admin_checkout = Checkout::admin();
 
-        $this->authorize('handle', $valasztmany_checkout);
-        $this->authorize('handle', $admin_checkout);
+        $this->authorize('addPayment', $valasztmany_checkout);
+        $this->authorize('addPayment', $admin_checkout);
 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
@@ -144,7 +143,7 @@ class EconomicController extends Controller
     public function KKTNetregToCheckout(Request $request)
     {
         $checkout = Checkout::studentsCouncil();
-        $this->authorize('handle', $checkout);
+        $this->authorize('addPayment', $checkout);
 
         /* Moving the Netreg amount from Valasztmany to Admins is not tracked (yet) */
         $validator = Validator::make($request->all(), [
@@ -170,7 +169,7 @@ class EconomicController extends Controller
     public function addTransaction(Request $request)
     {
         $checkout = Checkout::studentsCouncil();
-        $this->authorize('handle', $checkout);
+        $this->authorize('administrate', $checkout);
 
         $validator = Validator::make($request->all(), [
             'comment' => 'required|string',

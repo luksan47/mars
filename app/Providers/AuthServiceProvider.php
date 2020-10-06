@@ -71,13 +71,15 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole(Role::SECRETARY);
         });
         Gate::define('document.status-certificate', function ($user) {
-            return $user->hasRole(Role::COLLEGIST);
+            return $user->hasRoleBase(Role::COLLEGIST);
         });
         Gate::define('document.register-statement', function ($user) {
-            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+            return $user->hasRoleBase(Role::COLLEGIST)
+                || $user->hasRole(Role::TENANT);
         });
         Gate::define('document.import-license', function ($user) {
-            return $user->hasAnyRole([Role::COLLEGIST, Role::TENANT]);
+            return $user->hasRoleBase(Role::COLLEGIST)
+                || $user->hasRole(Role::TENANT);
         });
 
         Gate::define('document.any', function ($user) {

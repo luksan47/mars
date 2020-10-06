@@ -51,7 +51,7 @@
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <!-- student council module -->
-                @if(Auth::user()->hasRole(\App\Models\Role::COLLEGIST))
+                @can('viewAny', \App\Models\Checkout::class)
                 <li><div class="divider"></div></li>
                 <li class="@yield('student_council_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">
@@ -70,7 +70,7 @@
                         </ul>
                     </div>
                 </li>
-                @endif
+                @endcan
                 <!-- admin module -->
                 @if(Auth::user()->hasElevatedPermissions())
                 <li><div class="divider"></div></li>
