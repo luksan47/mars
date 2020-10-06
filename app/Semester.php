@@ -142,7 +142,6 @@ class Semester extends Model
     }
 
     // There is always a "current" semester. If there is not in the database, this function creates it.
-    // TODO: fine a safer method?
     public static function current()
     {
         $now = Carbon::now();
