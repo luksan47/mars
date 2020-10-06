@@ -19,7 +19,7 @@
                     @lang('checkout.current_balance_in_checkout'): 
                     <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
-                @can('handleAny', \App\Checkout::class)
+                @can('handleAny', \App\Models\Checkout::class)
                 <div class="row">
                     <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
                         <a href="{{ route('kktnetreg') }}" class="btn waves-effect" style="width:100%">
@@ -54,7 +54,7 @@
                             <tr>
                                 <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
                                 <td>
-                                    @can('administrate', \App\Checkout::studentsCouncil())
+                                    @can('administrate', \App\Models\Checkout::studentsCouncil())
                                     <a href="{{ route('kktnetreg') }}" class="btn waves-effect">
                                         @lang('checkout.details')</a>
                                     @endcan
@@ -91,7 +91,7 @@
                                 <th>@lang('checkout.workshop_balances')*</th>
                                 <th>
                                     @lang('checkout.allocated_balance')
-                                    @can('administrate', \App\Checkout::studentsCouncil())
+                                    @can('administrate', \App\Models\Checkout::studentsCouncil())
                                     <a href="#" class="btn-floating btn-small grey waves-effect">
                                         <i class="material-icons">refresh</i>
                                     </a>

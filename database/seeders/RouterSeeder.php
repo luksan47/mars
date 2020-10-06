@@ -1,5 +1,8 @@
 <?php
 
+namespace Database\Seeders;
+
+use App\Models\Router;
 use Illuminate\Database\Seeder;
 
 class RouterSeeder extends Seeder
@@ -11,7 +14,7 @@ class RouterSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Router::class, 5)->create();
-        factory(App\Router::class, 15)->create(['failed_for' => 0]);
+        Router::factory()->count(5)->create();
+        Router::factory()->count(15)->create(['failed_for' => 0]);
     }
 }

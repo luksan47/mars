@@ -51,7 +51,7 @@
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
                 <!-- student council module -->
-                @can('viewAny', \App\Checkout::class)
+                @can('viewAny', \App\Models\Checkout::class)
                 <li><div class="divider"></div></li>
                 <li class="@yield('student_council_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">
@@ -92,7 +92,7 @@
                             @endcan
 
                             <!-- user management -->
-                            @can('viewAny', \App\User::class)
+                            @can('viewAny', \App\Models\User::class)
                             <li>
                                 <a class="waves-effect" href="{{ route('admin.user.list') }}">
                                     <i class="material-icons left">supervisor_account</i> @lang('admin.user_management')
@@ -101,7 +101,7 @@
                             @endcan
 
                             <!-- print admin -->
-                            @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN))
+                            @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN))
                             <li>
                                 <a class="waves-effect" href="{{ route('print.admin') }}">
                                     <i class="material-icons left">local_printshop</i>@lang('print.print')
@@ -110,7 +110,7 @@
                             @endif
 
                             <!-- internet admin -->
-                            @if(Auth::user()->hasRole(\App\Role::INTERNET_ADMIN))
+                            @if(Auth::user()->hasRole(\App\Models\Role::INTERNET_ADMIN))
                             <li>
                                 <a class="waves-effect" href="{{ route('internet.admin') }}">
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')

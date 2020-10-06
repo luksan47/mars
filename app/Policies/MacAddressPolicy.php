@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\MacAddress;
-use App\Role;
-use App\User;
+use App\Models\MacAddress;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MacAddressPolicy
@@ -24,7 +24,7 @@ class MacAddressPolicy
     /**
      * Determine whether the user can view any mac addresses (in general).
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -35,8 +35,8 @@ class MacAddressPolicy
     /**
      * Determine whether the user can view the mac address.
      *
-     * @param  \App\User  $user
-     * @param  \App\MacAddress  $macAddress
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\MacAddress  $macAddress
      * @return mixed
      */
     public function view(User $user, MacAddress $macAddress)
@@ -47,7 +47,7 @@ class MacAddressPolicy
     /**
      * Determine whether the user can create mac addresses.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -58,8 +58,8 @@ class MacAddressPolicy
     /**
      * Determine whether the user can update the mac address.
      *
-     * @param  \App\User  $user
-     * @param  \App\MacAddress  $macAddress
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\MacAddress  $macAddress
      * @return mixed
      */
     public function update(User $user, MacAddress $macAddress)
@@ -70,8 +70,8 @@ class MacAddressPolicy
     /**
      * Determine whether the user can delete the mac address.
      *
-     * @param  \App\User  $user
-     * @param  \App\MacAddress  $macAddress
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\MacAddress  $macAddress
      * @return mixed
      */
     public function delete(User $user, MacAddress $macAddress)
@@ -82,8 +82,8 @@ class MacAddressPolicy
     /**
      * Determine whether the user can accept the mac address request.
      *
-     * @param  \App\User  $user
-     * @param  \App\MacAddress  $macAddress
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\MacAddress  $macAddress
      * @return mixed
      */
     public function accept(User $user, MacAddress $macAddress)

@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            \App\EventTrigger::listen();
+            \App\Models\EventTrigger::listen();
         })->hourly();
-        foreach (\App\Router::all() as $router) {
+        foreach (\App\Models\Router::all() as $router) {
             $schedule->job(new \App\Jobs\PingRouter($router))->everyFiveMinutes();
         }
     }

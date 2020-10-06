@@ -1,6 +1,9 @@
 <?php
 
-use App\Semester;
+namespace Database\Seeders;
+
+use App\Models\Semester;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SemesterSeeder extends Seeder
@@ -22,7 +25,7 @@ class SemesterSeeder extends Seeder
             $semester = $semester->succ();
         }
 
-        $users = \App\User::all();
+        $users = User::all();
 
         $semesters = Semester::all();
         foreach ($semesters as $semester) {

@@ -1,15 +1,21 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
-use App\EducationalInformation;
-use Faker\Generator as Faker;
+use App\Models\EducationalInformation;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(EducationalInformation::class, function (Faker $faker) {
-    return [
-        'year_of_graduation' => $faker->numberBetween($min = 1895, $max = date('Y')),
-        'high_school' => $faker->company,
-        'neptun' => $faker->regexify('[A-Z0-9]{6}'),
-        'year_of_acceptance' => $faker->numberBetween($min = 1895, $max = date('Y')),
-    ];
-});
+class EducationalInformationFactory extends Factory
+{
+    protected $model = EducationalInformation::class;
+
+    public function definition()
+    {
+        return [
+            'year_of_graduation' => $this->faker->numberBetween($min = 1895, $max = date('Y')),
+            'high_school' => $this->faker->company,
+            'neptun' => $this->faker->regexify('[A-Z0-9]{6}'),
+            'year_of_acceptance' => $this->faker->numberBetween($min = 1895, $max = date('Y')),
+        ];
+    }
+}

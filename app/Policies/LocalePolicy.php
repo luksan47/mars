@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\LocalizationContribution;
-use App\Role;
-use App\User;
+use App\Models\LocalizationContribution;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LocalePolicy

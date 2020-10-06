@@ -18,7 +18,7 @@ class CreatePrintJobsTable extends Migration
             $table->text('filename');
             $table->text('filepath');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->set('state', \App\PrintJob::STATES);
+            $table->set('state', \App\Models\PrintJob::STATES);
             $table->unsignedBigInteger('job_id');
             $table->unsignedInteger('cost');
             $table->timestamps();
