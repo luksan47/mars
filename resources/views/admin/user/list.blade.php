@@ -22,11 +22,13 @@
                             </td>
                             {{-- Column for warnings --}}
                             <td>
-                                @if($user->wifiConnections->count() > \App\WifiConnection::WARNING_THRESHOLD)
-                                <span class="new badge red" data-badge-caption="{{ $user->wifiConnections->count() }}">
-                                    @lang('internet.wifi_connections') :
-                                </span>
-                                @endif
+                                @can('viewAny', \App\WifiConnection::class)
+                                    @if($user->wifiConnections->count() > \App\WifiConnection::WARNING_THRESHOLD)
+                                    <span class="new badge red" data-badge-caption="{{ $user->wifiConnections->count() }}">
+                                        @lang('internet.wifi_connections') :
+                                    </span>
+                                    @endif
+                                @endcan
                             </td>
                             <td>
                                 <div class="right">

@@ -171,8 +171,7 @@ class InternetController extends Controller
 
     public function getWifiConnectionsAdmin()
     {
-        //ar_dump(WifiConnection::first()->user->first()->wifi_username); die();
-        $this->authorize('viewAny', MacAddress::class);
+        $this->authorize('viewAny', WifiConnection::class);
 
         $paginator = TabulatorPaginator::from(WifiConnection::join('internet_accesses as i', 'i.wifi_username', 'wifi_connections.wifi_username')
             ->join('users as user', 'user.id', '=', 'i.user_id')

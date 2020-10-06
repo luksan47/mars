@@ -26,21 +26,25 @@
                     <th scope="row">@lang('internet.wifi_password')</th>
                     <td>{{ $user->internetAccess->wifi_password }}</td>
                 </tr>
+                @can('viewAny', \App\WifiConnection::class)
                 <tr>
                     <th scope="row">@lang('internet.wifi_connections')</th>
                     <td>
                         <ul>
                             @foreach ($user->wifiConnections as $wifiConnection)
+                                @can('view', $wifiConnection)
                                 <li>
                                     <span class="new badge {{ $wifiConnection->getColor() }}" data-badge-caption="">
                                         {{ $wifiConnection->ip }} : {{ $wifiConnection->mac_address }}
                                     </span>
                                 </li>
+                                @endcan
                             @endforeach
                         </ul>
                         <small>*@lang('user.wifi_connections_color_tooltip')</small>
                     </td>
                 </tr>
+                @endcan
                 <tr>
                     <th scope="row">@lang('internet.mac_address')</th>
                     <td>
