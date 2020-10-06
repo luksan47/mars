@@ -89,6 +89,7 @@
                     field: "auto_approved_mac_slots",
                     sorter: "number",
                     editor: 'number',
+                    validator: "min:0"
                 },
                 {title: "", field: "state", headerSort: false, formatter: actions},
             ],
