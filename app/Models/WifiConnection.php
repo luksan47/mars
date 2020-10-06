@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,6 +47,7 @@ class WifiConnection extends Model
         if ($this->created_at > Carbon::now()->subDays(10)) {
             return 'orange';
         }
+
         return 'green';
     }
 }
