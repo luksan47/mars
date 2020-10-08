@@ -39,8 +39,23 @@ class InternetAccess extends Model
         return $username;
     }
 
-    public function wifiConnection()
+    public function wifiConnections()
     {
         return $this->hasMany('App\Models\WifiConnection', 'wifi_username', 'wifi_username');
+    }
+
+    public function extraWifiConnectionCount()
+    {
+        return $this->wifiConnections->where('extra', true)->count();
+    }
+
+    public function allowedConnectionCount()
+    {
+        return WifiConnection::WARNING_THRESHOLD + $this->extraWifiConnectionCount();
+    }
+
+    public function reachedWifiConnectionLimit()
+    {
+        return $this->wifiConnections->count() > $this->allowedConnectionCount();
     }
 }

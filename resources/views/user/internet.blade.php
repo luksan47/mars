@@ -29,20 +29,7 @@
                 @can('viewAny', \App\Models\WifiConnection::class)
                 <tr>
                     <th scope="row">@lang('internet.wifi_connections')</th>
-                    <td>
-                        <ul>
-                            @foreach ($user->wifiConnections as $wifiConnection)
-                                @can('view', $wifiConnection)
-                                <li>
-                                    <span class="new badge {{ $wifiConnection->getColor() }}" data-badge-caption="">
-                                        {{ $wifiConnection->ip }} : {{ $wifiConnection->mac_address }}
-                                    </span>
-                                </li>
-                                @endcan
-                            @endforeach
-                        </ul>
-                        <small>*@lang('user.wifi_connections_color_tooltip')</small>
-                    </td>
+                    @include('admin.internet.wifi_connections.show', ['showTooltip' => true])
                 </tr>
                 @endcan
                 <tr>

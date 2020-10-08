@@ -103,6 +103,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/internet/admin/mac_addresses/all', [InternetController::class, 'getUsersMacAddressesAdmin'])->name('internet.admin.mac_addresses.all');
     Route::get('/internet/admin/internet_accesses/all', [InternetController::class, 'getInternetAccessesAdmin'])->name('internet.admin.internet_accesses.all');
     Route::get('/internet/admin/wifi_connections/all', [InternetController::class, 'getWifiConnectionsAdmin'])->name('internet.admin.wifi_connections.all');
+    Route::get('/internet/admin/{user}/wifi_connections/approve', [InternetController::class, 'approveWifiConnections'])->name('admin.internet.wifi_connections.approve');
     Route::get('/internet/admin', [InternetController::class, 'admin'])->name('internet.admin');
     Route::post('/internet/mac_addresses/add', [InternetController::class, 'addMacAddress'])->name('internet.mac_addresses.add');
     Route::post('/internet/mac_addresses/{id}/edit', [InternetController::class, 'editMacAddress'])->name('internet.mac_addresses.edit');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\WifiConnection;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ class CreateWifiConnections extends Migration
             $table->string('ip', 15);
             $table->string('mac_address', 17);
             $table->string('wifi_username');
+            $table->boolean('extra')->default(false);
             $table->timestamps();
         });
     }

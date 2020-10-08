@@ -3,6 +3,7 @@
 return [
     'add' => 'Hozzáadás',
     'ajax_error' => 'Távoli hiba történt! Kérjük frissítse az oldalt!',
+    'allowed' => 'Engedélyezett',
     'approve' => 'Elfogad',
     'approved' => 'Elfogadott',
     'auto_approved_mac_slots' => 'Alap MAC slot',
@@ -38,6 +39,7 @@ return [
     'update' => 'Frissítés',
     'user_id' => 'Felhasználó id',
     'username' => 'Felhasználónév',
+    'users_over_threshold' => 'Wifi csatlakozások: felhasználók a limit felett',
     'wifi_connections' => 'WiFi csatlakozások',
     'wifi_password' => 'Wifi jelszó',
     'wifi_password_info' => 'Az ejc_wifi hálózatra a lenti adatokkal jelentkezhetsz be. Lehetőséged van a jelszavadat egy másik véletlenszerű jelszóra megváltoztatni, ezt a rendszergazdák bizonyos időnként meg is fogják tenni, amiről előre értesítenek.',

@@ -31,8 +31,9 @@ class InternetController extends Controller
     public function admin()
     {
         $activationDate = EventTrigger::internetActivationDeadline();
+        $users_over_threshold = $this->usersOverWifiThreshold();
 
-        return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all()]);
+        return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all(), 'users_over_threshold' => $users_over_threshold]);
     }
 
     public function getUsersMacAddresses(Request $request)
@@ -216,6 +217,31 @@ class InternetController extends Controller
 
             return $data;
         };
+    }
+
+    public function usersOverWifiThreshold()
+    {
+        $users = User::withCount('wifiConnections')->having('wifi_connections_count', '>', WifiConnection::WARNING_THRESHOLD)->get();
+        foreach ($users as $user) {
+            if (!$user->internetAccess->reachedWifiConnectionLimit()) {
+                $users = $users->except([$user->id]);
+            }
+        }
+        return $users;
+    }
+
+    public function approveWifiConnections(User $user)
+    {
+        $latestWifiConnection = $user->internetAccess->wifiConnections->where('extra', false)->first();
+        if ($latestWifiConnection === null) {
+            return redirect()->back()->with('message', __('general.nothing_to_modify'));
+        }
+
+        $latestWifiConnection->update([
+            'extra' => true,
+        ]);
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function showCheckout()

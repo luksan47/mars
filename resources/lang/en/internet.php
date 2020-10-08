@@ -3,6 +3,7 @@
 return [
     'add' => 'Add device',
     'ajax_error' => 'Server error! Please refresh the site!',
+    'allowed' => 'Allowed',
     'approve' => 'Approve',
     'approved' => 'Approved',
     'auto_approved_mac_slots' => 'Default MAC slot',
@@ -38,6 +39,7 @@ return [
     'update' => 'Update',
     'user_id' => 'User id',
     'username' => 'Username',
+    'users_over_threshold' => 'Wifi connections: users over threshold',
     'wifi_connections' => 'WiFi Connections',
     'wifi_password' => 'Wifi password',
     'wifi_password_info' => 'You can connect to ejc_wifi with the credentials listed below. You can change your password to a randomly generated one. The administrators will do this regularly, but you will be notified in advance.',

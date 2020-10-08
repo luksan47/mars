@@ -21,16 +21,6 @@
                                 <b>{{ $user->name }}</b><br>
                                 {{ $user->email }}
                             </td>
-                            {{-- Column for warnings --}}
-                            <td>
-                                @can('viewAny', \App\Models\WifiConnection::class)
-                                    @if($user->wifiConnections->count() > \App\Models\WifiConnection::WARNING_THRESHOLD)
-                                    <span class="new badge red" data-badge-caption="{{ $user->wifiConnections->count() }}">
-                                        @lang('internet.wifi_connections') :
-                                    </span>
-                                    @endif
-                                @endcan
-                            </td>
                             <td>
                                 @if($user->hasRoleBase(\App\Models\Role::COLLEGIST))
                                 <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">

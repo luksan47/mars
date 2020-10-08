@@ -43,7 +43,8 @@ class UsersTableSeeder extends Seeder
             for ($x = 0; $x < rand(1, 3); $x++) {
                 $user->workshops()->attach(rand(1, count(Workshop::ALL)));
             }
-            $user->internetAccess->setWifiUsername();
+            $wifi_username = $user->internetAccess->setWifiUsername();
+            WifiConnection::factory()->count($user->id % 6)->create(['wifi_username' => $wifi_username]);
         });
 
         //generate random tenants
@@ -54,7 +55,7 @@ class UsersTableSeeder extends Seeder
             $user->roles()->attach(Role::getId(Role::TENANT));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
             $wifi_username = $user->internetAccess->setWifiUsername();
-            WifiConnection::factory()->count($user->id % 5)->create(['wifi_username' => $wifi_username]);
+            WifiConnection::factory()->count($user->id % 6)->create(['wifi_username' => $wifi_username]);
         });
     }
 
