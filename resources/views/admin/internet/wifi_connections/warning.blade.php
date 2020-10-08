@@ -11,7 +11,7 @@
                 <span class="new badge red" data-badge-caption="
                     {{ $user->wifiConnections->count() }}
                     (@lang('internet.allowed') :
-                    {{ $user->internetAccess->allowedConnectionCount() }}) " >
+                    {{ $user->internetAccess->wifi_connection_limit }}) " >
                         @lang('internet.wifi_connections') :
                 </span>
             </td>

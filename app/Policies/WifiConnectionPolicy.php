@@ -34,4 +34,9 @@ class WifiConnectionPolicy
         return $user->hasRole(Role::INTERNET_ADMIN)
             || $user->wifiConnections->contains($wifiConnection);
     }
+
+    public function approveAny(User $user)
+    {
+        return $user->hasRole(Role::INTERNET_ADMIN);
+    }
 }

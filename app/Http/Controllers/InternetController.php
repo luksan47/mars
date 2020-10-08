@@ -6,6 +6,7 @@ use App\Models\EventTrigger;
 use App\Models\InternetAccess;
 use App\Models\MacAddress;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\WifiConnection;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
@@ -221,7 +222,7 @@ class InternetController extends Controller
 
     public function usersOverWifiThreshold()
     {
-        $users = User::withCount('wifiConnections')->having('wifi_connections_count', '>', WifiConnection::WARNING_THRESHOLD)->get();
+        $users = Role::getUsers(Role::INTERNET_USER);
         foreach ($users as $user) {
             if (! $user->internetAccess->reachedWifiConnectionLimit()) {
                 $users = $users->except([$user->id]);
@@ -231,16 +232,13 @@ class InternetController extends Controller
         return $users;
     }
 
-    public function approveWifiConnections(User $user)
+    public function approveWifiConnections($user)
     {
-        $latestWifiConnection = $user->internetAccess->wifiConnections->where('extra', false)->first();
-        if ($latestWifiConnection === null) {
-            return redirect()->back()->with('message', __('general.nothing_to_modify'));
-        }
+        $this->authorize('approveAny', WifiConnection::class);
 
-        $latestWifiConnection->update([
-            'extra' => true,
-        ]);
+        $user = User::findOrFail($user);
+
+        $user->internetAccess->increment('wifi_connection_limit');
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }

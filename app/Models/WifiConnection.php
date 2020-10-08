@@ -18,7 +18,6 @@ class WifiConnection extends Model
         'ip',
         'mac_address',
         'wifi_username',
-        'extra',
     ];
 
     const WARNING_THRESHOLD = 3;

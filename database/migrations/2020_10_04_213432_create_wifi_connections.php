@@ -18,8 +18,11 @@ class CreateWifiConnections extends Migration
             $table->string('ip', 15);
             $table->string('mac_address', 17);
             $table->string('wifi_username');
-            $table->boolean('extra')->default(false);
             $table->timestamps();
+        });
+
+        Schema::table('internet_accesses', function (Blueprint $table) {
+            $table->smallInteger('wifi_connection_limit')->default(3);
         });
     }
 
