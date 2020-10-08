@@ -223,10 +223,11 @@ class InternetController extends Controller
     {
         $users = User::withCount('wifiConnections')->having('wifi_connections_count', '>', WifiConnection::WARNING_THRESHOLD)->get();
         foreach ($users as $user) {
-            if (!$user->internetAccess->reachedWifiConnectionLimit()) {
+            if (! $user->internetAccess->reachedWifiConnectionLimit()) {
                 $users = $users->except([$user->id]);
             }
         }
+
         return $users;
     }
 
