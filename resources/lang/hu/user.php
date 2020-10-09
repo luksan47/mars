@@ -47,7 +47,7 @@ return [
     'show' => 'Mutat',
     'skandinavisztika_muhely' => 'Skandinavisztika műhely',
     'spanyol_muhely' => 'Spanyol műhely',
-    'status' => 'Status',
+    'status' => 'Státusz',
     'street' => 'Street',
     'surname' => 'Surname',
     'szlavisztika_muhely' => 'Szlavisztika műhely',

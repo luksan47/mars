@@ -270,6 +270,16 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->isActiveIn(Semester::current());
     }
 
+    public function isResident()
+    {
+        return $this->hasRoleWithObjectName('collegist', 'resident');
+    }
+
+    public function isExtern()
+    {
+        return $this->hasRoleWithObjectName('collegist', 'extern');
+    }
+
     public function getStatusIn($semester)
     {
         $semesters = $this->allSemesters;

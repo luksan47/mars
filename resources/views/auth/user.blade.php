@@ -6,16 +6,32 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-title">@lang('info.user_data')</div>
+                <blockquote>@lang('user.change_outdated_data')</blockquote>
                 <table>
                     <tbody>
                         <tr>
-                            @include('user.roles', ['user' => $user])
+                            <th>@lang('role.roles')</th>
+                            <td>@include('user.roles', ['user' => $user])</td>
+                            <td>
+                            @can('viewPermissionFor', $user)
+                                <a href="{{ route('admin.permissions.show', $user->id) }}"
+                                    class="btn-floating waves-effect waves-light right">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            @endcan
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>@lang('user.status')</th>
+                            <td>
+                                <span class="new badge {{ \App\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
+                                    @lang("user." . $user->getStatus())
+                                </span></td>
+                            <td>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                @if($user->hasEducationalInformation())
-                <blockquote>@lang('user.change_outdated_data')</blockquote>
-                @endif
             </div>
             {{-- Logout --}}
             <div class="card-action">

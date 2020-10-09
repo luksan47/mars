@@ -17,7 +17,28 @@
                     <table>
                         <tbody>
                             <tr>
-                                @include('user.roles', ['user' => $user])
+                                <th>@lang('role.roles')</th>
+                                <td>@include('user.roles', ['user' => $user])</td>
+                                <td>
+                                @can('viewPermissionFor', $user)
+                                    <a href="{{ route('admin.permissions.show', $user->id) }}"
+                                        class="btn-floating waves-effect waves-light right">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                @endcan
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>@lang('user.status')</th>
+                                <td>
+                                    <span class="new badge {{ \App\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
+                                        @lang("user." . $user->getStatus())
+                                    </span></td>
+                                <td>
+                                <!-- TODO policy for semesters, and create a blade for this table -->
+                                <a href="{{ route('admin.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect right">
+                                        <i class="material-icons">edit</i></a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

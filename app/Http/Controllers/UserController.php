@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -91,11 +92,32 @@ class UserController extends Controller
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
+
+    public function setCollegistType(Request $request)
+    {
+        $collegist_role = Role::firstWhere('name', Role::COLLEGIST);
+        $user = User::findOrFail($request->user_id);
+
+        $this->authorize('updatePermission', [$user, $collegist_role->id]);
+
+        if ($request->has('resident') && $user->hasRoleBase(Role::COLLEGIST)){
+            $user->roles()->detach($collegist_role);
+            if($request->resident == true){
+                $object_id = Role::getObjectIdByName(Role::COLLEGIST, 'resident');
+            } else {
+                $object_id = Role::getObjectIdByName(Role::COLLEGIST, 'extern');
+            }
+            $user->roles()->attach($collegist_role, ['object_id' => $object_id]);
+        } else {
+            return response()->json(null, 400);
+        }
+        return response()->json(null, 204);
+    }
+
     public function list()
     {
         $this->authorize('viewAny', User::class);
-
-        $users = User::all();
+        $users = User::all()->sortBy('name');
 
         return view('admin.user.list')->with('users', $users);
     }

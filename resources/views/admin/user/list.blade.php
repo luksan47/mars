@@ -14,13 +14,35 @@
             <div class="card-content">
                 <span class="card-title">@lang('admin.user_management')</span>
                 <table>
+                    <thead>
+                        <tr>
+                            <th>@lang('print.user')</th>
+                            <th>
+                                <a href="{{ route('admin.permissions.list') }}" class="btn waves-effect">
+                                    @lang('role.roles')
+                                    <i class="material-icons right">lock</i></a>
+                            </th>
+                            <th colspan="2">
+                                <a href="{{ route('admin.user.statuses') }}" class="btn waves-effect">
+                                    @lang('admin.statuses')
+                                    <i class="material-icons right">school</i></a>
+                            </th>
+                    </thead>
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
                             <td>
                                 <b>{{ $user->name }}</b><br>
                                 {{ $user->email }}
+                                @if($user->hasEducationalInformation())
+                                <br>{{ $user->educationalInformation->neptun ?? '' }}
+                                @endif
                             </td>
+                            <!-- Roles -->
+                            <td>
+                                @include('user.roles', ['user' => $user, 'newline' => true])
+                            </td>
+                            <!-- Status -->
                             <td>
                                 @if($user->hasRoleBase(\App\Models\Role::COLLEGIST))
                                 <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
@@ -28,12 +50,9 @@
                                 </span>
                                 @endif
                             </td>
+                            <!-- Edit -->
                             <td>
                                 <div class="right">
-                                    @can('view', $user)
-                                    <a href="{{ route('admin.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect">
-                                        <i class="material-icons">school</i></a>
-                                    @endcan
                                     @can('view', $user)
                                     <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
                                         <i class="material-icons">remove_red_eye</i></a>
