@@ -1,4 +1,4 @@
-@can('print.modify-free')
+@can('create', \App\Models\FreePages::class)
 <span class="card-title">@lang('print.add_free_pages')</span>
 <div class="row">
     <form method="POST" action="{{ route('print.free_pages') }}">

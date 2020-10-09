@@ -21,8 +21,26 @@ class PrintAccountPolicy
         }
     }
 
+    /**
+     * True if the user can use his/her print account.
+     */
+    public function use(User $user)
+    {
+        return true;
+    }
+
+    public function handleAny(User $user)
+    {
+        return false;
+    }
+
     public function view(User $user, PrintAccount $printAccount)
     {
-        return $user->id == $printAccount->user_id;
+        return $printAccount !== null && $user->id === $printAccount->user_id;
+    }
+
+    public function modify(User $user)
+    {
+        return false;
     }
 }

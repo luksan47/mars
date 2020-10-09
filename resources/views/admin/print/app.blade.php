@@ -29,6 +29,12 @@
             </div>
         </div>
     </div>
+    <div class="col s12">
+        @include("print.print.free", ['route' => route('print.free_pages.list.all')])
+    </div>
+    <div class="col s12">
+        @include("print.history.history", ['route' => route('print.print_jobs.list.all') ])
+    </div>
 </div>
 
 @endsection

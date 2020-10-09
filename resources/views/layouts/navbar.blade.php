@@ -33,11 +33,11 @@
     <!-- main options -->
     @if(Auth::user() && Auth::user()->verified)
         <!-- print page -->
-        @can('print.print')
+        @can('use', \App\Models\PrintAccount::class)
         <li><a class="waves-effect" href="{{ route('print') }}"><i class="material-icons left">local_printshop</i>@lang('print.print')</a></li>
         @endif
         <!-- internet page -->
-        @can('internet.internet')
+        @can('possess', \App\Models\InternetAccess::class)
         <li><a class="waves-effect" href="{{ route('internet') }}"><i class="material-icons left">wifi</i>@lang('internet.internet')</a></li>
         @endif
         <!-- faults page -->
@@ -101,16 +101,16 @@
                             @endcan
 
                             <!-- print admin -->
-                            @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN))
+                            @can('handleAny', \App\Models\PrintAccount::class)
                             <li>
                                 <a class="waves-effect" href="{{ route('print.admin') }}">
                                     <i class="material-icons left">local_printshop</i>@lang('print.print')
                                 </a>
                             </li>
-                            @endif
+                            @endcan
 
                             <!-- internet admin -->
-                            @if(Auth::user()->hasRole(\App\Models\Role::INTERNET_ADMIN))
+                            @can('handleAny', \App\Models\InternetAccess::class)
                             <li>
                                 <a class="waves-effect" href="{{ route('internet.admin') }}">
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')
@@ -121,7 +121,7 @@
                                     <i class="material-icons left">router</i>@lang('router.router_monitor')
                                 </a>
                             </li>
-                            @endif
+                            @endcan
 
                             <!-- permission admin -->
                             @can('permission.handle')
@@ -132,7 +132,7 @@
                             </li>
                             @endcan
 
-                            {{-- TODO checkout 
+                            {{-- TODO checkout
                             <li>
                             <a class="waves-effect" href="{{ route('admin.checkout') }}">
                                 <i class="material-icons left">credit_card</i> @lang('admin.checkout')
