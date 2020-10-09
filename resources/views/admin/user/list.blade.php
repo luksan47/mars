@@ -40,7 +40,10 @@
                             </td>
                             <!-- Roles -->
                             <td>
-                                @include('user.roles', ['user' => $user, 'newline' => true])
+                                @include('user.roles', [
+                                    'roles' => $user->roles->whereNotIn('name', [App\Role::COLLEGIST, App\Role::INTERNET_USER]),
+                                    'newline' => true
+                                ])
                             </td>
                             <!-- Status -->
                             <td>

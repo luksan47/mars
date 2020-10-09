@@ -18,7 +18,7 @@
                         <tbody>
                             <tr>
                                 <th>@lang('role.roles')</th>
-                                <td>@include('user.roles', ['user' => $user])</td>
+                                <td>@include('user.roles', ['roles' => $user->roles])</td>
                                 <td>
                                 @can('viewPermissionFor', $user)
                                     <a href="{{ route('admin.permissions.show', $user->id) }}"

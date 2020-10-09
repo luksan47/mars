@@ -18,7 +18,6 @@
                     <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="black-text" >
                         {{ $user->name }}</a>
                 </span>
-                @endif
                 <table>
                     <tbody>
                         @if(!$semesters->contains(\App\Semester::current()))

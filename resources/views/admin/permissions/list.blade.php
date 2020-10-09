@@ -18,7 +18,7 @@
                         @foreach ($users as $user)
                         <tr>
                             <td><a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="black-text" >{{ $user->name }}</a></td>
-                            <td>@include('user.roles', ['user' => $user])</td>
+                            <td>@include('user.roles', ['roles' => $user->roles])</td>
                             <td>
                             @can('viewPermissionFor', $user)
                                 <a href="{{ route('admin.permissions.show', $user->id) }}"
