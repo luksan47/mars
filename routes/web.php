@@ -64,8 +64,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/notifications/faults', [FaultController::class, 'getUnseenFaultCount'])->name('notifications.faults');
-
     /** User data */
     Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::post('/userdata/update_email', [UserController::class, 'updateEmail'])->name('userdata.update_email');
