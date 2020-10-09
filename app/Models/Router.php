@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\NotificationCounter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 
 class Router extends Model
 {
-    use HasFactory;
+    use NotificationCounter, HasFactory;
 
     protected $table = 'routers';
     protected $primaryKey = 'ip';
@@ -46,5 +47,10 @@ class Router extends Model
                 Mail::to($admin)->queue(new \App\Mail\RouterWarning($admin, $this));
             }
         }
+    }
+
+    public static function notifications()
+    {
+        return self::where('failed_for', '>', 0)->count();
     }
 }
