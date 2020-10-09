@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Checkout;
 use App\Http\Controllers\Controller;
+use App\Models\Checkout;
 use App\Models\PaymentType;
 use App\Models\Semester;
 use App\Models\Transaction;
