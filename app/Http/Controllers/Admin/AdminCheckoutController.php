@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Checkout;
+use App\Models\Checkout;
 use App\Http\Controllers\Controller;
-use App\PaymentType;
-use App\Semester;
-use App\Transaction;
-use App\User;
+use App\Models\PaymentType;
+use App\Models\Semester;
+use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

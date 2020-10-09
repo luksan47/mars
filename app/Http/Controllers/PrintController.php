@@ -10,10 +10,10 @@ use App\Models\PrintAccountHistory;
 use App\Models\Role;
 use App\Utils\Printer;
 use App\Utils\TabulatorPaginator;
-use App\Transaction;
-use App\Checkout;
-use App\Semester;
-use App\PaymentType;
+use App\Models\Transaction;
+use App\Models\Checkout;
+use App\Models\Semester;
+use App\Models\PaymentType;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
