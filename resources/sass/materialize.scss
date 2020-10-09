@@ -36,6 +36,19 @@ blockquote {
 .sidenav .divider {
   margin: 0;
 }
+.btn,
+.btn-flat {
+  border: $button-border;
+  border-radius: $button-radius;
+  display: inline-block;
+  height: inherit; //was $button-height originally - this enables multiline buttons if the text does not fit in
+  line-height: $button-height;
+  padding: $button-padding;
+  text-transform: uppercase;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
 
 // Settings for dark mode
 $transition-effects: color 1s ease, background-color 0.5s ease;
