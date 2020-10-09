@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -26,6 +28,8 @@ class RegistrationsController extends Controller
         $user = User::findOrFail($request->id);
         $user->update(['verified' => true]);
 
+        Cache::decrement('user');
+
         // Send notification mail.
         if (config('mail.active')) {
             Mail::to($user)->queue(new \App\Mail\ApprovedRegistration($user->name));
@@ -45,6 +49,8 @@ class RegistrationsController extends Controller
     public function reject(Request $request)
     {
         User::findOrFail($request->id)->delete();
+
+        Cache::decrement('user');
 
         if($request->next){
             $next_user = User::where('verified', false)->first();
