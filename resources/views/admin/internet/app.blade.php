@@ -11,6 +11,15 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
+            @include('admin.internet.wifi_connections.warning')
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
             @include('admin.internet.internet_access.internet_access')
             </div>
         </div>
@@ -21,6 +30,15 @@
         <div class="card">
             <div class="card-content">
             @include('admin.internet.mac_addresses.mac_addresses')
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+            @include('admin.internet.wifi_connections.list')
             </div>
         </div>
     </div>
