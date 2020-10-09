@@ -45,10 +45,6 @@ class PrintController extends Controller
         ]);
         $validator->validate();
 
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
-
         $is_two_sided = $request->has('two_sided');
         $number_of_copies = $request->number_of_copies;
         $use_free_pages = $request->use_free_pages;
@@ -67,10 +63,6 @@ class PrintController extends Controller
             'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
-
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
 
         $balance = $request->balance;
         $user = User::find($request->user_to_send);
@@ -126,8 +118,6 @@ class PrintController extends Controller
             'deadline' => 'required|date|after:now',
         ]);
         $validator->validate();
-
-        $free_pages = $request->free_pages;
 
         FreePages::create([
             'user_id' => $request->user_id_free,
