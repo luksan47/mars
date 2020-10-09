@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Utils\CounterNotification;
-
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;

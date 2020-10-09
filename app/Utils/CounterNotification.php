@@ -2,11 +2,14 @@
 
 namespace App\Utils;
 
-trait CounterNotification {
+trait CounterNotification
+{
     public static $cacheSeconds = 60;
 
-    public static function cacheKey() {
+    public static function cacheKey()
+    {
         $reflection = new \ReflectionClass(static::class);
+
         return strtolower($reflection->getShortName());
     }
 
