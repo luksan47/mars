@@ -1,6 +1,19 @@
 @can('viewAny', \App\Models\WifiConnection::class)
 <span class="card-title">@lang('internet.users_over_threshold')</span>
 <table>
+    <thead>
+        <tr>
+            <th>
+                @lang('internet.username')
+            </th>
+            <th>
+                @lang('internet.approved_wifi_slots')
+            </th>
+            <th>
+                @lang('internet.wifi_connections')
+            </th>
+        </tr>
+    </thead>
     <tbody>
         @foreach ($users_over_threshold as $user)
         <tr>
@@ -8,19 +21,14 @@
                 <b>{{ $user->name }}</b>
             </td>
             <td>
-                <span class="new badge red" data-badge-caption="
-                    {{ $user->wifiConnections->count() }}
-                    (@lang('internet.allowed') :
-                    {{ $user->internetAccess->wifi_connection_limit }}) " >
-                        @lang('internet.wifi_connections') :
-                </span>
+                {{ $user->internetAccess->wifi_connection_limit }}
             </td>
             @include('admin.internet.wifi_connections.show')
             <td>
                 <div class="right">
                     @can('view', $user)
                     <a href="{{ route('admin.internet.wifi_connections.approve', ['user' => $user->id]) }}" class="btn-floating waves-effect">
-                        <i class="material-icons">done</i></a>
+                        <i class="material-icons">exposure_plus_1</i></a>
                     @endcan
                 </div>
             </td>

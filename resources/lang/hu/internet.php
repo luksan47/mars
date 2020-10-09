@@ -6,6 +6,7 @@ return [
     'allowed' => 'Engedélyezett',
     'approve' => 'Elfogad',
     'approved' => 'Elfogadott',
+    'approved_wifi_slots' => 'Engedélyezett limit',
     'auto_approved_mac_slots' => 'Alap MAC slot',
     'auto_approved_mac_slots_long' => 'Automatikusan engedélyezett eszközök: :count db',
     'cancel' => 'Mégsem',
