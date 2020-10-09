@@ -92,7 +92,6 @@ class UserController extends Controller
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
-
     public function setCollegistType(Request $request)
     {
         $collegist_role = Role::firstWhere('name', Role::COLLEGIST);
@@ -100,9 +99,9 @@ class UserController extends Controller
 
         $this->authorize('updatePermission', [$user, $collegist_role->id]);
 
-        if ($request->has('resident') && $user->hasRoleBase(Role::COLLEGIST)){
+        if ($request->has('resident') && $user->hasRoleBase(Role::COLLEGIST)) {
             $user->roles()->detach($collegist_role);
-            if($request->resident == true){
+            if ($request->resident == true) {
                 $object_id = Role::getObjectIdByName(Role::COLLEGIST, 'resident');
             } else {
                 $object_id = Role::getObjectIdByName(Role::COLLEGIST, 'extern');
@@ -111,6 +110,7 @@ class UserController extends Controller
         } else {
             return response()->json(null, 400);
         }
+
         return response()->json(null, 204);
     }
 
