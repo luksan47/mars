@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Utils\CounterNotification;
+
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements HasLocalePreference
 {
-    use Notifiable, HasFactory;
+    use CounterNotification, Notifiable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -336,5 +338,10 @@ class User extends Authenticatable implements HasLocalePreference
             ->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
             ->where('payer_id', $this->id)
             ->first();
+    }
+
+    public static function notifications()
+    {
+        return self::where('verified', false)->count();
     }
 }

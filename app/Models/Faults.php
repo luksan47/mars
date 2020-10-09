@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Utils\CounterNotification;
 use Illuminate\Database\Eloquent\Model;
 
-class FaultsTable extends Model
+class Faults extends Model
 {
+    use CounterNotification;
+
     const UNSEEN = 'UNSEEN';
     const SEEN = 'SEEN';
     const DONE = 'DONE';
@@ -15,5 +18,10 @@ class FaultsTable extends Model
     public static function getState($value)
     {
         return strtoupper($value);
+    }
+
+    public static function notifications()
+    {
+        return self::where('status', self::UNSEEN)->count();
     }
 }
