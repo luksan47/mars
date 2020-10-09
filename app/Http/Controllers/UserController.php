@@ -119,6 +119,7 @@ class UserController extends Controller
         $semesters = $user->allSemesters->sortByDesc(function ($semester) {
             return $semester->getStartDate();
         });
+
         return view('admin.user.semesters')->with('user', $user)->with('semesters', $semesters);
     }
 

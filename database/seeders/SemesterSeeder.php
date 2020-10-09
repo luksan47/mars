@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Semester;
-
 use App\Models\Role;
+use App\Models\Semester;
 use Illuminate\Database\Seeder;
 
 class SemesterSeeder extends Seeder
