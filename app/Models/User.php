@@ -112,6 +112,18 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasMany('App\Models\MacAddress');
     }
 
+    public function wifiConnections()
+    {
+        return $this->hasManyThrough(
+            'App\Models\WifiConnection',
+            'App\Models\InternetAccess',
+            'user_id', // Foreign key on InternetAccess table...
+            'wifi_username', // Foreign key on WifiConnection table...
+            'id', // Local key on Users table...
+            'wifi_username' // Local key on InternetAccess table...
+        );
+    }
+
     /* Basic information of the user */
 
     public function setVerified()

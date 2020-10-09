@@ -12,6 +12,7 @@ use App\Models\PrintJob;
 use App\Models\PersonalInformation;
 use App\Models\EducationalInformation;
 use App\Models\Semester;
+use App\Models\WifiConnection;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -42,7 +43,8 @@ class UsersTableSeeder extends Seeder
             for ($x = 0; $x < rand(1, 3); $x++) {
                 $user->workshops()->attach(rand(1, count(Workshop::ALL)));
             }
-            $user->internetAccess->setWifiUsername();
+            $wifi_username = $user->internetAccess->setWifiUsername();
+            WifiConnection::factory()->count($user->id % 6)->create(['wifi_username' => $wifi_username]);
         });
 
         //generate random tenants
@@ -52,7 +54,8 @@ class UsersTableSeeder extends Seeder
             PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
             $user->roles()->attach(Role::getId(Role::TENANT));
             $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            $user->internetAccess->setWifiUsername();
+            $wifi_username = $user->internetAccess->setWifiUsername();
+            WifiConnection::factory()->count($user->id % 6)->create(['wifi_username' => $wifi_username]);
         });
     }
 
@@ -85,7 +88,8 @@ class UsersTableSeeder extends Seeder
                 $user->roles()->attach(Role::getId($role));
             }
         }
-        $user->internetAccess->setWifiUsername();
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
         $user->setStatus(Semester::ACTIVE);
     }
 
@@ -101,7 +105,8 @@ class UsersTableSeeder extends Seeder
         $user->roles()->attach(Role::getId(Role::COLLEGIST));
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-        $user->internetAccess->setWifiUsername();
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
         PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
         EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
         for ($x = 0; $x < rand(1, 3); $x++) {
@@ -123,7 +128,8 @@ class UsersTableSeeder extends Seeder
         ]);
         $user->roles()->attach(Role::getId(Role::TENANT));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-        $user->internetAccess->setWifiUsername();
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
         PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
     }
 

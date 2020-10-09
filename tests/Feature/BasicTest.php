@@ -35,23 +35,6 @@ class BasicTest extends TestCase
         'userdata/update_phone',
     ];
 
-    private $protected_localization_routes = [
-        'localizations/admin',
-        'localizations/approve',
-        'localizations/approve_all',
-        'localizations/delete',
-    ];
-
-
-    // In debug mode, the URIs are printed and can be checked what causes the problem.
-    // Use phpunit for debugging.
-    protected function tearDown() :void
-    {
-        if (config('app.debug')) {
-            echo "\n";
-        }
-    }
-
     /**
      * A basic test.
      *
@@ -95,7 +78,8 @@ class BasicTest extends TestCase
             } elseif (in_array($route->uri(), $skipped_routes)) {
                 // Skipping these...
             }else {
-                $this->assertTrue(in_array($response->status(), [302, 403]));
+
+                $this->assertTrue(in_array($response->status(), [302, 403]), "Got " . $response->status() . " for " . $route->uri());
             }
         }
     }
@@ -117,20 +101,17 @@ class BasicTest extends TestCase
             $response = $this->getResponse($user, $route);
 
             if (in_array($route->uri(), $this->unprotected_routes)) {
-                $this->assertTrue(in_array($response->status(), [200, 302]));
+                $this->assertTrue(in_array($response->status(), [200, 302]), "Got " . $response->status() . " for " . $route->uri());
             } elseif (in_array($route->uri(), $skipped_routes)) {
                 // Skipping these...
             } else {
-                $this->assertTrue(in_array($response->status(), [403, 404]));
+                $this->assertTrue(in_array($response->status(), [403, 404]), "Got " . $response->status() . " for " . $route->uri());
             }
         }
     }
 
     private function getResponse($user, $route)
     {
-        if(config('app.debug')) {
-            echo " " . $route->uri();
-        }
         if ($route->methods[0] == 'GET') {
             $response = $this->actingAs($user)->get($route->uri());
         } elseif ($route->methods[0] == 'POST') {
