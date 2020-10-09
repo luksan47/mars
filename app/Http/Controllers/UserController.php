@@ -116,7 +116,10 @@ class UserController extends Controller
         // TODO
         $this->authorize('view', $user);
 
-        return view('admin.user.semesters')->with('user', $user)->with('semesters', $user->allSemesters);
+        $semesters = $user->allSemesters->sortByDesc(function ($semester) {
+            return $semester->getStartDate();
+        });
+        return view('admin.user.semesters')->with('user', $user)->with('semesters', $semesters);
     }
 
     public function updateSemesterStatus($id, $semester, $status)
