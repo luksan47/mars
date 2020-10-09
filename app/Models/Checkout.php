@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +18,7 @@ class Checkout extends Model
 
     public function transactions()
     {
-        return $this->hasMany('App\Transaction');
+        return $this->hasMany('App\Models\Transaction');
     }
 
     public function balance()

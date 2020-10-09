@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\InternetAccess;
-use App\MacAddress;
-use App\User;
+use App\Models\EventTrigger;
+use App\Models\InternetAccess;
+use App\Models\MacAddress;
+use App\Models\User;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,7 @@ class InternetController extends Controller
 
     public function admin()
     {
-        $activationDate = \App\EventTrigger::internetActivationDeadline();
+        $activationDate = EventTrigger::internetActivationDeadline();
 
         return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all()]);
     }
@@ -121,7 +122,7 @@ class InternetController extends Controller
         }
 
         if ($request->has('auto_approved_mac_slots')) {
-            $internetAccess->auto_approved_mac_slots = $request->input('auto_approved_mac_slots');
+            $internetAccess->auto_approved_mac_slots = min(0, $request->input('auto_approved_mac_slots'));
         }
 
         $internetAccess->save();
@@ -137,7 +138,7 @@ class InternetController extends Controller
     {
         $internetAccess = $user->internetAccess;
         if ($internetAccess != null) {
-            $internetAccess->has_internet_until = \App\EventTrigger::internetActivationDeadline();
+            $internetAccess->has_internet_until = EventTrigger::internetActivationDeadline();
             $internetAccess->save();
 
             return $internetAccess->has_internet_until;

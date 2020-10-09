@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Semester;
+use App\Models\Semester;
 use Carbon\Carbon;
 use Tests\TestCase;
 //use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,11 +18,11 @@ class SemesterTest extends TestCase
      */
     public function testCurrentSemester()
     {
-        $autumn_semester = factory(Semester::class)->make([
+        $autumn_semester = Semester::factory()->make([
             'year' => 2020,
             'part' => 1,
         ]);
-        $spring_semester = factory(Semester::class)->make([
+        $spring_semester = Semester::factory()->make([
             'year' => 2020,
             'part' => 2,
         ]);
@@ -81,7 +81,7 @@ class SemesterTest extends TestCase
         $this->assertFalse($spring_semester->equals(Semester::current()));
 
         // Testing for far in the future (ie. the semester has to be created)
-        $future_semester = factory(Semester::class)->make([
+        $future_semester = Semester::factory()->make([
             'year' => 2032,
             'part' => 1,
         ]);
@@ -92,11 +92,11 @@ class SemesterTest extends TestCase
 
     public function testPredSuc()
     {
-        $autumn_semester = factory(Semester::class)->make([
+        $autumn_semester = Semester::factory()->make([
             'year' => 2020,
             'part' => 1,
         ]);
-        $spring_semester = factory(Semester::class)->make([
+        $spring_semester = Semester::factory()->make([
             'year' => 2020,
             'part' => 2,
         ]);
@@ -119,7 +119,4 @@ class SemesterTest extends TestCase
         $this->assertTrue($next_semester->pred()->pred()->equals($previous_semester));
         $this->assertTrue($previous_semester->next()->next()->equals($next_semester));
     }
-
-    
-
 }

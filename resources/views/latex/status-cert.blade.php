@@ -24,7 +24,7 @@
         \begin{tikzpicture}[remember picture,overlay]
         \fill[blue!40] (-\paperwidth,0.3) rectangle (2\paperwidth, -0.3);
         \fill[white] (\paperwidth/2 - 70,0) ellipse (3.2 and 1.25);
-        \node[inner sep=0pt] (picture) at (\paperwidth/2 - 70,0.2){\includegraphics[width=5cm]{epulet.png}};
+        \node[inner sep=0pt] (picture) at (\paperwidth/2 - 70,0.2){\includegraphics[width=5cm]{ {{ storage_path('/app/public/epulet.png') }}  }};
         \node[inner sep=0pt, text=white] (from) at (2.9, -0.05){\textbf{1 9 1 0  /  1 9 1 1}};
         \node[inner sep=0pt, text=white] (from) at (13.2, -0.05){\textbf{2 0 1 0  /  2 0 1 1}};
         \node[inner sep=0pt, text=blue!75!black] (from) at (\paperwidth/2 - 75,-1.5){\LARGE {\lsstyle LUSTRUM SAECULARE COLLEGII}};

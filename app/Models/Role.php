@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -101,7 +101,7 @@ class Role extends Model
     public static function possibleObjectsFor($name)
     {
         if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
-            return \App\Workshop::all();
+            return Workshop::all();
         }
         if ($name == self::LOCALE_ADMIN) {
             // Do we have this somewhere?
@@ -182,6 +182,11 @@ class Role extends Model
     public function hasElevatedPermissions()
     {
         return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
+    }
+
+    public function hasTranslatedName()
+    {
+        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER]);
     }
 
     private static function toSelectableCollection(array $items)

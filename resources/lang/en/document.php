@@ -2,7 +2,7 @@
 
 return [
     'clarify_print' => 'Print the wanted document using the printer in the Collegium, and give it to the secretary/doorman. Costs will be deducted.',
-    'clarify_request' => 'You can request certificates from the secretariat by clicking on the \"request\" button. This way the secretariat will be notified. You will find the signed and seald certificate at the secretariat on the next workday. Only the signed and sealed certificates are valid!',
+    'clarify_request' => 'You can request certificates from the secretariat by clicking on the "request" button. This way the secretariat will be notified. You will find the signed and seald certificate at the secretariat on the next workday. Only the signed and sealed certificates are valid!',
     'computer' => 'personal computer',
     'documents' => 'Documents',
     'download' => 'Download',

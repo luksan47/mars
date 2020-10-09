@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MacAddress extends Model
 {
+    use HasFactory;
+
     const REQUESTED = 'REQUESTED';
     const APPROVED = 'APPROVED';
     const REJECTED = 'REJECTED';
@@ -29,6 +32,6 @@ class MacAddress extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 }
