@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-trait CounterNotification
+trait NotificationCounter
 {
     public static $cacheSeconds = 60;
 

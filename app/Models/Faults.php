@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Utils\CounterNotification;
+use App\Utils\NotificationCounter;
 use Illuminate\Database\Eloquent\Model;
 
 class Faults extends Model
 {
-    use CounterNotification;
+    use NotificationCounter;
 
     const UNSEEN = 'UNSEEN';
     const SEEN = 'SEEN';

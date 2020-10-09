@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Utils\CounterNotification;
+use App\Utils\NotificationCounter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Mail;
 
 class Router extends Model
 {
-    use CounterNotification, HasFactory;
+    use NotificationCounter, HasFactory;
 
     protected $table = 'routers';
     protected $primaryKey = 'ip';

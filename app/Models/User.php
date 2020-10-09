@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Utils\CounterNotification;
+use App\Utils\NotificationCounter;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements HasLocalePreference
 {
-    use CounterNotification, Notifiable, HasFactory;
+    use NotificationCounter, Notifiable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
