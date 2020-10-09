@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Semester;
+use App\Models\Semester;
 use Carbon\Carbon;
 use Tests\TestCase;
 

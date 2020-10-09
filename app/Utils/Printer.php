@@ -2,8 +2,8 @@
 
 namespace App\Utils;
 
-use App\PrintAccount;
-use App\PrintJob;
+use App\Models\PrintAccount;
+use App\Models\PrintJob;
 use App\Console\Commands;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -141,7 +141,7 @@ class Printer
         return $state == PrintJob::QUEUED;
     }
 
-    private function setPages(Type $var = null)
+    private function setPages()
     {
         try {
             $this->pages = Commands::getPages($this->path);

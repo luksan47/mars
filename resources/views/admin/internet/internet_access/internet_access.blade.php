@@ -72,12 +72,6 @@
                     headerFilter: 'input'
                 },
                 {
-                    title: "@lang('internet.wifi_user')",
-                    field: "wifi_username",
-                    sorter: "string",
-                    headerFilter: 'input'
-                },
-                {
                     title: "@lang('internet.internet_access')",
                     field: "has_internet_until",
                     sorter: "datetime",
@@ -89,6 +83,7 @@
                     field: "auto_approved_mac_slots",
                     sorter: "number",
                     editor: 'number',
+                    validator: "min:0"
                 },
                 {title: "", field: "state", headerSort: false, formatter: actions},
             ],

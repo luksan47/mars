@@ -2,9 +2,9 @@
 
 namespace App\Policies;
 
-use App\InternetAccess;
-use App\Role;
-use App\User;
+use App\Models\InternetAccess;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class InternetAccessPolicy
@@ -24,7 +24,7 @@ class InternetAccessPolicy
     /**
      * Determine whether the user can view any internet accesses.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -35,8 +35,8 @@ class InternetAccessPolicy
     /**
      * Determine whether the user can view the internet access.
      *
-     * @param  \App\User  $user
-     * @param  \App\InternetAccess  $internetAccess
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\InternetAccess  $internetAccess
      * @return mixed
      */
     public function view(User $user, InternetAccess $internetAccess)
@@ -47,7 +47,7 @@ class InternetAccessPolicy
     /**
      * Determine whether the user can create internet accesses.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -58,8 +58,8 @@ class InternetAccessPolicy
     /**
      * Determine whether the user can update the internet access.
      *
-     * @param  \App\User  $user
-     * @param  \App\InternetAccess  $internetAccess
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\InternetAccess  $internetAccess
      * @return mixed
      */
     public function update(User $user, InternetAccess $internetAccess)
@@ -70,8 +70,8 @@ class InternetAccessPolicy
     /**
      * Determine whether the user can delete the internet access.
      *
-     * @param  \App\User  $user
-     * @param  \App\InternetAccess  $internetAccess
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\InternetAccess  $internetAccess
      * @return mixed
      */
     public function delete(User $user, InternetAccess $internetAccess)

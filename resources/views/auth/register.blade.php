@@ -12,7 +12,7 @@
                 @csrf
                 <div class="card-content">
                     <blockquote>
-                        @if($user_type == \App\Role::COLLEGIST)
+                        @if($user_type == \App\Models\Role::COLLEGIST)
                         <a href="{{ route('register.guest') }}">
                             @lang('registration.collegist_to_tenant')</a>
                         @else
@@ -35,7 +35,7 @@
                     <div class="card-title">@lang('info.contact')</div>
                         @include("auth.register.contact")
                     </div>
-                    @if($user_type == \App\Role::COLLEGIST)
+                    @if($user_type == \App\Models\Role::COLLEGIST)
                     <div class="divider"></div>
                     <div class="section">
                         <div class="card-title">@lang('info.information_of_studies')</div>

@@ -129,7 +129,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">@lang('checkout.payed_kkt') ({{\App\Semester::current()->tag()}})</span>
+                <span class="card-title">@lang('checkout.payed_kkt') ({{\App\Models\Semester::current()->tag()}})</span>
                 <table><tbody>
                     <tr>
                         <th>@lang('print.user')</th>
@@ -137,7 +137,7 @@
                         <th>@lang('checkout.amount')</th>                          
                     </tr>
                     @foreach($all_transactions as $transaction)
-                    @if($transaction->semester == \App\Semester::current())
+                    @if($transaction->semester == \App\Models\Semester::current())
                     @if(in_array($transaction->type->name, ['KKT']))
                     <tr>
                         <td>{{ $transaction->payer->name}}</td>

@@ -51,9 +51,9 @@
                         field: "created_at",
                         sorter: "datetime",
                         formatter:dateFormatter,
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
                     },
-                    @if(Auth::user() -> hasRole(\App\ Role::PRINT_ADMIN)) {
+                    @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) {
                         title: "@lang('print.user')",
                         field: "user.name",
                         sorter: "string",
@@ -64,21 +64,21 @@
                         title: "@lang('print.document')",
                         field: "filename",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
                     },
                     {
                         title: "@lang('print.cost')",
                         field: "cost",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
                     },
                     {
                         title: "@lang('print.state')",
                         field: "state",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN))
+                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN))
                         headerFilterParams: {
-                            @foreach(\App\ PrintJob::STATES as $key => $state)
+                            @foreach(\App\Models\PrintJob::STATES as $key => $state)
                             "{{ $state }}": "@lang('print.' . $state)",
                             @endforeach
                         }

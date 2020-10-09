@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Semester;
-use App\ImportItem;
+use App\Models\User;
+use App\Models\Semester;
+use App\Models\ImportItem;
 use App\Console\Commands;
 use App\Utils\Printer;
 
@@ -113,7 +113,7 @@ class DocumentController extends Controller
         $url = route('documents.status-cert.show', ['id' => Auth::user()->id]);
         if (config('mail.active')) {
             $secretaries = User::whereHas('roles', function($q){
-                $q->where('name', \App\Role::SECRETARY);
+                $q->where('name', \App\Models\Role::SECRETARY);
             })->get();
             foreach ($secretaries as $recipient) {
                 Mail::to($recipient)->queue(new \App\Mail\StateCertificateRequest($recipient->name, Auth::user()->name, $url));

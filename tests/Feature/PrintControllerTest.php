@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\User;
-use App\Role;
-use App\PrintAccount;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\PrintAccount;
 use App\Http\Controllers\PrintController;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,7 +16,7 @@ class PrintControllerTest extends TestCase
      */
     public function testUserWithoutPermissions()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $user->setVerified();
         $this->actingAs($user);
 
@@ -51,7 +51,7 @@ class PrintControllerTest extends TestCase
      */
     public function testUserWithPrinterPermissions()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $user->setVerified();
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $this->actingAs($user);
@@ -73,7 +73,7 @@ class PrintControllerTest extends TestCase
         $response->assertStatus(403);
         $response = $this->post('/print/transfer_balance', []);
         $response->assertStatus(302);
-        factory(\App\PrintJob::class)->create(['user_id' => $user->id]);
+        \App\Models\PrintJob::factory()->create(['user_id' => $user->id]);
         $response = $this->post('/print/print_jobs/' . $user->printJobs()->first()->id . '/cancel', []);
         $response->assertStatus(200);
 
@@ -86,7 +86,7 @@ class PrintControllerTest extends TestCase
      */
     public function testUserWithPrintAdminPermissions()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $user->setVerified();
         $user->roles()->attach(Role::getId(Role::PRINT_ADMIN));
         $this->actingAs($user);
@@ -108,7 +108,7 @@ class PrintControllerTest extends TestCase
         $response->assertStatus(302);
         $response = $this->post('/print/transfer_balance', []);
         $response->assertStatus(302);
-        factory(\App\PrintJob::class)->create(['user_id' => $user->id]);
+        \App\Models\PrintJob::factory()->create(['user_id' => $user->id]);
         $response = $this->post('/print/print_jobs/' . $user->printJobs()->first()->id . '/cancel', []);
         $response->assertStatus(200);
 
@@ -118,12 +118,12 @@ class PrintControllerTest extends TestCase
 
     public function testBalanceTransfer()
     {
-        $sender = factory(User::class)->create();
+        $sender = User::factory()->create();
         $sender->setVerified();
         $sender->roles()->attach(Role::getId(Role::PRINTER));
         $this->actingAs($sender);
 
-        $reciever = factory(User::class)->create();
+        $reciever = User::factory()->create();
         $reciever->setVerified();
         $reciever->roles()->attach(Role::getId(Role::PRINTER));
 
@@ -162,12 +162,12 @@ class PrintControllerTest extends TestCase
 
     public function testModifyBalance()
     {
-        $sender = factory(User::class)->create();
+        $sender = User::factory()->create();
         $sender->setVerified();
         $sender->roles()->attach(Role::getId(Role::PRINT_ADMIN));
         $this->actingAs($sender);
 
-        $reciever = factory(User::class)->create();
+        $reciever = User::factory()->create();
         $reciever->setVerified();
         $reciever->roles()->attach(Role::getId(Role::PRINTER));
 
