@@ -72,12 +72,6 @@
                     headerFilter: 'input'
                 },
                 {
-                    title: "@lang('internet.wifi_user')",
-                    field: "wifi_username",
-                    sorter: "string",
-                    headerFilter: 'input'
-                },
-                {
                     title: "@lang('internet.internet_access')",
                     field: "has_internet_until",
                     sorter: "datetime",

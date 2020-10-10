@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\NotificationCounter;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements HasLocalePreference
 {
-    use Notifiable, HasFactory;
+    use NotificationCounter, Notifiable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -110,6 +111,18 @@ class User extends Authenticatable implements HasLocalePreference
     public function macAddresses()
     {
         return $this->hasMany('App\Models\MacAddress');
+    }
+
+    public function wifiConnections()
+    {
+        return $this->hasManyThrough(
+            'App\Models\WifiConnection',
+            'App\Models\InternetAccess',
+            'user_id', // Foreign key on InternetAccess table...
+            'wifi_username', // Foreign key on WifiConnection table...
+            'id', // Local key on Users table...
+            'wifi_username' // Local key on InternetAccess table...
+        );
     }
 
     /* Basic information of the user */
@@ -341,5 +354,10 @@ class User extends Authenticatable implements HasLocalePreference
             ->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
             ->where('payer_id', $this->id)
             ->first();
+    }
+
+    public static function notifications()
+    {
+        return self::where('verified', false)->count();
     }
 }
