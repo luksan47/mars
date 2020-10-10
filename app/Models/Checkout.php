@@ -57,7 +57,9 @@ class Checkout extends Model
     {
         return $this->transactionSum($semester, PaymentType::print()->id);
     }
-    public function transactionSum(Semester $semester, $typeId){
+
+    public function transactionSum(Semester $semester, $typeId)
+    {
         return $this->transactions
             ->where('payment_type_id', $typeId)
             ->where('semester_id', $semester->id)

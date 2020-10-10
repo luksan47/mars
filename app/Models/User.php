@@ -218,7 +218,6 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
-
     public function isInStudentCouncil()
     {
         return $this->hasRole('student-council');
