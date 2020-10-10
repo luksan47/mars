@@ -21,14 +21,14 @@
                 <table>
                     <tbody>
                         @if(!$semesters->contains(\App\Models\Semester::current()))
-                            @include('admin.statuses.edit_semester', ['user' => $user, 'semester' => \App\Semester::current()])
+                            @include('admin.statuses.edit_semester', ['user' => $user, 'semester' => \App\Models\Semester::current()])
                         @endif
                         @foreach ($semesters as $semester)
                             @include('admin.statuses.edit_semester', ['user' => $user, 'semester' => $semester])
                         @endforeach
                         <tr><td colspan="3"></td></tr>
                         @if(!$semesters->contains(\App\Models\Semester::next()))
-                            @include('admin.statuses.edit_semester', ['user' => $user, 'semester' => \App\Semester::next()])
+                            @include('admin.statuses.edit_semester', ['user' => $user, 'semester' => \App\Models\Semester::next()])
                         @endif
                         <!-- TODO: make above template and use it -->
                         <script>
