@@ -41,7 +41,7 @@
                 paginationSize: 10,
                 layout: "fitColumns",
                 pagination: "remote", //enable remote pagination
-                ajaxURL: "{{ route('print.print_jobs.all') }}", //set url for ajax request
+                ajaxURL: "{{ $route }}", //set url for ajax request
                 ajaxSorting: true,
                 ajaxFiltering: true,
                 placeholder: "@lang('internet.nothing_to_show')",
@@ -51,38 +51,39 @@
                         field: "created_at",
                         sorter: "datetime",
                         formatter:dateFormatter,
-                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @can('viewAny', App\Models\PrintJob::class) headerFilter: 'input' @endcan
                     },
-                    @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) {
+                    @can('viewAny', App\Models\PrintJob::class)
+                    {
                         title: "@lang('print.user')",
                         field: "user.name",
                         sorter: "string",
                         headerFilter: 'input'
                     },
-                    @endif
+                    @endcan
                     {
                         title: "@lang('print.document')",
                         field: "filename",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @can('viewAny', App\Models\PrintJob::class) headerFilter: 'input' @endcan
                     },
                     {
                         title: "@lang('print.cost')",
                         field: "cost",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif
+                        @can('viewAny', App\Models\PrintJob::class)  headerFilter: 'input' @endcan
                     },
                     {
                         title: "@lang('print.state')",
                         field: "state",
                         sorter: "string",
-                        @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN))
+                        @can('viewAny', App\Models\PrintJob::class)
                         headerFilterParams: {
                             @foreach(\App\Models\PrintJob::STATES as $key => $state)
                             "{{ $state }}": "@lang('print.' . $state)",
                             @endforeach
                         }
-                        @endif
+                        @endcan
                     },
                     /* {title: "", field: "id", headerSort: false, formatter: deleteButton}, */
                 ],

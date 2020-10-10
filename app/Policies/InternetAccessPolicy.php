@@ -21,6 +21,16 @@ class InternetAccessPolicy
         }
     }
 
+    public function possess(User $user)
+    {
+        return true;
+    }
+
+    public function handleAny(User $user)
+    {
+        return false;
+    }
+
     /**
      * Determine whether the user can view any internet accesses.
      *
@@ -41,7 +51,7 @@ class InternetAccessPolicy
      */
     public function view(User $user, InternetAccess $internetAccess)
     {
-        return $user->id === $internetAccess->user_id;
+        return $internetAccess !== null && $user->id === $internetAccess->user_id;
     }
 
     /**

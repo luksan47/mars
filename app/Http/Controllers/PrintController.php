@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use App\Console\Commands;
 use App\Models\User;
 use App\Models\FreePages;
+use App\Models\PrintAccount;
 use App\Models\PrintJob;
 use App\Models\PrintAccountHistory;
-use App\Models\Role;
 use App\Utils\Printer;
 use App\Utils\TabulatorPaginator;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +22,7 @@ class PrintController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:print.print');
+        $this->middleware('can:use,App\Models\PrintAccount');
     }
 
     public function index() {
@@ -34,7 +33,8 @@ class PrintController extends Controller
     }
 
     public function admin() {
-        Gate::authorize('print.admin');
+        $this->authorize('handleAny', PrintAccount::class);
+
         return view('admin.print.app', ["users" => User::all()]);
     }
 
@@ -44,10 +44,6 @@ class PrintController extends Controller
             'number_of_copies' => 'required|integer|min:1'
         ]);
         $validator->validate();
-
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
 
         $is_two_sided = $request->has('two_sided');
         $number_of_copies = $request->number_of_copies;
@@ -67,10 +63,6 @@ class PrintController extends Controller
             'user_to_send' => 'required|integer|exists:users,id'
         ]);
         $validator->validate();
-
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
 
         $balance = $request->balance;
         $user = User::find($request->user_to_send);
@@ -105,6 +97,8 @@ class PrintController extends Controller
         $user = User::find($request->user_id_modify);
         $print_account = $user->printAccount;
 
+        $this->authorize('modify', $print_account);
+
         if ($balance < 0 && !$print_account->hasEnoughMoney($balance)) {
             return $this->handleNoBalance();
         }
@@ -127,7 +121,7 @@ class PrintController extends Controller
         ]);
         $validator->validate();
 
-        $free_pages = $request->free_pages;
+        $this->authorize('create', FreePages::class);
 
         FreePages::create([
             'user_id' => $request->user_id_free,
@@ -140,56 +134,52 @@ class PrintController extends Controller
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
-    public function listPrintJobs() {
+    public function listAllPrintJobs()
+    {
         $this->authorize('viewAny', PrintJob::class);
+
+        $this->updateCompletedPrintingJobs();
+
+        $columns = ['created_at', 'filename', 'cost', 'state', 'user.name'];
+        $printJobs = PrintJob::join('users as user', 'user.id', '=', 'user_id')
+            ->select('print_jobs.*')
+            ->with('user')
+            ->orderby('print_jobs.created_at', 'desc');
+
+        return $this->printJobsPaginator($printJobs, $columns);
+    }
+
+    public function listPrintJobs()
+    {
+        $this->authorize('viewSelf', PrintJob::class);
+
         $this->updateCompletedPrintingJobs();
 
         $columns = ['created_at', 'filename', 'cost', 'state'];
-        if (Auth::user()->hasRole(Role::PRINT_ADMIN)) {
-            array_push($columns, 'user.name');
-            $paginator = TabulatorPaginator::from(
-                    PrintJob::join('users as user', 'user.id', '=', 'user_id')
-                            ->select('print_jobs.*')
-                            ->with('user')
-                            ->orderby('print_jobs.created_at', 'desc')
-                )->sortable($columns)->filterable($columns)->paginate();
-        } else {
-            $paginator = TabulatorPaginator::from(Auth::user()->printJobs()->orderby('created_at', 'desc'))
-                ->sortable($columns)->filterable($columns)->paginate();
-        }
+        $printJobs = Auth::user()->printJobs()->orderby('created_at', 'desc');
 
-        $paginator->getCollection()->transform(PrintJob::translateStates());
-        $paginator->getCollection()->transform(PrintJob::addCurrencyTag());
-        return $paginator;
+        return $this->printJobsPaginator($printJobs, $columns);
     }
 
-    public function listFreePages() {
+    public function listAllFreePages()
+    {
         $this->authorize('viewAny', FreePages::class);
 
-        $columns = ['amount', 'deadline', 'modifier', 'comment'];
-        if (Auth::user()->hasRole(Role::PRINT_ADMIN)) {
-            array_push($columns, 'user.name');
-            array_push($columns, 'created_at');
-            $paginator = TabulatorPaginator::from(
-                    FreePages::join('users as user', 'user.id', '=', 'user_id')
-                        ->join('users as creator', 'creator.id', '=', 'last_modified_by')
-                        ->select('creator.name as modifier', 'printing_free_pages.*')
-                        ->with('user')
-                )->sortable($columns)
-                ->filterable($columns)
-                ->paginate();
-        } else {
-            $paginator = TabulatorPaginator::from(
-                    Auth::user()->freePages()
-                        ->join('users as creator', 'creator.id', '=', 'last_modified_by')
-                        ->select('creator.name as modifier', 'printing_free_pages.*')
-                        ->with('user')
-                )->sortable($columns)
-                ->filterable($columns)
-                ->paginate();
-        }
+        $columns = ['amount', 'deadline', 'modifier', 'comment', 'user.name', 'created_at'];
 
-        return $paginator;
+        $freePages = FreePages::join('users as user', 'user.id', '=', 'user_id');
+
+        return $this->freePagesPaginator($freePages, $columns);
+    }
+
+    public function listFreePages()
+    {
+        $this->authorize('viewSelf', FreePages::class);
+
+        $columns = ['amount', 'deadline', 'modifier', 'comment'];
+        $freePages = Auth::user()->freePages();
+
+        return $this->freePagesPaginator($freePages, $columns);
     }
 
     public function listPrintAccountHistory() {
@@ -217,6 +207,26 @@ class PrintController extends Controller
     }
 
     /** Private helper functions */
+
+    private function printJobsPaginator($printJobs, $columns)
+    {
+        $paginator = TabulatorPaginator::from($printJobs)->sortable($columns)->filterable($columns)->paginate();
+
+        $paginator->getCollection()->transform(PrintJob::translateStates());
+        $paginator->getCollection()->transform(PrintJob::addCurrencyTag());
+
+        return $paginator;
+    }
+
+    private function freePagesPaginator($freePages, $columns)
+    {
+        $paginator = TabulatorPaginator::from(
+            $freePages->join('users as creator', 'creator.id', '=', 'last_modified_by')
+                       ->select('creator.name as modifier', 'printing_free_pages.*')
+                       ->with('user')
+        )->sortable($columns)->filterable($columns)->paginate();
+        return $paginator;
+    }
 
     private function updateCompletedPrintingJobs() {
         try {

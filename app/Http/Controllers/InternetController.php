@@ -19,7 +19,7 @@ class InternetController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:internet.internet');
+        $this->middleware('can:possess,App\Models\InternetAccess');
     }
 
     public function index()
@@ -31,6 +31,8 @@ class InternetController extends Controller
 
     public function admin()
     {
+        $this->authorize('handleAny', InternetAccess::class);
+
         $activationDate = EventTrigger::internetActivationDeadline();
         $users_over_threshold = $this->usersOverWifiThreshold();
 
@@ -79,7 +81,7 @@ class InternetController extends Controller
     {
         $macAddress = MacAddress::findOrFail($id);
 
-        $this->authorize('delete', MacAddress::class);
+        $this->authorize('delete', $macAddress);
 
         $macAddress->delete();
 
@@ -137,9 +139,11 @@ class InternetController extends Controller
             ->where('user_id', '=', $internetAccess->user_id)->first();
     }
 
+    // TODO policy?
     public static function extendUsersInternetAccess(User $user)
     {
         $internetAccess = $user->internetAccess;
+
         if ($internetAccess != null) {
             $internetAccess->has_internet_until = EventTrigger::internetActivationDeadline();
             $internetAccess->save();
@@ -152,15 +156,13 @@ class InternetController extends Controller
 
     public function addMacAddress(Request $request)
     {
+        $this->authorize('create', MacAddress::class);
+
         $validator = Validator::make($request->all(), [
             'comment' => 'required|max:1000',
             'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
         ]);
         $validator->validate();
-
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
 
         $macAddress = new MacAddress();
         $macAddress->user_id = Auth::user()->id;

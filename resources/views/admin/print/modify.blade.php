@@ -1,4 +1,4 @@
-@can('print.modify')
+@can('modify', \App\Models\PrintAccount::class)
 <span class="card-title">@lang('print.modify_print_balance')</span>
 <div class="row">
 <form method="POST" action="{{ route('print.modify') }}">
@@ -18,4 +18,4 @@
         </div>
     </form>
 </div>
-@endif    
+@endif
