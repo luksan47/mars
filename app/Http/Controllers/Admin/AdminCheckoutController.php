@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Checkout;
-use App\Models\PaymentType;
-use App\Models\Semester;
-use App\Models\Transaction;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
+use App\Models\Checkout;
+use App\Models\PaymentType;
+use App\Models\Semester;
+use App\Models\Transaction;
 
 class AdminCheckoutController extends Controller
 {
@@ -107,8 +107,6 @@ class AdminCheckoutController extends Controller
         }
 
         $type = $request->amount > 0 ? PaymentType::income()->id : PaymentType::expense()->id;
-
-        // $this->createTransaction($checkout, null, Auth::user()->id, $request->amount, $type, Carbon::now(), $request->comment);
 
         Transaction::create([
             'checkout_id' => $checkout->id,

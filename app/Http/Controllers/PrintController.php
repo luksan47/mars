@@ -115,7 +115,7 @@ class PrintController extends Controller
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
 
-        $admin_checkout = Checkout::where('name', 'ADMIN')->firstOrFail();
+        $admin_checkout = Checkout::admin();
         Transaction::create([
             'checkout_id' => $admin_checkout->id,
             'receiver_id' => Auth::user()->id,

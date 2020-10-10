@@ -19,7 +19,7 @@
                     @lang('checkout.current_balance_in_checkout'): 
                     <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
-                @if(Auth::user()->isSysAdmin())
+                @can('addPayment', \App\Models\Checkout::admin())
                 <div class="row">
                     <div class="col s12 xl6">
                         <span class="card-title">@lang('checkout.new_transaction')</span>
@@ -28,21 +28,23 @@
                             @csrf
                             <div class="row">
                                 <div class="col s12">
-                                    <div class="input-field col s12 m4 l4">
+                                    <div class="input-field col s12 m6 l6">
                                         <input id="comment" name="comment" type="text" required>
                                         <label for="comment">@lang('checkout.description')</label>
                                         @error('comment')
                                         <span class="helper-text" data-error="{{ $message }}"></span>
                                         @enderror
                                     </div>
-                                    <div class="input-field col s12 m4 l4">
+                                    <div class="input-field col s12 m6 l6">
                                         <input id="amount" name="amount" type="number" required>
                                         <label for="amount">@lang('checkout.amount')</label>
                                         @error('amount')
                                         <span class="helper-text" data-error="{{ $message }}"></span>
                                         @enderror
                                     </div>
-                                    <div class="input-field col s12 m4 l4">
+                                </div>
+                                <div class="col s12">
+                                    <div class="input-field col s12">
                                         <input id="password" name="password" type="password" required>
                                         <label for="password">@lang('checkout.password')</label>
                                         @error('password')
@@ -85,7 +87,7 @@
                         <form method="POST" action="{{ route('admin.checkout.print_to_checkout') }}">
                             @csrf
                             <div class="row">
-                                <div class="col s7 xl8">
+                                <div class="col s12">
                                     <div class="input-field">
                                         <input id="password2" name="password" type="password" class="validate @error('checkout_pwd') invalid @enderror" required>
                                         <label for="password2">@lang('checkout.password')</label>
@@ -94,7 +96,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col s5 xl4">
+                            </div>
+                            <div>
+                                <div class="center-align">
                                     <div class="input-field">
                                         <button type="submit" class="btn waves-effect">
                                             <i class="material-icons right">forward</i>
@@ -106,7 +110,7 @@
                         </form>
                     </div>
                 </div>
-                @endif
+                @endcan
             </div>
         </div>
     </div>

@@ -45,24 +45,21 @@ class Checkout extends Model
 
     public function kktSum(Semester $semester)
     {
-        return $this->transactions
-            ->where('payment_type_id', PaymentType::kkt()->id)
-            ->where('semester_id', $semester->id)
-            ->sum('amount');
+        return $this->transactionSum($semester, PaymentType::kkt()->id);
     }
 
     public function netregSum(Semester $semester)
     {
-        return $this->transactions
-            ->where('payment_type_id', PaymentType::netreg()->id)
-            ->where('semester_id', $semester->id)
-            ->sum('amount');
+        return $this->transactionSum($semester, PaymentType::netreg()->id);
     }
 
     public function printSum(Semester $semester)
     {
+        return $this->transactionSum($semester, PaymentType::print()->id);
+    }
+    public function transactionSum(Semester $semester, $typeId){
         return $this->transactions
-            ->where('payment_type_id', PaymentType::print()->id)
+            ->where('payment_type_id', $typeId)
             ->where('semester_id', $semester->id)
             ->sum('amount');
     }

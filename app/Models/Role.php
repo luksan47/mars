@@ -202,6 +202,6 @@ class Role extends Model
 
     public function isSysAdmin()
     {
-        return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN]);
+        return in_array($this->name, [self::INTERNET_ADMIN]);
     }
 }
