@@ -41,7 +41,7 @@
                             <!-- Roles -->
                             <td>
                                 @include('user.roles', [
-                                    'roles' => $user->roles->whereNotIn('name', [App\Role::COLLEGIST, App\Role::INTERNET_USER]),
+                                    'roles' => $user->roles->whereNotIn('name', ['collegist', 'internet-user']),
                                     'newline' => true
                                 ])
                             </td>

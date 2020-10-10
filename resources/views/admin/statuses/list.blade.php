@@ -12,13 +12,10 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ App\Semester::current()->tag() }}
+                <span class="card-title">{{ App\Models\Semester::current()->tag() }}
                 </span>
                 <table>
                     <tbody>
-                        @php
-                        $resident_id = App\Role::getObjectIdByName(App\Role::COLLEGIST, 'resident');
-                        @endphp
                         @foreach($collegists as $user)
                         <tr>
                             <td>
@@ -28,7 +25,7 @@
                                 @endif
                             </td>   
                             <td>
-                                <span class="new badge {{ \App\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
+                                <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
                                     @lang("user." . $user->getStatus())
                                 </span>
                             </td>
@@ -48,7 +45,7 @@
                             </td>
                             <td>
                                 <div class="">
-                                    @include('admin.statuses.edit_buttons', ['user' => $user, 'semester' => App\Semester::current()])
+                                    @include('admin.statuses.edit_buttons', ['user' => $user, 'semester' => App\Models\Semester::current()])
                                 </div>
                             </td>
                             <td>
