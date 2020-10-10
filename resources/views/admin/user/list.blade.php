@@ -48,17 +48,17 @@
                             <!-- Roles -->
                             <td>
                                 @include('user.roles', [
-                                    'roles' => $user->roles->whereNotIn('name', ['collegist', 'internet-user']),
+                                    'roles' => $user->roles->whereNotIn('name', ['internet-user']),
                                     'newline' => true
                                 ])
                             </td>
                             <!-- Status -->
                             <td>
-                                @if($user->hasRoleBase(\App\Models\Role::COLLEGIST))
+                                
                                 <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
                                     @lang("user." . $user->getStatus())
                                 </span>
-                                @endif
+                                
                             </td>
                             <!-- Edit -->
                             <td>

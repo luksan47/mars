@@ -15,7 +15,7 @@ class SemesterSeeder extends Seeder
      */
     public function run()
     {
-        $semester = Semester::updateOrCreate([
+        $semester = Semester::firstOrCreate([
             'year' => 2015,
             'part' => 1,
         ]);
@@ -25,13 +25,26 @@ class SemesterSeeder extends Seeder
             $semester = $semester->succ();
         }
 
-        $users = Role::getUsers(Role::COLLEGIST);
+        $users = \App\Models\User::all()->filter(function ($value, $key) {
+            return $value->hasRoleBase(Role::COLLEGIST);
+        });
 
-        $semesters = Semester::all();
+        $semesters = Semester::all()->unique();
         foreach ($semesters as $semester) {
             foreach ($users as $user) {
                 $status = array_rand(Semester::STATUSES);
                 $user->allSemesters()->attach($semester, ['status' => Semester::STATUSES[$status]]);
+                if($semester->tag() == Semester::current()->tag()){
+                    if($status == 'ACTIVE'){
+                        $user->roles()->detach(Role::getId(Role::COLLEGIST));
+                        $user->roles()->attach(Role::getId(Role::COLLEGIST), [
+                            'object_id' => rand(
+                                Role::getObjectIdByName(Role::COLLEGIST, 'resident'), 
+                                Role::getObjectIdByName(Role::COLLEGIST, 'extern')
+                            )
+                        ]);
+                    }
+                }
             }
         }
     }

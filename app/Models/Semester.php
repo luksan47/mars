@@ -198,7 +198,7 @@ class Semester extends Model
 
     public static function getOrCreate($year, $part)
     {
-        $semester = Semester::updateOrCreate([
+        $semester = Semester::firstOrCreate([
             'year' => $year,
             'part' => $part,
         ]);
