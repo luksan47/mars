@@ -34,14 +34,14 @@ class SemesterSeeder extends Seeder
             foreach ($users as $user) {
                 $status = array_rand(Semester::STATUSES);
                 $user->allSemesters()->attach($semester, ['status' => Semester::STATUSES[$status]]);
-                if($semester->tag() == Semester::current()->tag()){
-                    if($status == 'ACTIVE'){
+                if ($semester->tag() == Semester::current()->tag()) {
+                    if ($status == 'ACTIVE') {
                         $user->roles()->detach(Role::getId(Role::COLLEGIST));
                         $user->roles()->attach(Role::getId(Role::COLLEGIST), [
                             'object_id' => rand(
-                                Role::getObjectIdByName(Role::COLLEGIST, 'resident'), 
+                                Role::getObjectIdByName(Role::COLLEGIST, 'resident'),
                                 Role::getObjectIdByName(Role::COLLEGIST, 'extern')
-                            )
+                            ),
                         ]);
                     }
                 }
