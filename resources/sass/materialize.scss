@@ -38,21 +38,67 @@ blockquote {
 }
 
 // Settings for dark mode
-$transition-effects: color 1s ease, background-color 1s ease;
+$transition-effects: color 1s ease, background-color 0.5s ease;
 
 body {
 	transition: $transition-effects;
 	&.dark {
-		background-color: #202123;
+		background-color: #000000;
 		color: #fff;
 		.card {
-			background-color: rgba(255,255,255,0.2);
+			background-color: rgba(25, 25, 25, 255);
 		}
 		.divider {
 			opacity: 0.2;
 		}
+		.tabulator {
+			background-color: rgba(25, 25, 25, 255);
+		}
+		.tabulator-col {
+			background-color: rgba(25, 25, 25, 255);
+		}
+		.tabulator-col-content {
+			background-color: rgba(25, 25, 25, 255);
+		}
+		.tabulator-page {
+			color: #fff;
+		}
+		.collapsible-body{
+			background-color: rgba(25, 25, 25, 255)
+		}
+		.dropdown-trigger{
+			color: #fff
+		}
+		.caret{
+			fill: #fff
+		}
+		.selected {
+			span{
+				color: #fff
+			}
+		}
+		.input-field{
+			input{
+				color: #fff
+			}
+		}
+		.dropdown-content {
+			background-color: rgba(25, 25, 25, 255);
+		}
+		.datepicker-calendar{
+			color: #000000;
+			.dropdown-trigger{
+				color: #000000
+			}
+			.caret{
+				fill: #000000
+			}
+		}
+		.datepicker-controls{
+
+		}
 		.sidenav {
-			background-color: #2D2D31;
+			background-color: rgba(25, 25, 25, 255);
 			li {
 				a {
 					&:not(.subheader){
@@ -74,7 +120,12 @@ body {
 			border: 1px solid rgba(255,255,255,0.2);
 			.collection-item {
 				background-color: rgba(255,255,255,0.2);
-				border-bottom: 1px solid rgba(255,255,255,0.2);;
+				border-bottom: 1px solid rgba(255,255,255,0.2);
+			}
+		}
+		.input-field{
+			textarea{
+				color: #fff
 			}
 		}
 	}
