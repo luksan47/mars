@@ -1,5 +1,5 @@
 {{-- Printing --}}
-@if($user->hasRole(\App\Role::PRINTER))
+@if($user->hasRole(\App\Models\Role::PRINTER))
 @can('view', $user->printAccount)
 <div class="card">
     <div class="card-content">

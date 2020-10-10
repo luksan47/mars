@@ -28,9 +28,9 @@
             columnMinWidth:150,
             headerSort:false,
             columns: [
-                {title: "@lang('internet.mac_address')", field: "mac_address", sorter: "string", @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif},
-                {title: "@lang('internet.comment')", field: "comment", sorter: "string", @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif},
-                {title: "@lang('internet.state')", field: "state", sorter: "string", @if(Auth::user()->hasRole(\App\Role::PRINT_ADMIN)) headerFilter: 'input' @endif},
+                {title: "@lang('internet.mac_address')", field: "mac_address", sorter: "string", @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif},
+                {title: "@lang('internet.comment')", field: "comment", sorter: "string", @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif},
+                {title: "@lang('internet.state')", field: "state", sorter: "string", @if(Auth::user()->hasRole(\App\Models\Role::PRINT_ADMIN)) headerFilter: 'input' @endif},
                 {title: "", field: "id", headerSort: false, formatter: deleteButton},
             ]
         });

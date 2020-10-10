@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\FaultsTable;
-use App\Role;
-use DB;
+use App\Models\Faults;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FaultsController extends Controller
 {
@@ -22,7 +22,7 @@ class FaultsController extends Controller
                 'reporter_id' => Auth::User()->id,
                 'location' => $new['location'],
                 'description' => $new['description'],
-                'status' => FaultsTable::UNSEEN,
+                'status' => Faults::UNSEEN,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ]
@@ -31,17 +31,17 @@ class FaultsController extends Controller
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
-    public function getFaultsTable(Request $request)
+    public function getFaults(Request $request)
     {
         return json_encode(DB::table('faults')->get());
     }
 
     public function updateStatus(Request $new)
     {
-        $auth = Auth::User()->hasRole(Role::STAFF) || FaultsTable::getState($new['status']) === FaultsTable::UNSEEN;
+        $auth = Auth::User()->hasRole(Role::STAFF) || Faults::getState($new['status']) === Faults::UNSEEN;
 
         if ($auth) {
-            DB::table('faults')->where('id', $new['id'])->update(['status' => FaultsTable::getState($new['status'])]);
+            DB::table('faults')->where('id', $new['id'])->update(['status' => Faults::getState($new['status'])]);
         }
 
         return var_export($auth);

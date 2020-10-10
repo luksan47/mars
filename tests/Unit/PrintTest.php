@@ -2,9 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\User;
-use App\Role;
-use App\PrintAccount;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\PrintAccount;
 use App\Http\Controllers\PrintController;
 use Tests\TestCase;
 
@@ -17,7 +17,7 @@ class PrintTest extends TestCase
      */
     public function testPrintAccount()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         //$user->roles()->attach(Role::getId(Role::PRINTER));
 
         $this->assertNotNull($user->printAccount);

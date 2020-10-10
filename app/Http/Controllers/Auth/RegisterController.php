@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\EducationalInformation;
-use App\Faculty;
+use App\Models\EducationalInformation;
+use App\Models\Faculty;
 use App\Http\Controllers\Controller;
-use App\PersonalInformation;
-use App\Role;
-use App\Semester;
-use App\User;
-use App\Workshop;
+use App\Models\PersonalInformation;
+use App\Models\Role;
+use App\Models\Semester;
+use App\Models\User;
+use App\Models\Workshop;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -112,7 +112,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {

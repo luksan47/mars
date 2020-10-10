@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -116,7 +116,11 @@ class UserController extends Controller
         // TODO
         $this->authorize('view', $user);
 
-        return view('admin.user.semesters')->with('user', $user)->with('semesters', $user->allSemesters);
+        $semesters = $user->allSemesters->sortByDesc(function ($semester) {
+            return $semester->getStartDate();
+        });
+
+        return view('admin.user.semesters')->with('user', $user)->with('semesters', $semesters);
     }
 
     public function updateSemesterStatus($id, $semester, $status)
@@ -126,7 +130,7 @@ class UserController extends Controller
         // TODO
         $this->authorize('view', $user);
 
-        $user->setStatusFor(\App\Semester::find($semester), $status);
+        $user->setStatusFor(\App\Models\Semester::find($semester), $status);
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
