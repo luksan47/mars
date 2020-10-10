@@ -24,9 +24,7 @@
                         <th scope="row">@lang('info.workshop')</th>
                         <td>
                             <ul>
-                                @foreach ($user->workshops as $workshop)
-                                <li>{{$workshop->name}}</li>
-                                @endforeach
+                                @include('user.workshop_tags', ['user' => $user])
                             </ul>
                         </td>
                     </tr>
@@ -48,11 +46,20 @@
                             <ul>
                                 @foreach ($user->allSemesters as $semester)
                                 <li>
-                                    <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatusIn($semester)) }}" data-badge-caption="">
+                                    <span class="new badge tooltipped {{ \App\Models\Semester::colorForStatus($user->getStatusIn($semester)) }}" 
+                                        data-badge-caption=""
+                                        data-position="right"  data-tooltip="@lang('user.'.$user->getStatusIn($semester))"
+                                        >
                                         {{ $semester->tag() }}
+                                        
                                     </span>
                                 </li>
                                 @endforeach
+                                <script>
+                                $(document).ready(function(){
+                                    $('.tooltipped').tooltip();
+                                });
+                                </script>
                             </ul>
                         </td>
                     </tr>

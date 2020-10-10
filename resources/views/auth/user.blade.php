@@ -7,31 +7,7 @@
             <div class="card-content">
                 <div class="card-title">@lang('info.user_data')</div>
                 <blockquote>@lang('user.change_outdated_data')</blockquote>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>@lang('role.roles')</th>
-                            <td>@include('user.roles', ['roles' => $user->roles])</td>
-                            <td>
-                            @can('viewPermissionFor', $user)
-                                <a href="{{ route('admin.permissions.show', $user->id) }}"
-                                    class="btn-floating waves-effect waves-light right">
-                                    <i class="material-icons">edit</i>
-                                </a>
-                            @endcan
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>@lang('user.status')</th>
-                            <td>
-                                <span class="new badge {{ \App\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
-                                    @lang("user." . $user->getStatus())
-                                </span></td>
-                            <td>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                @include('user.roles_status_table', ['user' => $user])
             </div>
             {{-- Logout --}}
             <div class="card-action">

@@ -58,6 +58,7 @@ return [
     'törtenesz_muhely' => 'Történész műhely',
     'wifi_connections_color_tooltip' => 'Zöld: > 10 nap, Sárga: 5 és 10 nap között, Piros: < 5 nap',
     'workshop' => 'Workshop',
+    'workshops' => 'Műhelyek',
     'year_of_enrollment' => 'Year of enrollment',
     'year_of_the_leaving_exam' => 'Year of the leaving exam',
     'zip_code' => 'Zip code',

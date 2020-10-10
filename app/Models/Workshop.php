@@ -50,4 +50,48 @@ class Workshop extends Model
     {
         return $this->belongsToMany(User::class, 'workshop_users');
     }
+
+    public function color()
+    {
+        switch ($this->name) {
+            case self::ANGOL:
+                return 'deep-purple lighten-3';
+            case self::BIOLOGIA:
+                return 'green lighten-2';
+            case self::BOLLOK:
+                return 'teal lighten-2';
+            case self::FILOZOFIA:
+                return 'teal accent-4';
+            case self::AURELION:
+                return 'lime darken-2';
+            case self::GAZDALKODASTUDOMANYI:
+                return 'brown lighten-2';
+            case self::GERMANISZTIKA:
+                return 'blue-grey lighten-2';
+            case self::INFORMATIKA:
+                return 'light-blue darken-4';
+            case self::MAGYAR:
+                return 'red lighten-2';
+            case self::MATEMATIKA:
+                return 'blue darken-2';
+            case self::MENDOL:
+                return 'cyan darken-2';
+            case self::OLASZ:
+                return 'red accent-3';
+            case self::ORIENTALISZTIKA:
+                return 'amber lighten-1';
+            case self::SKANDINAVISZTIKA:
+                return 'deep-orange lighten-3';
+            case self::SPANYOL:
+                return 'deep-purple darken-2';
+            case self::SZLAVISZTIKA:
+                return 'light-blue lighten-2';
+            case self::TARSADALOMTUDOMANYI:
+                return 'purple lighten-1';
+            case self::TORTENESZ:
+                return 'teal darken-4';
+            default:
+                return 'black';
+        }
+    }
 }

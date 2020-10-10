@@ -2,12 +2,12 @@
     return $current->name() === $chunk->last()->name();
 }) as $rolegroup)
 <span class="new badge {{ $rolegroup->first()->color() }}" data-badge-caption="">
-    {{ $rolegroup->first()->name() }}
+    <nobr>{{ $rolegroup->first()->name() }}</nobr>
 </span>
     @foreach($rolegroup as $role)
     @if($role->object())
     <span class="new badge {{ $rolegroup->first()->color() }}" data-badge-caption="">
-    : {{ $role->object()->name }}
+    <nobr>: {{ $role->object()->name }}</nobr>
     </span>
     @endif
     @endforeach

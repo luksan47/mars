@@ -18,12 +18,13 @@
                         <tr>
                             <th>@lang('print.user')</th>
                             <th>
+                                @lang('user.workshops')
+                            </th>
+                            <th colspan="3">
                                 <a href="{{ route('admin.permissions.list') }}" class="btn waves-effect">
                                     @lang('role.roles')
                                     <i class="material-icons right">lock</i></a>
-                            </th>
-                            <th colspan="2">
-                                <a href="{{ route('admin.user.statuses') }}" class="btn waves-effect">
+                                <a href="{{ route('admin.user.statuses') }}" class="btn waves-effect right">
                                     @lang('admin.statuses')
                                     <i class="material-icons right">school</i></a>
                             </th>
@@ -38,6 +39,12 @@
                                 <br>{{ $user->educationalInformation->neptun ?? '' }}
                                 @endif
                             </td>
+                            @can('viewEducationalInformation', $user)
+                            <!-- Workshops -->
+                            <td>
+                                @include('user.workshop_tags', ['user' => $user, 'newline' => true])
+                            </td>
+                            @endcan
                             <!-- Roles -->
                             <td>
                                 @include('user.roles', [
