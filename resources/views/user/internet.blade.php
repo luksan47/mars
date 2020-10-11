@@ -1,5 +1,4 @@
 {{-- Internet --}}
-@if($user->hasRole(\App\Models\Role::INTERNET_USER))
 @can('view', $user->internetAccess)
 <div class="card">
     <div class="card-content">
@@ -61,4 +60,3 @@
     </div>
 </div>
 @endcan
-@endif

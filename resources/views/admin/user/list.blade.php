@@ -54,7 +54,6 @@
                             </td>
                             <!-- Status -->
                             <td>
-                                
                                 <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
                                     @lang("user." . $user->getStatus())
                                 </span>

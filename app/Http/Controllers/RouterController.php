@@ -8,7 +8,7 @@ class RouterController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:internet.internet');
+        $this->middleware('can:possess,App\Models\InternetAccess');
     }
 
     public function index()

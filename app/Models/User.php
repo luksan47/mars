@@ -231,6 +231,11 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
+    public function isCollegist()
+    {
+        return $this->hasRoleBase(Role::COLLEGIST);
+    }
+
     public function isInStudentCouncil()
     {
         return $this->hasRole('student-council');
