@@ -22,7 +22,7 @@ return [
     'fr' => 'Francia',
     'gr' => 'Ógörög',
     'hu' => 'Magyar',
-    'internet-admin' => 'Internet adminisztrátor',
+    'internet-admin' => 'Hálózat adminisztrátor',
     'internet-user' => 'Internethasználó',
     'it' => 'Olasz',
     'la' => 'Latin',

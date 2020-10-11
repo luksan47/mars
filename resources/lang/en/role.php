@@ -22,7 +22,7 @@ return [
     'fr' => 'French',
     'gr' => 'Ancient greek',
     'hu' => 'Hungarian',
-    'internet-admin' => 'Internet admin',
+    'internet-admin' => 'Network admin',
     'internet-user' => 'Internet user',
     'it' => 'Italian',
     'la' => 'Latin',

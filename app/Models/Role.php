@@ -8,7 +8,7 @@ class Role extends Model
 {
     // General roles
     const PRINT_ADMIN = 'print-admin';
-    const INTERNET_ADMIN = 'internet-admin';
+    const NETWORK_ADMIN = 'internet-admin';
     const COLLEGIST = 'collegist';
     const TENANT = 'tenant';
     const WORKSHOP_ADMINISTRATOR = 'workshop-administrator';
