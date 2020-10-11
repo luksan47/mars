@@ -83,7 +83,6 @@ class UsersTableSeeder extends Seeder
         }
         $wifi_username = $user->internetAccess->setWifiUsername();
         WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
-        $user->setStatus(Semester::ACTIVE);
     }
 
     private function createCollegist($user)
@@ -108,8 +107,6 @@ class UsersTableSeeder extends Seeder
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->workshops()->attach(rand(1, count(Workshop::ALL)));
         }
-        $status = array_rand(Semester::STATUSES);
-        $user->setStatus($status);
     }
 
     private function createTenant($user)

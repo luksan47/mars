@@ -31,7 +31,7 @@ class SemesterSeeder extends Seeder
         foreach ($semesters as $semester) {
             foreach ($users as $user) {
                 $status = array_rand(Semester::STATUSES);
-                $user->allSemesters()->attach($semester, ['status' => Semester::STATUSES[$status]]);
+                $user->setStatusFor($semester, Semester::STATUSES[$status]);
             }
         }
     }
