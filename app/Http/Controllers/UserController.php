@@ -91,11 +91,29 @@ class UserController extends Controller
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
-    public function list()
+    public function setCollegistType(Request $request)
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::all();
+        if ($request->has('resident')) {
+            $user = User::findOrFail($request->user_id);
+
+            if ($request->resident === 'true') {
+                $user->setResident();
+            } else {
+                $user->setExtern();
+            }
+        } else {
+            return response()->json(null, 400);
+        }
+
+        return response()->json(null, 204);
+    }
+
+    public function list()
+    {
+        $this->authorize('viewAny', User::class);
+        $users = User::all()->sortBy('name');
 
         return view('admin.user.list')->with('users', $users);
     }

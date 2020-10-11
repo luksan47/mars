@@ -32,6 +32,7 @@ return [
     'print-admin' => 'Print admin',
     'printer' => 'Printer',
     'resident' => 'Resident',
+    'roles' => 'Roles',
     'science-committee' => 'Science Committee',
     'science-leader' => 'Science committee leader',
     'science-member' => 'Science committee member',

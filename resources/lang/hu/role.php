@@ -32,6 +32,7 @@ return [
     'print-admin' => 'Nyomtatási adminisztrátor',
     'printer' => 'Nyomtató',
     'resident' => 'Bentlakó',
+    'roles' => 'Jogosultságok',
     'science-committee' => 'Tudományos Bizottság',
     'science-leader' => 'Tudományos bizottsági elnök',
     'science-member' => 'Kommunikációs bizottsági tag',

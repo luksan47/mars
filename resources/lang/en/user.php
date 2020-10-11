@@ -58,6 +58,7 @@ return [
     'törtenesz_muhely' => 'Történész műhely',
     'wifi_connections_color_tooltip' => 'Green: > 10 days, Orange: between 5 and 10 days, Red: < 5 days',
     'workshop' => 'Workshop',
+    'workshops' => 'Workshops',
     'year_of_enrollment' => 'Year of enrollment',
     'year_of_the_leaving_exam' => 'Year of the leaving exam',
     'zip_code' => 'Zip code',

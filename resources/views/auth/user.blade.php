@@ -6,16 +6,8 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-title">@lang('info.user_data')</div>
-                <table>
-                    <tbody>
-                        <tr>
-                            @include('user.roles', ['user' => $user])
-                        </tr>
-                    </tbody>
-                </table>
-                @if($user->hasEducationalInformation())
                 <blockquote>@lang('user.change_outdated_data')</blockquote>
-                @endif
+                @include('user.roles_status_table', ['user' => $user])
             </div>
             {{-- Logout --}}
             <div class="card-action">

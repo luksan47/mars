@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RegistrationsController;
+use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmailController;
@@ -72,6 +73,12 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/admin/user/show/{id}', [UserController::class, 'show'])->name('admin.user.show');
     Route::get('/admin/semesters/{id}', [UserController::class, 'semesters'])->name('admin.user.semesters');
     Route::get('/admin/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('admin.user.semesters.update');
+
+    /** Semesters and statuses */
+    Route::get('/admin/statuses', [SemesterController::class, 'statuses'])->name('admin.user.statuses');
+    Route::get('/admin/semesters/{id}', [UserController::class, 'semesters'])->name('admin.user.semesters');
+    Route::get('/admin/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('admin.user.semesters.update');
+    Route::post('/admin/user/setCollegistType', [UserController::class, 'setCollegistType'])->name('admin.user.set_collegist_type');
 
     /** Localization */
     Route::get('/localizations', [LocaleController::class, 'index'])->name('localizations');

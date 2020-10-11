@@ -130,16 +130,7 @@
                             </li>
                             @endcan
 
-                            <!-- permission admin -->
-                            @can('permission.handle')
-                            <li>
-                                <a class="waves-effect" href="{{ route('admin.permissions.list') }}">
-                                <i class="material-icons left">lock</i>@lang('admin.permissions')
-                                </a>
-                            </li>
-                            @endcan
-
-                            {{-- TODO checkout
+                            {{-- TODO checkout 
                             <li>
                             <a class="waves-effect" href="{{ route('admin.checkout') }}">
                                 <i class="material-icons left">credit_card</i> @lang('admin.checkout')

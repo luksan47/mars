@@ -2,6 +2,7 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
+<a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
 <a href="#!" class="breadcrumb">@lang('admin.permissions')</a>
 @endsection
 @section('admin_module') active @endsection
@@ -16,8 +17,16 @@
                     <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <td>{{ $user->name }}</td>
-                            @include('user.roles', ['user' => $user])
+                            <td><a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="black-text" >{{ $user->name }}</a></td>
+                            <td>@include('user.roles', ['roles' => $user->roles])</td>
+                            <td>
+                            @can('viewPermissionFor', $user)
+                                <a href="{{ route('admin.permissions.show', $user->id) }}"
+                                    class="btn-floating waves-effect waves-light right">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            @endcan
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
