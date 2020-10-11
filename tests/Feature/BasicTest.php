@@ -105,7 +105,7 @@ class BasicTest extends TestCase
             } elseif (in_array($route->uri(), $skipped_routes)) {
                 // Skipping these...
             } else {
-                $this->assertTrue(in_array($response->status(), [403, 404]), "Got " . $response->status() . " for " . $route->uri());
+                $this->assertTrue(in_array($response->status(), [400, 403, 404]), "Got " . $response->status() . " for " . $route->uri());
             }
         }
     }
