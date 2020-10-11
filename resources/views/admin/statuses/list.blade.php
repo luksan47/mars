@@ -73,10 +73,6 @@
                             M.toast({html: "@lang('general.successful_modification')"});
                         },
                         error: function(xhr, textStatus, error) {
-                            console.log(xhr.responseText);
-                            console.log(xhr.statusText);
-                            console.log(textStatus);
-                            console.log(error);
                             window.alert('Something went wrong. Please try again later.');
                         }
                     });
