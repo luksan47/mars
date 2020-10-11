@@ -285,6 +285,24 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasRoleWithObjectName('collegist', 'resident');
     }
 
+    public function setResident()
+    {
+        if ($this->isCollegist()){
+            $collegist_role = Role::getId(Role::COLLEGIST);
+            $this->roles()->detach($collegist_role);
+            $this->roles()->attach($collegist_role, ['object_id' => Role::getObjectIdByName(Role::COLLEGIST, 'resident')]);
+        }
+    }
+
+    public function setExtern()
+    {
+        if ($this->isCollegist()){
+            $collegist_role = Role::getId(Role::COLLEGIST);
+            $this->roles()->detach($collegist_role);
+            $this->roles()->attach($collegist_role, ['object_id' => Role::getObjectIdByName(Role::COLLEGIST, 'extern')]);
+        } 
+    }
+
     public function isExtern()
     {
         return $this->hasRoleWithObjectName('collegist', 'extern');

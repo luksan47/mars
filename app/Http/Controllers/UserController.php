@@ -94,23 +94,17 @@ class UserController extends Controller
 
     public function setCollegistType(Request $request)
     {
-        $collegist_role = Role::firstWhere('name', Role::COLLEGIST);
         $user = User::findOrFail($request->user_id);
 
-        $this->authorize('updatePermission', [$user, $collegist_role->id]);
-
-        if ($request->has('resident') && $user->hasRoleBase(Role::COLLEGIST)) {
-            $user->roles()->detach($collegist_role);
+        if ($request->has('resident')) {
             if ($request->resident == true) {
-                $object_id = Role::getObjectIdByName(Role::COLLEGIST, 'resident');
+                $user->setResident();
             } else {
-                $object_id = Role::getObjectIdByName(Role::COLLEGIST, 'extern');
+                $user->setExtern();
             }
-            $user->roles()->attach($collegist_role, ['object_id' => $object_id]);
         } else {
             return response()->json(null, 400);
         }
-
         return response()->json(null, 204);
     }
 

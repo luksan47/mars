@@ -30,7 +30,6 @@
                                 </span>
                             </td>
                             <td>
-                                @if($user->isActive())
                                 <div class="switch">
                                     <label>
                                     @lang('role.extern')
@@ -41,7 +40,6 @@
                                     @lang('role.resident')
                                     </label>
                                 </div>
-                                @endif
                             </td>
                             <td>
                                 <div class="">
@@ -74,8 +72,12 @@
                         success: function(data) {
                             M.toast({html: "@lang('general.successful_modification')"});
                         },
-                        error: function(data) {
-                            window.alert("Something went wrong. Please try again later.")
+                        error: function(xhr, textStatus, error) {
+                            console.log(xhr.responseText);
+                            console.log(xhr.statusText);
+                            console.log(textStatus);
+                            console.log(error);
+                            window.alert('Something went wrong. Please try again later.');
                         }
                     });
                 }

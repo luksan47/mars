@@ -39,25 +39,31 @@
                                 <br>{{ $user->educationalInformation->neptun ?? '' }}
                                 @endif
                             </td>
-                            @can('viewEducationalInformation', $user)
                             <!-- Workshops -->
                             <td>
-                                @include('user.workshop_tags', ['user' => $user, 'newline' => true])
+                                @if($user->hasEducationalInformation())
+                                @can('viewEducationalInformation', $user)
+                                    @include('user.workshop_tags', ['user' => $user, 'newline' => true])
+                                @endcan
+                                @endif
                             </td>
-                            @endcan
                             <!-- Roles -->
                             <td>
+                                <!-- TODO policy -->
                                 @include('user.roles', [
-                                    'roles' => $user->roles->whereNotIn('name', ['internet-user']),
+                                    'roles' => $user->roles->whereNotIn('name', ['internet-user', 'printer']),
                                     'newline' => true
                                 ])
                             </td>
                             <!-- Status -->
                             <td>
+                                @if($user->hasEducationalInformation())
+                                @can('viewEducationalInformation', $user)
                                 <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
                                     @lang("user." . $user->getStatus())
                                 </span>
-                                
+                                @endcan
+                                @endif
                             </td>
                             <!-- Edit -->
                             <td>
