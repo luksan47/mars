@@ -21,10 +21,10 @@
                                 @lang('user.workshops')
                             </th>
                             <th colspan="3">
-                                <a href="{{ route('admin.permissions.list') }}" class="btn waves-effect">
+                                <a href="{{ route('secretariat.permissions.list') }}" class="btn waves-effect">
                                     @lang('role.roles')
                                     <i class="material-icons right">lock</i></a>
-                                <a href="{{ route('admin.user.statuses') }}" class="btn waves-effect right">
+                                <a href="{{ route('secretariat.user.statuses') }}" class="btn waves-effect right">
                                     @lang('admin.statuses')
                                     <i class="material-icons right">school</i></a>
                             </th>
@@ -69,7 +69,7 @@
                             <td>
                                 <div class="right">
                                     @can('view', $user)
-                                    <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
+                                    <a href="{{ route('secretariat.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
                                         <i class="material-icons">remove_red_eye</i></a>
                                     @endcan
                                 </div>

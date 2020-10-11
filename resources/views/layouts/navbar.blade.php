@@ -90,7 +90,7 @@
                             <!-- registrations -->
                             @can('registration.handle')
                             <li>
-                                <a class="waves-effect" href="{{ route('admin.registrations') }}">
+                                <a class="waves-effect" href="{{ route('secretariat.registrations') }}">
                                     <i class="material-icons left">how_to_reg</i> @lang('admin.handle_registrations')
                                     @notification(\App\Models\User::class)
                                 </a>
@@ -109,7 +109,7 @@
                             <!-- print admin -->
                             @can('handleAny', \App\Models\PrintAccount::class)
                             <li>
-                                <a class="waves-effect" href="{{ route('print.admin') }}">
+                                <a class="waves-effect" href="{{ route('print.manage') }}">
                                     <i class="material-icons left">local_printshop</i>@lang('print.print')
                                 </a>
                             </li>

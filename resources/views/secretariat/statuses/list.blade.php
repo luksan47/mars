@@ -2,7 +2,7 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
+<a href="{{ route('secretariat.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
 <a href="#!" class="breadcrumb">@lang('admin.statuses')</a>
 @endsection
 @section('admin_module') active @endsection
@@ -19,7 +19,7 @@
                         @foreach($collegists as $user)
                         <tr>
                             <td>
-                                <b><a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="black-text" >{{ $user->name }}</a></b>
+                                <b><a href="{{ route('secretariat.user.show', ['id' => $user->id]) }}" class="black-text" >{{ $user->name }}</a></b>
                                 @if($user->hasEducationalInformation())
                                 <br>{{ $user->educationalInformation->neptun ?? '' }}
                                 @endif
@@ -47,7 +47,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="{{ route('admin.user.semesters', ['id' => $user->id]) }}" class="btn-floating coli blue waves-effect right">
+                                <a href="{{ route('secretariat.user.semesters', ['id' => $user->id]) }}" class="btn-floating coli blue waves-effect right">
                                         <i class="material-icons">event_note</i></a>
                             </td>
                         @endforeach
@@ -62,7 +62,7 @@
                 function setStatus(id, isResident){
                     console.log(id, isResident)
                     $.ajax({
-                        url: "{{ route('admin.user.set_collegist_type') }}",
+                        url: "{{ route('secretariat.user.set_collegist_type') }}",
                         data: {
                             user_id: id,
                             resident: isResident

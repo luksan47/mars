@@ -37,13 +37,10 @@ class RegistrationsController extends Controller
         if($request->next){
             $next_user = User::where('verified', false)->first();
             if($next_user != null) {
-                return redirect()->route(
-                    'admin.registrations.show',
-                    ['id' => $next_user->id]
-                );
+                return redirect()->route('secretariat.registrations.show', ['id' => $next_user->id]);
             }
         }
-        return redirect()->route('secretariat.registrations.list')->with('message', __('general.successful_modification'));
+        return redirect()->route('secretariat.registrations')->with('message', __('general.successful_modification'));
     }
 
     public function reject(Request $request)
@@ -55,13 +52,10 @@ class RegistrationsController extends Controller
         if($request->next){
             $next_user = User::where('verified', false)->first();
             if($next_user != null) {
-                return redirect()->route(
-                    'admin.registrations.show',
-                    ['id' => $next_user->id]
-                );
+                return redirect()->route('secretariat.registrations.show', ['id' => $next_user->id]);
             }
         }
-        return redirect()->route('secretariat.registrations.list')->with('message', __('general.successful_modification'));
+        return redirect()->route('secretariat.registrations')->with('message', __('general.successful_modification'));
     }
 
     public function show(Request $request)

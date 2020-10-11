@@ -2,8 +2,8 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
-<a href="{{ route('admin.permissions.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.permissions')</a>
+<a href="{{ route('secretariat.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
+<a href="{{ route('secretariat.permissions.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.permissions')</a>
 <a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
 @section('admin_module') active @endsection
@@ -26,7 +26,7 @@
                                 @endif
                             </td>
                             <td>
-                                <form action="{{ route('admin.permissions.remove', ['id' => $user->id, 'role_id' => $role->id, 'object_id' => $role->pivot->object_id]) }}" method="post">
+                                <form action="{{ route('secretariat.permissions.remove', ['id' => $user->id, 'role_id' => $role->id, 'object_id' => $role->pivot->object_id]) }}" method="post">
                                 @csrf
                                 <button type="submit" class="btn-floating waves-effect waves-light right red">
                                     <i class="material-icons">delete</i>
@@ -51,7 +51,7 @@
                                 <td>{{ $role->name() }}</td>
                                 <td>
                                 <div class="row" style="padding:0;margin:0">
-                                <form action="{{ route('admin.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
+                                <form action="{{ route('secretariat.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
                                     @csrf
                                     <div class="col s10">
                                         @if($role->canHaveObject())

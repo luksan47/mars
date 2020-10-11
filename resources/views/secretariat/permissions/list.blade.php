@@ -2,7 +2,7 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
+<a href="{{ route('secretariat.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
 <a href="#!" class="breadcrumb">@lang('admin.permissions')</a>
 @endsection
 @section('admin_module') active @endsection
@@ -21,7 +21,7 @@
                             <td>@include('secretariat.user.roles', ['roles' => $user->roles])</td>
                             <td>
                             @can('viewPermissionFor', $user)
-                                <a href="{{ route('admin.permissions.show', $user->id) }}"
+                                <a href="{{ route('secretariat.permissions.show', $user->id) }}"
                                     class="btn-floating waves-effect waves-light right">
                                     <i class="material-icons">edit</i>
                                 </a>

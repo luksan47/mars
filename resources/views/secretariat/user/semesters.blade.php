@@ -3,8 +3,8 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
-<a href="{{ route('admin.user.statuses') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.statuses')</a>
+<a href="{{ route('secretariat.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
+<a href="{{ route('secretariat.user.statuses') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.statuses')</a>
 <a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
 
@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">
-                    <a href="{{ route('admin.user.show', ['id' => $user->id]) }}" class="black-text" >
+                    <a href="{{ route('secretariat.user.show', ['id' => $user->id]) }}" class="black-text" >
                         {{ $user->name }}</a>
                 </span>
                 <table>

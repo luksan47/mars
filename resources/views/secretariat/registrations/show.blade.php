@@ -2,7 +2,7 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="{{ route('admin.registrations') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.registrations')</a>
+<a href="{{ route('secretariat.registrations') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.registrations')</a>
 <a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
 @section('admin_module') active @endsection
@@ -15,9 +15,9 @@
             <div class="card-content">
                 <h5><b>{{ $user->name }}</b> ({{ $users_left}} @lang('document.left'))
                 <div class="right">
-                    <a href="{{ route('admin.registrations.reject', ['id' => $user->id, 'next' => true]) }}" class="btn-floating red waves-effect">
+                    <a href="{{ route('secretariat.registrations.reject', ['id' => $user->id, 'next' => true]) }}" class="btn-floating red waves-effect">
                         <i class="material-icons">block</i></a>
-                    <a href="{{ route('admin.registrations.accept', ['id' => $user->id, 'next' => true]) }}" class="btn-floating green waves-effect">
+                    <a href="{{ route('secretariat.registrations.accept', ['id' => $user->id, 'next' => true]) }}" class="btn-floating green waves-effect">
                         <i class="material-icons">done</i></a>
                 </div></h5>
             </div>

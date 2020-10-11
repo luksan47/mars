@@ -26,11 +26,11 @@
                             </td>
                             <td>
                                 <div class="right">
-                                    <a href="{{ route('admin.registrations.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
+                                    <a href="{{ route('secretariat.registrations.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
                                         <i class="material-icons">search</i></a>
-                                    <a href=" {{ route('admin.registrations.accept', ['id' => $user->id]) }}" class="btn-floating green waves-effect">
+                                    <a href=" {{ route('secretariat.registrations.accept', ['id' => $user->id]) }}" class="btn-floating green waves-effect">
                                         <i class="material-icons">done</i></a>
-                                    <a href="{{ route('admin.registrations.reject', ['id' => $user->id]) }}" class="btn-floating red waves-effect">
+                                    <a href="{{ route('secretariat.registrations.reject', ['id' => $user->id]) }}" class="btn-floating red waves-effect">
                                         <i class="material-icons">block</i></a>
                                 </div>
                             </td>

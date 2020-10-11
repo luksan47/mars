@@ -26,7 +26,7 @@
 
     {{-- Change password  --}}
         <div class="card">
-            <form method="POST" action="{{ route('userdata.update_password') }}">
+            <form method="POST" action="{{ route('secretariat.user.update_password') }}">
                 @csrf
                 <div class="card-content">
                     <div class="card-title">@lang('general.change_password')</div>
