@@ -9,9 +9,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\MacAddress;
 use App\Models\PrintJob;
-use App\Models\PersonalInformation;
-use App\Models\EducationalInformation;
 use App\Models\WifiConnection;
+use App\Models\EducationalInformation;
+
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -66,8 +66,7 @@ class UsersTableSeeder extends Seeder
         MacAddress::factory()->count(3)->create(['user_id' => $user->id]);
         FreePages::factory()->count(5)->create(['user_id' => $user->id]);
         PrintJob::factory()->count(5)->create(['user_id' => $user->id]);
-        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-        EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        $user->educationalInformation()->save(EducationalInformation::factory()->make(['user_id' => $user->id]));
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->faculties()->attach(rand(1, count(Faculty::ALL)));
         }
@@ -98,12 +97,11 @@ class UsersTableSeeder extends Seeder
                 Role::getObjectIdByName(Role::COLLEGIST, 'extern')
             )]
         );
+        $user->educationalInformation()->save(EducationalInformation::factory()->make(['user_id' => $user->id]));
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $wifi_username = $user->internetAccess->setWifiUsername();
         WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
-        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-        EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->faculties()->attach(rand(1, count(Faculty::ALL)));
         }
@@ -118,7 +116,6 @@ class UsersTableSeeder extends Seeder
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $wifi_username = $user->internetAccess->setWifiUsername();
         WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
-        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
         MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
     }
 
