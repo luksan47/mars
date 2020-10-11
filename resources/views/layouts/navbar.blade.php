@@ -195,13 +195,13 @@
                                 M.Toast.dismissAll();
                             };
                         </script>
-                        <li><a href="mailto:root@eotvos.elte.hu?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
+                        <li><a href="mailto:{{ config('test_mail') }}?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
                             <i class="material-icons left">sentiment_very_dissatisfied</i>@lang('general.report_bug')</a></li>
                     </ul>
                 </div>
             </li>
             <li>
-            <a class="dark-toggle" href="#" onclick="localStorage.setItem('mode', (localStorage.getItem('mode') || 'dark') === 'dark' ? 'light' : 'dark'); localStorage.getItem('mode') === 'dark' ? document.querySelector('body').classList.add('dark') : document.querySelector('body').classList.remove('dark')" title="Dark/light"><i class="material-icons left">brightness_4</i> Toggle Dark Mode</a>
+                <a class="dark-toggle" href="#" onclick="toggleColorMode()" title="Dark/light"><i class="material-icons left">brightness_4</i> Toggle Dark Mode</a>
             </li>
             @endif
         </ul>

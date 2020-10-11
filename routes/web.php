@@ -37,7 +37,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('index');
 
-Route::get('/color/{mode}', [HomeController::class, 'colorMode'])->name('set-color-mode');
+Route::post('/color/{mode}', [HomeController::class, 'colorMode'])->name('set-color-mode');
 Route::get('/setlocale/{locale}', [LocaleController::class, 'set'])->name('setlocale');
 
 Route::get('/privacy_policy', function () {

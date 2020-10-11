@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Log;
-
 class HomeController extends Controller
 {
     /**
@@ -19,8 +16,6 @@ class HomeController extends Controller
 
     public function colorMode($mode)
     {
-        Log::info('log');
-        Cookie::queue('theme', $mode, config('app.colormode_cookie_lifespan'));
-        return back()->with('theme', $mode);
+        return response('ok')->cookie('theme', $mode, config('app.colormode_cookie_lifespan'));
     }
 }
