@@ -287,7 +287,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function setResident()
     {
-        if ($this->isCollegist()){
+        if ($this->isCollegist()) {
             $collegist_role = Role::getId(Role::COLLEGIST);
             $this->roles()->detach($collegist_role);
             $this->roles()->attach($collegist_role, ['object_id' => Role::getObjectIdByName(Role::COLLEGIST, 'resident')]);
@@ -296,11 +296,11 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function setExtern()
     {
-        if ($this->isCollegist()){
+        if ($this->isCollegist()) {
             $collegist_role = Role::getId(Role::COLLEGIST);
             $this->roles()->detach($collegist_role);
             $this->roles()->attach($collegist_role, ['object_id' => Role::getObjectIdByName(Role::COLLEGIST, 'extern')]);
-        } 
+        }
     }
 
     public function isExtern()
