@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LocalizationContribution;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\LocalizationContribution;
-use App\Models\User;
 
 /**
- * Localization Contributions
+ * Localization Contributions.
  */
 class LocaleController extends Controller
 {
@@ -26,13 +25,14 @@ class LocaleController extends Controller
         $contributors = [];
         foreach ($contributor_ids as $value) {
             $contributor = User::find($value->id);
-            if ($contributor != null){
+            if ($contributor != null) {
                 $contributors[] = $contributor->name;
             }
         }
+
         return view('localizations.app', [
             'contributions' => LocalizationContribution::all(),
-            'contributors' => $contributors
+            'contributors' => $contributors,
         ]);
     }
 
@@ -56,7 +56,7 @@ class LocaleController extends Controller
         return response()->json(null, 204);
     }
 
-    function addExpression($language, $key, $value)
+    public function addExpression($language, $key, $value)
     {
         return Artisan::call('locale:add', [
             'language' => $language,
@@ -74,6 +74,7 @@ class LocaleController extends Controller
 
         if ($this->addExpression($contribution->language, $contribution->key, $contribution->value) == 0) {
             $contribution->update(['approved' => true]);
+
             return back()->with('message', __('general.successful_modification'));
         } else {
             return back()->with('error', 'Something went wrong. Please contact the system administrators.');
@@ -82,9 +83,8 @@ class LocaleController extends Controller
 
     public function approveAll(Request $request)
     {
-
         foreach (LocalizationContribution::where('approved', false)->get() as $contribution) {
-            if(Auth::user()->cannot('approve', $contribution)) {
+            if (Auth::user()->cannot('approve', $contribution)) {
                 continue;
             }
 
@@ -94,6 +94,7 @@ class LocaleController extends Controller
                 return back()->with('error', 'Something went wrong with '.$contribution->key.'. Please contact the system administrators.');
             }
         }
+
         return back()->with('message', __('general.successful_modification'));
     }
 

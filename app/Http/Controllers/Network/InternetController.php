@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Network;
 
+use App\Http\Controllers\Controller;
 use App\Models\EventTrigger;
 use App\Models\InternetAccess;
 use App\Models\MacAddress;
@@ -9,8 +10,6 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\WifiConnection;
 use App\Utils\TabulatorPaginator;
-use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

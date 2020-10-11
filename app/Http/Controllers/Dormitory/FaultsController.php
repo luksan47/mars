@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Dormitory;
 
+use App\Http\Controllers\Controller;
 use App\Models\Faults;
 use App\Models\Role;
-use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

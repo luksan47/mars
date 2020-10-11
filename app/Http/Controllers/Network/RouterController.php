@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Network;
 
-use App\Models\Router;
 use App\Http\Controllers\Controller;
+use App\Models\Router;
 
 class RouterController extends Controller
 {

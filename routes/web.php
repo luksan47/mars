@@ -11,24 +11,22 @@
 |
 */
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dormitory\FaultsController;
 use App\Http\Controllers\Dormitory\PrintController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\Network\InternetController;
 use App\Http\Controllers\Network\RouterController;
-use App\Http\Controllers\Secretariat\PermissionController;
-use App\Http\Controllers\Secretariat\SemesterController;
 use App\Http\Controllers\Secretariat\DocumentController;
-use App\Http\Controllers\Secretariat\SecretariatController;
-use App\Http\Controllers\Secretariat\UserController;
+use App\Http\Controllers\Secretariat\PermissionController;
 use App\Http\Controllers\Secretariat\RegistrationsController;
+use App\Http\Controllers\Secretariat\SecretariatController;
+use App\Http\Controllers\Secretariat\SemesterController;
+use App\Http\Controllers\Secretariat\UserController;
 use App\Http\Controllers\StudentsCouncil\EconomicController;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', [HomeController::class, 'welcome'])->name('index');
 Route::get('/verification', [HomeController::class, 'verification'])->name('verification');
