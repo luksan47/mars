@@ -93,12 +93,16 @@ class UserController extends Controller
 
     public function setCollegistType(Request $request)
     {
-        $user = User::findOrFail($request->user_id);
-
         if ($request->has('resident')) {
+
+            $user = User::findOrFail($request->user_id);
+
+            //return response()->json($request->resident, 400);
+
             if ($request->resident == true) {
                 $user->setResident();
             } else {
+                die();
                 $user->setExtern();
             }
         } else {

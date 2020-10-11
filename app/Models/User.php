@@ -211,8 +211,8 @@ class User extends Authenticatable implements HasLocalePreference
     public function hasRoleBase(string $roleName)
     {
         $objects = Role::possibleObjectsFor($roleName);
-        foreach ($objects as $key => $value) {
-            if ($this->hasRole($roleName, $key)) {
+        foreach ($objects as $object) {
+            if ($this->hasRole($roleName, $object->id)) {
                 return true;
             }
         }
