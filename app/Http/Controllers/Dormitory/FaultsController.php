@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dormitory;
 
 use App\Models\Faults;
 use App\Models\Role;
+use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +40,7 @@ class FaultsController extends Controller
 
     public function updateStatus(Request $new)
     {
-        $auth = Auth::User()->hasRole(Role::STAFF) || Faults::getState($new['status']) === Faults::UNSEEN;
+        $auth = Auth::user()->hasRole(Role::STAFF) || Faults::getState($new['status']) === Faults::UNSEEN;
 
         if ($auth) {
             DB::table('faults')->where('id', $new['id'])->update(['status' => Faults::getState($new['status'])]);

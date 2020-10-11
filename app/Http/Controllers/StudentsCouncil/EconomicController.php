@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\StudentCouncil;
+namespace App\Http\Controllers\StudentsCouncil;
 
 use App\Models\Checkout;
 use App\Models\PaymentType;
 use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\Workshop;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\InternetController;
+use App\Http\Controllers\Network\InternetController;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;

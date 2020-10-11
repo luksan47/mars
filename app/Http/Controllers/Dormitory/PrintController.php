@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dormitory;
 
 use App\Console\Commands;
 use App\Models\User;
@@ -10,6 +10,7 @@ use App\Models\PrintJob;
 use App\Models\PrintAccountHistory;
 use App\Utils\Printer;
 use App\Utils\TabulatorPaginator;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

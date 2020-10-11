@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Network;
 
 use App\Models\Router;
+use App\Http\Controllers\Controller;
 
 class RouterController extends Controller
 {

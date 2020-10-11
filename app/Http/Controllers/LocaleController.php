@@ -10,18 +10,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\LocalizationContribution;
 use App\Models\User;
 
+/**
+ * Localization Contributions
+ */
 class LocaleController extends Controller
 {
-    public function set(Request $request, $locale)
-    {
-        App::setLocale($locale);
-        return redirect()->back()->cookie('locale', $locale, config('app.locale_cookie_lifespan'));
-    }
-
-    /**
-     * Localization Contributions
-     */
-
     public function index()
     {
         $contributor_ids = DB::table('localization_contributions')

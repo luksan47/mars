@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Secretariat;
 
 use App\Models\User;
 use App\Models\Semester;
 use App\Models\ImportItem;
 use App\Console\Commands;
 use App\Utils\Printer;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

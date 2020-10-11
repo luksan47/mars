@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Secretariat;
 
 use App\Models\EventTrigger;
 use App\Models\Semester;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 
+// TODO: rename this class
 class SecretariatController extends Controller
 {
     public function list()

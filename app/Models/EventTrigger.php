@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\SecretariatController;
+use App\Http\Controllers\Secretariat\SecretariatController;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;

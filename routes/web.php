@@ -11,52 +11,34 @@
 |
 */
 
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\RegistrationsController;
-use App\Http\Controllers\Admin\SemesterController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\FaultsController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InternetController;
 use App\Http\Controllers\LocaleController;
-use App\Http\Controllers\PrintController;
-use App\Http\Controllers\RouterController;
-use App\Http\Controllers\SecretariatController;
-use App\Http\Controllers\StudentCouncil\EconomicController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\RegistrationsController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Dormitory\FaultsController;
+use App\Http\Controllers\Dormitory\PrintController;
+use App\Http\Controllers\Network\InternetController;
+use App\Http\Controllers\Network\RouterController;
+use App\Http\Controllers\Secretariat\PermissionController;
+use App\Http\Controllers\Secretariat\SemesterController;
+use App\Http\Controllers\Secretariat\DocumentController;
+use App\Http\Controllers\Secretariat\SecretariatController;
+use App\Http\Controllers\Secretariat\UserController;
+use App\Http\Controllers\StudentsCouncil\EconomicController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
-Route::get('/', function () {
-    if (Auth::user()) {
-        return redirect('home');
-    }
 
-    return view('welcome');
-})->name('index');
-
-Route::get('/setlocale/{locale}', [LocaleController::class, 'set'])->name('setlocale');
-
-Route::get('/privacy_policy', function () {
-    return Storage::response('public/adatvedelmi_tajekoztato.pdf');
-})->name('privacy_policy');
-
-Route::get('/img/{filename}', [EmailController::class, 'getPicture']);
+Route::get('/', [HomeController::class, 'welcome'])->name('index');
+Route::get('/verification', [HomeController::class, 'verification'])->name('verification');
+Route::get('/privacy_policy', [HomeController::class, 'privacyPolicy'])->name('privacy_policy');
+Route::get('/img/{filename}', [HomeController::class, 'getPicture']);
+Route::get('/setlocale/{locale}', [HomeController::class, 'setLocale'])->name('setlocale');
 
 Auth::routes();
 
 Route::get('/register/guest', [RegisterController::class, 'showTenantRegistrationForm'])->name('register.guest');
-
-Route::get('/verification', function () {
-    return view('auth.verification');
-})->name('verification');
-
-Route::middleware(['auth', 'log'])->group(function () {
-    Route::get('/test_mails/{mail}/{send?}', [EmailController::class, 'testEmail']);
-});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/userdata/update_password', [UserController::class, 'updatePassword'])->name('userdata.update_password');
