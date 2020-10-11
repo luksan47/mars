@@ -144,7 +144,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/documents/status-cert/request', [DocumentController::class, 'requestStatusCertificate'])->name('documents.status-cert.request');
     Route::get('/documents/status-cert/{id}/show', [DocumentController::class, 'showStatusCertificate'])->name('documents.status-cert.show');
 
-    /** Student Council */
+    /** Students' Council */
     Route::get('/economic_committee', [EconomicController::class, 'index'])->name('economic_committee');
     Route::get('/economic_committee/transaction', [EconomicController::class, 'indexTransaction'])->name('economic_committee.transaction');
     Route::post('/economic_committee/transaction/add', [EconomicController::class, 'addTransaction'])->name('economic_committee.transaction.add');

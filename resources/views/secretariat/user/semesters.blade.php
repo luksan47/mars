@@ -7,6 +7,7 @@
 <a href="{{ route('secretariat.user.statuses') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.statuses')</a>
 <a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
+@section('secretariat_module') active @endsection
 
 @section('content')
 

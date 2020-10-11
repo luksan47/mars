@@ -5,7 +5,7 @@
 <a href="{{ route('secretariat.registrations') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.registrations')</a>
 <a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
-@section('admin_module') active @endsection
+@section('secretariat_module') active @endsection
 
 @section('content')
 <div class="row">
@@ -23,9 +23,9 @@
             </div>
         </div>
         {{-- Personal information --}}
-        @include('secretariat.user.personal-information', ['user' => $user])
+        @include('user.personal-information', ['user' => $user])
         {{-- Educational information --}}
-        @include('secretariat.user.educational-information', ['user' => $user])
+        @include('user.educational-information', ['user' => $user])
     </div>
 </div>
 @endsection

@@ -5,7 +5,7 @@
 <a href="{{ route('secretariat.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
 <a href="#!" class="breadcrumb">@lang('admin.statuses')</a>
 @endsection
-@section('admin_module') active @endsection
+@section('student_council_module') active @endsection
 
 @section('content')
 <div class="row">

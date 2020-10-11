@@ -55,7 +55,7 @@
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <!-- student council module -->
+                <!-- students' council module -->
                 @can('viewAny', \App\Models\Checkout::class)
                 <li><div class="divider"></div></li>
                 <li class="@yield('student_council_module')">
@@ -76,13 +76,14 @@
                     </div>
                 </li>
                 @endcan
-                <!-- admin module -->
+                <!-- secretariat module -->
                 @if(Auth::user()->hasElevatedPermissions())
+
                 <li><div class="divider"></div></li>
-                <li class="@yield('admin_module')">
+                <li class="@yield('secretariat_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">
-                        <i class="material-icons left">edit</i>
-                        @lang('admin.admin')
+                        <i class="material-icons left">business_center</i>
+                        @lang('general.secretariat')
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
                     <div class="collapsible-body">
@@ -105,7 +106,20 @@
                                 </a>
                             </li>
                             @endcan
+                        </ul>
+                    </div>
+                </li>
 
+                {{-- Sysadmin module --}}
+                <li><div class="divider"></div></li>
+                <li class="@yield('admin_module')">
+                    <a class="collapsible-header waves-effect" style="padding-left:32px">
+                        <i class="material-icons left">edit</i>
+                        @lang('admin.admin')
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
                             <!-- print admin -->
                             @can('handleAny', \App\Models\PrintAccount::class)
                             <li>
