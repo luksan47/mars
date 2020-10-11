@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
 use App\Models\User;
 
 class SemesterController extends Controller
@@ -12,7 +11,7 @@ class SemesterController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $collegists = User::collegists()->sortBy('name');;
+        $collegists = User::collegists()->sortBy('name');
 
         return view('admin.statuses.list', ['collegists' => $collegists]);
     }
