@@ -9,9 +9,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\MacAddress;
 use App\Models\PrintJob;
-use App\Models\PersonalInformation;
+use App\Models\WifiConnection;
 use App\Models\EducationalInformation;
-use App\Models\Semester;
+
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -23,40 +23,39 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->createAdmin();
-        $this->createCollegist();
-        $this->createTenant();
+        $this->createSuperUser();
         $this->createStaff();
 
-        //generate random collegists
+        //generate collegists
+
+        $collegist = User::create([
+            'name' => 'Éliás Próféta',
+            'email' => 'collegist@eotvos.elte.hu',
+            'password' => bcrypt('asdasdasd'),
+            'verified' => true,
+        ]);
+        $this->createCollegist($collegist);
+
         User::factory()->count(50)->create()->each(function ($user) {
-            MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            $user->roles()->attach(Role::getId(Role::COLLEGIST));
-            $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->faculties()->attach(rand(1, count(Faculty::ALL)));
-            }
-            for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->workshops()->attach(rand(1, count(Workshop::ALL)));
-            }
-            $user->internetAccess->setWifiUsername();
+            $this->createCollegist($user);
         });
 
-        //generate random tenants
+        //generate tenants
+
+        $tenant = User::create([
+            'name' => 'David Tenant',
+            'email' => 'tenant@eotvos.elte.hu',
+            'password' => bcrypt('asdasdasd'),
+            'verified' => true,
+        ]);
+        $this->createTenant($tenant);
+
         User::factory()->count(5)->create()->each(function ($user) {
-            MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            $user->roles()->attach(Role::getId(Role::TENANT));
-            $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            $user->internetAccess->setWifiUsername();
+            $this->createTenant($user);
         });
     }
 
-    private function createAdmin()
+    private function createSuperUser()
     {
         $user = User::create([
             'name' => 'Hapák József',
@@ -67,8 +66,7 @@ class UsersTableSeeder extends Seeder
         MacAddress::factory()->count(3)->create(['user_id' => $user->id]);
         FreePages::factory()->count(5)->create(['user_id' => $user->id]);
         PrintJob::factory()->count(5)->create(['user_id' => $user->id]);
-        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-        EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        $user->educationalInformation()->save(EducationalInformation::factory()->make(['user_id' => $user->id]));
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->faculties()->attach(rand(1, count(Faculty::ALL)));
         }
@@ -85,46 +83,40 @@ class UsersTableSeeder extends Seeder
                 $user->roles()->attach(Role::getId($role));
             }
         }
-        $user->internetAccess->setWifiUsername();
-        $user->setStatus(Semester::ACTIVE);
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
     }
 
-    private function createCollegist()
+    private function createCollegist($user)
     {
-        $user = User::create([
-            'name' => 'Éliás Próféta',
-            'email' => 'collegist@eotvos.elte.hu',
-            'password' => bcrypt('asdasdasd'),
-            'verified' => true,
-        ]);
-        PrintJob::factory()->count(5)->create(['user_id' => $user->id]);
-        $user->roles()->attach(Role::getId(Role::COLLEGIST));
+        MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        $user->roles()->attach(Role::getId(Role::COLLEGIST), [
+            'object_id' => rand(
+                Role::getObjectIdByName(Role::COLLEGIST, 'resident'),
+                Role::getObjectIdByName(Role::COLLEGIST, 'extern')
+            )]
+        );
+        $user->educationalInformation()->save(EducationalInformation::factory()->make(['user_id' => $user->id]));
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-        $user->internetAccess->setWifiUsername();
-        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-        EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->faculties()->attach(rand(1, count(Faculty::ALL)));
         }
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->workshops()->attach(rand(1, count(Workshop::ALL)));
         }
-        $user->setStatus(Semester::ACTIVE);
     }
 
-    private function createTenant()
+    private function createTenant($user)
     {
-        $user = User::create([
-            'name' => 'David Tenant',
-            'email' => 'tenant@eotvos.elte.hu',
-            'password' => bcrypt('asdasdasd'),
-            'verified' => true,
-        ]);
         $user->roles()->attach(Role::getId(Role::TENANT));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-        $user->internetAccess->setWifiUsername();
-        PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        $wifi_username = $user->internetAccess->setWifiUsername();
+        WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
+        MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
     }
 
     private function createStaff()

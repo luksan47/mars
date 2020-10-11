@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use Faker\Generator as Faker;
+use App\Models\PrintAccount;
+use App\Models\PersonalInformation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -43,10 +44,8 @@ class UserFactory extends Factory {
         return $this->afterMaking(function (User $user) {
             //
         })->afterCreating(function (User $user) {
-            $user->printAccount()->save(\App\Models\PrintAccount::factory()->make(['user_id' => $user->id]));
-            $user->personalInformation()->save(\App\Models\PersonalInformation::factory()->make(['user_id' => $user->id]));
-            $user->educationalInformation()->save(\App\Models\EducationalInformation::factory()->make(['user_id' => $user->id]));
-            $user->setStatus($this->faker->randomElement(\App\Models\Semester::STATUSES));
+            $user->printAccount()->save(PrintAccount::factory()->make(['user_id' => $user->id]));
+            $user->personalInformation()->save(PersonalInformation::factory()->make(['user_id' => $user->id]));
         });
     }
 

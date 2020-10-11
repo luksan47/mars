@@ -16,7 +16,7 @@ class PermissionController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::all()->sortBy('name');
 
         return view('admin.permissions.list', ['users' => $users]);
     }

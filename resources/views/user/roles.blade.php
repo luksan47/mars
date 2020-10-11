@@ -1,23 +1,21 @@
-{{-- This should be in a tr --}}
-<td>
-    @foreach($user->roles as $role)
-    <span class="new badge {{ $role->color() }}" data-badge-caption="">{{ $role->name() }}
-        @if($role->pivot->object_id)
-            :
-            @if($role->hasTranslatedName())
-                {{ $role->object()->name  }}
-            @else
-                @lang('role.' . $role->object()->name)
-            @endif
-        @endif
+{{-- Input: $roles, $newline = false --}}
+{{-- Show roles in badges. Roles with same base will be grouped. --}}
+@php
+$chunks = $roles->chunkWhile(function($current, $key, $chunk) {
+    return $current->name === $chunk->last()->name;
+});
+@endphp
+
+@foreach($chunks as $rolegroup)
+    <span class="new badge {{ $rolegroup->first()->color() }}" data-badge-caption="">
+        <nobr>{{ $rolegroup->first()->name() }}</nobr>
     </span>
+    @foreach($rolegroup as $role)
+        @if($role->object())
+        <span class="new badge {{ $rolegroup->first()->color() }}" data-badge-caption="">
+            <nobr>: @lang('role.'.$role->object()->name)</nobr>
+        </span>
+        @endif
     @endforeach
-</td>
-<td>
-@can('viewPermissionFor', $user)
-    <a href="{{ route('admin.permissions.show', $user->id) }}"
-        class="btn-floating waves-effect waves-light right">
-        <i class="material-icons">edit</i>
-    </a>
-@endcan
-</td>
+    @if($newline ?? false) <br> @endif
+@endforeach

@@ -8,33 +8,33 @@
                 cell = cell.getValue();
             }
             const translations = {
-                {{ App\Models\FaultsTable::UNSEEN }}: "@lang('faults.unseen')",
-                {{ App\Models\FaultsTable::SEEN }}: "@lang('faults.seen')",
-                {{ App\Models\FaultsTable::DONE }}: "@lang('faults.done')",
-                {{ App\Models\FaultsTable::WONT_FIX }}: "@lang('faults.wont_fix')"
+                {{ App\Models\Faults::UNSEEN }}: "@lang('faults.unseen')",
+                {{ App\Models\Faults::SEEN }}: "@lang('faults.seen')",
+                {{ App\Models\Faults::DONE }}: "@lang('faults.done')",
+                {{ App\Models\Faults::WONT_FIX }}: "@lang('faults.wont_fix')"
             };
             const colors = {
-                {{ App\Models\FaultsTable::UNSEEN }}: "",
-                {{ App\Models\FaultsTable::SEEN }}: "",
-                {{ App\Models\FaultsTable::DONE }}: "coli-text text-orange",
-                {{ App\Models\FaultsTable::WONT_FIX }}: "coli-text text-blue"
+                {{ App\Models\Faults::UNSEEN }}: "",
+                {{ App\Models\Faults::SEEN }}: "",
+                {{ App\Models\Faults::DONE }}: "coli-text text-orange",
+                {{ App\Models\Faults::WONT_FIX }}: "coli-text text-blue"
             };
             return '<div class="font-italic ' + colors[cell] + '">' + translations[cell] + '</div>';
         }
 
         var button = function (cell, formatterParams) {
             switch (formatterParams['status']) {
-                case "{{ App\Models\FaultsTable::DONE }}":
+                case "{{ App\Models\Faults::DONE }}":
                     var style = "btn waves-effect";
                     var text = "@lang('faults.done')";
                     break;
             
-                case "{{ App\Models\FaultsTable::WONT_FIX }}":
+                case "{{ App\Models\Faults::WONT_FIX }}":
                     var style = "waves-effect btn coli blue";
                     var text = "@lang('faults.wont_fix')";
                     break;
                 
-                case "{{ App\Models\FaultsTable::UNSEEN }}":
+                case "{{ App\Models\Faults::UNSEEN }}":
                     var style = "btn-flat waves-effect grey lighten-4 ";
                     var text = "@lang('faults.reopen')";
                     break;
@@ -58,27 +58,27 @@
             var status = cell.getRow().getData()["status"];
 
             switch (formatterParams['status']) {
-                case "{{ App\Models\FaultsTable::DONE }}":
-                    if (status === "{{ App\Models\FaultsTable::SEEN }}" || status === "{{ App\Models\FaultsTable::UNSEEN }}") {
+                case "{{ App\Models\Faults::DONE }}":
+                    if (status === "{{ App\Models\Faults::SEEN }}" || status === "{{ App\Models\Faults::UNSEEN }}") {
                         return button(cell, formatterParams);
                     }
                     break;
 
-                case "{{ App\Models\FaultsTable::WONT_FIX }}":
-                    if (status === "{{ App\Models\FaultsTable::UNSEEN }}") {
+                case "{{ App\Models\Faults::WONT_FIX }}":
+                    if (status === "{{ App\Models\Faults::UNSEEN }}") {
                         onRendered(function () {
-                            $.post("{{ route('faults.update') }}", {id: cell.getValue(), status: "{{ App\Models\FaultsTable::SEEN }}"}, );
+                            $.post("{{ route('faults.update') }}", {id: cell.getValue(), status: "{{ App\Models\Faults::SEEN }}"}, );
                         });
                     }
-                    if (status === "{{ App\Models\FaultsTable::SEEN }}" || status === "{{ App\Models\FaultsTable::UNSEEN }}") {
+                    if (status === "{{ App\Models\Faults::SEEN }}" || status === "{{ App\Models\Faults::UNSEEN }}") {
                         return button(cell, formatterParams);
                     } else {
                         return status_translate(status);
                     }
                     break;
 
-                case "{{ App\Models\FaultsTable::UNSEEN }}":
-                    if (status === "{{ App\Models\FaultsTable::DONE }}" || status === "{{ App\Models\FaultsTable::WONT_FIX }}") {
+                case "{{ App\Models\Faults::UNSEEN }}":
+                    if (status === "{{ App\Models\Faults::DONE }}" || status === "{{ App\Models\Faults::WONT_FIX }}") {
                         return button(cell, formatterParams);
                     }
                     break;
@@ -100,12 +100,12 @@
                 {title: "@lang('faults.location')", field: "location", sorter: "string", widthGrow: 2, formatter: "textarea"},
                 {title: "@lang('faults.description')", field: "description", sorter: "string", widthGrow: 3, formatter: "textarea"},
                 @if(Auth::User()->hasRole(\App\Models\Role::STAFF))
-                {title: "", field: "id", headerSort: false, width: 100, formatter: button_formatter, formatterParams: {status: "{{ App\Models\FaultsTable::DONE }}"}},
-                {title: "", field: "id", headerSort: false, width: 200, formatter: button_formatter, formatterParams: {status: "{{ App\Models\FaultsTable::WONT_FIX }}"}},
+                {title: "", field: "id", headerSort: false, width: 100, formatter: button_formatter, formatterParams: {status: "{{ App\Models\Faults::DONE }}"}},
+                {title: "", field: "id", headerSort: false, width: 200, formatter: button_formatter, formatterParams: {status: "{{ App\Models\Faults::WONT_FIX }}"}},
                 @else
                 {title: "@lang('faults.status')", field: "status", sorter: "string", width: 150, formatter: status_translate},
                 @endif
-                {title: "", field: "id", headerSort: false, width: 130, formatter: button_formatter, formatterParams: {status: "{{ App\Models\FaultsTable::UNSEEN }}"}}
+                {title: "", field: "id", headerSort: false, width: 130, formatter: button_formatter, formatterParams: {status: "{{ App\Models\Faults::UNSEEN }}"}}
             ],
             initialSort: [
                 {column: "created_at", dir: "desc"}

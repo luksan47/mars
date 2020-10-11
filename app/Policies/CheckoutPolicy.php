@@ -16,12 +16,12 @@ class CheckoutPolicy
      */
     public function view(User $user, Checkout $checkout)
     {
-        return $user->hasRoleBase(Role::COLLEGIST);
+        return $user->isCollegist();
     }
 
     public function viewAny(User $user)
     {
-        return $user->hasRoleBase(Role::COLLEGIST);
+        return $user->isCollegist();
     }
 
     public function addPayment(User $user, Checkout $checkout)

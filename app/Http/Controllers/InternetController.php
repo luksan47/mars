@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\EventTrigger;
 use App\Models\InternetAccess;
 use App\Models\MacAddress;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\WifiConnection;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +19,7 @@ class InternetController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:internet.internet');
+        $this->middleware('can:possess,App\Models\InternetAccess');
     }
 
     public function index()
@@ -29,9 +31,12 @@ class InternetController extends Controller
 
     public function admin()
     {
-        $activationDate = EventTrigger::internetActivationDeadline();
+        $this->authorize('handleAny', InternetAccess::class);
 
-        return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all()]);
+        $activationDate = EventTrigger::internetActivationDeadline();
+        $users_over_threshold = $this->usersOverWifiThreshold();
+
+        return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all(), 'users_over_threshold' => $users_over_threshold]);
     }
 
     public function getUsersMacAddresses(Request $request)
@@ -65,8 +70,8 @@ class InternetController extends Controller
         $this->authorize('viewAny', InternetAccess::class);
 
         $paginator = TabulatorPaginator::from(InternetAccess::join('users as user', 'user.id', '=', 'user_id')->select('internet_accesses.*')->with('user'))
-            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
-            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name', 'wifi_username'])
+            ->sortable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
+            ->filterable(['auto_approved_mac_slots', 'has_internet_until', 'user.name'])
             ->paginate();
 
         return $paginator;
@@ -76,7 +81,7 @@ class InternetController extends Controller
     {
         $macAddress = MacAddress::findOrFail($id);
 
-        $this->authorize('delete', MacAddress::class);
+        $this->authorize('delete', $macAddress);
 
         $macAddress->delete();
 
@@ -134,9 +139,11 @@ class InternetController extends Controller
             ->where('user_id', '=', $internetAccess->user_id)->first();
     }
 
+    // TODO policy?
     public static function extendUsersInternetAccess(User $user)
     {
         $internetAccess = $user->internetAccess;
+
         if ($internetAccess != null) {
             $internetAccess->has_internet_until = EventTrigger::internetActivationDeadline();
             $internetAccess->save();
@@ -149,15 +156,13 @@ class InternetController extends Controller
 
     public function addMacAddress(Request $request)
     {
+        $this->authorize('create', MacAddress::class);
+
         $validator = Validator::make($request->all(), [
             'comment' => 'required|max:1000',
             'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
         ]);
         $validator->validate();
-
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
 
         $macAddress = new MacAddress();
         $macAddress->user_id = Auth::user()->id;
@@ -182,6 +187,20 @@ class InternetController extends Controller
         DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
     }
 
+    public function getWifiConnectionsAdmin()
+    {
+        $this->authorize('viewAny', WifiConnection::class);
+
+        $paginator = TabulatorPaginator::from(WifiConnection::join('internet_accesses as i', 'i.wifi_username', 'wifi_connections.wifi_username')
+            ->join('users as user', 'user.id', '=', 'i.user_id')
+            ->select('wifi_connections.*')->with('user'))
+            ->sortable(['user.name', 'wifi_username', 'mac_address'])
+            ->filterable(['user.name', 'wifi_username', 'mac_address'])
+            ->paginate();
+
+        return $paginator;
+    }
+
     public function translateStates(): \Closure
     {
         return function ($data) {
@@ -201,6 +220,29 @@ class InternetController extends Controller
 
             return $data;
         };
+    }
+
+    public function usersOverWifiThreshold()
+    {
+        $users = Role::getUsers(Role::INTERNET_USER);
+        foreach ($users as $user) {
+            if (! $user->internetAccess->reachedWifiConnectionLimit()) {
+                $users = $users->except([$user->id]);
+            }
+        }
+
+        return $users;
+    }
+
+    public function approveWifiConnections($user)
+    {
+        $this->authorize('approveAny', WifiConnection::class);
+
+        $user = User::findOrFail($user);
+
+        $user->internetAccess->increment('wifi_connection_limit');
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function showCheckout()

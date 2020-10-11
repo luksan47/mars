@@ -29,28 +29,17 @@ class PrintJobPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return false;
     }
 
     /**
-     * Determine whether the user can view the print job.
+     * Determine whether the user can view his/her print jobs.
      *
      * @param  \App\Models\User  $user
      * @param  \App\Models\PrintJob  $printJob
      * @return mixed
      */
-    public function view(User $user, PrintJob $printJob)
-    {
-        return $printJob->user_id == $user->id;
-    }
-
-    /**
-     * Determine whether the user can create print jobs.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
+    public function viewSelf(User $user)
     {
         return true;
     }
@@ -65,17 +54,5 @@ class PrintJobPolicy
     public function update(User $user, PrintJob $printJob)
     {
         return $printJob->user_id == $user->id;
-    }
-
-    /**
-     * Determine whether the user can delete the print job.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\PrintJob  $printJob
-     * @return mixed
-     */
-    public function delete(User $user, PrintJob $printJob)
-    {
-        return false;
     }
 }

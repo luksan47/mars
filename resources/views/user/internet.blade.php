@@ -1,5 +1,4 @@
 {{-- Internet --}}
-@if($user->hasRole(\App\Models\Role::INTERNET_USER))
 @can('view', $user->internetAccess)
 <div class="card">
     <div class="card-content">
@@ -26,6 +25,12 @@
                     <th scope="row">@lang('internet.wifi_password')</th>
                     <td>{{ $user->internetAccess->wifi_password }}</td>
                 </tr>
+                @can('viewAny', \App\Models\WifiConnection::class)
+                <tr>
+                    <th scope="row">@lang('internet.wifi_connections')</th>
+                    @include('admin.internet.wifi_connections.show', ['showTooltip' => true])
+                </tr>
+                @endcan
                 <tr>
                     <th scope="row">@lang('internet.mac_address')</th>
                     <td>
@@ -55,4 +60,3 @@
     </div>
 </div>
 @endcan
-@endif
