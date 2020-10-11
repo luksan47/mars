@@ -282,30 +282,31 @@ class User extends Authenticatable implements HasLocalePreference
 
     public function isResident()
     {
-        return $this->hasRoleWithObjectName('collegist', 'resident');
-    }
-
-    public function setResident()
-    {
-        if ($this->isCollegist()) {
-            $collegist_role = Role::getId(Role::COLLEGIST);
-            $this->roles()->detach($collegist_role);
-            $this->roles()->attach($collegist_role, ['object_id' => Role::getObjectIdByName(Role::COLLEGIST, 'resident')]);
-        }
-    }
-
-    public function setExtern()
-    {
-        if ($this->isCollegist()) {
-            $collegist_role = Role::getId(Role::COLLEGIST);
-            $this->roles()->detach($collegist_role);
-            $this->roles()->attach($collegist_role, ['object_id' => Role::getObjectIdByName(Role::COLLEGIST, 'extern')]);
-        }
+        return $this->hasRoleWithObjectName(Role::COLLEGIST, 'resident');
     }
 
     public function isExtern()
     {
-        return $this->hasRoleWithObjectName('collegist', 'extern');
+        return $this->hasRoleWithObjectName(Role::COLLEGIST, 'extern');
+    }
+
+    public function setResident()
+    {
+        $this->setCollegistRole('resident');
+    }
+
+    public function setExtern()
+    {
+        $this->setCollegistRole('extern');
+    }
+
+    private function setCollegistRole($objectName)
+    {
+        if ($this->isCollegist()) {
+            $collegist_role = Role::getId(Role::COLLEGIST);
+            $this->roles()->detach($collegist_role);
+            $this->roles()->attach($collegist_role, ['object_id' => Role::getObjectIdByName(Role::COLLEGIST, $objectName)]);
+        }
     }
 
     public function getStatusIn($semester)
