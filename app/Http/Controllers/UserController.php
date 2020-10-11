@@ -93,6 +93,8 @@ class UserController extends Controller
 
     public function setCollegistType(Request $request)
     {
+        $this->authorize('viewAny', User::class);
+
         if ($request->has('resident')) {
             $user = User::findOrFail($request->user_id);
 
