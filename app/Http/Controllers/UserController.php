@@ -96,7 +96,7 @@ class UserController extends Controller
         if ($request->has('resident')) {
             $user = User::findOrFail($request->user_id);
 
-            if ($request->resident === "true") {
+            if ($request->resident === 'true') {
                 $user->setResident();
             } else {
                 $user->setExtern();
