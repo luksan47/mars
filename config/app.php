@@ -6,7 +6,7 @@ return [
         'light',
         'dark',
     ],
-    'colormode_cookie_lifespan' => 9600,
+    'colormode_cookie_lifespan' => 960000,
 
     /*
     |--------------------------------------------------------------------------
