@@ -12,9 +12,7 @@ class SemesterController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $collegists = User::all()->filter(function ($value, $key) {
-            return $value->hasRoleBase(Role::COLLEGIST);
-        })->sortBy('name');
+        $collegists = User::collegists()->sortBy('name');;
 
         return view('admin.statuses.list', ['collegists' => $collegists]);
     }

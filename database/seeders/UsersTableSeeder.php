@@ -11,7 +11,6 @@ use App\Models\MacAddress;
 use App\Models\PrintJob;
 use App\Models\PersonalInformation;
 use App\Models\EducationalInformation;
-use App\Models\Semester;
 use App\Models\WifiConnection;
 use Illuminate\Database\Seeder;
 
@@ -27,6 +26,8 @@ class UsersTableSeeder extends Seeder
         $this->createSuperUser();
         $this->createStaff();
 
+        //generate collegists
+
         $collegist = User::create([
             'name' => 'Éliás Próféta',
             'email' => 'collegist@eotvos.elte.hu',
@@ -34,10 +35,12 @@ class UsersTableSeeder extends Seeder
             'verified' => true,
         ]);
         $this->createCollegist($collegist);
-        //generate random collegists
+
         User::factory()->count(50)->create()->each(function ($user) {
             $this->createCollegist($user);
         });
+
+        //generate tenants
 
         $tenant = User::create([
             'name' => 'David Tenant',
@@ -46,7 +49,7 @@ class UsersTableSeeder extends Seeder
             'verified' => true,
         ]);
         $this->createTenant($tenant);
-        //generate random tenants
+
         User::factory()->count(5)->create()->each(function ($user) {
             $this->createTenant($user);
         });
