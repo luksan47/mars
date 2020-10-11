@@ -24,42 +24,35 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->createAdmin();
-        $this->createCollegist();
-        $this->createTenant();
+        $this->createSuperUser();
         $this->createStaff();
 
+        $collegist = User::create([
+            'name' => 'Éliás Próféta',
+            'email' => 'collegist@eotvos.elte.hu',
+            'password' => bcrypt('asdasdasd'),
+            'verified' => true,
+        ]);
+        $this->createCollegist($collegist);
         //generate random collegists
         User::factory()->count(50)->create()->each(function ($user) {
-            MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            EducationalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            $user->roles()->attach(Role::getId(Role::COLLEGIST));
-            $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->faculties()->attach(rand(1, count(Faculty::ALL)));
-            }
-            for ($x = 0; $x < rand(1, 3); $x++) {
-                $user->workshops()->attach(rand(1, count(Workshop::ALL)));
-            }
-            $wifi_username = $user->internetAccess->setWifiUsername();
-            WifiConnection::factory()->count($user->id % 6)->create(['wifi_username' => $wifi_username]);
+            $this->createCollegist($user);
         });
 
+        $tenant = User::create([
+            'name' => 'David Tenant',
+            'email' => 'tenant@eotvos.elte.hu',
+            'password' => bcrypt('asdasdasd'),
+            'verified' => true,
+        ]);
+        $this->createTenant($tenant);
         //generate random tenants
         User::factory()->count(5)->create()->each(function ($user) {
-            MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
-            $user->roles()->attach(Role::getId(Role::TENANT));
-            $user->roles()->attach(Role::getId(Role::INTERNET_USER));
-            $wifi_username = $user->internetAccess->setWifiUsername();
-            WifiConnection::factory()->count($user->id % 6)->create(['wifi_username' => $wifi_username]);
+            $this->createTenant($user);
         });
     }
 
-    private function createAdmin()
+    private function createSuperUser()
     {
         $user = User::create([
             'name' => 'Hapák József',
@@ -93,16 +86,16 @@ class UsersTableSeeder extends Seeder
         $user->setStatus(Semester::ACTIVE);
     }
 
-    private function createCollegist()
+    private function createCollegist($user)
     {
-        $user = User::create([
-            'name' => 'Éliás Próféta',
-            'email' => 'collegist@eotvos.elte.hu',
-            'password' => bcrypt('asdasdasd'),
-            'verified' => true,
-        ]);
-        PrintJob::factory()->count(5)->create(['user_id' => $user->id]);
-        $user->roles()->attach(Role::getId(Role::COLLEGIST));
+        MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        PrintJob::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        $user->roles()->attach(Role::getId(Role::COLLEGIST), [
+            'object_id' => rand(
+                Role::getObjectIdByName(Role::COLLEGIST, 'resident'),
+                Role::getObjectIdByName(Role::COLLEGIST, 'extern')
+            )]
+        );
         $user->roles()->attach(Role::getId(Role::PRINTER));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $wifi_username = $user->internetAccess->setWifiUsername();
@@ -115,22 +108,18 @@ class UsersTableSeeder extends Seeder
         for ($x = 0; $x < rand(1, 3); $x++) {
             $user->workshops()->attach(rand(1, count(Workshop::ALL)));
         }
-        $user->setStatus(Semester::ACTIVE);
+        $status = array_rand(Semester::STATUSES);
+        $user->setStatus($status);
     }
 
-    private function createTenant()
+    private function createTenant($user)
     {
-        $user = User::create([
-            'name' => 'David Tenant',
-            'email' => 'tenant@eotvos.elte.hu',
-            'password' => bcrypt('asdasdasd'),
-            'verified' => true,
-        ]);
         $user->roles()->attach(Role::getId(Role::TENANT));
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $wifi_username = $user->internetAccess->setWifiUsername();
         WifiConnection::factory($user->id % 5)->create(['wifi_username' => $wifi_username]);
         PersonalInformation::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
+        MacAddress::factory()->count($user->id % 5)->create(['user_id' => $user->id]);
     }
 
     private function createStaff()
