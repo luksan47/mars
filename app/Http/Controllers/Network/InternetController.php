@@ -28,7 +28,7 @@ class InternetController extends Controller
     {
         $internetAccess = Auth::user()->internetAccess;
 
-        return view('internet.app', ['internet_access' => $internetAccess]);
+        return view('network.internet.app', ['internet_access' => $internetAccess]);
     }
 
     public function admin()
@@ -38,7 +38,7 @@ class InternetController extends Controller
         $activationDate = EventTrigger::internetActivationDeadline();
         $users_over_threshold = $this->usersOverWifiThreshold();
 
-        return view('admin.internet.app', ['activation_date' => $activationDate, 'users' => User::all(), 'users_over_threshold' => $users_over_threshold]);
+        return view('network.manage.app', ['activation_date' => $activationDate, 'users' => User::all(), 'users_over_threshold' => $users_over_threshold]);
     }
 
     public function getUsersMacAddresses(Request $request)
@@ -251,6 +251,6 @@ class InternetController extends Controller
     {
         $users = User::where('verified', false)->get();
 
-        return view('admin.checkout', ['users' => $users]);
+        return view('network.checkout', ['users' => $users]);
     }
 }

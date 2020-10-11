@@ -14,7 +14,7 @@ class FaultsController extends Controller
 {
     public function index()
     {
-        return view('faults.app');
+        return view('dormitory.faults.app');
     }
 
     public function addFault(Request $new)

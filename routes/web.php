@@ -13,7 +13,6 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
-use App\Http\Controllers\Admin\RegistrationsController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dormitory\FaultsController;
 use App\Http\Controllers\Dormitory\PrintController;
@@ -24,6 +23,7 @@ use App\Http\Controllers\Secretariat\SemesterController;
 use App\Http\Controllers\Secretariat\DocumentController;
 use App\Http\Controllers\Secretariat\SecretariatController;
 use App\Http\Controllers\Secretariat\UserController;
+use App\Http\Controllers\Secretariat\RegistrationsController;
 use App\Http\Controllers\StudentsCouncil\EconomicController;
 
 use Illuminate\Support\Facades\Auth;

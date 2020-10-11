@@ -22,7 +22,7 @@ class DocumentController extends Controller
     {
         Gate::authorize('document.any');
 
-        return view('document.index');
+        return view('secretariat.document.index');
     }
 
     /** Register statement */
@@ -65,7 +65,7 @@ class DocumentController extends Controller
     {
         Gate::authorize('document.import-license');
 
-        return view('document.import', ['items' => Auth::user()->importItems]);
+        return view('secretariat.document.import', ['items' => Auth::user()->importItems]);
     }
 
     public function addImport(Request $request)

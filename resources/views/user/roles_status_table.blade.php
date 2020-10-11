@@ -20,7 +20,7 @@
             </span></td>
         <td>
         @can('viewPermissionFor', $user) {{-- ??? --}}
-            <a href="{{ route('admin.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect right">
+            <a href="{{ route('secretariat.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect right">
                 <i class="material-icons">edit</i></a>
         @endcan
         </td>

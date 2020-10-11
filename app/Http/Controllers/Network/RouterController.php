@@ -18,13 +18,13 @@ class RouterController extends Controller
 
         $routers = Router::all()->sortBy('room');
 
-        return view('admin.routers.list')->with('routers', $routers);
+        return view('network.routers.list')->with('routers', $routers);
     }
 
     public function view($ip)
     {
         $router = Router::findOrFail($ip);
 
-        return view('admin.routers.view')->with('router', $router);
+        return view('network.routers.view')->with('router', $router);
     }
 }

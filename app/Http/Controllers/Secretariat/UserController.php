@@ -117,7 +117,7 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
         $users = User::all()->sortBy('name');
 
-        return view('admin.user.list')->with('users', $users);
+        return view('secretariat.user.list')->with('users', $users);
     }
 
     public function show($id)
@@ -126,7 +126,7 @@ class UserController extends Controller
 
         $this->authorize('view', $user);
 
-        return view('admin.user.show')->with('user', $user);
+        return view('secretariat.user.show')->with('user', $user);
     }
 
     public function semesters($id)
@@ -140,7 +140,7 @@ class UserController extends Controller
             return $semester->getStartDate();
         });
 
-        return view('admin.user.semesters')->with('user', $user)->with('semesters', $semesters);
+        return view('secretariat.user.semesters')->with('user', $user)->with('semesters', $semesters);
     }
 
     public function updateSemesterStatus($id, $semester, $status)

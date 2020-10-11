@@ -30,7 +30,7 @@ class LocaleController extends Controller
                 $contributors[] = $contributor->name;
             }
         }
-        return view('localizations', [
+        return view('localizations.app', [
             'contributions' => LocalizationContribution::all(),
             'contributors' => $contributors
         ]);
@@ -40,7 +40,7 @@ class LocaleController extends Controller
     {
         $this->authorize('viewAny', LocalizationContribution::class);
 
-        return view('admin.localizations', ['contributions'=> LocalizationContribution::where('approved', false)->get()]);
+        return view('localizations.manage', ['contributions'=> LocalizationContribution::where('approved', false)->get()]);
     }
 
     public function add(Request $request)

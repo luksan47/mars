@@ -13,6 +13,6 @@ class SemesterController extends Controller
 
         $collegists = User::collegists()->sortBy('name');
 
-        return view('admin.statuses.list', ['collegists' => $collegists]);
+        return view('secretariat.statuses.list', ['collegists' => $collegists]);
     }
 }

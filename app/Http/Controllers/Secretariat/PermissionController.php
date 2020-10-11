@@ -18,7 +18,7 @@ class PermissionController extends Controller
     {
         $users = User::all()->sortBy('name');
 
-        return view('admin.permissions.list', ['users' => $users]);
+        return view('secretariat.permissions.list', ['users' => $users]);
     }
 
     public function show($id)
@@ -27,7 +27,7 @@ class PermissionController extends Controller
 
         $this->authorize('viewPermissionFor', $user);
 
-        return view('admin.permissions.show', ['user' => $user]);
+        return view('secretariat.permissions.show', ['user' => $user]);
     }
 
     public function edit(Request $request, $id, $role_id)
