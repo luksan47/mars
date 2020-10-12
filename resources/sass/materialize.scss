@@ -67,19 +67,19 @@ body {
 			background-color: rgba(25, 25, 25, 255)
 		}
 		.dropdown-trigger{
-			color: #fff
+			color: #fff;
 		}
 		.caret{
-			fill: #fff
+			fill: #fff;
 		}
 		.selected {
 			span{
-				color: #fff
+				color: #fff;
 			}
 		}
 		.input-field{
 			input{
-				color: #fff
+				color: #fff;
 			}
 		}
 		.dropdown-content {
@@ -93,9 +93,6 @@ body {
 			.caret{
 				fill: #000000
 			}
-		}
-		.datepicker-controls{
-
 		}
 		.sidenav {
 			background-color: rgba(25, 25, 25, 255);
@@ -123,9 +120,12 @@ body {
 				border-bottom: 1px solid rgba(255,255,255,0.2);
 			}
 		}
+		textarea{
+			color: #fff;
+		}
 		.input-field{
 			textarea{
-				color: #fff
+				color: #fff;
 			}
 		}
 	}
