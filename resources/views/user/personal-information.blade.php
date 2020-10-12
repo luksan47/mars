@@ -43,7 +43,7 @@
                 </tr>
                 @if($user->hasPersonalInformation())
                     <tr>
-                        <th scope="row">@lang('info.phone_number')</th>
+                        <th scope="row">@lang('user.phone_number')</th>
                         <td>
                             @if($modifiable_phone ?? false)
                                 <form method="POST" action="{{ route('userdata.update_phone') }}">
@@ -82,19 +82,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.place_and_date_of_birth')</th>
+                        <th scope="row">@lang('user.place_and_date_of_birth')</th>
                         <td>
                             {{ $user->personalInformation->place_of_birth }},  {{ $user->personalInformation->date_of_birth }}
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.mothers_name')</th>
+                        <th scope="row">@lang('user.mothers_name')</th>
                         <td>
                             {{ $user->personalInformation->mothers_name }}
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.address')</th>
+                        <th scope="row">@lang('user.address')</th>
                         <td>
                             {{ $user->personalInformation->country }}, <small>{{ $user->personalInformation->county }}</small>
                             <br>
