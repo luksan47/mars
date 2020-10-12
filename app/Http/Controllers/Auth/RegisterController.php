@@ -132,6 +132,7 @@ class RegisterController extends Controller
             'zip_code' => $data['zip_code'],
             'city' => $data['city'],
             'street_and_number' => $data['street_and_number'],
+            'status' => $data['status']
         ]);
 
         //TODO change collegist and tenant role into role group

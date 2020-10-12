@@ -22,6 +22,7 @@ class PersonalInformation extends Model
         'zip_code',
         'city',
         'street_and_number',
+        'status'
     ];
 
     public function user()

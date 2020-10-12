@@ -49,4 +49,34 @@
         <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
+    <div class="input-field col s12">
+        <select id="status" name="status">
+           <option value="extern" selected>Extern</option>
+           <option value="resident">Resident</option>
+        </select>
+          <label for="status">status</label>
+          <script>
+            var instances;
+            $(document).ready(
+              function() {
+                var elems = $('#status');
+                const options = [
+                  { name : 'extern',  value : 'extern' },
+                  { name : 'resident',  value : 'resident' },
+                  ]
+                instances = M.FormSelect.init(elems, options);
+          });
+          </script>
+          @error('status')
+          <blockquote class="error">{{ $message }}</blockquote>
+          @enderror
+    </div>
+    <div class="input-field col s12">
+        <input id="educational_email" name="educational_email" type="text" class="validate @error('educational_email') invalid @enderror" value="{{ old('educational_email') }}"
+            required>
+        <label for="educational_email">Educational Email</label>
+        @error('educational_email')
+        <span class="helper-text" data-error="{{ $message }}"></span>
+        @enderror
+    </div>
 </div>
