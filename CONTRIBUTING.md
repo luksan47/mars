@@ -23,21 +23,22 @@ With these steps you should be able to run Mars on your machine:
     * `git checkout release`
     * `init.bat` (`bash init.sh` on Linux)
 4. Set up Homestead: Copy and rename `Homestead.yaml.example` from this repository to `Homestead.yaml` in the Homestead directory (overwrite if needed). Modify this file by changing `folders: - map: /your/local/path/to/mars` .
-5. Set up Mars: Copy and rename `.env.example` to `.env`, and change these settings: 
+5. Create ssh keys to `~/.ssh/homestead_rsa.pub` and `~/.ssh/homestead_rsa`. (You can use something like `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`.)
+6. On Windows add the `192.168.10.10  mars.local` host entry to `C:\Windows\System32\drivers\etc\hosts`.
+7. Go to your Homestead directory and Run `vagrant up` and `vagrant ssh` to set up and enter your virtual machine.
+8. In the project root (`cd mars`) run `composer install`
+9. Set up Mars: Copy and rename `.env.example` to `.env`, and change these settings: 
 `DB_DATABASE=homestead
 DB_USERNAME=homestead
 DB_PASSWORD=secret
 APP_URL=http://mars.local`.
-If you want to set up emails, change `MAIL_TEST_ADMIN` to your email (after seeding, you will be able to log in to the admin user with this email address) and set your email credentials (`MAIL_USERNAME` and `MAIL_PASSWORD`) - you might have to enable third party access to your email account. 
-5. Create ssh keys to `~/.ssh/homestead_rsa.pub` and `~/.ssh/homestead_rsa`. (You can use something like `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`.)
-6. On Windows add the `192.168.10.10  mars.local` host entry to `C:\Windows\System32\drivers\etc\hosts`.
-7. Go to your Homestead directory and Run `vagrant up` and `vagrant ssh` to set up and enter your virtual machine.
-8.
-   * In the project root (`cd mars`) run `composer install` and `php artisan migrate:fresh --seed`.
+10. If you want to set up emails, change `MAIL_TEST_ADMIN` to your email (after seeding, you will be able to log in to the admin user with this email address) and set your email credentials (`MAIL_USERNAME` and `MAIL_PASSWORD`) - you might have to enable third party access to your email account.
+11. Run the following commands:
+   * Run `php artisan migrate:fresh --seed`.
    * Run `php artisan key:generate`.
    * Run `npm install` to install JS related dependencies.
    * Run `npm run dev` to create the CSS and JS files in the `public` directory. 
-9. The project should be running at [mars.local](http://mars.local/).
+11. The project should be running at [mars.local](http://mars.local/).
 
 We like to use [PHPStorm](https://www.jetbrains.com/phpstorm/) for development. You can get a free license if you are a student.
 The project contains basic configuration for this IDE with the Homestead environment, just open the project root in PHPStorm.
