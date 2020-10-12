@@ -23,7 +23,7 @@ return [
     'user_data' => 'Felhasználói adatok',
     'workshop' => 'Műhely',
     'workshop_must_be_filled' => 'A műhely kitöltése kötelező.',
-    'year_of_acceptance' => 'Felvétel éve',
+    'year_of_acceptance' => 'Collegiumi felvétel éve',
     'year_of_graduation' => 'Érettségi éve',
     'zip_code' => 'Irányítószám',
 ];

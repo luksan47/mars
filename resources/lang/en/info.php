@@ -23,7 +23,7 @@ return [
     'user_data' => 'User data',
     'workshop' => 'Workshop',
     'workshop_must_be_filled' => 'The workshop must be filled.',
-    'year_of_acceptance' => 'Year of acceptance',
+    'year_of_acceptance' => 'Year of acceptance in the Collegium',
     'year_of_graduation' => 'Year of graduation',
     'zip_code' => 'Zip code',
 ];
