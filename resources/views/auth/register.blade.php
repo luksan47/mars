@@ -27,18 +27,18 @@
                     </div>
                     <div class="divider"></div>
                     <div class="section">
-                        <div class="card-title">@lang('info.user_data')</div>
+                        <div class="card-title">@lang('user.user_data')</div>
                         @include("auth.register.personal")
                     </div>
                     <div class="divider"></div>
                     <div class="section">
-                    <div class="card-title">@lang('info.contact')</div>
+                    <div class="card-title">@lang('user.contact')</div>
                         @include("auth.register.contact")
                     </div>
                     @if($user_type == \App\Models\Role::COLLEGIST)
                     <div class="divider"></div>
                     <div class="section">
-                        <div class="card-title">@lang('info.information_of_studies')</div>
+                        <div class="card-title">@lang('user.information_of_studies')</div>
                         @include("auth.register.information_of_studies")
                     </div>
                     @endif

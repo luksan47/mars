@@ -9,7 +9,7 @@
   <option value="{{ $element->id }}">{{ $element->name }}</option>
   @endforeach
 </select>
-<label for="{{ $element_id }}">@lang('info.name')</label>
+<label for="{{ $element_id }}">@lang('user.name')</label>
 @error($element_id)
 <span class="helper-text" data-error="{{ $message }}"></span>
 @enderror
