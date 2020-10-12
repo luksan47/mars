@@ -24,6 +24,7 @@ return [
     'other_transaction' => 'Other expense or income',
     'password' => 'Checkout\'s password',
     'pay' => 'Pay',
+    'pay_kkt_descr' => 'If someone pays you the KKT/Netreg, you should add it here. Only collegists with active status can be selected who did not payed. <br>The collegists will be notified by email and their internet access will be extended automatically.',
     'pay_kktnetreg' => 'Pay KKT and Netreg',
     'payed_by' => 'Payed by',
     'payed_kkt' => 'Payed KKT',
@@ -36,6 +37,6 @@ return [
     'transactions_payed' => 'You payed the following transaction(s)',
     'used_balance' => 'Used balance',
     'users_have_to_pay' => 'Users who have to pay',
-    'workshop_balance_descr' => 'Under development.',
+    'workshop_balance_descr' => 'Residents / externs (+ the remaining members who did not payed yet)<br>After each resident, the workshop receives :kkt * 0.6, and after each extern, the workshop receives :kkt * 0.45 HUF. (If a member has multiple workshops, the amount is divided accordingly.)',
     'workshop_balances' => 'Workshops\' balance',
 ];

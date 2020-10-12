@@ -160,6 +160,11 @@ class Semester extends Model
         return Semester::getOrCreate($year, $part);
     }
 
+    public function isCurrent()
+    {
+        return $this->equals($this::current());
+    }
+
     public function succ()
     {
         if ($this->isSpring()) {
@@ -224,7 +229,7 @@ class Semester extends Model
         }
     }
 
-    /* Helpers for testing */
+    /* Helpers */
 
     public function equals($other)
     {

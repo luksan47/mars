@@ -8,6 +8,7 @@ use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Workshop;
+use App\Models\WorkshopBalance;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\InternetController;
 
@@ -49,7 +50,8 @@ class EconomicController extends Controller
             $transactions['kkt'] = $checkout->kktSum($semester);
             $transactions['sum'] = $semester->transactionsInCheckout($checkout)->sum('amount');
 
-            $data[$semester->tag().' ('.$semester->getStartDate()->format('Y.m.d').'-'.$semester->getEndDate()->format('Y.m.d').')'] = [
+            $data[] = [
+                'semester' => $semester,
                 'transactions' => $transactions,
                 'workshop_balances' => $semester->workshopBalances
             ];
@@ -202,19 +204,8 @@ class EconomicController extends Controller
 
     public function calculateWorkshopBalance(Semester $semester)
     {
-        //TODO (#382)
-        //for every active member in a workshop
-        //payed kkt * (if resident: 0.6, if day-boarder: 0.45) / user's workshops' count
-        //or the proportions should be edited?
-
-        /* $payed_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
-                return ($user->isActiveIn($workshop_balance->semester)
-                        && !$user->haveToPayKKTNetregInSemester($workshop_balance->semester));
-                })->count();
-        $remaining_member_num = $workshop_balance->workshop->users->filter(function ($user, $key) use ($workshop_balance) {
-                return ($user->haveToPayKKTNetregInSemester($workshop_balance->semester));
-                })->count(); */
-
+        WorkshopBalance::generateBalances();
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     private function createTransaction($checkout, $receiver_id, $payer_id, $amount, $type, $moved_to_checkout = null, $comment = null)

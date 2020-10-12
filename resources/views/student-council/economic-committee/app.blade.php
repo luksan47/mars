@@ -42,11 +42,14 @@
             </div>
         </div>
     </div>
-    @foreach($data as $semester => $row)
+    @foreach($data as $row)
+    @php
+    $semester = $row['semester'];
+    @endphp
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ $semester }}</span>
+                <span class="card-title">{{ $semester->tag().' ('.$semester->getStartDate()->format('Y.m.d').'-'.$semester->getEndDate()->format('Y.m.d').')'}}</span>
                 <div class="row">
                     <div class="col s12">
                         <table><tbody>
@@ -85,32 +88,50 @@
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <table class="centered">
-                        <thead>
-                            <tr>
-                                <th>@lang('checkout.workshop_balances')*</th>
-                                <th>
-                                    @lang('checkout.allocated_balance')
-                                    @can('administrate', \App\Models\Checkout::studentsCouncil())
-                                    <a href="#" class="btn-floating btn-small grey waves-effect">
-                                        <i class="material-icons">refresh</i>
-                                    </a>
-                                    @endcan
-                                </th>
-                                <th>@lang('checkout.used_balance')</th>
-                                <th>@lang('checkout.remaining_balance')</th>
-                            @foreach($row['workshop_balances'] as $workshop_balance)</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{ $workshop_balance->workshop->name }}</td>
-                                <td>{{ $workshop_balance->allocated_balance }}</td>
-                                <td>{{ $workshop_balance->used_balance }}</td>
-                                <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody></table>
-                        <blockquote>*@lang('checkout.workshop_balance_descr')</blockquote>
+                        <table class="centered" style="display: block;overflow-x:auto;">
+                            <thead>
+                                <tr>
+                                    <th>@lang('checkout.workshop_balances')</th>
+                                    <th>@lang('general.members') @if($semester->isCurrent()) * @endif</th>
+                                    <th>
+                                        @lang('checkout.allocated_balance')
+                                        @if($semester->isCurrent())
+                                        @can('administrate', \App\Models\Checkout::studentsCouncil())
+                                        <a href="{{ route('economic_committee.workshop_balance') }}" class="btn-floating btn-small grey waves-effect">
+                                            <i class="material-icons">refresh</i>
+                                        </a>
+                                        @endif
+                                        @endcan
+                                    </th>
+                                    <th>@lang('checkout.used_balance')</th>
+                                    <th>@lang('checkout.remaining_balance')</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($row['workshop_balances'] as $workshop_balance)</th>
+                                <tr>
+                                    <td>{{ $workshop_balance->workshop->name }}</td>
+                                    <td>
+                                        @php
+                                        $workshop = $workshop_balance->workshop;
+                                        $payed_members = $workshop->membersPayedKKTNetregInSemester($semester);
+                                        $payed_residents = $payed_members->filter(function($user, $key){ return $user->isResident();})->count();
+                                        $payed_externs = $payed_members->filter(function($user, $key){ return $user->isExtern();})->count();
+                                        $not_payed = $workshop->users->filter(function ($user, $key) use ($semester) {
+                                            return ($user->hasToPayKKTNetregInSemester($semester));})->count();
+                                        @endphp
+                                        {{ $payed_residents }} / {{ $payed_externs}} (+{{ $not_payed }})
+                                    </td>
+                                    <td>{{ $workshop_balance->allocated_balance }}</td>
+                                    <td>{{ $workshop_balance->used_balance }}</td>
+                                    <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @if($semester->isCurrent())
+                        <blockquote>*@lang('checkout.workshop_balance_descr', ['kkt' => config('custom.kkt')])</blockquote>
+                        @endif
                     </div>
                 </div>
             </div>

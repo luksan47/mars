@@ -18,10 +18,11 @@
                     @csrf
                     <div class="row">
                         <div class="col s12">
+                            <blockquote>@lang('checkout.pay_kkt_descr')</blockquote>
                             <div class="input-field col s12 m12 l4">
                                 @include("utils.select", [
                                     'elements' => $users->filter(function ($value, $key) {
-                                            return true;// $value->haveToPayKKTNetreg(); //all user will be better for now TODO change this later
+                                            return $value->hasToPayKKTNetreg();
                                         }), 
                                     'element_id' => 'user_id',
                                     'required' => true])
@@ -117,7 +118,7 @@
                 <span class="card-title">@lang('checkout.users_have_to_pay') ({{ $current_semester }}) </span>
                 <table><tbody>
                     @foreach($users as $user)
-                    @if($user->haveToPayKKTNetreg())
+                    @if($user->hasToPayKKTNetreg())
                     <tr><td>{{ $user->name }}</td></tr>
                     @endif
                     @endforeach
