@@ -204,6 +204,7 @@ class EconomicController extends Controller
 
     public function calculateWorkshopBalance(Semester $semester)
     {
+        $this->authorize('administrate', Checkout::studentsCouncil());
         WorkshopBalance::generateBalances();
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
