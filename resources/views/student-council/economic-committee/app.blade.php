@@ -21,21 +21,13 @@
                 </blockquote>
                 @can('handleAny', \App\Models\Checkout::class)
                 <div class="row">
-                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
+                    <div class="col s12 m12 l6 xl6" style="margin-bottom:5px">
                         <a href="{{ route('kktnetreg') }}" class="btn waves-effect" style="width:100%">
                             @lang('checkout.pay_kktnetreg')</a>
                     </div>
-                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
-                        <a href="#" class="btn waves-effect" disabled style="width:100%">
-                            @lang('checkout.transaction_for_workshop')</a>
-                    </div>
-                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
+                    <div class="col s12 m12 l6 xl6" style="margin-bottom:5px">
                         <a href="{{ route('economic_committee.transaction') }}" class="btn waves-effect" style="width:100%">
                             @lang('checkout.other_transaction')</a>
-                    </div>
-                    <div class="col s12 m12 l6 xl3" style="margin-bottom:5px">
-                        <a href="#" class="btn waves-effect" disabled style="width:100%">
-                            @lang('checkout.receipts')</a>
                     </div>
                 </div>
                 @endcan
@@ -92,7 +84,7 @@
                             <thead>
                                 <tr>
                                     <th>@lang('checkout.workshop_balances')</th>
-                                    <th>@lang('general.members') @if($semester->isCurrent()) * @endif</th>
+                                    <th>@lang('general.members')@if($semester->isCurrent())*@endif</th>
                                     <th>
                                         @lang('checkout.allocated_balance')
                                         @if($semester->isCurrent())
