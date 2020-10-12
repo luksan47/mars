@@ -81,11 +81,11 @@ class Workshop extends Model
     {
         return $this->payedKKTNetregInSemester(Semester::current());
     }
-    
+
     public function membersPayedKKTNetregInSemester(Semester $semester)
     {
-        return $this->users->filter(function ($user, $key) use ($semester){
-            return $user->isActiveIn($semester) && (!$user->hasToPayKKTNetregInSemester($semester));
+        return $this->users->filter(function ($user, $key) use ($semester) {
+            return $user->isActiveIn($semester) && (! $user->hasToPayKKTNetregInSemester($semester));
         });
     }
 
