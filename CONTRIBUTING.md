@@ -38,7 +38,7 @@ APP_URL=http://mars.local`.
    * Run `php artisan key:generate`.
    * Run `npm install` to install JS related dependencies.
    * Run `npm run dev` to create the CSS and JS files in the `public` directory. 
-11. The project should be running at [mars.local](http://mars.local/).
+12. The project should be running at [mars.local](http://mars.local/).
 
 We like to use [PHPStorm](https://www.jetbrains.com/phpstorm/) for development. You can get a free license if you are a student.
 The project contains basic configuration for this IDE with the Homestead environment, just open the project root in PHPStorm.
