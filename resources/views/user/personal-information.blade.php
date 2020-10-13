@@ -9,7 +9,7 @@
                     <th scope="row">@lang('registration.email')</th>
                     <td>
                         @if($modifiable_email ?? false)
-                            <form method="POST" action="{{ route('userdata.update_email') }}">
+                            <form method="POST" action="{{ route('secretariat.user.update_email') }}">
                                 @csrf
                                 <div class="input-field inline" style="margin:0">
                                     <input id="email" type="email" name="email" size="30" autocomplete="email"
@@ -43,10 +43,10 @@
                 </tr>
                 @if($user->hasPersonalInformation())
                     <tr>
-                        <th scope="row">@lang('info.phone_number')</th>
+                        <th scope="row">@lang('user.phone_number')</th>
                         <td>
                             @if($modifiable_phone ?? false)
-                                <form method="POST" action="{{ route('userdata.update_phone') }}">
+                                <form method="POST" action="{{ route('secretariat.user.update_phone') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
                                         <input id="phone_number" type="tel" name="phone_number" size="30" 
@@ -82,19 +82,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.place_and_date_of_birth')</th>
+                        <th scope="row">@lang('user.place_and_date_of_birth')</th>
                         <td>
                             {{ $user->personalInformation->place_of_birth }},  {{ $user->personalInformation->date_of_birth }}
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.mothers_name')</th>
+                        <th scope="row">@lang('user.mothers_name')</th>
                         <td>
                             {{ $user->personalInformation->mothers_name }}
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.address')</th>
+                        <th scope="row">@lang('user.address')</th>
                         <td>
                             {{ $user->personalInformation->country }}, <small>{{ $user->personalInformation->county }}</small>
                             <br>

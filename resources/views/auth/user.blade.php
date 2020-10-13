@@ -5,7 +5,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <div class="card-title">@lang('info.user_data')</div>
+                <div class="card-title">@lang('user.user_data')</div>
                 <blockquote>@lang('user.change_outdated_data')</blockquote>
                 @include('user.roles_status_table', ['user' => $user])
             </div>
@@ -26,7 +26,7 @@
 
     {{-- Change password  --}}
         <div class="card">
-            <form method="POST" action="{{ route('userdata.update_password') }}">
+            <form method="POST" action="{{ route('secretariat.user.update_password') }}">
                 @csrf
                 <div class="card-content">
                     <div class="card-title">@lang('general.change_password')</div>
