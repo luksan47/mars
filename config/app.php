@@ -21,7 +21,7 @@ return [
 
     'name' => env('APP_NAME', 'Urán'),
 
-    'version' => env('APP_VERSION', '3.3'),
+    'version' => env('APP_VERSION', '3.4'),
 
     'logo_blue_path' => '/img/uran_blue.png',
 

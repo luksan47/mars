@@ -35,34 +35,9 @@ class AuthServiceProvider extends ServiceProvider
         // Model-related policies, registering the contents of $this->policies
         $this->registerPolicies();
         // General policies without models
-        $this->registerPrintPolicies();
-        $this->registerInternetPolicies();
         $this->registerDocumentPolicies();
         $this->registerVerificationPolicies();
         $this->registerPermissionHandlingPolicies();
-    }
-
-    public function registerPrintPolicies()
-    {
-        Gate::define('print.print', function ($user) {
-            return $user->hasAnyRole([Role::PRINT_ADMIN, Role::PRINTER]);
-        });
-        Gate::define('print.modify', function ($user) {
-            return $user->hasRole(Role::PRINT_ADMIN);
-        });
-        Gate::define('print.modify-free', function ($user) {
-            return $user->hasRole(Role::PRINT_ADMIN);
-        });
-        Gate::define('print.admin', function ($user) {
-            return $user->hasRole(Role::PRINT_ADMIN);
-        });
-    }
-
-    public function registerInternetPolicies()
-    {
-        Gate::define('internet.internet', function ($user) {
-            return $user->hasAnyRole([Role::INTERNET_ADMIN, Role::INTERNET_USER]);
-        });
     }
 
     public function registerDocumentPolicies()
@@ -71,14 +46,14 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole(Role::SECRETARY);
         });
         Gate::define('document.status-certificate', function ($user) {
-            return $user->hasRoleBase(Role::COLLEGIST);
+            return $user->isCollegist();
         });
         Gate::define('document.register-statement', function ($user) {
-            return $user->hasRoleBase(Role::COLLEGIST)
+            return $user->isCollegist()
                 || $user->hasRole(Role::TENANT);
         });
         Gate::define('document.import-license', function ($user) {
-            return $user->hasRoleBase(Role::COLLEGIST)
+            return $user->isCollegist()
                 || $user->hasRole(Role::TENANT);
         });
 

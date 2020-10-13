@@ -2,7 +2,9 @@
 
 @section('title')
 <a href="#!" class="breadcrumb">@lang('admin.admin')</a>
-<a href="#!" class="breadcrumb">@lang('admin.permissions')</a>
+<a href="{{ route('admin.user.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.user_management')</a>
+<a href="{{ route('admin.permissions.list') }}" class="breadcrumb" style="cursor: pointer">@lang('admin.permissions')</a>
+<a href="#!" class="breadcrumb">{{ $user->name }}</a>
 @endsection
 @section('admin_module') active @endsection
 
@@ -12,7 +14,7 @@
     {{-- Roles of user --}}
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ $user->name }} - @lang('admin.permissions') </span>
+                <span class="card-title">{{ $user->name }}@lang('admin.users_roles')</span>
                 <table>
                     <tbody>
                         @foreach ($user->roles->sortBy('name') as $role)

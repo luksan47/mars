@@ -10,5 +10,7 @@ return [
     'registrations' => 'Regisztrációk',
     'reject' => 'Elutasít',
     'show' => 'Mutat',
+    'statuses' => 'Státuszok',
     'user_management' => 'Felhasználók kezelése',
+    'users_roles' => ' jogosultságai',
 ];

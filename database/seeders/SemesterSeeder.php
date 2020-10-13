@@ -15,7 +15,7 @@ class SemesterSeeder extends Seeder
      */
     public function run()
     {
-        $semester = Semester::updateOrCreate([
+        $semester = Semester::firstOrCreate([
             'year' => 2015,
             'part' => 1,
         ]);
@@ -27,11 +27,11 @@ class SemesterSeeder extends Seeder
 
         $users = Role::getUsers(Role::COLLEGIST);
 
-        $semesters = Semester::all();
+        $semesters = Semester::all()->unique();
         foreach ($semesters as $semester) {
             foreach ($users as $user) {
                 $status = array_rand(Semester::STATUSES);
-                $user->allSemesters()->attach($semester, ['status' => Semester::STATUSES[$status]]);
+                $user->setStatusFor($semester, Semester::STATUSES[$status]);
             }
         }
     }

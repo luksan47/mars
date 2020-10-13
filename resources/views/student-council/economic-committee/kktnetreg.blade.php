@@ -133,7 +133,7 @@
                 <table><tbody>
                     <tr>
                         <th>@lang('print.user')</th>
-                        <th>@lang('info.workshop')</th>
+                        <th>@lang('user.workshop')</th>
                         <th>@lang('checkout.amount')</th>                          
                     </tr>
                     @foreach($all_transactions as $transaction)

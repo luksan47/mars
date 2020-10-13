@@ -21,61 +21,28 @@ class FreePagesPolicy
         }
     }
 
-    /**
-     * Determine whether the user can view any print jobs.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
     public function viewAny(User $user)
+    {
+        return false;
+    }
+
+    public function viewSelf(User $user)
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can view the print job.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\PrintJob  $printJob
-     * @return mixed
-     */
     public function view(User $user, FreePages $freePages)
     {
         return $freePages->user_id == $user->id;
     }
 
-    /**
-     * Determine whether the user can create print jobs.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
     public function create(User $user)
     {
-        return true;
+        return false;
     }
 
-    /**
-     * Determine whether the user can update the print job.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\PrintJob  $printJob
-     * @return mixed
-     */
     public function update(User $user, FreePages $freePages)
     {
         return $freePages->user_id == $user->id;
-    }
-
-    /**
-     * Determine whether the user can delete the print job.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\PrintJob  $printJob
-     * @return mixed
-     */
-    public function delete(User $user, FreePages $freePages)
-    {
-        return false;
     }
 }

@@ -24,9 +24,13 @@ class PrintControllerTest extends TestCase
         // TODO: test this with freshly registered user.
         $response = $this->get('/print');
         $response->assertStatus(403);
-        $response = $this->get('/print/free_pages/all');
+        $response = $this->get('/print/free_pages/list');
         $response->assertStatus(403);
-        $response = $this->get('/print/print_jobs/all');
+        $response = $this->get('/print/print_jobs/list');
+        $response->assertStatus(403);
+        $response = $this->get('/print/free_pages/list/all');
+        $response->assertStatus(403);
+        $response = $this->get('/print/print_jobs/list/all');
         $response->assertStatus(403);
         $response = $this->get('/print/admin');
         $response->assertStatus(403);
@@ -58,10 +62,14 @@ class PrintControllerTest extends TestCase
 
         $response = $this->get('/print');
         $response->assertStatus(200);
-        $response = $this->get('/print/free_pages/all');
+        $response = $this->get('/print/free_pages/list');
         $response->assertStatus(200);
-        $response = $this->get('/print/print_jobs/all');
+        $response = $this->get('/print/print_jobs/list');
         $response->assertStatus(200);
+        $response = $this->get('/print/free_pages/list/all');
+        $response->assertStatus(403);
+        $response = $this->get('/print/print_jobs/list/all');
+        $response->assertStatus(403);
         $response = $this->get('/print/admin');
         $response->assertStatus(403);
         $response = $this->get('/print/account_history');
@@ -93,9 +101,13 @@ class PrintControllerTest extends TestCase
 
         $response = $this->get('/print');
         $response->assertStatus(200);
-        $response = $this->get('/print/free_pages/all');
+        $response = $this->get('/print/free_pages/list');
         $response->assertStatus(200);
-        $response = $this->get('/print/print_jobs/all');
+        $response = $this->get('/print/print_jobs/list');
+        $response->assertStatus(200);
+        $response = $this->get('/print/free_pages/list/all');
+        $response->assertStatus(200);
+        $response = $this->get('/print/print_jobs/list/all');
         $response->assertStatus(200);
         $response = $this->get('/print/admin');
         $response->assertStatus(200);

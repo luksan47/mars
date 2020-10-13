@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RegistrationsController;
+use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmailController;
@@ -74,6 +75,12 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/admin/semesters/{id}', [UserController::class, 'semesters'])->name('admin.user.semesters');
     Route::get('/admin/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('admin.user.semesters.update');
 
+    /** Semesters and statuses */
+    Route::get('/admin/statuses', [SemesterController::class, 'statuses'])->name('admin.user.statuses');
+    Route::get('/admin/semesters/{id}', [UserController::class, 'semesters'])->name('admin.user.semesters');
+    Route::get('/admin/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('admin.user.semesters.update');
+    Route::post('/admin/user/setCollegistType', [UserController::class, 'setCollegistType'])->name('admin.user.set_collegist_type');
+
     /** Localization */
     Route::get('/localizations', [LocaleController::class, 'index'])->name('localizations');
     Route::post('/localizations/add', [LocaleController::class, 'add'])->name('localizations.add');
@@ -86,17 +93,19 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Printing */
     Route::get('/print', [PrintController::class, 'index'])->name('print');
-    Route::get('/print/free_pages/all', [PrintController::class, 'listFreePages'])->name('print.free_pages.all');
-    Route::get('/print/print_jobs/all', [PrintController::class, 'listPrintJobs'])->name('print.print_jobs.all');
+    Route::get('/print/free_pages/list', [PrintController::class, 'listFreePages'])->name('print.free_pages.list');
+    Route::get('/print/print_jobs/list', [PrintController::class, 'listPrintJobs'])->name('print.print_jobs.list');
+    Route::get('/print/free_pages/list/all', [PrintController::class, 'listAllFreePages'])->name('print.free_pages.list.all');
+    Route::get('/print/print_jobs/list/all', [PrintController::class, 'listAllPrintJobs'])->name('print.print_jobs.list.all');
     Route::post('/print/transfer_balance', [PrintController::class, 'transferBalance'])->name('print.transfer-balance');
     Route::post('/print/print_jobs/{id}/cancel', [PrintController::class, 'cancelPrintJob'])->name('print.print_jobs.cancel');
     Route::put('/print/print', [PrintController::class, 'print'])->name('print.print');
-    Route::middleware(['can:print.modify'])->group(function () {
+    Route::middleware(['can:modify,App\Models\PrintAccount'])->group(function () {
         Route::get('/print/account_history', [PrintController::class, 'listPrintAccountHistory'])->name('print.account_history');
         Route::get('/print/admin', [PrintController::class, 'admin'])->name('print.admin');
         Route::post('/print/modify_balance', [PrintController::class, 'modifyBalance'])->name('print.modify');
     });
-    Route::post('/print/add_free_pages', [PrintController::class, 'addFreePages'])->name('print.free_pages')->middleware('can:print.modify-free');
+    Route::post('/print/add_free_pages', [PrintController::class, 'addFreePages'])->name('print.free_pages')->middleware('can:create,App\Models\FreePages');
 
     /** Internet */
     Route::get('/internet', [InternetController::class, 'index'])->name('internet');

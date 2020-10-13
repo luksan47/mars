@@ -9,13 +9,13 @@
         @include("print.print.print")
     </div>
     <div class="col s12">
-        @include("print.print.free")
+        @include("print.print.free", ['route' => route('print.free_pages.list')])
     </div>
     <div class="col s12">
         @include("print.send.send")
     </div>
     <div class="col s12">
-        @include("print.history.history")
+        @include("print.history.history", ['route' => route('print.print_jobs.list')])
     </div>
 </div>
 @endsection
