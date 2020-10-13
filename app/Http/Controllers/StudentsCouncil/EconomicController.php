@@ -76,7 +76,9 @@ class EconomicController extends Controller
         $this->authorize('handleAny', Checkout::class);
 
         $my_transactions_not_in_checkout = Transaction::where('receiver_id', Auth::user()->id)
-            ->where('moved_to_checkout', null)->get();
+            ->where('moved_to_checkout', null)
+            ->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id])
+            ->get();
         $sum = $my_transactions_not_in_checkout->sum('amount');
 
         $all_kktnetreg_transaction = Transaction::whereIn(
@@ -121,8 +123,27 @@ class EconomicController extends Controller
 
         // Creating transactions even if amount is 0.
         // Paying 0 means that the user payed their netreg+kkt depts (which is 0 in this case).
-        $kkt = $this->createTransaction($valasztmany_checkout, Auth::user()->id, $payer->id, $request->kkt, PaymentType::KKT);
-        $netreg = $this->createTransaction($admin_checkout, Auth::user()->id, $payer->id, $request->netreg, PaymentType::NETREG);
+        $kkt = Transaction::create([
+            'checkout_id' => $valasztmany_checkout->id,
+            'receiver_id' => Auth::user()->id,
+            'payer_id' => $payer->id,
+            'semester_id' => Semester::current()->id,
+            'amount' => $request->kkt,
+            'payment_type_id' => PaymentType::kkt()->id,
+            'comment' => null,
+            'moved_to_checkout' => null,
+        ]);
+
+        $netreg = Transaction::create([
+            'checkout_id' => $admin_checkout->id,
+            'receiver_id' => Auth::user()->id,
+            'payer_id' => $payer->id,
+            'semester_id' => Semester::current()->id,
+            'amount' => $request->netreg,
+            'payment_type_id' => PaymentType::netreg()->id,
+            'comment' => null,
+            'moved_to_checkout' => null,
+        ]);
 
         $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
         if (config('mail.active')) {
@@ -153,7 +174,9 @@ class EconomicController extends Controller
         }
 
         $transactions = Transaction::where('receiver_id', Auth::user()->id)
-            ->where('moved_to_checkout', null)->get();
+            ->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id])
+            ->where('moved_to_checkout', null)
+            ->get();
 
         foreach ($transactions as $transaction) {
             $transaction->update([
@@ -179,9 +202,18 @@ class EconomicController extends Controller
             return back()->withErros($validator)->withInput();
         }
 
-        $type = $request->amount > 0 ? PaymentType::INCOME : PaymentType::EXPENSE;
+        $type = $request->amount > 0 ? PaymentType::income()->id : PaymentType::expense()->id;
 
-        $this->createTransaction($checkout, null, Auth::user()->id, $request->amount, $type, Carbon::now(), $request->comment);
+        Transaction::create([
+            'checkout_id' => $checkout->id,
+            'receiver_id' => null,
+            'payer_id' => Auth::user()->id,
+            'semester_id' => Semester::current()->id,
+            'amount' => $request->amount,
+            'payment_type_id' => $type,
+            'comment' => $request->comment,
+            'moved_to_checkout' => Carbon::now(),
+        ]);
 
         return redirect()->action(
             [EconomicController::class, 'index'], ['redirected' => true]
@@ -215,18 +247,5 @@ class EconomicController extends Controller
 
     }
 
-    private function createTransaction($checkout, $receiver_id, $payer_id, $amount, $type, $moved_to_checkout = null, $comment = null)
-    {
-        $transaction = Transaction::create([
-            'checkout_id' => $checkout->id,
-            'receiver_id' => $receiver_id,
-            'payer_id' => $payer_id,
-            'semester_id' => Semester::current()->id,
-            'amount' => $amount,
-            'payment_type_id' => PaymentType::where('name', $type)->firstOrFail()->id,
-            'comment' => $comment,
-            'moved_to_checkout' => $moved_to_checkout,
-        ]);
-        return $transaction;
-    }
+    
 }

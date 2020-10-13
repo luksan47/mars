@@ -199,4 +199,9 @@ class Role extends Model
 
         return collect($objects);
     }
+
+    public function isSysAdmin()
+    {
+        return in_array($this->name, [self::INTERNET_ADMIN]);
+    }
 }

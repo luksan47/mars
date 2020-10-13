@@ -16,6 +16,7 @@ use App\Http\Controllers\Dormitory\FaultsController;
 use App\Http\Controllers\Dormitory\PrintController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\Network\AdminCheckoutController;
 use App\Http\Controllers\Network\InternetController;
 use App\Http\Controllers\Network\RouterController;
 use App\Http\Controllers\Secretariat\DocumentController;
@@ -97,8 +98,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/internet/wifi_password/reset', [InternetController::class, 'resetWifiPassword'])->name('internet.wifi_password.reset');
     Route::post('/internet/internet_accesses/{id}/edit', [InternetController::class, 'editInternetAccess'])->name('internet.internet_accesses.edit');
 
-    /** WIP: Admin Checkout **/
-    //Route::get('/admin/checkout', 'InternetController@showCheckout')->name('admin.checkout');
+    /** Admin Checkout **/
+    Route::get('/network/admin/checkout', [AdminCheckoutController::class, 'showCheckout'])->name('admin.checkout');
+    Route::post('network/admin/checkout/print_to_checkout', [AdminCheckoutController::class, 'printToCheckout'])->name('admin.checkout.print_to_checkout');
+    Route::post('/network/admin/checkout/transaction/add', [AdminCheckoutController::class, 'addTransaction'])->name('admin.checkout.transaction.add');
 
     /** Routers */
     Route::get('/routers', [RouterController::class, 'index'])->name('routers');

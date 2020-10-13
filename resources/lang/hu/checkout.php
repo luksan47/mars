@@ -27,6 +27,7 @@ return [
     'pay_kktnetreg' => 'KKT és Netreg fizetése',
     'payed_by' => 'Fizette',
     'payed_kkt' => 'KKT-t fizettek',
+    'print' => 'Nyomtatás',
     'receipts' => 'Átvételi elismervények',
     'remaining_balance' => 'Felhasználható egyenleg',
     'sum' => 'Összesen',

@@ -10,6 +10,10 @@ use App\Models\PrintJob;
 use App\Models\PrintAccountHistory;
 use App\Utils\Printer;
 use App\Utils\TabulatorPaginator;
+use App\Models\Transaction;
+use App\Models\Checkout;
+use App\Models\Semester;
+use App\Models\PaymentType;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -105,6 +109,18 @@ class PrintController extends Controller
         }
         $print_account->update(['last_modified_by' => Auth::user()->id]);
         $print_account->increment('balance', $balance);
+
+        $admin_checkout = Checkout::admin();
+        Transaction::create([
+            'checkout_id' => $admin_checkout->id,
+            'receiver_id' => Auth::user()->id,
+            'payer_id' => $user->id,
+            'semester_id' => Semester::current()->id,
+            'amount' => $request->balance,
+            'payment_type_id' => PaymentType::print()->id,
+            'comment' => null,
+            'moved_to_checkout' => null,
+        ]);
 
         // Send notification mail
         if (config('mail.active')) {
