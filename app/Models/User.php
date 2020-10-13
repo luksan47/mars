@@ -241,9 +241,9 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasRoleBase(Role::COLLEGIST);
     }
 
-    public function isInStudentCouncil()
+    public function isInStudentsCouncil()
     {
-        return $this->hasRole('student-council');
+        return $this->hasRoleBase('student-council');
     }
 
     /* Semester related getters */
