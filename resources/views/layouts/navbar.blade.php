@@ -55,7 +55,7 @@
         <!-- collapsible modules -->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <!-- student council module -->
+                <!-- students' council module -->
                 @can('viewAny', \App\Models\Checkout::class)
                 <li><div class="divider"></div></li>
                 <li class="@yield('student_council_module')">
@@ -76,13 +76,14 @@
                     </div>
                 </li>
                 @endcan
-                <!-- admin module -->
+                <!-- secretariat module -->
                 @if(Auth::user()->hasElevatedPermissions())
+
                 <li><div class="divider"></div></li>
-                <li class="@yield('admin_module')">
+                <li class="@yield('secretariat_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">
-                        <i class="material-icons left">edit</i>
-                        @lang('admin.admin')
+                        <i class="material-icons left">business_center</i>
+                        @lang('general.secretariat')
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
                     <div class="collapsible-body">
@@ -90,7 +91,7 @@
                             <!-- registrations -->
                             @can('registration.handle')
                             <li>
-                                <a class="waves-effect" href="{{ route('admin.registrations') }}">
+                                <a class="waves-effect" href="{{ route('secretariat.registrations') }}">
                                     <i class="material-icons left">how_to_reg</i> @lang('admin.handle_registrations')
                                     @notification(\App\Models\User::class)
                                 </a>
@@ -100,16 +101,29 @@
                             <!-- user management -->
                             @can('viewAny', \App\Models\User::class)
                             <li>
-                                <a class="waves-effect" href="{{ route('admin.user.list') }}">
+                                <a class="waves-effect" href="{{ route('secretariat.user.list') }}">
                                     <i class="material-icons left">supervisor_account</i> @lang('admin.user_management')
                                 </a>
                             </li>
                             @endcan
+                        </ul>
+                    </div>
+                </li>
 
+                {{-- Sysadmin module --}}
+                <li><div class="divider"></div></li>
+                <li class="@yield('admin_module')">
+                    <a class="collapsible-header waves-effect" style="padding-left:32px">
+                        <i class="material-icons left">edit</i>
+                        @lang('admin.admin')
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </a>
+                    <div class="collapsible-body">
+                        <ul>
                             <!-- print admin -->
                             @can('handleAny', \App\Models\PrintAccount::class)
                             <li>
-                                <a class="waves-effect" href="{{ route('print.admin') }}">
+                                <a class="waves-effect" href="{{ route('print.manage') }}">
                                     <i class="material-icons left">local_printshop</i>@lang('print.print')
                                 </a>
                             </li>

@@ -28,7 +28,7 @@
                 @can('viewAny', \App\Models\WifiConnection::class)
                 <tr>
                     <th scope="row">@lang('internet.wifi_connections')</th>
-                    @include('admin.internet.wifi_connections.show', ['showTooltip' => true])
+                    @include('network.wifi_connections.show', ['showTooltip' => true])
                 </tr>
                 @endcan
                 <tr>
