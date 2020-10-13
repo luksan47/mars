@@ -5,7 +5,7 @@
             <option value="{{ $country }}" @if($country=="Hungary") selected @endif>{{ $country }} </option>
             @endforeach
           </select>
-          <label for="country">@lang('info.country')</label>
+          <label for="country">@lang('user.country')</label>
           <script>
             var instances;
             $(document).ready(
@@ -25,21 +25,21 @@
     </div>
     <div class="input-field col s12 m12 l6">
         <input id="county" name="county" type="text" class="validate @error('county') invalid @enderror" value="{{ old('county') }}" required>
-        <label for="county">@lang('info.county')</label>
+        <label for="county">@lang('user.county')</label>
         @error('county')
         <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
     <div class="input-field col s12 m12 l6">
         <input id="zip_code" name="zip_code" type="number" class="validate @error('zip_code') invalid @enderror" value="{{ old('zip_code') }}" required>
-        <label for="zip_code">@lang('info.zip_code')</label>
+        <label for="zip_code">@lang('user.zip_code')</label>
         @error('zip_code')
         <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
     <div class="input-field col s12">
         <input id="city" name="city" type="text" class="validate @error('city') invalid @enderror" value="{{ old('city') }}" required>
-        <label for="city">@lang('info.city')</label>
+        <label for="city">@lang('user.city')</label>
         @error('city')
         <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
@@ -47,7 +47,7 @@
     <div class="input-field col s12">
         <input id="street_and_number" name="street_and_number" type="text" class="validate @error('street_and_number') invalid @enderror"
             value="{{ old('street_and_number') }}" required>
-        <label for="street_and_number">@lang('info.street_and_number')</label>
+        <label for="street_and_number">@lang('user.street_and_number')</label>
         @error('street_and_number')
         <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
