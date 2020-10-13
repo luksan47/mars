@@ -7,11 +7,11 @@
         <table>
             <tbody>
                     <tr>
-                        <th scope="row">@lang('info.neptun')</th>
+                        <th scope="row">@lang('user.neptun')</th>
                         <td>{{ $user->educationalInformation->neptun ?? ''}}</td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.faculty')</th>
+                        <th scope="row">@lang('user.faculty')</th>
                         <td>
                             <ul>
                                 @foreach ($user->faculties as $faculty)
@@ -21,7 +21,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.workshop')</th>
+                        <th scope="row">@lang('user.workshop')</th>
                         <td>
                             <ul>
                                 @include('user.workshop_tags', ['user' => $user])
@@ -29,19 +29,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.high_school')</th>
+                        <th scope="row">@lang('user.high_school')</th>
                         <td>{{ $user->educationalInformation->high_school }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.year_of_graduation')</th>
+                        <th scope="row">@lang('user.year_of_graduation')</th>
                         <td>{{ $user->educationalInformation->year_of_graduation }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.year_of_acceptance')</th>
+                        <th scope="row">@lang('user.year_of_acceptance')</th>
                         <td>{{ $user->educationalInformation->year_of_acceptance }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">@lang('info.semesters')</th>
+                        <th scope="row">@lang('user.semesters')</th>
                         <td>
                             <ul>
                                 @foreach ($user->allSemesters as $semester)
