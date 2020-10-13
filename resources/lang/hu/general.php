@@ -20,6 +20,7 @@ return [
     'register_guest' => 'Vendégeknek',
     'report_bug' => 'Hiba bejelentése',
     'search' => 'Keresés...',
+    'secretariat' => 'Titkárság',
     'semester' => 'Szemeszter',
     'settings' => 'Beállítások',
     'success' => 'Siker!',

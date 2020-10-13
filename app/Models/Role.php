@@ -8,7 +8,7 @@ class Role extends Model
 {
     // General roles
     const PRINT_ADMIN = 'print-admin';
-    const INTERNET_ADMIN = 'internet-admin';
+    const NETWORK_ADMIN = 'internet-admin';
     const COLLEGIST = 'collegist';
     const TENANT = 'tenant';
     const WORKSHOP_ADMINISTRATOR = 'workshop-administrator';
@@ -27,7 +27,7 @@ class Role extends Model
     // all roles
     const ALL = [
         self::PRINT_ADMIN,
-        self::INTERNET_ADMIN,
+        self::NETWORK_ADMIN,
         self::COLLEGIST,
         self::TENANT,
         self::WORKSHOP_ADMINISTRATOR,
@@ -148,7 +148,7 @@ class Role extends Model
         switch ($this->name) {
             case self::PRINT_ADMIN:
                 return 'red';
-            case self::INTERNET_ADMIN:
+            case self::NETWORK_ADMIN:
                 return 'pink';
             case self::COLLEGIST:
                 return 'coli';
@@ -181,7 +181,7 @@ class Role extends Model
 
     public function hasElevatedPermissions()
     {
-        return in_array($this->name, [self::PRINT_ADMIN, self::INTERNET_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
+        return in_array($this->name, [self::PRINT_ADMIN, self::NETWORK_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
     }
 
     public function hasTranslatedName()
