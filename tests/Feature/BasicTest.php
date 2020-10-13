@@ -23,6 +23,7 @@ class BasicTest extends TestCase
         // 200 routes
         '/',
         'setlocale/{locale}',
+        'color/{mode}',
         'login',
         'logout',
         'register',
