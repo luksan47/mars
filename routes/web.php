@@ -101,8 +101,9 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Admin Checkout **/
     Route::get('/network/admin/checkout', [AdminCheckoutController::class, 'showCheckout'])->name('admin.checkout');
-    Route::post('network/admin/checkout/print_to_checkout', [AdminCheckoutController::class, 'printToCheckout'])->name('admin.checkout.print_to_checkout');
+    Route::post('network/admin/checkout/print_to_checkout', [AdminCheckoutController::class, 'printToCheckout'])->name('admin.checkout.to_checkout');
     Route::post('/network/admin/checkout/transaction/add', [AdminCheckoutController::class, 'addTransaction'])->name('admin.checkout.transaction.add');
+    Route::get('/network/admin/checkout/transaction/delete/{transaction}', [EconomicController::class, 'deleteTransaction'])->name('admin.checkout.transaction.delete');
 
     /** Routers */
     Route::get('/routers', [RouterController::class, 'index'])->name('routers');
@@ -153,6 +154,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/economic_committee/transaction/delete/{transaction}', [EconomicController::class, 'deleteTransaction'])->name('economic_committee.transaction.delete');
     Route::get('/economic_committee/kktnetreg', [EconomicController::class, 'indexKKTNetreg'])->name('kktnetreg');
     Route::post('/economic_committee/kktnetreg/pay', [EconomicController::class, 'payKKTNetreg'])->name('kktnetreg.pay');
-    Route::post('/economic_committee/kktnetreg/to_checkout', [EconomicController::class, 'KKTNetregToCheckout'])->name('kktnetreg.to_checkout');
     Route::get('/economic_committee/calculate_workshop_balance', [EconomicController::class, 'calculateWorkshopBalance'])->name('economic_committee.workshop_balance');
+    Route::post('/economic_committee/kktnetreg/to_checkout', [EconomicController::class, 'KKTNetregToCheckout'])->name('economic_committee.to_checkout');
 });

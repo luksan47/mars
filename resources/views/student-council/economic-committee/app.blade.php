@@ -34,12 +34,7 @@
             </div>
         </div>
     </div>
-    @foreach($data as $row)
-    @php
-    $semester = $row['semester'];
-    $transactions = $row['transactions'];
-    $workshop_balances = $row['workshop_balances']; 
-    @endphp
+    @foreach($transactions as $semester => $transaction)
     <div class="col s12">
         <div class="card">
             <div class="card-content">
@@ -48,34 +43,14 @@
                     <div class="col s12">
                         <table><tbody>
                             <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
-                            <tr>
-                                <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
-                                <td>
-                                    @can('administrate', \App\Models\Checkout::studentsCouncil())
-                                    <a href="{{ route('kktnetreg') }}" class="btn waves-effect">
-                                        @lang('checkout.details')</a>
-                                    @endcan
-                                </td>
-                                <td class="right"><nobr>{{ number_format($transactions['kkt'], 0, '.', ' ') }} Ft</nobr></td>
-                            </tr>
-                            @foreach($transactions['income'] as $transaction)
-                            <tr>
-                                <td>{{ $transaction->comment }}</td>
-                                <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
-                                <td class="right"><nobr>{{ number_format($transaction->amount, 0, '.', ' ') }} Ft</nobr></td>
-                            </tr>
-                            @endforeach
+                            @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::KKT])
+                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::INCOME])
+
                             <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
-                            @foreach($transactions['expense'] as $transaction)
-                            <tr>
-                                <td>{{ $transaction->comment }}</td>
-                                <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
-                                <td class="right"><nobr>{{ number_format($transaction->amount, 0, '.', ' ') }} Ft</nobr></td>
-                            </tr>
-                            @endforeach
+                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::EXPENSE])
                             <tr>
                                 <th colspan="2">@lang('checkout.sum')</th>
-                                <th class="right"><nobr>{{ number_format($transactions['sum'], 0, '.', ' ') }} Ft</nobr></th>
+                                <th class="right"><nobr>{{ number_format(/*$row['transactions']['sum']*/ 0, 0, '.', ' ') }} Ft</nobr></th>
                             </tr>
                         </tbody></table>
                     </div>

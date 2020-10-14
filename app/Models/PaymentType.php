@@ -45,4 +45,9 @@ class PaymentType extends Model
     {
         return self::where('name', self::PRINT)->firstOrFail();
     }
+
+    public static function getByName(string $name)
+    {
+        return self::where('name', $name)->firstOrFail();
+    }
 }
