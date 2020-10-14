@@ -20,6 +20,7 @@ return [
     'register_guest' => 'For tenants',
     'report_bug' => 'Report a bug',
     'search' => 'Search...',
+    'secretariat' => 'Secretariat',
     'semester' => 'Semester',
     'settings' => 'Settings',
     'success' => 'Success!',
