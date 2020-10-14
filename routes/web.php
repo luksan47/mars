@@ -11,84 +11,62 @@
 |
 */
 
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\RegistrationsController;
-use App\Http\Controllers\Admin\SemesterController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\FaultsController;
+use App\Http\Controllers\Dormitory\FaultsController;
+use App\Http\Controllers\Dormitory\PrintController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\InternetController;
 use App\Http\Controllers\LocaleController;
-use App\Http\Controllers\PrintController;
-use App\Http\Controllers\RouterController;
-use App\Http\Controllers\SecretariatController;
-use App\Http\Controllers\StudentCouncil\EconomicController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Network\AdminCheckoutController;
+use App\Http\Controllers\Network\InternetController;
+use App\Http\Controllers\Network\RouterController;
+use App\Http\Controllers\Secretariat\DocumentController;
+use App\Http\Controllers\Secretariat\PermissionController;
+use App\Http\Controllers\Secretariat\RegistrationsController;
+use App\Http\Controllers\Secretariat\SecretariatController;
+use App\Http\Controllers\Secretariat\SemesterController;
+use App\Http\Controllers\Secretariat\UserController;
+use App\Http\Controllers\StudentsCouncil\EconomicController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
-Route::get('/', function () {
-    if (Auth::user()) {
-        return redirect('home');
-    }
-
-    return view('welcome');
-})->name('index');
-
-Route::get('/setlocale/{locale}', [LocaleController::class, 'set'])->name('setlocale');
-
-Route::get('/privacy_policy', function () {
-    return Storage::response('public/adatvedelmi_tajekoztato.pdf');
-})->name('privacy_policy');
-
-Route::get('/img/{filename}', [EmailController::class, 'getPicture']);
+Route::get('/', [HomeController::class, 'welcome'])->name('index');
+Route::get('/verification', [HomeController::class, 'verification'])->name('verification');
+Route::get('/privacy_policy', [HomeController::class, 'privacyPolicy'])->name('privacy_policy');
+Route::get('/img/{filename}', [HomeController::class, 'getPicture']);
+Route::get('/setlocale/{locale}', [HomeController::class, 'setLocale'])->name('setlocale');
 
 Auth::routes();
 
 Route::get('/register/guest', [RegisterController::class, 'showTenantRegistrationForm'])->name('register.guest');
 
-Route::get('/verification', function () {
-    return view('auth.verification');
-})->name('verification');
-
-Route::middleware(['auth', 'log'])->group(function () {
-    Route::get('/test_mails/{mail}/{send?}', [EmailController::class, 'testEmail']);
-});
-
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::post('/userdata/update_password', [UserController::class, 'updatePassword'])->name('userdata.update_password');
+    Route::post('/secretariat/user/update_password', [UserController::class, 'updatePassword'])->name('secretariat.user.update_password');
 });
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/color/{mode}', [HomeController::class, 'colorMode'])->name('set-color-mode');
 
-    /** User data */
+    /** User related routes */
     Route::get('/user', [UserController::class, 'index'])->name('user');
-    Route::post('/userdata/update_email', [UserController::class, 'updateEmail'])->name('userdata.update_email');
-    Route::post('/userdata/update_phone', [UserController::class, 'updatePhone'])->name('userdata.update_phone');
-    Route::get('/admin/user/list', [UserController::class, 'list'])->name('admin.user.list');
-    Route::get('/admin/user/show/{id}', [UserController::class, 'show'])->name('admin.user.show');
-    Route::get('/admin/semesters/{id}', [UserController::class, 'semesters'])->name('admin.user.semesters');
-    Route::get('/admin/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('admin.user.semesters.update');
-
-    /** Semesters and statuses */
-    Route::get('/admin/statuses', [SemesterController::class, 'statuses'])->name('admin.user.statuses');
-    Route::get('/admin/semesters/{id}', [UserController::class, 'semesters'])->name('admin.user.semesters');
-    Route::get('/admin/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('admin.user.semesters.update');
-    Route::post('/admin/user/setCollegistType', [UserController::class, 'setCollegistType'])->name('admin.user.set_collegist_type');
+    Route::post('/secretariat/user/update_email', [UserController::class, 'updateEmail'])->name('secretariat.user.update_email');
+    Route::post('/secretariat/user/update_phone', [UserController::class, 'updatePhone'])->name('secretariat.user.update_phone');
+    Route::get('/secretariat/user/list', [UserController::class, 'list'])->name('secretariat.user.list');
+    Route::get('/secretariat/user/show/{id}', [UserController::class, 'show'])->name('secretariat.user.show');
+    Route::get('/secretariat/user/semesters/{id}', [UserController::class, 'semesters'])->name('secretariat.user.semesters');
+    Route::get('/secretariat/user/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('secretariat.user.semesters.update');
+    Route::post('/secretariat/user/setCollegistType', [UserController::class, 'setCollegistType'])->name('secretariat.user.set_collegist_type');
+    Route::get('/secretariat/user/statuses', [SemesterController::class, 'statuses'])->name('secretariat.user.statuses');
+    Route::get('/secretariat/user/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('secretariat.user.semesters.update');
 
     /** Localization */
     Route::get('/localizations', [LocaleController::class, 'index'])->name('localizations');
     Route::post('/localizations/add', [LocaleController::class, 'add'])->name('localizations.add');
     Route::middleware(['can:viewAny,App\Models\LocalizationContribution'])->group(function () {
         Route::get('/localizations/admin', [LocaleController::class, 'indexAdmin'])->name('localizations.admin');
-        Route::post('/localizations/approve', [LocaleController::class, 'approve'])->name('localizations.approve');
-        Route::post('/localizations/approve_all', [LocaleController::class, 'approveAll'])->name('localizations.approve_all');
-        Route::post('/localizations/delete', [LocaleController::class, 'delete'])->name('localizations.delete');
+        Route::post('/localizations/admin/approve', [LocaleController::class, 'approve'])->name('localizations.approve');
+        Route::post('/localizations/admin/approve_all', [LocaleController::class, 'approveAll'])->name('localizations.approve_all');
+        Route::post('/localizations/admin/delete', [LocaleController::class, 'delete'])->name('localizations.delete');
     });
 
     /** Printing */
@@ -102,7 +80,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::put('/print/print', [PrintController::class, 'print'])->name('print.print');
     Route::middleware(['can:modify,App\Models\PrintAccount'])->group(function () {
         Route::get('/print/account_history', [PrintController::class, 'listPrintAccountHistory'])->name('print.account_history');
-        Route::get('/print/admin', [PrintController::class, 'admin'])->name('print.admin');
+        Route::get('/print/manage', [PrintController::class, 'admin'])->name('print.manage');
         Route::post('/print/modify_balance', [PrintController::class, 'modifyBalance'])->name('print.modify');
     });
     Route::post('/print/add_free_pages', [PrintController::class, 'addFreePages'])->name('print.free_pages')->middleware('can:create,App\Models\FreePages');
@@ -121,8 +99,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/internet/wifi_password/reset', [InternetController::class, 'resetWifiPassword'])->name('internet.wifi_password.reset');
     Route::post('/internet/internet_accesses/{id}/edit', [InternetController::class, 'editInternetAccess'])->name('internet.internet_accesses.edit');
 
-    /** WIP: Admin Checkout **/
-    //Route::get('/admin/checkout', 'InternetController@showCheckout')->name('admin.checkout');
+    /** Admin Checkout **/
+    Route::get('/network/admin/checkout', [AdminCheckoutController::class, 'showCheckout'])->name('admin.checkout');
+    Route::post('network/admin/checkout/print_to_checkout', [AdminCheckoutController::class, 'printToCheckout'])->name('admin.checkout.print_to_checkout');
+    Route::post('/network/admin/checkout/transaction/add', [AdminCheckoutController::class, 'addTransaction'])->name('admin.checkout.transaction.add');
 
     /** Routers */
     Route::get('/routers', [RouterController::class, 'index'])->name('routers');
@@ -130,18 +110,18 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Registration handling */
     Route::middleware(['can:registration.handle'])->group(function () {
-        Route::get('/admin/registrations', [RegistrationsController::class, 'index'])->name('admin.registrations');
-        Route::get('/admin/registrations/show/{id}', [RegistrationsController::class, 'show'])->name('admin.registrations.show');
-        Route::get('/admin/registrations/accept/{id}', [RegistrationsController::class, 'accept'])->name('admin.registrations.accept');
-        Route::get('/admin/registrations/reject/{id}', [RegistrationsController::class, 'reject'])->name('admin.registrations.reject');
+        Route::get('/secretariat/registrations', [RegistrationsController::class, 'index'])->name('secretariat.registrations');
+        Route::get('/secretariat/registrations/show/{id}', [RegistrationsController::class, 'show'])->name('secretariat.registrations.show');
+        Route::get('/secretariat/registrations/accept/{id}', [RegistrationsController::class, 'accept'])->name('secretariat.registrations.accept');
+        Route::get('/secretariat/registrations/reject/{id}', [RegistrationsController::class, 'reject'])->name('secretariat.registrations.reject');
     });
 
     /** Permission handling */
     Route::middleware(['can:permission.handle'])->group(function () {
-        Route::get('/admin/permissions', [PermissionController::class, 'index'])->name('admin.permissions.list');
-        Route::get('/admin/permissions/{id}/show', [PermissionController::class, 'show'])->name('admin.permissions.show');
-        Route::post('/admin/permissions/{id}/edit/{role_id}', [PermissionController::class, 'edit'])->name('admin.permissions.edit');
-        Route::post('/admin/permissions/{id}/remove/{role_id}/{object_id?}', [PermissionController::class, 'remove'])->name('admin.permissions.remove');
+        Route::get('/secretariat/permissions', [PermissionController::class, 'index'])->name('secretariat.permissions.list');
+        Route::get('/secretariat/permissions/{id}/show', [PermissionController::class, 'show'])->name('secretariat.permissions.show');
+        Route::post('/secretariat/permissions/{id}/edit/{role_id}', [PermissionController::class, 'edit'])->name('secretariat.permissions.edit');
+        Route::post('/secretariat/permissions/{id}/remove/{role_id}/{object_id?}', [PermissionController::class, 'remove'])->name('secretariat.permissions.remove');
     });
 
     /** Faults */
@@ -166,7 +146,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/documents/status-cert/request', [DocumentController::class, 'requestStatusCertificate'])->name('documents.status-cert.request');
     Route::get('/documents/status-cert/{id}/show', [DocumentController::class, 'showStatusCertificate'])->name('documents.status-cert.show');
 
-    /** Student Council */
+    /** Students' Council */
     Route::get('/economic_committee', [EconomicController::class, 'index'])->name('economic_committee');
     Route::get('/economic_committee/transaction', [EconomicController::class, 'indexTransaction'])->name('economic_committee.transaction');
     Route::post('/economic_committee/transaction/add', [EconomicController::class, 'addTransaction'])->name('economic_committee.transaction.add');

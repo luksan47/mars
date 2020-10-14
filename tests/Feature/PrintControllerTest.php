@@ -4,10 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Role;
-use App\Models\PrintAccount;
-use App\Http\Controllers\PrintController;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PrintControllerTest extends TestCase
 {
@@ -32,7 +29,7 @@ class PrintControllerTest extends TestCase
         $response->assertStatus(403);
         $response = $this->get('/print/print_jobs/list/all');
         $response->assertStatus(403);
-        $response = $this->get('/print/admin');
+        $response = $this->get('/print/manage');
         $response->assertStatus(403);
         $response = $this->get('/print/account_history');
         $response->assertStatus(403);
@@ -70,7 +67,7 @@ class PrintControllerTest extends TestCase
         $response->assertStatus(403);
         $response = $this->get('/print/print_jobs/list/all');
         $response->assertStatus(403);
-        $response = $this->get('/print/admin');
+        $response = $this->get('/print/manage');
         $response->assertStatus(403);
         $response = $this->get('/print/account_history');
         $response->assertStatus(403);
@@ -109,7 +106,7 @@ class PrintControllerTest extends TestCase
         $response->assertStatus(200);
         $response = $this->get('/print/print_jobs/list/all');
         $response->assertStatus(200);
-        $response = $this->get('/print/admin');
+        $response = $this->get('/print/manage');
         $response->assertStatus(200);
         $response = $this->get('/print/account_history');
         $response->assertStatus(200);

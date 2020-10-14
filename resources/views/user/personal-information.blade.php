@@ -9,7 +9,7 @@
                     <th scope="row">@lang('registration.email')</th>
                     <td>
                         @if($modifiable_email ?? false)
-                            <form method="POST" action="{{ route('userdata.update_email') }}">
+                            <form method="POST" action="{{ route('secretariat.user.update_email') }}">
                                 @csrf
                                 <div class="input-field inline" style="margin:0">
                                     <input id="email" type="email" name="email" size="30" autocomplete="email"
@@ -46,7 +46,7 @@
                         <th scope="row">@lang('user.phone_number')</th>
                         <td>
                             @if($modifiable_phone ?? false)
-                                <form method="POST" action="{{ route('userdata.update_phone') }}">
+                                <form method="POST" action="{{ route('secretariat.user.update_phone') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
                                         <input id="phone_number" type="tel" name="phone_number" size="30" 
