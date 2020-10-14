@@ -76,7 +76,7 @@ class Workshop extends Model
             return $user->isExtern();
         });
     }
-    
+
     public function color()
     {
         switch ($this->name) {
