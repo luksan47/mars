@@ -48,6 +48,9 @@ blockquote {
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent;
 }
+.btn-fixed-height {
+  height: $button-height;
+}
 
 
 // Settings for dark mode
