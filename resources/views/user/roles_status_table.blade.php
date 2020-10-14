@@ -5,7 +5,7 @@
         <td>@include('user.roles', ['roles' => $user->roles, 'newline' => $newline ?? false])</td>
         <td>
         @can('viewPermissionFor', $user)
-            <a href="{{ route('admin.permissions.show', $user->id) }}"
+            <a href="{{ route('secretariat.permissions.show', $user->id) }}"
                 class="btn-floating waves-effect waves-light right">
                 <i class="material-icons">edit</i>
             </a>
@@ -20,7 +20,7 @@
             </span></td>
         <td>
         @can('viewPermissionFor', $user) {{-- ??? --}}
-            <a href="{{ route('admin.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect right">
+            <a href="{{ route('secretariat.user.semesters', ['id' => $user->id]) }}" class="btn-floating waves-effect right">
                 <i class="material-icons">edit</i></a>
         @endcan
         </td>

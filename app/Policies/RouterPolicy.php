@@ -12,7 +12,7 @@ class RouterPolicy
 
     public function before(User $user, $ability)
     {
-        if ($user->hasRole(Role::INTERNET_ADMIN)) {
+        if ($user->hasRole(Role::NETWORK_ADMIN)) {
             return true;
         }
     }

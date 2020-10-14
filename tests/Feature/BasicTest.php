@@ -23,6 +23,7 @@ class BasicTest extends TestCase
         // 200 routes
         '/',
         'setlocale/{locale}',
+        'color/{mode}',
         'login',
         'logout',
         'register',
@@ -30,9 +31,9 @@ class BasicTest extends TestCase
         'password/email',
         'password/reset/{token}',
         'register/guest',
-        'userdata/update_password',
-        'userdata/update_email',
-        'userdata/update_phone',
+        'secretariat/user/update_password',
+        'secretariat/user/update_email',
+        'secretariat/user/update_phone',
     ];
 
     /**

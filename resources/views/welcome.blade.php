@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
 </head>
 
-<body>
+<body class="{{ Cookie::get('theme') }}">
     @if (Route::has('login'))
     <header>
         <div class="navbar-fixed">

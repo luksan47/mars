@@ -31,7 +31,7 @@ class CheckoutPolicy
         }
         if ($checkout->name === Checkout::ADMIN) {
             return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['economic-member', 'economic-leader'])
-                || $user->hasRole(Role::INTERNET_ADMIN);
+                || $user->hasRole(Role::NETWORK_ADMIN);
         }
 
         return false;
@@ -43,7 +43,7 @@ class CheckoutPolicy
             return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['economic-leader']);
         }
         if ($checkout->name === Checkout::ADMIN) {
-            return $user->hasRole(Role::INTERNET_ADMIN);
+            return $user->hasRole(Role::NETWORK_ADMIN);
         }
 
         return false;
