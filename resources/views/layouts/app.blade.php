@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -21,8 +21,8 @@
 
 
     <!-- Styles -->
-    <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen,projection" >
     <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="{{ mix('css/app.css') }}" media="screen,projection" >
 
     <!-- Scripts -->
     <script type="text/javascript" src="{{ mix('js/jquery.min.js') }}"></script>
@@ -47,7 +47,7 @@
 
 </head>
 
-<body>
+<body class="{{ Cookie::get('theme') }}">
     <header>
         @include('layouts.navbar')
     </header>
@@ -68,6 +68,23 @@
         'cookie': "@lang('cookie.message')",
         'header': "@lang('cookie.header')",
     };
+    </script>
+    <script>
+        function toggleColorMode() {
+            var mode = (localStorage.getItem('mode') || 'dark') === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('mode', mode);
+            if(localStorage.getItem('mode') === 'dark') {
+                document.querySelector('body').classList.add('dark');
+            } else {
+                document.querySelector('body').classList.remove('dark');
+            }
+
+            // Save as cookie
+            $.ajax({
+                type: "POST",
+                url: "{{ route('set-color-mode', [':mode']) }}".replace(':mode', mode),
+            });
+        }
     </script>
 </body>
 
