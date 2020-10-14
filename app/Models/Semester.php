@@ -63,6 +63,11 @@ class Semester extends Model
         return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
     }
 
+    public function datesToText()
+    {
+        return $this->getStartDate()->format('Y.m.d').'-'.$this->getEndDate()->format('Y.m.d');
+    }
+
     public function isAutumn()
     {
         return $this->part == 1;

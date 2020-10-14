@@ -37,11 +37,13 @@
     @foreach($data as $row)
     @php
     $semester = $row['semester'];
+    $transactions = $row['transactions'];
+    $workshop_balances = $row['workshop_balances']; 
     @endphp
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ $semester->tag().' ('.$semester->getStartDate()->format('Y.m.d').'-'.$semester->getEndDate()->format('Y.m.d').')'}}</span>
+                <span class="card-title">{{ $semester->tag().' ('. $semester->datesToText().')'}}</span>
                 <div class="row">
                     <div class="col s12">
                         <table><tbody>
@@ -54,9 +56,9 @@
                                         @lang('checkout.details')</a>
                                     @endcan
                                 </td>
-                                <td class="right"><nobr>{{ number_format($row['transactions']['kkt'], 0, '.', ' ') }} Ft</nobr></td>
+                                <td class="right"><nobr>{{ number_format($transactions['kkt'], 0, '.', ' ') }} Ft</nobr></td>
                             </tr>
-                            @foreach($row['transactions']['income'] as $transaction)
+                            @foreach($transactions['income'] as $transaction)
                             <tr>
                                 <td>{{ $transaction->comment }}</td>
                                 <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
@@ -64,7 +66,7 @@
                             </tr>
                             @endforeach
                             <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
-                            @foreach($row['transactions']['expense'] as $transaction)
+                            @foreach($transactions['expense'] as $transaction)
                             <tr>
                                 <td>{{ $transaction->comment }}</td>
                                 <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
@@ -73,7 +75,7 @@
                             @endforeach
                             <tr>
                                 <th colspan="2">@lang('checkout.sum')</th>
-                                <th class="right"><nobr>{{ number_format($row['transactions']['sum'], 0, '.', ' ') }} Ft</nobr></th>
+                                <th class="right"><nobr>{{ number_format($transactions['sum'], 0, '.', ' ') }} Ft</nobr></th>
                             </tr>
                         </tbody></table>
                     </div>
@@ -100,13 +102,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($row['workshop_balances'] as $workshop_balance)</th>
+                                @foreach($workshop_balances as $workshop_balance)</th>
                                 <tr>
                                     <td>{{ $workshop_balance->workshop->name }}</td>
                                     <td>
                                         @php
                                         $workshop = $workshop_balance->workshop;
-                                        $payed_members = $workshop->membersPayedKKTNetregInSemester($semester);
+                                        $payed_members = $workshop_balance->membersPayedKKTNetregInSemester($semester);
                                         $payed_residents = $payed_members->filter(function($user, $key){ return $user->isResident();})->count();
                                         $payed_externs = $payed_members->filter(function($user, $key){ return $user->isExtern();})->count();
                                         $not_payed = $workshop->users->filter(function ($user, $key) use ($semester) {

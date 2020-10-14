@@ -28,6 +28,18 @@ class WorkshopBalance extends Model
         return $this->belongsTo('App\Models\Semester');
     }
 
+    public function membersPayedKKTNetreg()
+    {
+        return $this->payedKKTNetregInSemester(Semester::current());
+    }
+
+    public function membersPayedKKTNetregInSemester(Semester $semester)
+    {
+        return $this->workshop->users->filter(function ($user, $key) use ($semester) {
+            return $user->isActiveIn($semester) && (! $user->hasToPayKKTNetregInSemester($semester));
+        });
+    }
+
     /**
      * Generates all the workshops' allocated balance in the current semester.
      * For all active members in a workshop who payed kkt: 
