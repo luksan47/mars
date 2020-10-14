@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::post('/color/{mode}', [HomeController::class, 'colorMode'])->name('set-color-mode');
 
     /** User related routes */
     Route::get('/user', [UserController::class, 'index'])->name('user');

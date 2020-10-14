@@ -2,7 +2,7 @@ os:
   - linux
 language: php
 php:
-  - 7.3
+  - 7.4
 services:
   - mysql
 cache:
@@ -24,4 +24,3 @@ branches:
   only:
   - master
   - uran-2.x
-  
