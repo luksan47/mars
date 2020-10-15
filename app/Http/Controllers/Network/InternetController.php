@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\EventTrigger;
 use App\Models\InternetAccess;
 use App\Models\MacAddress;
-use App\Models\Role;
 use App\Models\User;
 use App\Models\WifiConnection;
 use App\Utils\TabulatorPaginator;
