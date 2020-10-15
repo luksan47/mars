@@ -56,6 +56,7 @@ class Semester extends Model
             return $value->getStartDate() < Carbon::now();
         });
     }
+
     // For displaying semesters
     public function tag()
     {
@@ -65,6 +66,7 @@ class Semester extends Model
     public static function byTag(string $tag)
     {
         $parts = explode(self::SEPARATOR, $tag);
+
         return self::getOrCreate($parts[0], $parts[2]);
     }
 

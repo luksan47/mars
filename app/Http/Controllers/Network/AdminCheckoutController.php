@@ -5,13 +5,8 @@ namespace App\Http\Controllers\Network;
 use App\Http\Controllers\Controller;
 use App\Models\Checkout;
 use App\Models\PaymentType;
-use App\Models\Semester;
-use App\Models\Transaction;
 use App\Utils\CheckoutHandler;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class AdminCheckoutController extends Controller
 {
@@ -26,6 +21,7 @@ class AdminCheckoutController extends Controller
             PaymentType::NETREG,
         ];
         $checkoutData = $this->getCheckout(Checkout::admin(), $payment_types);
+
         return view('network.checkout', $checkoutData);
     }
 
@@ -43,10 +39,12 @@ class AdminCheckoutController extends Controller
     {
         $checkout = Checkout::admin();
         $this->createTransaction($request, $checkout);
+
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
-    public static function routeBase() {
+    public static function routeBase()
+    {
         return 'admin.checkout';
     }
 }

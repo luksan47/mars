@@ -6,13 +6,10 @@ use App\Models\Checkout;
 use App\Models\PaymentType;
 use App\Models\Semester;
 use App\Models\Transaction;
-
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
 
 trait CheckoutHandler
 {
@@ -28,9 +25,9 @@ trait CheckoutHandler
             ->whereIn('payment_type_id', $payment_type_ids)
             ->groupBy([function ($item) {
                 return $item['semester']->tag();
-            } , function ($item) {
+            }, function ($item) {
                 return $item['type']->name;
-            },]);
+            }]);
 
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();
@@ -100,6 +97,7 @@ trait CheckoutHandler
     {
         $this->authorize('delete', $transaction);
         $transaction->delete();
+
         return redirect()->back()->with('message', __('general.successfully_deleted'));
     }
 
@@ -111,13 +109,15 @@ trait CheckoutHandler
             ->where('moved_to_checkout', null)
             ->whereIn('payment_type_id', $payment_type_ids)
             ->get();
+
         return $user_transactions_not_in_checkout;
     }
 
     private function paymenyTypeIDs(array $payment_types)
     {
-        return array_map(fn($name) => PaymentType::getByName($name)->id, $payment_types);
+        return array_map(fn ($name) => PaymentType::getByName($name)->id, $payment_types);
     }
+
     /**
      * Returns the route name base, so some routes could be generated automatically.
      * For example the route base of economic_committee.transaction.delete is economic_committee.
