@@ -124,7 +124,11 @@
                             </tbody>
                         </table>
                         @if($semester->isCurrent())
-                        <blockquote>*@lang('checkout.workshop_balance_descr', ['kkt' => config('custom.kkt')])</blockquote>
+                        <blockquote>*@lang('checkout.workshop_balance_descr', [
+                            'kkt' => config('custom.kkt'),
+                            'resident' => config('custom.workshop_balance_resident'),
+                            'extern' => config('custom.workshop_balance_extern')
+                        ])</blockquote>
                         @endif
                     </div>
                 </div>

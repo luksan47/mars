@@ -38,6 +38,6 @@ return [
     'transactions_payed' => 'You payed the following transaction(s)',
     'used_balance' => 'Used balance',
     'users_have_to_pay' => 'Users who have to pay',
-    'workshop_balance_descr' => 'Residents / externs (+ the remaining members who did not payed yet)<br>After each resident, the workshop receives :kkt * 0.6, and after each extern, the workshop receives :kkt * 0.45 HUF. (If a member has multiple workshops, the amount is divided accordingly.)',
+    'workshop_balance_descr' => 'Residents / externs (+ the remaining members who did not payed yet)<br>After each resident, the workshop receives :kkt * :resident, and after each extern, the workshop receives :kkt * :extern HUF. (If a member has multiple workshops, the amount is divided accordingly.)',
     'workshop_balances' => 'Workshops\' balance',
 ];

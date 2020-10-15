@@ -54,7 +54,7 @@ class WorkshopBalance extends Model
                 if ($member->isActive() && !$member->hasToPayKKTNetreg())
                 {
                     $balance += config('custom.kkt') *
-                        ($member->isResident() ? 0.6 : 0.45 ) /
+                        ($member->isResident() ? config('custom.workshop_balance_resident') : config('custom.workshop_balance_extern') ) /
                         $member->workshops->count();
                 }
             }

@@ -38,6 +38,6 @@ return [
     'transactions_payed' => 'Az alábbi tranzakciókat fizetted be',
     'used_balance' => 'Felhasznált egyenleg',
     'users_have_to_pay' => 'Még nem fizettek',
-    'workshop_balance_descr' => 'Bentlakók / bejárók (+ akik még nem fizettek, de aktív státuszú collegisták)<br>Azok közül, akik fizettek, minden bentlakó után a műhely :kkt * 0.6, minden bejáró után :kkt * 0.45 forintot kap. (Ha egy collegistának több műhelye is van, a műhelyei megosztoznak az összegen.)',
+    'workshop_balance_descr' => 'Bentlakók / bejárók (+ akik még nem fizettek, de aktív státuszú collegisták)<br>Azok közül, akik fizettek, minden bentlakó után a műhely :kkt * :resident, minden bejáró után :kkt * :extern forintot kap. (Ha egy collegistának több műhelye is van, a műhelyei megosztoznak az összegen.)',
     'workshop_balances' => 'Műhelyek egyenlegei',
 ];
