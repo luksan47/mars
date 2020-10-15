@@ -246,6 +246,16 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasRoleBase('student-council');
     }
 
+    public static function printers()
+    {
+        return Role::getUsers(Role::PRINTER);
+    }
+
+    public static function internetUsers()
+    {
+        return Role::getUsers(Role::INTERNET_USER);
+    }
+
     /* Semester related getters */
 
     public function allSemesters()
