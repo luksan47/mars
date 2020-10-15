@@ -78,7 +78,7 @@
                         <th>@lang('user.workshop')</th>
                         <th>@lang('checkout.amount')</th>
                     </tr>
-                    @foreach($transactions as $transaction)
+                    {{-- @foreach($transactions as $transaction)
                         @if($transaction->semester == \App\Models\Semester::current() &&
                             $transaction->type->name == \App\Models\PaymentType::KKT)
                             <tr>
@@ -91,7 +91,7 @@
                                 <td>{{ $transaction->amount }}</td>
                             </tr>
                         @endif
-                    @endforeach
+                    @endforeach --}}
                 </tbody></table>
             </div>
         </div>
@@ -110,30 +110,34 @@
                         <td>@lang('checkout.amount')</td>
                         <td>@lang('checkout.in_checkout')</td>
                     </tr>
-                    @foreach($transactions as $transaction)
-                    <tr>
-                        <td>{{ $transaction->semester->tag() }}<td>
-                        <td>{{ $transaction->created_at }}</td>
-                        <td>
-                            @if($transaction->payer)
-                                {{ $transaction->payer->name }}
-                            @endif
-                        </td>
-                        <td>
-                            @if($transaction->receiver)
-                                {{ $transaction->receiver->name }}
-                            @endif
-                        </td>
-                        <td>
-                            @if(in_array($transaction->type->name, [\App\Models\PaymentType::NETREG, \App\Models\PaymentType::KKT]))
-                            {{ $transaction->type->name }}
-                            @else
-                            {{ $transaction->comment ?? ''}}
-                            @endif
-                        </td>
-                        <td>{{ $transaction->amount }} Ft</td>
-                        <td>{{ $transaction->moved_to_checkout ?? '-'}}
-                    </tr>
+                    @foreach($transactions as $semesterTag => $transactionPerSemester)
+                        @foreach ($transactionPerSemester as $paymentType => $transactionPerPaymentType)
+                            @foreach ($transactionPerPaymentType as $transaction)
+                            <tr>
+                                <td>{{ $transaction->semester->tag() }}<td>
+                                <td>{{ $transaction->created_at }}</td>
+                                <td>
+                                    @if($transaction->payer)
+                                        {{ $transaction->payer->name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($transaction->receiver)
+                                        {{ $transaction->receiver->name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(in_array($transaction->type->name, [\App\Models\PaymentType::NETREG, \App\Models\PaymentType::KKT]))
+                                    {{ $transaction->type->name }}
+                                    @else
+                                    {{ $transaction->comment ?? ''}}
+                                    @endif
+                                </td>
+                                <td>{{ $transaction->amount }} Ft</td>
+                                <td>{{ $transaction->moved_to_checkout ?? '-'}}
+                            </tr>
+                            @endforeach
+                        @endforeach
                     @endforeach
                 </tbody></table>
                 </div>

@@ -56,11 +56,16 @@ class Semester extends Model
             return $value->getStartDate() < Carbon::now();
         });
     }
-
     // For displaying semesters
     public function tag()
     {
         return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
+    }
+
+    public static function byTag(string $tag)
+    {
+        $parts = explode(self::SEPARATOR, $tag);
+        return self::getOrCreate($parts[0], $parts[2]);
     }
 
     public function datesToText()

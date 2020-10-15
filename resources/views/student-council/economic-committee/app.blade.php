@@ -10,13 +10,13 @@
 
 <div class="row">
     <div class="col s12">
-        <div class="card">   
+        <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('checkout.checkout')</span>
                 <blockquote>
-                    @lang('checkout.current_balance'): 
+                    @lang('checkout.current_balance'):
                     <b class="coli-text text-orange"> {{ number_format($current_balance, 0, '.', ' ') }} Ft</b>.<br>
-                    @lang('checkout.current_balance_in_checkout'): 
+                    @lang('checkout.current_balance_in_checkout'):
                     <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
                 @can('handleAny', \App\Models\Checkout::class)
@@ -34,11 +34,14 @@
             </div>
         </div>
     </div>
-    @foreach($transactions as $semester => $transaction)
+    @foreach($transactions as $semesterTag => $transaction)
+    @php
+        $semester = \App\Models\Semester::byTag($semesterTag);
+    @endphp
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ $semester->tag().' ('. $semester->datesToText().')'}}</span>
+                <span class="card-title">{{ $semesterTag }}</span>
                 <div class="row">
                     <div class="col s12">
                         <table><tbody>
@@ -65,32 +68,22 @@
                                     <th>
                                         @lang('checkout.allocated_balance')
                                         @if($semester->isCurrent())
-                                        @can('administrate', \App\Models\Checkout::studentsCouncil())
-                                        <a href="{{ route('economic_committee.workshop_balance') }}" class="btn-floating btn-small grey waves-effect">
-                                            <i class="material-icons">refresh</i>
-                                        </a>
+                                            @can('administrate', \App\Models\Checkout::studentsCouncil())
+                                            <a href="{{ route('economic_committee.workshop_balance') }}" class="btn-floating btn-small grey waves-effect">
+                                                <i class="material-icons">refresh</i>
+                                            </a>
+                                            @endcan
                                         @endif
-                                        @endcan
                                     </th>
                                     <th>@lang('checkout.used_balance')</th>
                                     <th>@lang('checkout.remaining_balance')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($workshop_balances as $workshop_balance)</th>
+                                @foreach($workshop_balances[$semesterTag] as $workshop_balance)</th>
                                 <tr>
-                                    <td>{{ $workshop_balance->workshop->name }}</td>
-                                    <td>
-                                        @php
-                                        $workshop = $workshop_balance->workshop;
-                                        $payed_members = $workshop_balance->membersPayedKKTNetregInSemester($semester);
-                                        $payed_residents = $payed_members->filter(function($user, $key){ return $user->isResident();})->count();
-                                        $payed_externs = $payed_members->filter(function($user, $key){ return $user->isExtern();})->count();
-                                        $not_payed = $workshop->users->filter(function ($user, $key) use ($semester) {
-                                            return ($user->hasToPayKKTNetregInSemester($semester));})->count();
-                                        @endphp
-                                        {{ $payed_residents }} / {{ $payed_externs}} (+{{ $not_payed }})
-                                    </td>
+                                    <td>{{ $workshop_balance->workshop->name }} </td>
+                                    <td>{{ $workshop_balance->payCountDisplayString($semester) }}</td>
                                     <td>{{ $workshop_balance->allocated_balance }}</td>
                                     <td>{{ $workshop_balance->used_balance }}</td>
                                     <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>

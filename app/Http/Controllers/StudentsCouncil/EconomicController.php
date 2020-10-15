@@ -10,9 +10,7 @@ use App\Models\User;
 use App\Models\WorkshopBalance;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Network\InternetController;
-use App\Models\WorkshopBalance;
 use App\Utils\CheckoutHandler;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -35,9 +33,10 @@ class EconomicController extends Controller
 
         $checkoutData = $this->getCheckout($checkout, $payment_types);
 
-        $workshop_balances = WorkshopBalance::groupBy(function ($item) {
-            return $item['semester']->tag();
-        });
+        $workshop_balances = WorkshopBalance::all()
+            ->groupBy(function ($item) {
+                return $item['semester']->tag();
+            });
 
         $view = view('student-council.economic-committee.app', $checkoutData)
             ->with('workshop_balances', $workshop_balances);
@@ -47,7 +46,6 @@ class EconomicController extends Controller
         return $view;
     }
 
-    // TODO: use getCheckout when #437 is merged.
     public function indexKKTNetreg()
     {
         $checkout = Checkout::studentsCouncil();
@@ -59,19 +57,10 @@ class EconomicController extends Controller
             PaymentType::KKT,
         ];
 
-        $all_kktnetreg_transaction = Transaction::whereIn(
-            'payment_type_id',
-            [PaymentType::kkt()->id, PaymentType::netreg()->id]
-        )->get();
+        $checkoutData = $this->getCheckout($checkout, $payment_types);
 
-        $user_transactions_not_in_checkout = $this->userTransactionsNotInCheckout($payment_types);
-
-        return view('student-council.economic-committee.kktnetreg', [
-            'users' => User::all(),
-            'user_transactions_not_in_checkout' => $user_transactions_not_in_checkout,
-            'transactions' => $all_kktnetreg_transaction,
-            'route_base' => $this->routeBase(),
-        ]);
+        return view('student-council.economic-committee.kktnetreg', $checkoutData)
+            ->with('users', User::collegists());
 }
 
     public function indexTransaction()

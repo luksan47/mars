@@ -58,11 +58,26 @@ class WorkshopBalance extends Model
                         $member->workshops->count();
                 }
             }
-            DB::table('workshop_balances')
-                ->updateOrInsert(
-                    ['semester_id' => Semester::current()->id, 'workshop_id' => $workshop->id],
-                    ['allocated_balance' => $balance]
-                );
+            self::updateOrInsert(
+                ['semester_id' => Semester::current()->id, 'workshop_id' => $workshop->id],
+                ['allocated_balance' => $balance]
+            );
         }
+    }
+
+    public function payCountDisplayString(Semester $semester)
+    {
+        $workshop = $this->workshop;
+        $payed_members = $this->membersPayedKKTNetregInSemester($semester);
+        $payed_residents = $payed_members->filter(function($user, $key){
+            return $user->isResident();
+        })->count();
+        $payed_externs = $payed_members->filter(function($user, $key){
+            return $user->isExtern();
+        })->count();
+        $not_payed = $workshop->users->filter(function ($user, $key) use ($semester) {
+            return ($user->hasToPayKKTNetregInSemester($semester));
+        })->count();
+        return $payed_residents . ' / ' . $payed_externs . ' (+' . $not_payed . ')';
     }
 }
