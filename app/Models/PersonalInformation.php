@@ -31,7 +31,8 @@ class PersonalInformation extends Model
 
     public function getAddress()
     {
-        return $this->country.', '.$this->zip_code.' '.$this->city.', '.$this->street_and_number;
+        $country = $this->country === "Hungary" ? "" : ($this->country . ", ");
+        return $country . $this->zip_code . ' ' . $this->city . ', ' . $this->street_and_number;
     }
 
     public function getPlaceAndDateOfBirth()
