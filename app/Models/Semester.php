@@ -63,6 +63,11 @@ class Semester extends Model
         return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
     }
 
+    public function datesToText()
+    {
+        return $this->getStartDate()->format('Y.m.d').'-'.$this->getEndDate()->format('Y.m.d');
+    }
+
     public function isAutumn()
     {
         return $this->part == 1;
@@ -160,6 +165,11 @@ class Semester extends Model
         return Semester::getOrCreate($year, $part);
     }
 
+    public function isCurrent()
+    {
+        return $this->equals($this::current());
+    }
+
     public function succ()
     {
         if ($this->isSpring()) {
@@ -224,7 +234,7 @@ class Semester extends Model
         }
     }
 
-    /* Helpers for testing */
+    /* Helpers */
 
     public function equals($other)
     {
