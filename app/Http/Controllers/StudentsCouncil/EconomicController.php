@@ -89,7 +89,7 @@ class EconomicController extends Controller
         )->get();
 
         return view('student-council.economic-committee.kktnetreg', [
-            'users' => User::all(),
+            'users' => User::collegists(),
             'my_transactions' => $my_transactions_not_in_checkout,
             'sum_my_transactions' => $sum,
             'all_transactions' => $all_kktnetreg_transaction,
