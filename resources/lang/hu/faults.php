@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'add-fault' => 'Új hiba bejelentése',
     'autherror' => 'Hiba. Nem sikerült a felhasználói engedélyek hitelesítése.',
     'cancel' => 'Mégsem',
     'confirm' => 'Megerősítés',

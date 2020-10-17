@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'add-fault' => 'Add fault',
     'autherror' => 'Error. Could not authenticate user permissions.',
     'cancel' => 'Cancel',
     'confirm' => 'Confirm',
