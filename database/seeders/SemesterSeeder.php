@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
 use App\Models\Semester;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class SemesterSeeder extends Seeder
@@ -25,7 +25,7 @@ class SemesterSeeder extends Seeder
             $semester = $semester->succ();
         }
 
-        $users = Role::getUsers(Role::COLLEGIST);
+        $users = User::collegists();
 
         $semesters = Semester::all()->unique();
         foreach ($semesters as $semester) {

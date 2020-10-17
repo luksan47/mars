@@ -24,6 +24,7 @@ return [
     'other_transaction' => 'Más bevétel vagy kiadás',
     'password' => 'Kassza jelszava',
     'pay' => 'Fizetés',
+    'pay_kkt_descr' => 'Ha valaki fizetni szeretne neked, azt írd fel itt. Csak aktív státuszú collegisták választhatóak ki, akik még nem fizettek KKT-t/Netreget. <br>A tranzakcióról emailben értesítést kapnak, és az internet-elérésük automatikusan meghosszabbításra kerül.',
     'pay_kktnetreg' => 'KKT és Netreg fizetése',
     'payed_by' => 'Fizette',
     'payed_kkt' => 'KKT-t fizettek',
@@ -37,6 +38,6 @@ return [
     'transactions_payed' => 'Az alábbi tranzakciókat fizetted be',
     'used_balance' => 'Felhasznált egyenleg',
     'users_have_to_pay' => 'Még nem fizettek',
-    'workshop_balance_descr' => 'Fejlesztés alatt.',
+    'workshop_balance_descr' => 'Bentlakók / bejárók (+ akik még nem fizettek, de aktív státuszú collegisták)<br>Azok közül, akik fizettek, minden bentlakó után a műhely :kkt * :resident, minden bejáró után :kkt * :extern forintot kap. (Ha egy collegistának több műhelye is van, a műhelyei megosztoznak az összegen.)',
     'workshop_balances' => 'Műhelyek egyenlegei',
 ];

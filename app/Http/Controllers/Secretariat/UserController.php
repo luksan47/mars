@@ -114,7 +114,7 @@ class UserController extends Controller
     public function list()
     {
         $this->authorize('viewAny', User::class);
-        $users = User::all()->sortBy('name');
+        $users = User::collegists()->sortBy('name');
 
         return view('secretariat.user.list')->with('users', $users);
     }

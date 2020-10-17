@@ -35,7 +35,7 @@ class SecretariatController extends Controller
      */
     public static function finalizeStatements()
     {
-        $users = User::all();
+        $users = User::collegists();
         $next_semester = Semester::next();
         foreach ($users as $user) {
             if (! $user->isInSemester($next_semester)) {

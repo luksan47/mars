@@ -32,7 +32,7 @@ class PrintController extends Controller
 
     public function index() {
         return view('dormitory.print.app', [
-                "users" => User::all(),
+                "users" => User::printers(),
                 "free_pages" => Auth::user()->sumOfActiveFreePages()
             ]);
     }
@@ -40,7 +40,7 @@ class PrintController extends Controller
     public function admin() {
         $this->authorize('handleAny', PrintAccount::class);
 
-        return view('dormitory.print.manage.app', ["users" => User::all()]);
+        return view('dormitory.print.manage.app', ["users" => User::printers()]);
     }
 
     public function print(Request $request) {

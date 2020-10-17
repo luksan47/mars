@@ -51,6 +51,32 @@ class Workshop extends Model
         return $this->belongsToMany(User::class, 'workshop_users');
     }
 
+    public function activeMembers()
+    {
+        return $this->activeMembersInSemester(Semester::current());
+    }
+
+    public function activeMembersInSemester(Semester $semester)
+    {
+        return $this->filter(function ($user, $key) use ($semester) {
+            return $user->isActiveInSemester($semester);
+        });
+    }
+
+    public function residents()
+    {
+        return $this->users->filter(function ($user, $key) {
+            return $user->isResident();
+        });
+    }
+
+    public function externs()
+    {
+        return $this->users->filter(function ($user, $key) {
+            return $user->isExtern();
+        });
+    }
+
     public function color()
     {
         switch ($this->name) {
