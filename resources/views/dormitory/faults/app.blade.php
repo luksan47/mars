@@ -7,7 +7,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">@lang('faults.new_fault')</span>
+                <span class="card-title">@lang('faults.add-fault')</span>
                 <blockquote>@lang('faults.fault_description')</blockquote>
                 <form id="send-fault" class="form-horizontal" method="POST" action=" {{ route('faults.add') }} ">
                     @csrf

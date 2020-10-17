@@ -43,7 +43,7 @@
         <!-- faults page -->
         <li><a class="waves-effect" href="{{ route('faults') }}"><i class="material-icons left">build</i>@lang('faults.faults')
                 @if (Auth::user()->hasRole(\App\Models\Role::STAFF))
-                    @notification(\App\Models\Faults::class)
+                    @notification(\App\Models\Fault::class)
                 @endif
             </a>
         </li>
