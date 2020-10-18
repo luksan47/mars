@@ -153,4 +153,14 @@ class UserController extends Controller
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
+
+    public function deleteUserWorkshop($user, $workshop)
+    {
+        // TODO
+        $this->authorize('viewAny', User::class);
+
+        $user = User::findOrFail($user);
+
+        $user->workshops()->detach($workshop);
+    }
 }
