@@ -37,7 +37,7 @@
         };
 
         var deleteButton = function (cell, formatterParams, onRendered) {
-            return $("<button type=\"button\" class=\"btn waves-effect coli blue\">@lang('internet.delete')</button>").click(function () {
+            return $("<button type=\"button\" class=\"btn waves-effect btn-fixed-height coli blue\">@lang('internet.delete')</button>").click(function () {
                 var data = cell.getRow().getData();
                 //confirm('@lang('internet.delete')', '@lang('internet.confirm_delete')', '@lang('internet.cancel')', '@lang('internet.delete')', function () {
                     $.ajax({
