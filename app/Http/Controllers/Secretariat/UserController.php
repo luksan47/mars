@@ -163,7 +163,7 @@ class UserController extends Controller
 
         $user->workshops()->detach($workshop);
     }
-    
+
     public function addUserWorkshop(Request $request, User $user)
     {
         $this->authorize('view', $user);
@@ -178,6 +178,7 @@ class UserController extends Controller
                 ->withInput();
         }
         $user->workshops()->attach($request->workshop_id);
+
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
 }
