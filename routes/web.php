@@ -58,6 +58,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/secretariat/user/setCollegistType', [UserController::class, 'setCollegistType'])->name('secretariat.user.set_collegist_type');
     Route::get('/secretariat/user/statuses', [SemesterController::class, 'statuses'])->name('secretariat.user.statuses');
     Route::get('/secretariat/user/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('secretariat.user.semesters.update');
+    Route::get('/secretariat/user/{user}/workshop/{workshop}/delete', [UserController::class, 'deleteUserWorkshop'])->name('secretariat.user.workshop.delete');
+    Route::post('/secretariat/user/{user}/workshop/add', [UserController::class, 'addUserWorkshop'])->name('secretariat.user.workshop.add');
 
     /** Localization */
     Route::get('/localizations', [LocaleController::class, 'index'])->name('localizations');
