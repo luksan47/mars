@@ -24,17 +24,17 @@
 
         var button = function (cell, formatterParams) {
             switch (formatterParams['status']) {
-                case "{{ App\Models\Faults::DONE }}":
+                case "{{ App\Models\Fault::DONE }}":
                     var style = "btn waves-effect btn-fixed-height";
                     var text = "@lang('faults.done')";
                     break;
             
-                case "{{ App\Models\Faults::WONT_FIX }}":
+                case "{{ App\Models\Fault::WONT_FIX }}":
                     var style = "waves-effect btn coli blue btn-fixed-height";
                     var text = "@lang('faults.wont_fix')";
                     break;
                 
-                case "{{ App\Models\Faults::UNSEEN }}":
+                case "{{ App\Models\Fault::UNSEEN }}":
                     var style = "btn-flat waves-effect grey lighten-4 btn-fixed-height";
                     var text = "@lang('faults.reopen')";
                     break;
