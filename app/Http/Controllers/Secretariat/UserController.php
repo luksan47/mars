@@ -163,4 +163,21 @@ class UserController extends Controller
 
         $user->workshops()->detach($workshop);
     }
+    
+    public function addUserWorkshop(Request $request, User $user)
+    {
+        $this->authorize('view', $user);
+
+        $validator = Validator::make($request->except('_token'), [
+            'workshop_id' => 'required|exists:workshops,id',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $user->workshops()->attach($request->workshop_id);
+        return redirect()->back()->with('message', __('general.successfully_added'));
+    }
 }

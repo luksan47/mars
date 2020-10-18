@@ -24,7 +24,8 @@
                         <th scope="row">@lang('user.workshop')</th>
                         <td>
                             <ul>
-                                @include('user.workshop_tags', ['user' => $user])
+                                @include('user.workshop_tags', ['user' => $user])<br>
+                                @include('secretariat.user.add_workshop', ['user' => $user])
                             </ul>
                         </td>
                     </tr>

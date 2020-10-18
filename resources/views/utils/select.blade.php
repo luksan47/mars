@@ -4,12 +4,11 @@
 @endphp
 <select searchable="@lang('general.search')" id="{{ $element_id }}" name="{{ $element_id }}" 
   @if($required ?? false) required @endif>
-  <option value="" disabled selected>@lang('general.choose_option')</option>
+  <option value="" disabled selected>@if($label ?? null) {{$label}} @else @lang('general.choose_option') @endif</option>
   @foreach ($elements as $element)
   <option value="{{ $element->id }}">{{ $element->name }}</option>
   @endforeach
 </select>
-<label for="{{ $element_id }}">@lang('user.name')</label>
 @error($element_id)
 <span class="helper-text" data-error="{{ $message }}"></span>
 @enderror
