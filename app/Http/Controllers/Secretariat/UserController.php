@@ -164,9 +164,12 @@ class UserController extends Controller
         $user->workshops()->detach($workshop);
     }
 
-    public function addUserWorkshop(Request $request, User $user)
+    public function addUserWorkshop(Request $request, $user)
     {
-        $this->authorize('view', $user);
+        // TODO
+        $this->authorize('viewAny', User::class);
+
+        $user = User::findOrFail($user);
 
         $validator = Validator::make($request->except('_token'), [
             'workshop_id' => 'required|exists:workshops,id',
