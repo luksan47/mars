@@ -153,4 +153,35 @@ class UserController extends Controller
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
+
+    public function deleteUserWorkshop($user, $workshop)
+    {
+        // TODO
+        $this->authorize('viewAny', User::class);
+
+        $user = User::findOrFail($user);
+
+        $user->workshops()->detach($workshop);
+    }
+
+    public function addUserWorkshop(Request $request, $user)
+    {
+        // TODO
+        $this->authorize('viewAny', User::class);
+
+        $user = User::findOrFail($user);
+
+        $validator = Validator::make($request->except('_token'), [
+            'workshop_id' => 'required|exists:workshops,id',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $user->workshops()->attach($request->workshop_id);
+
+        return redirect()->back()->with('message', __('general.successfully_added'));
+    }
 }
