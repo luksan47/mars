@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\User;
 use App\Models\Role;
 use App\Models\Semester;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 
 class SetCollegistStatus extends Migration
