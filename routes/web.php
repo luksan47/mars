@@ -12,7 +12,7 @@
 */
 
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Dormitory\FaultsController;
+use App\Http\Controllers\Dormitory\FaultController;
 use App\Http\Controllers\Dormitory\PrintController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
@@ -58,6 +58,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/secretariat/user/setCollegistType', [UserController::class, 'setCollegistType'])->name('secretariat.user.set_collegist_type');
     Route::get('/secretariat/user/statuses', [SemesterController::class, 'statuses'])->name('secretariat.user.statuses');
     Route::get('/secretariat/user/semesters/update/{id}/{semester}/{status}', [UserController::class, 'updateSemesterStatus'])->name('secretariat.user.semesters.update');
+    Route::get('/secretariat/user/{user}/workshop/{workshop}/delete', [UserController::class, 'deleteUserWorkshop'])->name('secretariat.user.workshop.delete');
+    Route::post('/secretariat/user/{user}/workshop/add', [UserController::class, 'addUserWorkshop'])->name('secretariat.user.workshop.add');
 
     /** Localization */
     Route::get('/localizations', [LocaleController::class, 'index'])->name('localizations');
@@ -126,10 +128,10 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     });
 
     /** Faults */
-    Route::get('/faults', [FaultsController::class, 'index'])->name('faults');
-    Route::get('/faults/table', [FaultsController::class, 'GetFaults'])->name('faults.table');
-    Route::post('/faults/add', [FaultsController::class, 'addFault'])->name('faults.add');
-    Route::post('/faults/update', [FaultsController::class, 'updateStatus'])->name('faults.update');
+    Route::get('/faults', [FaultController::class, 'index'])->name('faults');
+    Route::get('/faults/table', [FaultController::class, 'GetFaults'])->name('faults.table');
+    Route::post('/faults/add', [FaultController::class, 'addFault'])->name('faults.add');
+    Route::post('/faults/update', [FaultController::class, 'updateStatus'])->name('faults.update');
 
     /** WIP: Secretariat */
     Route::get('/secretariat/users', [SecretariatController::class, 'list'])->name('secretariat.users');
