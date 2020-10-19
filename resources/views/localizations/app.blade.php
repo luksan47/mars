@@ -4,13 +4,6 @@
 @endsection
 
 @section('content')
-<script>
-var config = {
-    url : "{{ route('localizations.add') }}",
-    success_msg : "@lang('general.successful_modification')",
-    error_msg : "@lang('general.failed')"
-}
-</script>
 <div class="row">
     <div class="col s12">
         <div class="card">
@@ -29,9 +22,6 @@ var config = {
                             @endif
                             @endforeach
                         </ul>
-                        <script>
-                            $('.dropdown-trigger').dropdown();
-                       </script>
                     </div>
                     {{-- Change reference language: en or hu --}}
                     <div class="col s6 m3"><i class="right">@lang('localizations.reference_language'):</i></div>
@@ -59,22 +49,6 @@ var config = {
                     </div>
                     @endcan
                 </div>
-                <script>
-                    function change_language(language){
-                    if(language=="hu"){
-                        document.getElementById("hu").classList.remove("hide");
-                        document.getElementById("en").classList.add("hide");
-                    }
-                    if(language=="en"){
-                        document.getElementById("en").classList.remove("hide");
-                        document.getElementById("hu").classList.add("hide");
-                    }
-                    //set textarea heights
-                    ($('textarea')).each(function(index, elem){
-                        elem.style.height = elem.scrollHeight+'px'; 
-                    });
-                }
-                </script>
             </div>
         </div>
     </div>
@@ -141,5 +115,32 @@ var config = {
 
     @endif
 </div>
-<script type="text/javascript" src="{{ mix('js/page_based/localizations.js') }}"></script>
 @endsection
+
+@push('scripts')
+    <script>
+        $('.dropdown-trigger').dropdown();
+
+        var config = {
+            url : "{{ route('localizations.add') }}",
+            success_msg : "@lang('general.successful_modification')",
+            error_msg : "@lang('general.failed')"
+        }
+
+        function change_language(language){
+            if(language=="hu"){
+                document.getElementById("hu").classList.remove("hide");
+                document.getElementById("en").classList.add("hide");
+            }
+            if(language=="en"){
+                document.getElementById("en").classList.remove("hide");
+                document.getElementById("hu").classList.add("hide");
+            }
+            //set textarea heights
+            ($('textarea')).each(function(index, elem){
+                elem.style.height = elem.scrollHeight+'px';
+            });
+        }
+    </script>
+    <script type="text/javascript" src="{{ mix('js/page_based/localizations.js') }}"></script>
+@endpush
