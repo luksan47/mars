@@ -102,9 +102,10 @@ class Role extends Model
     public static function possibleObjectsFor($name)
     {
         if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
-            if(!Cache::get('workshop.all')) {
+            if(! Cache::get('workshop.all')) {
                 Cache::put('workshop.all', Workshop::all(), 60);
             }
+
             return Cache::get('workshop.all');
         }
         if ($name == self::LOCALE_ADMIN) {

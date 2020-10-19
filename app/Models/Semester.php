@@ -153,7 +153,7 @@ class Semester extends Model
     // There is always a "current" semester. If there is not in the database, this function creates it.
     public static function current()
     {
-        if(!Cache::get('semester.current')) {
+        if(! Cache::get('semester.current')) {
             $now = Carbon::now();
             if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month <= self::END_OF_SPRING_SEMESTER) {
                 $part = 2;
