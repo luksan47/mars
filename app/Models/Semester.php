@@ -153,8 +153,8 @@ class Semester extends Model
     // There is always a "current" semester. If there is not in the database, this function creates it.
     public static function current()
     {
-        $today = Carbon::today();
-        if (! Cache::get('semester.current.' . $today)) {
+        $today = Carbon::today()->format('Ymd');
+        if (! Cache::get('semester.current.'.$today)) {
             $now = Carbon::now();
             if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month <= self::END_OF_SPRING_SEMESTER) {
                 $part = 2;
@@ -167,10 +167,10 @@ class Semester extends Model
 
             $current = Semester::getOrCreate($year, $part);
 
-            Cache::put('semester.current.' . $today, $current, 86400);
+            Cache::put('semester.current.'.$today, $current, 86400);
         }
 
-        return Cache::get('semester.current.' . $today);
+        return Cache::get('semester.current.'.$today);
     }
 
     public function isCurrent()
