@@ -297,6 +297,13 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->isActiveIn(Semester::current());
     }
 
+    public function scopeIsActive()
+    {
+        return $this->whereHas('activeSemesters', function ($query) {
+            $query->where('id', Semester::current()->id);
+        });
+    }
+
     public function isResident()
     {
         return $this->hasRoleWithObjectName(Role::COLLEGIST, 'resident');

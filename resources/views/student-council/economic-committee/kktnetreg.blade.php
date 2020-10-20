@@ -21,9 +21,7 @@
                             <blockquote>@lang('checkout.pay_kkt_descr')</blockquote>
                             <div class="input-field col s12 m12 l4">
                                 @include("utils.select", [
-                                    'elements' => $users->filter(function ($value, $key) {
-                                            return $value->hasToPayKKTNetreg();
-                                        }), 
+                                    'elements' => $users,
                                     'element_id' => 'user_id',
                                     'required' => true])
                             </div>
@@ -69,7 +67,7 @@
                             @endif
                             <td>{{ $transaction->amount }} Ft</td>
                             <td>
-                                <a href="{{ route('economic_committee.transaction.delete', ['transaction' => $transaction->id]) }}" 
+                                <a href="{{ route('economic_committee.transaction.delete', ['transaction' => $transaction->id]) }}"
                                     class="btn-floating waves-effect right red">
                                     <i class="material-icons">delete</i></a>
                             </td>
@@ -118,14 +116,12 @@
                 <span class="card-title">@lang('checkout.users_have_to_pay') ({{ $current_semester }}) </span>
                 <table><tbody>
                     @foreach($users as $user)
-                    @if($user->hasToPayKKTNetreg())
                     <tr><td>{{ $user->name }}</td></tr>
-                    @endif
                     @endforeach
                 </tbody></table>
             </div>
         </div>
-    </div>    
+    </div>
     {{-- Temporary solution while generating workshop balances does not work (#382) --}}
     <div class="col s12">
         <div class="card">
@@ -135,10 +131,10 @@
                     <tr>
                         <th>@lang('print.user')</th>
                         <th>@lang('user.workshop')</th>
-                        <th>@lang('checkout.amount')</th>                          
+                        <th>@lang('checkout.amount')</th>
                     </tr>
                     @foreach($all_transactions as $transaction)
-                    @if($transaction->semester == \App\Models\Semester::current())
+                    @if($transaction->semester_id == \App\Models\Semester::current()->id)
                     @if(in_array($transaction->type->name, ['KKT']))
                     <tr>
                         <td>{{ $transaction->payer->name}}</td>
@@ -155,7 +151,7 @@
                 </tbody></table>
             </div>
         </div>
-    </div>          
+    </div>
     <div class="col s12">
         <div class="card">
             <div class="card-content">
@@ -168,7 +164,7 @@
                         <td>@lang('checkout.collected_by')</td>
                         <td>@lang('checkout.details')</td>
                         <td>@lang('checkout.amount')</td>
-                        <td>@lang('checkout.in_checkout')</td>                           
+                        <td>@lang('checkout.in_checkout')</td>
                     </tr>
                     @foreach($all_transactions as $transaction)
                     <tr>
@@ -190,7 +186,6 @@
                     </tr>
                     @endforeach
                 </tbody></table>
-                </div>
             </div>
         </div>
     </div>
