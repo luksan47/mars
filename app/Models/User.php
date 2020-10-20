@@ -207,6 +207,13 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
+    public function scopeRole($query, $role)
+    {
+        return $query->whereHas('roles', function ($q) use ($role) {
+            $q->where('name', $role);
+        });
+    }
+
     // Has any role with all possible object ID
     public function hasRoleBase(string $roleName)
     {
