@@ -210,7 +210,7 @@ class User extends Authenticatable implements HasLocalePreference
     public function scopeRole($query, $role)
     {
         return $query->whereHas('roles', function ($q) use ($role) {
-            $q->name = $role;
+            $q->where('name', $role);
         });
     }
 
