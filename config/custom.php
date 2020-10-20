@@ -6,4 +6,7 @@ return [
 
     'workshop_balance_resident' => env('WORKSHOP_BALANCE_RESIDENT', '0.6'),
     'workshop_balance_extern' => env('WORKSHOP_BALANCE_EXTERN', '0.45'),
+
+    'mac-to-dhcp-target' => env('MAC_TO_DHCP_TARGET'),
+    'mac-to-dhcp-script' => env('MAC_TO_DHCP_SCRIPT'),
 ];

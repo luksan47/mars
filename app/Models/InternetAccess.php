@@ -8,7 +8,7 @@ class InternetAccess extends Model
 {
     protected $primaryKey = 'user_id';
 
-    protected $fillable = ['user_id', 'wifi_username', 'wifi_connection_limit'];
+    protected $fillable = ['user_id', 'wifi_username', 'wifi_connection_limit', 'auto_approved_mac_slots'];
     protected $hidden = ['wifi_password'];
 
     protected $dates = [

@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Models\MacAddress;
+use App\Models\User;
+use Composer\Config\ConfigSourceInterface;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -72,5 +75,20 @@ class Commands
             $result = exec($command);
         }
         return $result;
+    }
+
+    public static function addMacToDhcp(MacAddress $macAddress)
+    {
+        $internetAccess = $macAddress->user->internetAccess;
+        if ($macAddress->state !== MacAddress::APPROVED) return;
+        if (!$internetAccess->isActive()) return;
+        if (self::isDebugMode()) return;
+        $command = config('custom.mac-to-dhcp-script') . ' '
+            . $internetAccess->wifi_username . ' '
+            . $macAddress->mac_address . ' '
+            . config('custom.mac-to-dhcp-target');
+        Log::info($command);
+        $result = exec($command);
+        Log::info("Result:" . $result);
     }
 }

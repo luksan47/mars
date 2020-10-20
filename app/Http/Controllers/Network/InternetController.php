@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Network;
 
+use App\Console\Commands;
 use App\Http\Controllers\Controller;
 use App\Models\EventTrigger;
 use App\Models\InternetAccess;
@@ -127,7 +128,7 @@ class InternetController extends Controller
         }
 
         if ($request->has('auto_approved_mac_slots')) {
-            $internetAccess->auto_approved_mac_slots = min(0, $request->input('auto_approved_mac_slots'));
+            $internetAccess->auto_approved_mac_slots = max(0, $request->auto_approved_mac_slots);
         }
 
         $internetAccess->save();
@@ -182,9 +183,20 @@ class InternetController extends Controller
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
-    private function autoApproveMacAddresses($user)
+    private function autoApproveMacAddresses(User $user)
     {
-        DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
+        $stateOrder = [MacAddress::APPROVED, MacAddress::REQUESTED, MacAddress::REJECTED];
+        $macAddresses = $user->macAddresses->sortBy(function ($macAddress, $key) use ($stateOrder) {
+            return array_search($macAddress['state'], $stateOrder);
+        })->take($user->internetAccess->auto_approved_mac_slots);
+        foreach ($macAddresses as $macAddress) {
+            if ($macAddress->state != MacAddress::APPROVED) {
+                $macAddress->update([
+                    'state' => MacAddress::APPROVED,
+                ]);
+                Commands::addMacToDhcp($macAddress);
+            }
+        }
     }
 
     public function getWifiConnectionsAdmin()
