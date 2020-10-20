@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dormitory;
 
 use App\Console\Commands;
+use App\Mail\NoPaper;
 use App\Models\User;
 use App\Models\FreePages;
 use App\Models\PrintAccount;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -35,6 +37,16 @@ class PrintController extends Controller
                 "users" => User::printers(),
                 "free_pages" => Auth::user()->sumOfActiveFreePages()
             ]);
+    }
+    public function noPaper(){
+        $userName = Auth::user()->name;
+        $users = DB::table('roles')->select('email')
+            ->join('role_users', 'roles.id', '=', 'role_users.role_id')
+            ->join('users', 'user_id', '=', 'users.id')
+            ->where('roles.name','internet-admin')
+            ->get();
+        Mail::to($users)->send(new NoPaper($userName));
+        return redirect('/print')->with('message','Email sent');
     }
 
     public function admin() {

@@ -7,7 +7,7 @@
             @lang("print.pdf_maxsize", ['maxsize' => config('print.pdf_size_limit')/1000/1000])
             @lang('print.costs',['one_sided'=>App\Models\PrintAccount::$COST['one_sided'], "two_sided" => env('PRINT_COST_TWOSIDED')])
             </p><p>
-            @lang('print.available_money'): <b class="coli-text text-orange"> {{ Auth::user()->printAccount->balance }}</b> HUF. 
+            @lang('print.available_money'): <b class="coli-text text-orange"> {{ Auth::user()->printAccount->balance }}</b> HUF.
             @lang('print.upload_money')
             </p>
         </blockquote>
@@ -40,7 +40,7 @@
                         </label>
                     </p>
                 </div>
-                @if($free_pages>0) {{-- only show when user have active free pages --}} 
+                @if($free_pages>0) {{-- only show when user have active free pages --}}
                 <div class="input-field col s8 xl4">
                     <p>
                         <label>
@@ -58,5 +58,13 @@
                 </div>
             </div>
         </form>
+        <div style="margin-right: 0px" class="row">
+            <form method="POST" action="/print">
+                @csrf
+                @if(!session('message'))
+                    <button class="btn waves-green right" type="submit">No paper</button>
+                @endif
+            </form>
+        </div>
     </div>
 </div>
