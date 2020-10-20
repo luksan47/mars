@@ -223,18 +223,6 @@ class InternetController extends Controller
         };
     }
 
-    /*public function usersOverWifiThreshold()
-    {
-        $users = User::internetUsers();
-        foreach ($users as $user) {
-            if (! $user->internetAccess->reachedWifiConnectionLimit()) {
-                $users = $users->except([$user->id]);
-            }
-        }
-
-        return $users;
-    }*/
-
     public function approveWifiConnections($user)
     {
         $this->authorize('approveAny', WifiConnection::class);
