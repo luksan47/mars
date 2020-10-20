@@ -21,7 +21,7 @@ class SetWifiToTwo extends Migration
         $internetAccesses = InternetAccess::all();
         foreach ($internetAccesses as $internetAccesses) {
             $internetAccesses->update([
-                'wifi_connection_limit' => 2
+                'wifi_connection_limit' => 2,
             ]);
         }
     }
