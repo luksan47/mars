@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 /** A semester is identified by a year and by it's either autumn or spring.
@@ -152,17 +153,24 @@ class Semester extends Model
     // There is always a "current" semester. If there is not in the database, this function creates it.
     public static function current()
     {
-        $now = Carbon::now();
-        if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month <= self::END_OF_SPRING_SEMESTER) {
-            $part = 2;
-            $year = $now->year - 1;
-        } else {
-            $part = 1;
-            // This assumes that the semester ends in the new year.
-            $year = $now->month <= self::END_OF_AUTUMN_SEMESTER ? $now->year - 1 : $now->year;
+        $today = Carbon::today()->format('Ymd');
+        if (! Cache::get('semester.current.'.$today)) {
+            $now = Carbon::now();
+            if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month <= self::END_OF_SPRING_SEMESTER) {
+                $part = 2;
+                $year = $now->year - 1;
+            } else {
+                $part = 1;
+                // This assumes that the semester ends in the new year.
+                $year = $now->month <= self::END_OF_AUTUMN_SEMESTER ? $now->year - 1 : $now->year;
+            }
+
+            $current = Semester::getOrCreate($year, $part);
+
+            Cache::put('semester.current.'.$today, $current, 86400);
         }
 
-        return Semester::getOrCreate($year, $part);
+        return Cache::get('semester.current.'.$today);
     }
 
     public function isCurrent()
