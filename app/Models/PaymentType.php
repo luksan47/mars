@@ -47,7 +47,8 @@ class PaymentType extends Model
         return self::getFromCache(self::PRINT);
     }
 
-    public static function getFromCache($type) {
+    public static function getFromCache($type)
+    {
         return Cache::remember('paymentType.'.$type, 86400, function () use ($type) {
             return self::where('name', $type)->firstOrFail();
         });
