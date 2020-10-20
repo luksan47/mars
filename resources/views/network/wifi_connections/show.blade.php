@@ -1,6 +1,6 @@
 <td>
     <ul>
-        @foreach ($user->wifiConnections as $wifiConnection)
+        @foreach ($user->internetAccess->wifiConnections as $wifiConnection)
             @can('view', $wifiConnection)
             <li>
                 <span class="new badge {{ $wifiConnection->getColor() }}" data-badge-caption="">
