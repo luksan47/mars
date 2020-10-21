@@ -29,8 +29,6 @@ class SetMacToOne extends Migration
      */
     public function down()
     {
-        Schema::table('one', function (Blueprint $table) {
-            //
-        });
+        //
     }
 }
