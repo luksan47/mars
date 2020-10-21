@@ -125,6 +125,11 @@ class User extends Authenticatable implements HasLocalePreference
         );
     }
 
+    public function getReachedWifiConnectionLimitAttribute()
+    {
+        return $this->internetAccess->reachedWifiConnectionLimit();
+    }
+
     /* Basic information of the user */
 
     public function setVerified()
@@ -256,11 +261,6 @@ class User extends Authenticatable implements HasLocalePreference
     public static function printers()
     {
         return Role::getUsers(Role::PRINTER);
-    }
-
-    public static function internetUsers()
-    {
-        return Role::getUsers(Role::INTERNET_USER);
     }
 
     /* Semester related getters */
