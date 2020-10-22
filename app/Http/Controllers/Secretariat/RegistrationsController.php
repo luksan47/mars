@@ -18,7 +18,7 @@ class RegistrationsController extends Controller
 
     public function index()
     {
-        $users = User::where('verified', false)->get();
+        $users = User::where('verified', false)->with('educationalInformation')->get();
 
         return view('secretariat.registrations.list', ['users' => $users]);
     }
