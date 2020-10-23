@@ -297,6 +297,13 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->isActiveIn(Semester::current());
     }
 
+    public function scopeIsActive()
+    {
+        return $this->whereHas('activeSemesters', function ($query) {
+            $query->where('id', Semester::current()->id);
+        });
+    }
+
     public function isResident()
     {
         return $this->hasRoleWithObjectName(Role::COLLEGIST, 'resident');
@@ -388,8 +395,8 @@ class User extends Authenticatable implements HasLocalePreference
         $payed_kktnetreg = $this->transactions_payed()
             ->where('semester_id', $semester->id)
             ->where(function ($query) {
-                $query->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
-                      ->orWhere('payment_type_id', PaymentType::where('name', 'NETREG')->firstOrFail()->id);
+                $query->where('payment_type_id', PaymentType::kkt()->id)
+                      ->orWhere('payment_type_id', PaymentType::netreg()->id);
             })->get();
 
         return $payed_kktnetreg->count() == 0;
@@ -402,7 +409,7 @@ class User extends Authenticatable implements HasLocalePreference
         }
 
         return $semester->transactions()
-            ->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
+            ->where('payment_type_id', PaymentType::kkt()->id)
             ->where('payer_id', $this->id)
             ->first();
     }
