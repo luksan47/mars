@@ -127,7 +127,7 @@ class InternetController extends Controller
         }
 
         if ($request->has('auto_approved_mac_slots')) {
-            $internetAccess->auto_approved_mac_slots = min(0, $request->input('auto_approved_mac_slots'));
+            $internetAccess->auto_approved_mac_slots = max(0, $request->input('auto_approved_mac_slots'));
         }
 
         $internetAccess->save();
