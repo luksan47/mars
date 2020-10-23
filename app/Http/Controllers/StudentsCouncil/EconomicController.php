@@ -4,6 +4,7 @@ namespace App\Http\Controllers\StudentsCouncil;
 
 use App\Models\Checkout;
 use App\Models\PaymentType;
+use App\Models\Role;
 use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
@@ -56,11 +57,17 @@ class EconomicController extends Controller
             PaymentType::NETREG,
             PaymentType::KKT,
         ];
+      
+        $users_has_to_pay_kktnetreg = User::role(Role::COLLEGIST)->isActive()
+            ->whereDoesntHave('transactions_payed', function ($query) {
+                $query->where('semester_id', Semester::current()->id);
+                $query->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id]);
+            })->get();
 
         $checkoutData = $this->getCheckout($checkout, $payment_types);
 
         return view('student-council.economic-committee.kktnetreg', $checkoutData)
-            ->with('users', User::collegists());
+            ->with('users', $users_has_to_pay_kktnetreg);
 }
 
     public function indexTransaction()

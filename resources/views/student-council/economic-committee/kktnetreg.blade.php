@@ -21,9 +21,7 @@
                             <blockquote>@lang('checkout.pay_kkt_descr')</blockquote>
                             <div class="input-field col s12 m12 l4">
                                 @include("utils.select", [
-                                    'elements' => $users->filter(function ($value, $key) {
-                                            return $value->hasToPayKKTNetreg();
-                                        }), 
+                                    'elements' => $users,
                                     'element_id' => 'user_id',
                                     'required' => true])
                             </div>
@@ -59,9 +57,7 @@
                 <span class="card-title">@lang('checkout.users_have_to_pay') ({{ \App\Models\Semester::current()->tag() }}) </span>
                 <table><tbody>
                     @foreach($users as $user)
-                        @if($user->hasToPayKKTNetreg())
-                            <tr><td>{{ $user->name }}</td></tr>
-                        @endif
+                      <tr><td>{{ $user->name }}</td></tr>
                     @endforeach
                 </tbody></table>
             </div>
@@ -78,6 +74,7 @@
                         <th>@lang('user.workshop')</th>
                         <th>@lang('checkout.amount')</th>
                     </tr>
+                    {{-- TODO --}}
                     {{-- @foreach($transactions as $transaction)
                         @if($transaction->semester == \App\Models\Semester::current() &&
                             $transaction->type->name == \App\Models\PaymentType::KKT)
@@ -140,7 +137,6 @@
                         @endforeach
                     @endforeach
                 </tbody></table>
-                </div>
             </div>
         </div>
     </div>
