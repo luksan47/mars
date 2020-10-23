@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($users_over_threshold as $user)
+        @forelse ($users->where('reachedWifiConnectionLimit', true) as $user)
         <tr>
             <td>
                 <b>{{ $user->name }}</b>
@@ -33,14 +33,13 @@
                 </div>
             </td>
         </tr>
-        @endforeach
-        @if($users_over_threshold->count() == 0)
+        @empty
         <tr>
             <td>
                 @lang('internet.nothing_to_show')
             </td>
         </tr>
-        @endif
+        @endforelse
     </tbody>
 </table>
 <small>*@lang('user.wifi_connections_color_tooltip')</small>

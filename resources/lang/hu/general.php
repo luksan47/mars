@@ -29,5 +29,6 @@ return [
     'successful_transaction' => 'Sikeres tranzakció!',
     'successfully_added' => 'Sikeres hozzáadás!',
     'successfully_deleted' => 'Sikeres törlés',
+    'toggle-dark-mode' => 'Sötét/világos mód',
     'you_are_logged_in' => 'Sikeresen bejelentkeztél!',
 ];

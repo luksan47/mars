@@ -20,8 +20,6 @@ class WifiConnection extends Model
         'wifi_username',
     ];
 
-    const WARNING_THRESHOLD = 3;
-
     public function internetAccess()
     {
         return $this->belongsTo('App\Models\InernetAccess', 'wifi_username', 'wifi_username');
