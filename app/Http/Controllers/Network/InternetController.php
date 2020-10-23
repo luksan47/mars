@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EventTrigger;
 use App\Models\InternetAccess;
 use App\Models\MacAddress;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\WifiConnection;
 use App\Utils\TabulatorPaginator;
@@ -34,9 +35,9 @@ class InternetController extends Controller
         $this->authorize('handleAny', InternetAccess::class);
 
         $activationDate = EventTrigger::internetActivationDeadline();
-        $users_over_threshold = $this->usersOverWifiThreshold();
+        $users = User::role(Role::INTERNET_USER)->with('internetAccess.wifiConnections')->get();
 
-        return view('network.manage.app', ['activation_date' => $activationDate, 'users' => User::internetUsers(), 'users_over_threshold' => $users_over_threshold]);
+        return view('network.manage.app', ['activation_date' => $activationDate, 'users' => $users]);
     }
 
     public function getUsersMacAddresses(Request $request)
@@ -220,18 +221,6 @@ class InternetController extends Controller
 
             return $data;
         };
-    }
-
-    public function usersOverWifiThreshold()
-    {
-        $users = User::internetUsers();
-        foreach ($users as $user) {
-            if (! $user->internetAccess->reachedWifiConnectionLimit()) {
-                $users = $users->except([$user->id]);
-            }
-        }
-
-        return $users;
     }
 
     public function approveWifiConnections($user)

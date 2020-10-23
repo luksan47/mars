@@ -144,12 +144,11 @@
                             </li>
                             @endcan
 
-                            
                             <li>
                             <a class="waves-effect" href="{{ route('admin.checkout') }}">
                                 <i class="material-icons left">credit_card</i> @lang('admin.checkout')
                             </a>
-                            </li> 
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -206,7 +205,7 @@
                 </div>
             </li>
             <li>
-                <a class="dark-toggle" href="#" onclick="toggleColorMode()" title="Dark/light"><i class="material-icons left">brightness_4</i> Toggle Dark Mode</a>
+                <a class="dark-toggle" href="#" onclick="toggleColorMode()" title="Dark/light"><i class="material-icons left">brightness_4</i>@lang('general.toggle-dark-mode')</a>
             </li>
             @endif
         </ul>
