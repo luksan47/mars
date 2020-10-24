@@ -78,6 +78,6 @@ class WorkshopBalance extends Model
         $not_payed = $workshop->users->filter(function ($user, $key) use ($semester) {
             return ($user->hasToPayKKTNetregInSemester($semester));
         })->count();
-        return $payed_residents . ' / ' . $payed_externs . ' (+' . $not_payed . ')';
+        return $payed_residents . ' - ' . $payed_externs . ' (+' . $not_payed . ')';
     }
 }
