@@ -4,6 +4,7 @@ namespace App\Http\Controllers\StudentsCouncil;
 
 use App\Models\Checkout;
 use App\Models\PaymentType;
+use App\Models\Role;
 use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
@@ -77,19 +78,26 @@ class EconomicController extends Controller
     {
         $this->authorize('handleAny', Checkout::class);
 
+        $users_has_to_pay_kktnetreg = User::role(Role::COLLEGIST)->isActive()
+            ->whereDoesntHave('transactions_payed', function ($query) {
+                $query->where('semester_id', Semester::current()->id);
+                $query->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id]);
+            })->get();
+
         $my_transactions_not_in_checkout = Transaction::where('receiver_id', Auth::user()->id)
             ->where('moved_to_checkout', null)
             ->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id])
+            ->with(['payer:id,name', 'type:id,name'])
             ->get();
         $sum = $my_transactions_not_in_checkout->sum('amount');
 
         $all_kktnetreg_transaction = Transaction::whereIn(
             'payment_type_id',
             [PaymentType::kkt()->id, PaymentType::netreg()->id]
-        )->get();
+        )->with(['payer:id,name', 'receiver:id,name', 'type:id,name', 'semester:id,year,part'])->get();
 
         return view('student-council.economic-committee.kktnetreg', [
-            'users' => User::collegists(),
+            'users' => $users_has_to_pay_kktnetreg,
             'my_transactions' => $my_transactions_not_in_checkout,
             'sum_my_transactions' => $sum,
             'all_transactions' => $all_kktnetreg_transaction,
@@ -239,5 +247,5 @@ class EconomicController extends Controller
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
-    
+
 }
