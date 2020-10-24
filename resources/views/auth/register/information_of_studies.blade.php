@@ -34,16 +34,21 @@
     </div>
 
     <div class="input-field col s6">
-        @include('utils.select', ['elements' => \App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST), 'element_id' => 'collegist_status', 'label' => __('user.status')])
+        @include('utils.select', [
+            'elements' => \App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)->map(function ($object) {
+                return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];
+        }), 'element_id' => 'collegist_status', 'label' => __('user.status'), 'required' => true])
     </div>
-
-    <div class="input-field col s12">
-        <input type="email" id="educational_email" name="educational_email" class="validate @error('educational_email') invalid @enderror"
-            value="{{ old('educational_email') }}" autocomplete="educational_email" autofocus required>
-        <label for="educational_email">@lang('user.educational-email')</label>
-        @error('educational_email')
-        <span class="helper-text" data-error="{{ $message }}"></span>
-        @enderror
+    <div class="col s12">
+        <div class="input-field inline">
+            <input type="text" id="educational_email" name="educational_email" class="validate @error('educational_email') invalid @enderror"
+                value="{{ old('educational_email') }}" autocomplete="educational_email" required>
+            <label for="educational_email">@lang('user.educational-email')</label>
+            @error('educational_email')
+            <span class="helper-text" data-error="{{ $message }}"></span>
+            @enderror
+        </div>
+        @student.elte.hu
     </div>
 
     <div class="input-field col s12">

@@ -23,7 +23,7 @@ return [
     'county' => 'County',
     'date_and_place_of_birth' => 'Date and place of birth',
     'date_of_birth' => 'Date of birth',
-    'educational-email' => 'Teams e-mail',
+    'educational-email' => 'Educational e-mail',
     'educational_information' => 'Educational information',
     'email' => 'E-mail',
     'faculty' => 'Faculty',
