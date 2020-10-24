@@ -125,6 +125,11 @@ class User extends Authenticatable implements HasLocalePreference
         );
     }
 
+    public function getReachedWifiConnectionLimitAttribute()
+    {
+        return $this->internetAccess->reachedWifiConnectionLimit();
+    }
+
     /* Basic information of the user */
 
     public function setVerified()
@@ -207,6 +212,13 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
+    public function scopeRole($query, $role)
+    {
+        return $query->whereHas('roles', function ($q) use ($role) {
+            $q->where('name', $role);
+        });
+    }
+
     // Has any role with all possible object ID
     public function hasRoleBase(string $roleName)
     {
@@ -251,11 +263,6 @@ class User extends Authenticatable implements HasLocalePreference
         return Role::getUsers(Role::PRINTER);
     }
 
-    public static function internetUsers()
-    {
-        return Role::getUsers(Role::INTERNET_USER);
-    }
-
     /* Semester related getters */
 
     public function allSemesters()
@@ -288,6 +295,13 @@ class User extends Authenticatable implements HasLocalePreference
     public function isActive()
     {
         return $this->isActiveIn(Semester::current());
+    }
+
+    public function scopeIsActive()
+    {
+        return $this->whereHas('activeSemesters', function ($query) {
+            $query->where('id', Semester::current()->id);
+        });
     }
 
     public function isResident()
@@ -381,8 +395,8 @@ class User extends Authenticatable implements HasLocalePreference
         $payed_kktnetreg = $this->transactions_payed()
             ->where('semester_id', $semester->id)
             ->where(function ($query) {
-                $query->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
-                      ->orWhere('payment_type_id', PaymentType::where('name', 'NETREG')->firstOrFail()->id);
+                $query->where('payment_type_id', PaymentType::kkt()->id)
+                      ->orWhere('payment_type_id', PaymentType::netreg()->id);
             })->get();
 
         return $payed_kktnetreg->count() == 0;
@@ -395,7 +409,7 @@ class User extends Authenticatable implements HasLocalePreference
         }
 
         return $semester->transactions()
-            ->where('payment_type_id', PaymentType::where('name', 'KKT')->firstOrFail()->id)
+            ->where('payment_type_id', PaymentType::kkt()->id)
             ->where('payer_id', $this->id)
             ->first();
     }

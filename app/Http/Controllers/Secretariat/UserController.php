@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Secretariat;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -114,7 +115,8 @@ class UserController extends Controller
     public function list()
     {
         $this->authorize('viewAny', User::class);
-        $users = User::collegists()->sortBy('name');
+        $users = User::role(Role::COLLEGIST)
+            ->with(['roles', 'workshops', 'educationalInformation', 'allSemesters'])->orderBy('name')->get();
 
         return view('secretariat.user.list')->with('users', $users);
     }

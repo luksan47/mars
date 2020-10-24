@@ -22,11 +22,11 @@
                 });
             };
 
-            return $("<button type=\"button\" style=\"margin: 2px;\" class=\"btn waves-effect coli blue\">@lang('internet.reject')</button></br>")
+            return $("<button type=\"button\" style=\"margin: 2px;\" class=\"btn waves-effect red\">@lang('internet.reject')</button></br>")
                 .click(function () {
                 changeState('rejected');
             }).toggle(data._state === '{{ \App\Models\MacAddress::REQUESTED }}')
-                .add($("<button type=\"button\" style=\"margin: 2px;\" class=\"btn waves-effect\">@lang('internet.approve')</button></br>")
+                .add($("<button type=\"button\" style=\"margin: 2px;\" class=\"btn waves-effect green\">@lang('internet.approve')</button></br>")
                     .click(function () {
                 changeState('approved');
             }).toggle(data._state === '{{ \App\Models\MacAddress::REQUESTED }}'))
@@ -74,21 +74,24 @@
                     title: "@lang('internet.username')",
                     field: "user.name",
                     sorter: "string",
-                    headerFilter: 'input'
+                    headerFilter: 'input',
+                    minWidth:200,
                 },
                 {
                     title: "@lang('internet.mac_address')",
                     field: "mac_address",
                     sorter: "string",
-                    headerFilter: 'input'
+                    headerFilter: 'input',
+                    minWidth:180,
                 },
-                {title: "@lang('internet.comment')", field: "comment", sorter: "string", headerFilter: 'input'},
+                {title: "@lang('internet.comment')", field: "comment", sorter: "string", headerFilter: 'input', minWidth:150},
                 {
                     title: "@lang('internet.created_at')",
                     field: "created_at",
                     sorter: "datetime",
                     formatter: dateFormatter,
-                    headerFilter: 'input'
+                    headerFilter: 'input',
+                    minWidth:170,
                 },
                 {
                     title: "@lang('internet.state')", field: "state", sorter: "string", headerFilter: 'select',
@@ -96,9 +99,10 @@
                         "rejected": "@lang('internet.rejected')",
                         "approved": "@lang('internet.approved')",
                         "requested": "@lang('internet.requested')"
-                    }
+                    },
+                    minWidth:140,
                 },
-                {title: "", field: "state", width:"130", headerSort: false, formatter: actions},
+                {title: "", field: "state", width:"130", headerSort: false, formatter: actions, minWidth:140},
                 {title: "", field: "id", headerSort: false, formatter: deleteButton},
             ],
         });
