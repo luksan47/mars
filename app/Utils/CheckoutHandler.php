@@ -21,13 +21,10 @@ trait CheckoutHandler
 
         $user_transactions_not_in_checkout = $this->userTransactionsNotInCheckout($payment_types);
 
-        $transactions = Transaction::all()
-            ->whereIn('payment_type_id', $payment_type_ids)
-            ->groupBy([function ($item) {
-                return $item['semester']->tag();
-            }, function ($item) {
-                return $item['type']->name;
-            }]);
+        $transactions = Transaction::whereIn('payment_type_id', $payment_type_ids)
+            ->with(['semester', 'type'])
+            ->orderBy('semester_id', 'desc')
+            ->get();
 
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();
@@ -54,16 +51,11 @@ trait CheckoutHandler
 
         $payment_type_ids = $this->paymenyTypeIDs($payment_types);
 
-        $transactions = Transaction::where('receiver_id', Auth::user()->id)
+        $now = Carbon::now();
+        Transaction::where('receiver_id', Auth::user()->id)
             ->whereIn('payment_type_id', $payment_type_ids)
             ->where('moved_to_checkout', null)
-            ->get();
-
-        foreach ($transactions as $transaction) {
-            $transaction->update([
-                'moved_to_checkout' => Carbon::now(),
-            ]);
-        }
+            ->update(['moved_to_checkout' => $now]);
 
         return redirect()->back()->with('message', __('general.successfully_added'));
     }

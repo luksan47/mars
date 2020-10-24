@@ -51,8 +51,7 @@
                                         data-badge-caption=""
                                         data-position="right"  data-tooltip="@lang('user.'.$user->getStatusIn($semester))"
                                         >
-                                        {{ $semester->tag() }}
-                                        
+                                        {{ $semester->tag }}
                                     </span>
                                 </li>
                                 @endforeach

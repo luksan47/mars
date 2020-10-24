@@ -34,13 +34,8 @@ class EconomicController extends Controller
 
         $checkoutData = $this->getCheckout($checkout, $payment_types);
 
-        $workshop_balances = WorkshopBalance::all()
-            ->groupBy(function ($item) {
-                return $item['semester']->tag();
-            });
+        $view = view('student-council.economic-committee.app', $checkoutData);
 
-        $view = view('student-council.economic-committee.app', $checkoutData)
-            ->with('workshop_balances', $workshop_balances);
         if($redirected){
             return $view->with('message', __('general.successfully_added'));
         }
@@ -57,11 +52,11 @@ class EconomicController extends Controller
             PaymentType::NETREG,
             PaymentType::KKT,
         ];
-      
+
         $users_has_to_pay_kktnetreg = User::role(Role::COLLEGIST)->isActive()
-            ->whereDoesntHave('transactions_payed', function ($query) {
+            ->whereDoesntHave('transactions_payed', function ($query) use ($payment_types) {
                 $query->where('semester_id', Semester::current()->id);
-                $query->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id]);
+                $query->whereIn('payment_type_id', $this->paymenyTypeIDs($payment_types));
             })->get();
 
         $checkoutData = $this->getCheckout($checkout, $payment_types);
@@ -72,8 +67,19 @@ class EconomicController extends Controller
 
     public function indexTransaction()
     {
-        $this->authorize('handleAny', Checkout::class);
-        return view('student-council.economic-committee.transaction');
+        $checkout = Checkout::studentsCouncil();
+
+        $this->authorize('handleAny', $checkout);
+
+        $payment_types = [
+            PaymentType::INCOME,
+            PaymentType::EXPENSE,
+            PaymentType::KKT,
+        ];
+
+        $checkoutData = $this->getCheckout($checkout, $payment_types);
+
+        return view('student-council.economic-committee.transaction', $checkoutData);
     }
 
     public function payKKTNetreg(Request $request)
@@ -90,9 +96,6 @@ class EconomicController extends Controller
             'netreg' => 'required|integer|min:0',
         ]);
         $validator->validate();
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
 
         $payer = User::findOrFail($request->user_id);
 

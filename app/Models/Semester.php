@@ -59,7 +59,7 @@ class Semester extends Model
     }
 
     // For displaying semesters
-    public function tag()
+    public function getTagAttribute()
     {
         return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
     }
@@ -121,7 +121,7 @@ class Semester extends Model
     {
         //create fields for the semester if not exist
         //TODO find a better way (#381)
-        if (DB::table('workshop_balances')->select('*')->where('semester_id', $this->id)->count() == 0) {
+        if (WorkshopBalance::where('semester_id', $this->id)->count() == 0) {
             foreach (Workshop::all() as $workshop) {
                 WorkshopBalance::create([
                     'semester_id' => $this->id,

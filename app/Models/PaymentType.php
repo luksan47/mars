@@ -56,6 +56,6 @@ class PaymentType extends Model
 
     public static function getByName(string $name)
     {
-        return self::where('name', $name)->firstOrFail();
+        return self::getFromCache($name);
     }
 }

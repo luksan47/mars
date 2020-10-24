@@ -54,7 +54,7 @@
     <div class="col s12 xl6 pull-xl6">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">@lang('checkout.users_have_to_pay') ({{ \App\Models\Semester::current()->tag() }}) </span>
+                <span class="card-title">@lang('checkout.users_have_to_pay') ({{ \App\Models\Semester::current()->tag }}) </span>
                 <table><tbody>
                     @foreach($users as $user)
                       <tr><td>{{ $user->name }}</td></tr>
@@ -63,78 +63,26 @@
             </div>
         </div>
     </div>
-    {{-- Temporary solution while generating workshop balances does not work (#382) --}}
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">@lang('checkout.payed_kkt') ({{\App\Models\Semester::current()->tag()}})</span>
+                <span class="card-title">@lang('checkout.payed_kkt') ({{\App\Models\Semester::current()->tag}})</span>
                 <table><tbody>
                     <tr>
                         <th>@lang('print.user')</th>
                         <th>@lang('user.workshop')</th>
                         <th>@lang('checkout.amount')</th>
                     </tr>
-                    {{-- TODO --}}
-                    {{-- @foreach($transactions as $transaction)
-                        @if($transaction->semester == \App\Models\Semester::current() &&
-                            $transaction->type->name == \App\Models\PaymentType::KKT)
+                    @foreach($transactions as $transaction)
+                        @if($transaction->type->name == \App\Models\PaymentType::KKT)
                             <tr>
                                 <td>{{ $transaction->payer->name}}</td>
                                 <td>
-                                    @foreach($transaction->payer->workshops as $workshop)
-                                    {{ $workshop->name }}<br>
-                                    @endforeach
+                                    @include('user.workshop_tags', ['user' => $transaction->payer])
                                 </td>
                                 <td>{{ $transaction->amount }}</td>
                             </tr>
                         @endif
-                    @endforeach --}}
-                </tbody></table>
-            </div>
-        </div>
-    </div>
-    <div class="col s12">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">@lang('print.history')</span>
-                <table><tbody>
-                    <tr>
-                        <td>@lang('general.semester')<td>
-                        <td>@lang('checkout.date')</td>
-                        <td>@lang('checkout.payed_by')</td>
-                        <td>@lang('checkout.collected_by')</td>
-                        <td>@lang('checkout.details')</td>
-                        <td>@lang('checkout.amount')</td>
-                        <td>@lang('checkout.in_checkout')</td>
-                    </tr>
-                    @foreach($transactions as $semesterTag => $transactionPerSemester)
-                        @foreach ($transactionPerSemester as $paymentType => $transactionPerPaymentType)
-                            @foreach ($transactionPerPaymentType as $transaction)
-                            <tr>
-                                <td>{{ $transaction->semester->tag() }}<td>
-                                <td>{{ $transaction->created_at }}</td>
-                                <td>
-                                    @if($transaction->payer)
-                                        {{ $transaction->payer->name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($transaction->receiver)
-                                        {{ $transaction->receiver->name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(in_array($transaction->type->name, [\App\Models\PaymentType::NETREG, \App\Models\PaymentType::KKT]))
-                                    {{ $transaction->type->name }}
-                                    @else
-                                    {{ $transaction->comment ?? ''}}
-                                    @endif
-                                </td>
-                                <td>{{ $transaction->amount }} Ft</td>
-                                <td>{{ $transaction->moved_to_checkout ?? '-'}}
-                            </tr>
-                            @endforeach
-                        @endforeach
                     @endforeach
                 </tbody></table>
             </div>
