@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 /** A semester is identified by a year and by it's either autumn or spring.
  * ie. a spring semester starting in february 2020 will be (2019, 2) since we write 2019/20/2.
