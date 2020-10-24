@@ -39,7 +39,7 @@ $(document).ready(function() {
             },
             {
                 title: "@lang('print.modified_by')",
-                field: "modifier",
+                field: "modifier.name",
                 sorter: "string",
                 headerFilter: 'input',
                 minWidth:180

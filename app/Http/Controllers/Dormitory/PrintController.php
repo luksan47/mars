@@ -202,12 +202,13 @@ class PrintController extends Controller
     public function listPrintAccountHistory() {
         $this->authorize('viewAny', PrintJob::class);
 
-        $columns = ['user.name', 'balance_change', 'free_page_change', 'deadline_change', 'modifier', 'modified_at'];
+        $columns = ['user.name', 'balance_change', 'free_page_change', 'deadline_change', 'modifier.name', 'modified_at'];
         $paginator = TabulatorPaginator::from(
             PrintAccountHistory::join('users as user', 'user.id', '=', 'user_id')
-                    ->join('users as modifier', 'modifier.id', '=', 'modified_by')
-                    ->select('print_account_history.*', 'modifier.name as modifier')
-                    ->with('user')
+                ->join('users as modifier', 'modifier.id', '=', 'modified_by')
+                ->select('print_account_history.*')
+                ->with('user')
+                ->with('modifier')
             )->sortable($columns)
             ->filterable($columns)
             ->paginate();
