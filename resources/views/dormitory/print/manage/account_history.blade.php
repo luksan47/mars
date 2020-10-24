@@ -16,33 +16,39 @@ $(document).ready(function() {
                 title: "@lang('print.user')",
                 field: "user.name",
                 sorter: "string",
-                headerFilter: 'input'
+                headerFilter: 'input',
+                minWidth:200
             },
             {
                 title: "@lang('print.balance_change')",
                 field: "balance_change",
                 sorter: "number",
+                minWidth:100
             },
             {
                 title: "@lang('print.free_page_change')",
                 field: "free_page_change",
                 sorter: "number",
+                minWidth:100
             },
             {
                 title: "@lang('print.deadline_change')",
                 field: "deadline_change",
                 sorter: "date",
+                minWidth:180
             },
             {
                 title: "@lang('print.modified_by')",
                 field: "modifier",
                 sorter: "string",
-                headerFilter: 'input'
+                headerFilter: 'input',
+                minWidth:180
             },
             {
                 title: "@lang('print.modified_at')",
                 field: "modified_at",
                 sorter: "date",
+                minWidth:180
             },
         ],
         initialSort: [
