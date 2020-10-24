@@ -47,43 +47,47 @@
             </div>
         </div>
 
-        <div class="col s12">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title">@lang('print.history')</span>
-                    <table><tbody>
-                        <tr>
-                            <td>@lang('general.semester')<td>
-                            <td>@lang('checkout.date')</td>
-                            <td>@lang('checkout.payed_by')</td>
-                            <td>@lang('checkout.collected_by')</td>
-                            <td>@lang('checkout.details')</td>
-                            <td>@lang('checkout.amount')</td>
-                            <td>@lang('checkout.in_checkout')</td>
-                        </tr>
-                        @foreach($transactions as $transaction)
+        @foreach($semesters as $semester)
+        @php
+            $transactions = $semester->transactions;
+        @endphp
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">{{ $semester->tag }}</span>
+                        <table><tbody>
                             <tr>
-                                <td>{{ $transaction->semester->tag }}<td>
-                                <td>{{ $transaction->created_at }}</td>
-                                <td>
-                                    @if($transaction->payer)
-                                        {{ $transaction->payer->name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($transaction->receiver)
-                                        {{ $transaction->receiver->name }}
-                                    @endif
-                                </td>
-                                <td>{{ $transaction->type->name }}</td>
-                                <td>{{ $transaction->amount }} Ft</td>
-                                <td>{{ $transaction->moved_to_checkout ?? '-'}}
+                                <td>@lang('checkout.date')</td>
+                                <td>@lang('checkout.payed_by')</td>
+                                <td>@lang('checkout.collected_by')</td>
+                                <td>@lang('checkout.details')</td>
+                                <td>@lang('checkout.amount')</td>
+                                <td>@lang('checkout.in_checkout')</td>
                             </tr>
-                        @endforeach
-                    </tbody></table>
+                                @foreach ($transactions as $transaction)
+                                    <tr>
+                                        <td>{{ $transaction->created_at }}</td>
+                                        <td>
+                                            @if($transaction->payer)
+                                                {{ $transaction->payer->name }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($transaction->receiver)
+                                                {{ $transaction->receiver->name }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $transaction->comment ?? $transaction->type->name }}</td>
+                                        <td>{{ $transaction->amount }} Ft</td>
+                                        <td>{{ $transaction->moved_to_checkout ?? '-'}}
+                                    </tr>
+                                @endforeach
+                        </tbody></table>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
     </div>
 </div>
 @endsection

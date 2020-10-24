@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 trait CheckoutHandler
 {
-    private function getCheckout(Checkout $checkout, array $payment_types)
+    private function getCurrentCheckout(Checkout $checkout, array $payment_types)
     {
         $this->authorize('view', $checkout);
 
@@ -21,17 +21,39 @@ trait CheckoutHandler
 
         $user_transactions_not_in_checkout = $this->userTransactionsNotInCheckout($payment_types);
 
-        $transactions = Transaction::whereIn('payment_type_id', $payment_type_ids)
+        $transactions = Transaction::where('checkout_id', $checkout->id)
+            ->whereIn('payment_type_id', $payment_type_ids)
             ->with(['semester', 'type'])
             ->orderBy('semester_id', 'desc')
+            ->get();
+
+        return [
+            'transactions' => $transactions,
+            'user_transactions_not_in_checkout' => $user_transactions_not_in_checkout,
+            'checkout_id' => $checkout->id,
+            'route_base' => $this->routeBase(),
+        ];
+    }
+
+    private function getCheckout(Checkout $checkout, array $payment_types)
+    {
+        $this->authorize('view', $checkout);
+
+        $payment_type_ids = $this->paymenyTypeIDs($payment_types);
+
+        $semesters = Semester::with(['transactions' => function ($query) use ($checkout, $payment_type_ids) {
+                $query->whereIn('payment_type_id', $payment_type_ids);
+                $query->where('checkout_id', $checkout->id);
+            }, 'transactions.type'])
+            ->orderBy('year', 'desc')
+            ->orderBy('part', 'desc')
             ->get();
 
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();
 
         return [
-            'transactions' => $transactions,
-            'user_transactions_not_in_checkout' => $user_transactions_not_in_checkout,
+            'semesters' => $semesters,
             'current_balance' => $current_balance,
             'current_balance_in_checkout' => $current_balance_in_checkout,
             'checkout_id' => $checkout->id,

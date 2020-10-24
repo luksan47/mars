@@ -1,5 +1,5 @@
 {{-- Input: $transaction, $paymentType  --}}
-@foreach($transaction[$paymentType] ?? [] as $transaction)
+@foreach($transactions->where('payment_type_id', $paymentType->id) as $transaction)
 <tr>
     <td>{{ $transaction->comment }}</td>
     <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>

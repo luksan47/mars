@@ -7,7 +7,6 @@
 @section('student_council_module') active @endsection
 
 @section('content')
-
 <div class="row">
     <div class="col s12">
         <div class="card">
@@ -34,37 +33,40 @@
             </div>
         </div>
     </div>
-    @foreach($transactions as $transaction)
+    @foreach($semesters as $semester)
+    @php
+        $transactions = $semester->transactions;
+    @endphp
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ $transaction->semester->tag }}</span>
+                <span class="card-title">{{ $semester->tag }}</span>
                 <div class="row">
                     <div class="col s12">
                         <table><tbody>
                             <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
-                            @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::KKT])
-                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::INCOME])
+                            @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::kkt()])
+                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::income()])
 
                             <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
-                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::EXPENSE])
+                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::expense()])
                             <tr>
                                 <th colspan="2">@lang('checkout.sum')</th>
-                                <th class="right"><nobr>{{ number_format(/*$row['transactions']['sum']*/ 0, 0, '.', ' ') }} Ft</nobr></th>
+                                <th class="right"><nobr>{{ number_format($semester->transactions->sum('amount'), 0, '.', ' ') }} Ft</nobr></th>
                             </tr>
                         </tbody></table>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <table class="centered" style="display: block;overflow-x:auto;">
+                        <table class="highlight responsive-table centered" style="display: block;overflow-x:auto;">
                             <thead>
                                 <tr>
-                                    <th>@lang('checkout.workshop_balances')</th>
-                                    <th>@lang('general.members')@if($transaction->semester->isCurrent())*@endif</th>
+                                    <th class="valign-wrapper">@lang('checkout.workshop_balances')</th>
+                                    <th>@lang('general.members')@if($semester->isCurrent())*@endif</th>
                                     <th>
                                         @lang('checkout.allocated_balance')
-                                        @if($transaction->semester->isCurrent())
+                                        @if($semester->isCurrent())
                                             @can('administrate', \App\Models\Checkout::studentsCouncil())
                                             <a href="{{ route('economic_committee.workshop_balance') }}" class="btn-floating btn-small grey waves-effect">
                                                 <i class="material-icons">refresh</i>
@@ -77,10 +79,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($transaction->semester->workshopBalances as $workshop_balance)</th>
+                                @foreach($semester->workshopBalances as $workshop_balance)</th>
                                 <tr>
-                                    <td>{{ $workshop_balance->workshop->name }} </td>
-                                    <td>{{ $workshop_balance->payCountDisplayString($transaction->semester) }}</td>
+                                    <td class="valign-wrapper">{{ $workshop_balance->workshop->name }} </td>
+                                    <td>{{ $workshop_balance->payCountDisplayString($semester) }}</td>
                                     <td>{{ $workshop_balance->allocated_balance }}</td>
                                     <td>{{ $workshop_balance->used_balance }}</td>
                                     <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>
@@ -88,7 +90,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        @if($transaction->semester->isCurrent())
+                        @if($semester->isCurrent())
                         <blockquote>*@lang('checkout.workshop_balance_descr', [
                             'kkt' => config('custom.kkt'),
                             'resident' => config('custom.workshop_balance_resident'),

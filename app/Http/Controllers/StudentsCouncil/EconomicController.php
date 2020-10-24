@@ -59,7 +59,7 @@ class EconomicController extends Controller
                 $query->whereIn('payment_type_id', $this->paymenyTypeIDs($payment_types));
             })->get();
 
-        $checkoutData = $this->getCheckout($checkout, $payment_types);
+        $checkoutData = $this->getCurrentCheckout($checkout, $payment_types);
 
         return view('student-council.economic-committee.kktnetreg', $checkoutData)
             ->with('users', $users_has_to_pay_kktnetreg);

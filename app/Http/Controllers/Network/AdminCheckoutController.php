@@ -21,8 +21,10 @@ class AdminCheckoutController extends Controller
             PaymentType::NETREG,
         ];
         $checkoutData = $this->getCheckout(Checkout::admin(), $payment_types);
+        $user_transactions_not_in_checkout = $this->userTransactionsNotInCheckout($payment_types);
 
-        return view('network.checkout', $checkoutData);
+        return view('network.checkout', $checkoutData)
+            ->with('user_transactions_not_in_checkout', $user_transactions_not_in_checkout);
     }
 
     public function printToCheckout(Request $request)

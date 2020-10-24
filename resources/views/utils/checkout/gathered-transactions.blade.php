@@ -12,11 +12,7 @@
                         @endif
                     </td>
                     <td>
-                        @if(in_array($transaction->type->name, [\App\Models\PaymentType::NETREG, \App\Models\PaymentType::KKT]))
-                            {{ $transaction->type->name }}
-                        @else
-                            {{ $transaction->comment ?? ''}}
-                        @endif
+                        {{ $transaction->type->name }}
                     </td>
                     <td>{{ $transaction->amount }} Ft</td>
                     <td>

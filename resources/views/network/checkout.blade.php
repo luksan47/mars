@@ -72,34 +72,35 @@
     </div>
 </div>
 
-@foreach($transactions as $semester => $transaction)
-
 <div class="row">
     <div class="col s12">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">{{ $semester }}</span>
-                <div class="row">
-                    <div class="col s12">
-                        <table><tbody>
-                            <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
-                            @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::PRINT])
-                            @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::NETREG])
-                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::INCOME])
-                            <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
-                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::EXPENSE])
-                            <tr>
-                                <th colspan="2">@lang('checkout.sum')</th>
-                                <th class="right"><nobr>{{ number_format($current_balance, 0, '.', ' ') }} Ft</nobr></th>
-                            </tr>
-                        </tbody></table>
+        @foreach ($semesters as $semester)
+        @php
+            $transactions = $semester->transactions;
+        @endphp
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ $semester->tag }}</span>
+                    <div class="row">
+                        <div class="col s12">
+                            <table><tbody>
+                                <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
+                                @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::print()])
+                                @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::netreg()])
+                                @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::income()])
+                                <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
+                                @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::expense()])
+                                <tr>
+                                    <th colspan="2">@lang('checkout.sum')</th>
+                                    <th class="right"><nobr>{{ number_format($semester->transactions->sum('amount'), 0, '.', ' ') }} Ft</nobr></th>
+                                </tr>
+                            </tbody></table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endforeach
     </div>
 </div>
-@endforeach
-
 
 @endsection
