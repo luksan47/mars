@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\MacAddressSaved;
+use App\Events\MacAddressDeleted;
+use App\Listeners\UpdatePhysicalIP;
+use App\Listeners\AutoApproveMacAddresses;
+
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -17,6 +21,13 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        MacAddressSaved::class => [
+            AutoApproveMacAddresses::class,
+            UpdatePhysicalIP::class,
+        ],
+        MacAddressDeleted::class => [
+            AutoApproveMacAddresses::class,
         ],
     ];
 

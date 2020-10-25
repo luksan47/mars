@@ -105,7 +105,7 @@ class InternetController extends Controller
         $this->authorize('update', $macAddress);
 
         if ($request->has('state')) {
-            $macAddress->state = $request->input('state');
+            $macAddress->state = strtoupper($request->input('state'));
         }
 
         $macAddress->save();
@@ -160,23 +160,28 @@ class InternetController extends Controller
         $this->authorize('create', MacAddress::class);
 
         $validator = Validator::make($request->all(), [
-            'comment' => 'required|max:1000',
+            'comment' => 'required|max:255',
             'mac_address' => ['required', 'regex:/((([a-fA-F0-9]{2}[-:]){5}([a-fA-F0-9]{2}))|(([a-fA-F0-9]{2}:){5}([a-fA-F0-9]{2})))/i'],
         ]);
         $validator->validate();
 
-        $macAddress = new MacAddress();
-        $macAddress->user_id = Auth::user()->id;
-        if (Auth::user()->can('accept', $macAddress) && $request->has('user_id')) {
+        if (Auth::user()->can('accept', MacAddress::class) && $request->has('user_id')) {
             $request->validate([
                 'user_id' => 'integer|exists:users,id',
             ]);
-            $macAddress->user_id = $request->input('user_id');
-            $macAddress->state = MacAddress::APPROVED;
+            $target_id = $request->input('user_id');
+            $state = MacAddress::APPROVED;
+        } else {
+            $target_id = Auth::user()->id;
+            $state = MacAddress::REQUESTED;
         }
-        $macAddress->comment = $request->input('comment');
-        $macAddress->mac_address = str_replace('-', ':', strtoupper($request->input('mac_address')));
-        $macAddress->save();
+
+        $macAddress = MacAddress::create([
+            'user_id' => $target_id,
+            'state' => $state,
+            'comment' => $request->input('comment'),
+            'mac_address' => str_replace('-', ':', strtoupper($request->input('mac_address'))), //TODO use mutator
+        ]);
 
         $this->autoApproveMacAddresses(Auth::user());
 
@@ -185,7 +190,7 @@ class InternetController extends Controller
 
     private function autoApproveMacAddresses($user)
     {
-        DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
+        //DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
     }
 
     public function getWifiConnectionsAdmin()
