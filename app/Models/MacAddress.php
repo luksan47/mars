@@ -61,4 +61,9 @@ class MacAddress extends Model
         }
         $this->saveQuietly();
     }
+
+    public function setMacAddressAttribute(string $value)
+    {
+        $this->attributes['mac_address'] = str_replace('-', ':', strtoupper($value));
+    }
 }

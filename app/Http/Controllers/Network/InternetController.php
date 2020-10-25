@@ -12,7 +12,6 @@ use App\Models\WifiConnection;
 use App\Utils\TabulatorPaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -174,7 +173,7 @@ class InternetController extends Controller
             'user_id' => $target_id,
             'state' => $state,
             'comment' => $request->input('comment'),
-            'mac_address' => str_replace('-', ':', strtoupper($request->input('mac_address'))), //TODO use mutator
+            'mac_address' => $request->input('mac_address'), //TODO use mutator
         ]);
 
         return redirect()->back()->with('message', __('general.successfully_added'));
