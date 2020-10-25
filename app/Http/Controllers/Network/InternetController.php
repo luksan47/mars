@@ -85,8 +85,6 @@ class InternetController extends Controller
         $this->authorize('delete', $macAddress);
 
         $macAddress->delete();
-
-        $this->autoApproveMacAddresses($macAddress->user);
     }
 
     public function resetWifiPassword(Request $request)
@@ -110,8 +108,6 @@ class InternetController extends Controller
 
         $macAddress->save();
 
-        $this->autoApproveMacAddresses($macAddress->user);
-
         $macAddress = $macAddress->refresh(); // auto approve maybe modified this
 
         return $this->translateStates()($macAddress);
@@ -132,8 +128,6 @@ class InternetController extends Controller
         }
 
         $internetAccess->save();
-
-        $this->autoApproveMacAddresses(User::find($internetAccess->user_id));
 
         return InternetAccess::join('users as user', 'user.id', '=', 'user_id')
             ->select('internet_accesses.*')->with('user')
@@ -176,21 +170,14 @@ class InternetController extends Controller
             $state = MacAddress::REQUESTED;
         }
 
-        $macAddress = MacAddress::create([
+        MacAddress::create([
             'user_id' => $target_id,
             'state' => $state,
             'comment' => $request->input('comment'),
             'mac_address' => str_replace('-', ':', strtoupper($request->input('mac_address'))), //TODO use mutator
         ]);
 
-        $this->autoApproveMacAddresses(Auth::user());
-
         return redirect()->back()->with('message', __('general.successfully_added'));
-    }
-
-    private function autoApproveMacAddresses($user)
-    {
-        //DB::statement('UPDATE mac_addresses SET state = \'APPROVED\' WHERE user_id = ? ORDER BY FIELD(state,\'APPROVED\',\'REQUESTED\',\'REJECTED\'), updated_at DESC limit ?;', [$user->id, $user->internetAccess->auto_approved_mac_slots]);
     }
 
     public function getWifiConnectionsAdmin()
