@@ -69,23 +69,26 @@
                     title: "@lang('internet.username')",
                     field: "user.name",
                     sorter: "string",
-                    headerFilter: 'input'
+                    headerFilter: 'input',
+                    minWidth:200,
                 },
                 {
                     title: "@lang('internet.internet_access')",
                     field: "has_internet_until",
                     sorter: "datetime",
                     formatter: dateFormatter,
-                    editor: 'dateEditor'
+                    editor: 'dateEditor',
+                    minWidth:200,
                 },
                 {
                     title: "@lang('internet.auto_approved_mac_slots')",
                     field: "auto_approved_mac_slots",
                     sorter: "number",
                     editor: 'number',
-                    validator: "min:0"
+                    validator: "min:0",
+                    minWidth:50
                 },
-                {title: "", field: "state", headerSort: false, formatter: actions},
+                {title: "", field: "state", headerSort: false, formatter: actions, minWidth:150},
             ],
             ajaxResponse: function (url, params, response) {
                 response.data = response.data.map(record => {
