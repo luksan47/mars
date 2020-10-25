@@ -41,6 +41,7 @@ return [
         'year_of_acceptance' => 'year of acceptance',
         'faculty' => 'faculty',
         'workshop' => 'workshop',
+        'educational_email' => 'Educational e-mail',
     ],
     'before' => 'The :attribute must be a date before :date.',
     'before_or_equal' => 'The :attribute must be a date before or equal to :date.',
