@@ -34,6 +34,8 @@ Route::get('/verification', [HomeController::class, 'verification'])->name('veri
 Route::get('/privacy_policy', [HomeController::class, 'privacyPolicy'])->name('privacy_policy');
 Route::get('/img/{filename}', [HomeController::class, 'getPicture']);
 Route::get('/setlocale/{locale}', [HomeController::class, 'setLocale'])->name('setlocale');
+Route::post('/report_bug', [HomeController::class, 'reportBug'])->name('reportbug');
+Route::get('/report_bug', [HomeController::class, 'indexReportBug'])->name('index_reportbug');
 
 Auth::routes();
 
