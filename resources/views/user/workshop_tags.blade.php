@@ -2,7 +2,11 @@
 @if($user->hasEducationalInformation())
 @foreach ($user->workshops as $workshop)
     <span class="new badge {{ $workshop->color() }} scale-transition" id="user-workshop-{{ $user->id }}-{{ $workshop->id }}" data-badge-caption="">
-        <nobr>{{$workshop->name}} <span style="cursor: pointer;" onclick="deleteWorkshop({{ $user->id }}, {{ $workshop->id }})">&cross;</span></nobr>
+        <nobr>{{$workshop->name}} 
+            @can('viewAny', \App\Models\User::class) <!-- delete button -->
+                <span style="cursor: pointer;" onclick="deleteWorkshop({{ $user->id }}, {{ $workshop->id }})">&cross;</span>
+            @endcan
+        </nobr>
     </span>
     @if($newline ?? false)
     <br id="br-user-workshop-{{ $user->id }}-{{ $workshop->id }}">

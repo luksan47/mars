@@ -41,6 +41,7 @@ return [
         'year_of_acceptance' => 'felvétel éve',
         'faculty' => 'kar',
         'workshop' => 'műhely',
+        'educational_email' => 'Egyetemi e-mail',
     ],
     'before' => 'A(z) :attribute :date előtti dátum kell, hogy legyen!',
     'before_or_equal' => 'A(z) :attribute nem lehet későbbi dátum, mint :date!',

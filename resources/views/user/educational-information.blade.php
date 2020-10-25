@@ -11,6 +11,10 @@
                         <td>{{ $user->educationalInformation->neptun ?? ''}}</td>
                     </tr>
                     <tr>
+                        <th scope="row">@lang('user.educational-email')</th>
+                        <td>{{ $user->educationalInformation->email ?? ''}}</td>
+                    </tr>
+                    <tr>
                         <th scope="row">@lang('user.faculty')</th>
                         <td>
                             <ul>
