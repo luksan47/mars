@@ -39,6 +39,7 @@ return [
     'no_balance' => 'Nincs elegendő pénz a számlán',
     'no_free_pages' => 'Nincs ingyenes nyomtatás',
     'no_free_pages_left' => 'Nincs annyi ingyenesen nyomtatható oldal',
+    'no_paper' => 'NEEDED TRANSLATION',
     'number_of_copies' => 'Példányszám',
     'number_of_printed_documents' => 'Nyomtatott dokumentumok száma',
     'options' => 'Beállítások',
