@@ -106,7 +106,7 @@ class HomeController extends Controller
                     'User-Agent: request',
                     'Content-type: application/x-www-form-urlencoded',
                     'Accept: application/vnd.github.v3+json', 
-                    'Authorization: token '. '6a9b36d3535b20a6bceeddc3383a58fa244109c4'
+                    'Authorization: token '. env('GITHUB_AUTH_TOKEN')
                 ],
                 'content' => $post
             ]
