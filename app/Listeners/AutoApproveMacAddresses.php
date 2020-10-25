@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\MacAddress;
-use Illuminate\Support\Facades\Log;
 
 class AutoApproveMacAddresses
 {
@@ -33,7 +32,7 @@ class AutoApproveMacAddresses
             ->take($slots_to_approve);
         // Updating one by one to fire events.
         foreach ($macAddresses as $macAddress) {
-            $macAddress->state =MacAddress::APPROVED;
+            $macAddress->state = MacAddress::APPROVED;
             $macAddress->saveQuietly();
             $macAddress->setNextIP();
         }

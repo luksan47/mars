@@ -2,9 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Models\MacAddress;
-use Illuminate\Support\Facades\Log;
-
 class UpdatePhysicalIP
 {
     /**
