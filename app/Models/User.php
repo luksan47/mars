@@ -6,9 +6,9 @@ use App\Utils\NotificationCounter;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements HasLocalePreference
 {
@@ -47,7 +47,7 @@ class User extends Authenticatable implements HasLocalePreference
         // You can use `withoutGlobalScope('verified')` to include them.
         static::addGlobalScope('verified', function (Builder $builder) {
             // This condition prevents side-effects for unverified users.
-            if(Auth::hasUser() && Auth::user()->verified) {
+            if (Auth::hasUser() && Auth::user()->verified) {
                 $builder->where('verified', true);
             }
         });
