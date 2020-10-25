@@ -12,5 +12,5 @@ return [
     'wait_for_approving_registration' => 'Please wait for an administrator to approve your registration.',
     'no_paper' => 'No paper in the printer',
     'thank_you' => 'Thank you',
-    'email_sent' => 'Email sent'
+    'email_sent' => 'Email sent',
 ];
