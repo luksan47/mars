@@ -31,7 +31,7 @@ class InternetAccess extends Model
             if ($this->user->isCollegist() && isset($this->personalInformation)) {
                 $username = $this->personalInformation->neptun;
             } else {
-                $username = 'wifiuser'.$this->user->id;
+                $username = 'wifiuser'.$this->user_id;
             }
         }
         $this->update(['wifi_username' => $username]);
