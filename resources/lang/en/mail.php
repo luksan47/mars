@@ -10,4 +10,7 @@ return [
     'status_certificate_request_subject' => 'Status certificate request',
     'thank_you_registering' => 'Thank you for registering to the :app system.',
     'wait_for_approving_registration' => 'Please wait for an administrator to approve your registration.',
+    'no_paper' => 'No paper in the printer',
+    'thank_you' => 'Thank you',
+    'email_sent' => 'Email sent'
 ];

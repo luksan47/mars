@@ -58,12 +58,10 @@
                 </div>
             </div>
         </form>
-        <div style="margin-right: 0px" class="row">
-            <form method="POST" action="/print">
+        <div style="margin-right: 0" class="row">
+            <form method="POST" action="{{ route('print.no_paper.email') }}">
                 @csrf
-                @if(!session('message'))
-                    <button class="btn waves-green right" type="submit">No paper</button>
-                @endif
+                    <button class="btn waves-green right" type="submit">@lang('print.no_paper')</button>
             </form>
         </div>
     </div>

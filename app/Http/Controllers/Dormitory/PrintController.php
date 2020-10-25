@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dormitory;
 
 use App\Console\Commands;
 use App\Mail\NoPaper;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\FreePages;
 use App\Models\PrintAccount;
@@ -40,13 +41,9 @@ class PrintController extends Controller
     }
     public function noPaper(){
         $userName = Auth::user()->name;
-        $users = DB::table('roles')->select('email')
-            ->join('role_users', 'roles.id', '=', 'role_users.role_id')
-            ->join('users', 'user_id', '=', 'users.id')
-            ->where('roles.name','internet-admin')
-            ->get();
-        Mail::to($users)->send(new NoPaper($userName));
-        return redirect('/print')->with('message','Email sent');
+        $admins = User::role(Role::INTERNET_ADMIN)->select('email')->get()->map->only(['email'])->pluck('email')->all();
+        Mail::to($admins)->send(new NoPaper($userName));
+        return redirect()->back()->with('message', __('mail.email_sent'));
     }
 
     public function admin() {

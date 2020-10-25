@@ -1,6 +1,5 @@
 @component('mail::message')
-    No paper in the printer
-
-    Thank you,
-    {{$userName}}
+    @lang('mail.no_paper')
+    <p>@lang('mail.thank_you'),</p>
+   {{$userName}}
 @endcomponent

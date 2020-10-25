@@ -39,6 +39,7 @@ return [
     'no_balance' => 'Not enough money on the account',
     'no_free_pages' => 'You have no free pages.',
     'no_free_pages_left' => 'Not enough free pages',
+    'no_paper' => 'No paper',
     'number_of_copies' => 'Number of copies',
     'number_of_printed_documents' => 'Number of printed documents',
     'options' => 'Printing options',
