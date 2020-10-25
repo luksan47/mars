@@ -31,6 +31,7 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
+                        @can('view', $user)
                         <tr>
                             <td>
                                 <b>{{ $user->name }}</b><br>
@@ -68,13 +69,12 @@
                             <!-- Edit -->
                             <td>
                                 <div class="right">
-                                    @can('view', $user)
                                     <a href="{{ route('secretariat.user.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
                                         <i class="material-icons">remove_red_eye</i></a>
-                                    @endcan
                                 </div>
                             </td>
                         </tr>
+                        @endcan
                         @endforeach
                         @if(count($users) == 0)
                         <tr>

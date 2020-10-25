@@ -17,6 +17,7 @@ class EducationalInformation extends Model
         'high_school',
         'neptun',
         'year_of_acceptance',
+        'email',
     ];
 
     public function user()
