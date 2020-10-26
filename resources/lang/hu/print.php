@@ -37,6 +37,7 @@ return [
     'modify_pages' => 'Oldalak módosítása',
     'modify_print_balance' => 'Felhasználható egyenleg módosítása',
     'no-paper-description' => 'Amennyiben azt tapasztalod, hogy a nyomtatóból kifogyott a papír, vagy kifogyóban van, itt tudod értesíteni a rendszergazdákat.',
+    'no-paper-reported' => 'Egy felhasználó jelentette, hogy a papír kifogyott a nyomtatóból, ekkor: :date. A rendszergazdák hamarosan feltöltik.',
     'no_balance' => 'Nincs elegendő pénz a számlán',
     'no_free_pages' => 'Nincs ingyenes nyomtatás',
     'no_free_pages_left' => 'Nincs annyi ingyenesen nyomtatható oldal',

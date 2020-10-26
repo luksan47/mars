@@ -37,6 +37,7 @@ return [
     'modify_pages' => 'Modify pages',
     'modify_print_balance' => 'Modify print balance',
     'no-paper-description' => 'If you noticed that the printer had ran out of paper or running low, you can notify the system administrators.',
+    'no-paper-reported' => 'A user has reported at :date that the paper has ran out. The system administrators are refilling as soon as possible.',
     'no_balance' => 'Not enough money on the account',
     'no_free_pages' => 'You have no free pages.',
     'no_free_pages_left' => 'Not enough free pages',

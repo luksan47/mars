@@ -61,13 +61,17 @@
         <div class="row">
             <div class="col s9">
                 <blockquote>
+                    @if(Cache::has('print.no-paper'))
+                        @lang('print.no-paper-reported', ['date' => Cache::get('print.no-paper')])
+                    @else
                         @lang('print.no-paper-description')
+                    @endif
                 </blockquote>
             </div>
             <div class="input-field col s3">
                 <form method="POST" action="{{ route('print.no_paper.email') }}">
                     @csrf
-                        <button class="btn waves-green right coli blue" type="submit">@lang('print.no_paper')</button>
+                        <button class="btn waves-green right coli blue" type="submit" @if(Cache::has('print.no-paper')) disabled @endif>@lang('print.no_paper')</button>
                 </form>
             </div>
         </div>
