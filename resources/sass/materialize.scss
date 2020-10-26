@@ -1,7 +1,9 @@
+
+
 //custom color
 $coli: (
-  "blue": #242851,
-  "orange": #b38f2f,
+  "blue": if($isDebug, #5e1a10, #242851),
+  "orange": if($isDebug, #dc3c1c, #b38f2f),
   "lightblue": #6e76e5
 );
 //import and overwrite default colors
