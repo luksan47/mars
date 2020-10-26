@@ -41,13 +41,15 @@ trait CheckoutHandler
 
         $payment_type_ids = $this->paymenyTypeIDs($payment_types);
 
+        $current_semester = Semester::current();
         $semesters = Semester::with(['transactions' => function ($query) use ($checkout, $payment_type_ids) {
             $query->whereIn('payment_type_id', $payment_type_ids);
             $query->where('checkout_id', $checkout->id);
         }, 'transactions.type'])
             ->orderBy('year', 'desc')
             ->orderBy('part', 'desc')
-            ->get();
+            ->get()
+            ->where('tag', '<=', $current_semester->tag);
 
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();
