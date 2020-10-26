@@ -20,7 +20,6 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -40,9 +39,11 @@ class PrintController extends Controller
             ]);
     }
     public function noPaper(){
-        $userName = Auth::user()->name;
-        $admins = User::role(Role::INTERNET_ADMIN)->select('email')->get()->map->only(['email'])->pluck('email')->all();
-        Mail::to($admins)->send(new NoPaper($userName));
+        $reporterName = Auth::user()->name;
+        $admins = User::role(Role::NETWORK_ADMIN)->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin)->send(new NoPaper($admin->name, $reporterName));
+        }
         return redirect()->back()->with('message', __('mail.email_sent'));
     }
 

@@ -10,17 +10,18 @@ class NoPaper extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $userName;
+    public string $recipient;
+    public string $reporter;
 
     /**
      * Create a new message instance.
      *
      * @param string $userName
      */
-    public function __construct(string $userName)
+    public function __construct(string $recipient, string $reporter)
     {
-        //
-        $this->userName = $userName;
+        $this->recipient = $recipient;
+        $this->reporter = $reporter;
     }
 
     /**
@@ -31,6 +32,6 @@ class NoPaper extends Mailable
     public function build()
     {
         return $this->markdown('emails.no_paper')
-            ->subject(__('mail.no_paper'));
+            ->subject(__('mail.no-paper-subject'));
     }
 }

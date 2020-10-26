@@ -58,11 +58,18 @@
                 </div>
             </div>
         </form>
-        <div style="margin-right: 0" class="row">
-            <form method="POST" action="{{ route('print.no_paper.email') }}">
-                @csrf
-                    <button class="btn waves-green right" type="submit">@lang('print.no_paper')</button>
-            </form>
+        <div class="row">
+            <div class="col s9">
+                <blockquote>
+                        @lang('print.no-paper-description')
+                </blockquote>
+            </div>
+            <div class="input-field col s3">
+                <form method="POST" action="{{ route('print.no_paper.email') }}">
+                    @csrf
+                        <button class="btn waves-green right coli blue" type="submit">@lang('print.no_paper')</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

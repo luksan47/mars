@@ -20,7 +20,6 @@ class Role extends Model
     const LOCALE_ADMIN = 'locale-admin';
     const PERMISSION_HANDLER = 'permission-handler';
     const STUDENT_COUNCIL = 'student-council';
-    const INTERNET_ADMIN = 'internet-admin';
 
     // Module-related roles
     const PRINTER = 'printer';
