@@ -51,35 +51,36 @@
                                         <i class="material-icons">event_note</i></a>
                             </td>
                         @endforeach
-                        <script>
-                            $(document).ready(function(){
-                                $('.tooltipped').tooltip();
-                            });
-                        </script>
                     </tbody>
                 </table>
-                <script>
-                function setStatus(id, isResident){
-                    console.log(id, isResident)
-                    $.ajax({
-                        url: "{{ route('secretariat.user.set_collegist_type') }}",
-                        data: {
-                            user_id: id,
-                            resident: isResident
-                        },
-                        type: 'post',
-                        dataType: 'json',
-                        success: function(data) {
-                            M.toast({html: "@lang('general.successful_modification')"});
-                        },
-                        error: function(xhr, textStatus, error) {
-                            window.alert('Something went wrong. Please try again later.');
-                        }
-                    });
-                }
-                </script>
             </div>
         </div>
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+
+        function setStatus(id, isResident){
+            console.log(id, isResident)
+            $.ajax({
+                url: "{{ route('secretariat.user.set_collegist_type') }}",
+                data: {
+                    user_id: id,
+                    resident: isResident
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    M.toast({html: "@lang('general.successful_modification')"});
+                },
+                error: function(xhr, textStatus, error) {
+                    window.alert('Something went wrong. Please try again later.');
+                }
+            });
+        }
+    </script>
+@endpush

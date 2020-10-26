@@ -21,16 +21,6 @@
         @error('date_of_birth')
         <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
-        <script>
-        $(document).ready(function() {
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',
-                firstDay: 1,
-                yearRange: 50,
-                maxDate: new Date(),
-            });
-        });
-        </script>
     </div>
     <div class="input-field col s12">
         <input id="mothers_name" name="mothers_name" type="text" class="validate @error('mothers_name') invalid @enderror" value="{{ old('mothers_name') }}"
@@ -50,3 +40,16 @@
         @enderror
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                firstDay: 1,
+                yearRange: 50,
+                maxDate: new Date(),
+            });
+        });
+    </script>
+@endpush
