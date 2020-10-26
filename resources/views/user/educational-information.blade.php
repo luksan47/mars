@@ -11,6 +11,10 @@
                         <td>{{ $user->educationalInformation->neptun ?? ''}}</td>
                     </tr>
                     <tr>
+                        <th scope="row">@lang('user.educational-email')</th>
+                        <td>{{ $user->educationalInformation->email ?? ''}}</td>
+                    </tr>
+                    <tr>
                         <th scope="row">@lang('user.faculty')</th>
                         <td>
                             <ul>
@@ -52,7 +56,6 @@
                                         data-position="right"  data-tooltip="@lang('user.'.$user->getStatusIn($semester))"
                                         >
                                         {{ $semester->tag() }}
-                                        
                                     </span>
                                 </li>
                                 @endforeach

@@ -116,7 +116,7 @@ class Role extends Model
             return self::toSelectableCollection($locales);
         }
 
-        if ($name == 'student-council') {
+        if ($name == self::STUDENT_COUNCIL) {
             $student_council_members = [
                 'president',
                 'vice_president',
@@ -137,7 +137,7 @@ class Role extends Model
             return self::toSelectableCollection($student_council_members);
         }
 
-        if ($name == 'collegist') {
+        if ($name == self::COLLEGIST) {
             $collegists = [
                 'resident',
                 'extern',

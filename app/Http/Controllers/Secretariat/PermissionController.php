@@ -16,7 +16,7 @@ class PermissionController extends Controller
 
     public function index()
     {
-        $users = User::all()->sortBy('name');
+        $users = User::with('roles')->orderBy('name')->get();
 
         return view('secretariat.permissions.list', ['users' => $users]);
     }
