@@ -18,14 +18,14 @@ class RegistrationsController extends Controller
 
     public function index()
     {
-        $users = User::where('verified', false)->with('educationalInformation')->get();
+        $users = User::withoutGlobalScope('verified')->where('verified', false)->with('educationalInformation')->get();
 
         return view('secretariat.registrations.list', ['users' => $users]);
     }
 
     public function accept(Request $request)
     {
-        $user = User::findOrFail($request->id);
+        $user = User::withoutGlobalScope('verified')->findOrFail($request->id);
         $user->update(['verified' => true]);
 
         Cache::decrement('user');
@@ -35,7 +35,7 @@ class RegistrationsController extends Controller
             Mail::to($user)->queue(new \App\Mail\ApprovedRegistration($user->name));
         }
         if($request->next){
-            $next_user = User::where('verified', false)->first();
+            $next_user = User::withoutGlobalScope('verified')->where('verified', false)->first();
             if($next_user != null) {
                 return redirect()->route('secretariat.registrations.show', ['id' => $next_user->id]);
             }
@@ -45,12 +45,12 @@ class RegistrationsController extends Controller
 
     public function reject(Request $request)
     {
-        User::findOrFail($request->id)->delete();
+        User::withoutGlobalScope('verified')->findOrFail($request->id)->delete();
 
         Cache::decrement('user');
 
         if($request->next){
-            $next_user = User::where('verified', false)->first();
+            $next_user = User::withoutGlobalScope('verified')->where('verified', false)->first();
             if($next_user != null) {
                 return redirect()->route('secretariat.registrations.show', ['id' => $next_user->id]);
             }
@@ -60,8 +60,8 @@ class RegistrationsController extends Controller
 
     public function show(Request $request)
     {
-        $user = User::find($request->id);
-        $unverified_users_left = count(User::where('verified', false)->get());
+        $user = User::withoutGlobalScope('verified')->findOrFail($request->id);
+        $unverified_users_left = count(User::withoutGlobalScope('verified')->where('verified', false)->get());
         return view('secretariat.registrations.show', ['user' => $user, 'users_left' => $unverified_users_left]);
     }
 }

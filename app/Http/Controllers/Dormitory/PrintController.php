@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dormitory;
 
 use App\Console\Commands;
+use App\Mail\NoPaper;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\FreePages;
 use App\Models\PrintAccount;
@@ -35,6 +37,14 @@ class PrintController extends Controller
                 "users" => User::printers(),
                 "free_pages" => Auth::user()->sumOfActiveFreePages()
             ]);
+    }
+    public function noPaper(){
+        $reporterName = Auth::user()->name;
+        $admins = User::role(Role::NETWORK_ADMIN)->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin)->send(new NoPaper($admin->name, $reporterName));
+        }
+        return redirect()->back()->with('message', __('mail.email_sent'));
     }
 
     public function admin() {
