@@ -21,18 +21,6 @@
             @error('deadline')
             <span class="helper-text" data-error="{{ $message }}"></span>
             @enderror
-            <script>
-            var tomorrow = new Date();
-            tomorrow.setDate(new Date().getDate()+1);
-            $(document).ready(function() {
-                $('.datepicker').datepicker({
-                    format: 'yyyy-mm-dd',
-                    firstDay: 1,
-                    yearRange: 10,
-                    minDate: tomorrow,
-                });
-            });
-            </script>
         </div>
         <div class="input-field col s12 m12 l3">
             <input id="comment" name="comment" type="text" value="{{ old('comment') }}" required>
@@ -43,3 +31,19 @@
         </div>
     </form>
 @endif</div>
+
+
+@push('scripts')
+    <script>
+        var tomorrow = new Date();
+        tomorrow.setDate(new Date().getDate()+1);
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                firstDay: 1,
+                yearRange: 10,
+                minDate: tomorrow,
+            });
+        });
+    </script>
+@endpush
