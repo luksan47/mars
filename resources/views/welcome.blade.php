@@ -14,6 +14,12 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/welcome_page.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ mix('css/materialize.css') }}" media="screen,projection" />
+
+    @if (config('app.debug'))
+        <!-- Scripts -->
+        <script type="text/javascript" src="{{ mix('js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ mix('js/materialize.js') }}"></script>
+    @endif
 </head>
 
 <body class="{{ Cookie::get('theme') }}">
@@ -45,7 +51,7 @@
         <div class="content">
             <div class="row">
                 <div class="col s12 l2 offset-l2 center-align">
-                    <img class="material-icons" style="height:100px" src="{{ config('app.logo_blue_path') }}">
+                    <img class="material-icons @if(config('app.debug'))tooltipped" data-tooltip='<div>Icons made by monkik from www.flaticon.com</div>'@else"@endif style="height:100px" src="{{ config('app.logo_blue_path') }}">
                 </div>
                 <div class="col s12 l5 center-align">
                     <div class="noselect"
@@ -70,6 +76,14 @@
             </div>
         </div>
     </div>
+
+    @if (config('app.debug'))
+        <script>
+            $(document).ready(function(){
+                $('.tooltipped').tooltip();
+            });
+        </script>
+    @endif
 </body>
 
 </html>

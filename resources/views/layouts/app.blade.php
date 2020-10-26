@@ -69,6 +69,13 @@
         'header': "@lang('cookie.header')",
     };
     </script>
+    @if (config('app.debug'))
+        <script>
+            $(document).ready(function(){
+                $('.tooltipped').tooltip();
+            });
+        </script>
+    @endif
     <script>
         function toggleColorMode() {
             var mode = (localStorage.getItem('mode') || 'dark') === 'dark' ? 'light' : 'dark';

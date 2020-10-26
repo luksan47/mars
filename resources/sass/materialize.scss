@@ -1,9 +1,7 @@
-
-
 //custom color
 $coli: (
-  "blue": if($isDebug, #5e1a10, #242851),
-  "orange": if($isDebug, #dc3c1c, #b38f2f),
+  "blue": if($isDebug == "true", #5e1a10, #242851),
+  "orange": if($isDebug == "true", #dc3c1c, #b38f2f),
   "lightblue": #6e76e5
 );
 //import and overwrite default colors
@@ -19,7 +17,7 @@ $secondary-color: color("coli", "orange");
 $success-color: color("blue-grey", "lighten-1");
 $link-color: color("coli", "orange");
 
-//import the remaining materialize style 
+//import the remaining materialize style
 //(will include the previous ones also, but it won't overwrite those)
 @import "node_modules/materialize-css/sass/materialize.scss";
 
