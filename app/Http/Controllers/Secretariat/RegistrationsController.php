@@ -26,6 +26,10 @@ class RegistrationsController extends Controller
     public function accept(Request $request)
     {
         $user = User::withoutGlobalScope('verified')->findOrFail($request->id);
+        if($user->verified) {
+            return redirect()->route('secretariat.registrations');
+        }
+
         $user->update(['verified' => true]);
 
         Cache::decrement('user');
@@ -45,7 +49,12 @@ class RegistrationsController extends Controller
 
     public function reject(Request $request)
     {
-        User::withoutGlobalScope('verified')->findOrFail($request->id)->delete();
+        $user = User::withoutGlobalScope('verified')->findOrFail($request->id);
+        if($user->verified) {
+            return redirect()->route('secretariat.registrations');
+        }
+
+        $user->delete();
 
         Cache::decrement('user');
 
@@ -61,6 +70,10 @@ class RegistrationsController extends Controller
     public function show(Request $request)
     {
         $user = User::withoutGlobalScope('verified')->findOrFail($request->id);
+        if($user->verified) {
+            return redirect()->route('secretariat.registrations');
+        }
+
         $unverified_users_left = count(User::withoutGlobalScope('verified')->where('verified', false)->get());
         return view('secretariat.registrations.show', ['user' => $user, 'users_left' => $unverified_users_left]);
     }
