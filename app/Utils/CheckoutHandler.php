@@ -42,14 +42,14 @@ trait CheckoutHandler
         $payment_type_ids = $this->paymenyTypeIDs($payment_types);
 
         $current_semester = Semester::current();
-        $semesters = Semester::with(['transactions' => function ($query) use ($checkout, $payment_type_ids) {
-            $query->whereIn('payment_type_id', $payment_type_ids);
-            $query->where('checkout_id', $checkout->id);
-        }, 'transactions.type'])
-            ->orderBy('year', 'desc')
+        $semesters = Semester::orderBy('year', 'desc')
             ->orderBy('part', 'desc')
             ->get()
-            ->where('tag', '<=', $current_semester->tag);
+            ->where('tag', '<=', $current_semester->tag)
+            ->load(['transactions' => function ($query) use ($checkout, $payment_type_ids) {
+                $query->whereIn('payment_type_id', $payment_type_ids);
+                $query->where('checkout_id', $checkout->id);
+            }, 'transactions.type']);
 
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();
@@ -122,6 +122,7 @@ trait CheckoutHandler
         $payment_type_ids = $this->paymenyTypeIDs($payment_types);
 
         $user_transactions_not_in_checkout = Transaction::where('receiver_id', Auth::user()->id)
+            ->with(['type', 'payer'])
             ->where('moved_to_checkout', null)
             ->whereIn('payment_type_id', $payment_type_ids)
             ->get();
