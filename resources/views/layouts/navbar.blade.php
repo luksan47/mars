@@ -192,13 +192,6 @@
                             <i class="material-icons left">sentiment_satisfied_alt</i>@lang('localizations.help_translate')</a></li>
 
                         <!-- report a bug -->
-                        <script>
-                            //The href: mailto may not work on every device. In this case, show a notification.
-                            var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
-                            function dismiss() {
-                                M.Toast.dismissAll();
-                            };
-                        </script>
                         <li><a href="mailto:{{ config('test_mail') }}?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
                             <i class="material-icons left">sentiment_very_dissatisfied</i>@lang('general.report_bug')</a></li>
                     </ul>
@@ -223,3 +216,13 @@
     </form>
     @endif
 </ul>
+
+@push('scripts')
+    <script>
+        //The href: mailto may not work on every device. In this case, show a notification.
+        var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
+        function dismiss() {
+            M.Toast.dismissAll();
+        };
+    </script>
+@endpush

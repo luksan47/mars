@@ -22,15 +22,13 @@
             layout:"fitColumns",
             pagination: "remote", //enable remote pagination
             ajaxURL: "{{ route('internet.mac_addresses.users') }}", //set url for ajax request
-            ajaxSorting: true,
-            ajaxFiltering: true,
             placeholder: "@lang('internet.nothing_to_show')",
             columnMinWidth:150,
             headerSort:false,
             columns: [
-                {title: "@lang('internet.mac_address')", field: "mac_address", sorter: "string", @can('viewAny', \App\Models\MacAddress::class) headerFilter: 'input' @endcan},
-                {title: "@lang('internet.comment')", field: "comment", sorter: "string", @can('viewAny', \App\Models\MacAddress::class) headerFilter: 'input' @endcan},
-                {title: "@lang('internet.state')", field: "state", sorter: "string", @can('viewAny', \App\Models\MacAddress::class) headerFilter: 'input' @endcan},
+                {title: "@lang('internet.mac_address')", field: "mac_address", sorter: "string"},
+                {title: "@lang('internet.comment')", field: "comment", sorter: "string"},
+                {title: "@lang('internet.state')", field: "state", sorter: "string"},
                 {title: "", field: "id", headerSort: false, formatter: deleteButton},
             ]
         });

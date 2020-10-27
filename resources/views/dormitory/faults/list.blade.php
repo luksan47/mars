@@ -94,6 +94,7 @@
             ajaxFiltering: true,
             layout: "fitColumns",
             placeholder: "@lang('internet.nothing_to_show')",
+            columnMinWidth:200,
             columns: [
                 {title: "@lang('faults.created_at')", field: "created_at", sorter: "datetime", sorterParams: {format: "YYYY-MM-DD HH:mm:ss"}, width: 180,
                  formatter: "datetime", formatterParams: {outputFormat: "YYYY. MM. DD. HH:mm"}},

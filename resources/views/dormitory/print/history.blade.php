@@ -46,6 +46,7 @@
                 ajaxFiltering: true,
                 placeholder: "@lang('internet.nothing_to_show')",
                 headerSort: false,
+                columnMinWidth:200,
                 columns: [{
                         title: "@lang('internet.created_at')",
                         field: "created_at",
