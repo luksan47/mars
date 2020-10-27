@@ -68,12 +68,25 @@
                     @endif
                 </blockquote>
             </div>
-            <div class="input-field col s3">
-                <form method="POST" action="{{ route('print.no_paper.email') }}">
-                    @csrf
-                        <button class="btn waves-green right coli blue" type="submit" @if(Cache::has('print.no-paper')) disabled @endif>@lang('print.no_paper')</button>
-                </form>
-            </div>
+            @if(Cache::has('print.no-paper') && Auth::user()->can('handleAny', \App\Models\PrintAccount::class))
+                <div class="input-field col s3">
+                    <form method="POST" action="{{ route('print.added_paper') }}">
+                        @csrf
+                        <div class="row">
+                            <button class="btn waves-green right coli blue" type="submit">@lang('print.added_paper')</button>
+                        </div>
+                    </form>
+                </div>
+            @else
+                <div class="input-field col s3">
+                    <form method="POST" action="{{ route('print.no_paper') }}">
+                        @csrf
+                        <div class="row">
+                            <button class="btn waves-green right coli blue" type="submit" @if(Cache::has('print.no-paper')) disabled @endif>@lang('print.no_paper')</button>
+                        </div>
+                    </form>
+                </div>
+            @endif
         </div>
     </div>
 </div>

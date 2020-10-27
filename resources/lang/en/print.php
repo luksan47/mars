@@ -7,6 +7,7 @@ return [
     'SUCCESS' => 'Done',
     'add' => 'Add',
     'add_free_pages' => 'Add free pages',
+    'added_paper' => 'Refilled paper',
     'amount' => 'Amount',
     'available_free_pages' => 'Free pages left :number_of_free_pages page',
     'available_money' => 'Available money',

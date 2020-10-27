@@ -7,6 +7,7 @@ return [
     'SUCCESS' => 'Kész',
     'add' => 'Hozzáadás',
     'add_free_pages' => 'Ingyenes oldalak hozzáadása',
+    'added_paper' => 'Papír újratöltve',
     'amount' => 'Összeg',
     'available_free_pages' => 'Ezen felül ingyenesen nyomtatható :number_of_free_pages oldal',
     'available_money' => 'Rendelkezésre álló összeg',

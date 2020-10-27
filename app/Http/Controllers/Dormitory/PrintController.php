@@ -33,14 +33,16 @@ class PrintController extends Controller
         $this->middleware('can:use,App\Models\PrintAccount');
     }
 
-    public function index() {
+    public function index()
+    {
         return view('dormitory.print.app', [
                 "users" => User::printers(),
                 "free_pages" => Auth::user()->sumOfActiveFreePages()
             ]);
     }
 
-    public function noPaper(){
+    public function noPaper()
+    {
         $reporterName = Auth::user()->name;
         $admins = User::role(Role::NETWORK_ADMIN)->get();
         foreach ($admins as $admin) {
@@ -50,6 +52,14 @@ class PrintController extends Controller
         }
         Cache::put('print.no-paper', now(), 3600);
         return redirect()->back()->with('message', __('mail.email_sent'));
+    }
+
+    public function addedPaper()
+    {
+        $this->authorize('handleAny', PrintAccount::class);
+
+        Cache::forget('print.no-paper');
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function admin() {

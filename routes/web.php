@@ -73,8 +73,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Printing */
     Route::get('/print', [PrintController::class, 'index'])->name('print');
-    Route::post('/print/no-paper', [PrintController::class, 'noPaper'])->name('print.no_paper.email');
-
+    Route::post('/print/no-paper', [PrintController::class, 'noPaper'])->name('print.no_paper');
+    Route::post('/print/added-paper', [PrintController::class, 'addedPaper'])->name('print.added_paper');
     Route::get('/print/free_pages/list', [PrintController::class, 'listFreePages'])->name('print.free_pages.list');
     Route::get('/print/print_jobs/list', [PrintController::class, 'listPrintJobs'])->name('print.print_jobs.list');
     Route::get('/print/free_pages/list/all', [PrintController::class, 'listAllFreePages'])->name('print.free_pages.list.all');
