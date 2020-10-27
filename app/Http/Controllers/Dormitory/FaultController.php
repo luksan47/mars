@@ -62,14 +62,9 @@ class FaultController extends Controller
 
     public function notifyStaff(Fault $fault, bool $reopen = false)
     {
-        if (config('mail.active')) {
-            $staffs= Role::getUsers(Role::STAFF);
-            foreach ($staffs as $staff) {
-                Mail::to($staff)->queue(new \App\Mail\NewFault(
-                    $staff->name,
-                    $fault,
-                    $reopen));
-            }
+        $staffs= Role::getUsers(Role::STAFF);
+        foreach ($staffs as $staff) {
+            Mail::to($staff)->queue(new \App\Mail\NewFault($staff->name, $fault, $reopen));
         }
     }
 }

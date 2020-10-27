@@ -10,6 +10,7 @@ use App\Models\FreePages;
 use App\Models\PrintAccount;
 use App\Models\PrintJob;
 use App\Models\PrintAccountHistory;
+use App\Mail\ChangedPrintBalance;
 use App\Utils\Printer;
 use App\Utils\TabulatorPaginator;
 use App\Models\Transaction;
@@ -109,9 +110,7 @@ class PrintController extends Controller
         $to_account->increment('balance', $balance);
 
         // Send notification mail
-        if (config('mail.active')) {
-            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
-        }
+        Mail::to($user)->queue(new ChangedPrintBalance($user, $balance, Auth::user()->name));
 
         return redirect()->back()->with('message', __('general.successful_transaction'));
     }
@@ -148,9 +147,7 @@ class PrintController extends Controller
         ]);
 
         // Send notification mail
-        if (config('mail.active')) {
-            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
-        }
+        Mail::to($user)->queue(new ChangedPrintBalance($user, $balance, Auth::user()->name));
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }

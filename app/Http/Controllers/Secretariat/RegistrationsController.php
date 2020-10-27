@@ -35,9 +35,7 @@ class RegistrationsController extends Controller
         Cache::decrement('user');
 
         // Send notification mail.
-        if (config('mail.active')) {
-            Mail::to($user)->queue(new \App\Mail\ApprovedRegistration($user->name));
-        }
+        Mail::to($user)->queue(new \App\Mail\ApprovedRegistration($user->name));
         if($request->next){
             $next_user = User::withoutGlobalScope('verified')->where('verified', false)->first();
             if($next_user != null) {

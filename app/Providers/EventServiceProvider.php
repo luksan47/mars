@@ -6,8 +6,10 @@ use App\Events\MacAddressDeleted;
 use App\Events\MacAddressSaved;
 use App\Listeners\AutoApproveMacAddresses;
 use App\Listeners\UpdatePhysicalIP;
+use App\Listeners\MailGate;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         MacAddressDeleted::class => [
             AutoApproveMacAddresses::class,
+        ],
+        MessageSending::class => [
+            MailGate::class,
         ],
     ];
 

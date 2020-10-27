@@ -124,15 +124,13 @@ class EconomicController extends Controller
         ]);
 
         $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
-        if (config('mail.active')) {
-            $internet_expiration_message = null;
-            if ($new_internet_expire_date !== null){
-                $internet_expiration_message = __('internet.expiration_extended', [
-                    'new_date' => $new_internet_expire_date->format('Y-m-d')
-                ]);
-            }
-            Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
+        $internet_expiration_message = null;
+        if ($new_internet_expire_date !== null){
+            $internet_expiration_message = __('internet.expiration_extended', [
+                'new_date' => $new_internet_expire_date->format('Y-m-d')
+            ]);
         }
+        Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
 
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
