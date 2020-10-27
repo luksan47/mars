@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dormitory;
 
 use App\Console\Commands;
+use App\Mail\NoPaper;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\FreePages;
 use App\Models\PrintAccount;
@@ -18,6 +20,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -30,11 +33,33 @@ class PrintController extends Controller
         $this->middleware('can:use,App\Models\PrintAccount');
     }
 
-    public function index() {
+    public function index()
+    {
         return view('dormitory.print.app', [
                 "users" => User::printers(),
                 "free_pages" => Auth::user()->sumOfActiveFreePages()
             ]);
+    }
+
+    public function noPaper()
+    {
+        $reporterName = Auth::user()->name;
+        $admins = User::role(Role::NETWORK_ADMIN)->get();
+        foreach ($admins as $admin) {
+            if (config('mail.active')) {
+                Mail::to($admin)->send(new NoPaper($admin->name, $reporterName));
+            }
+        }
+        Cache::put('print.no-paper', now(), 3600);
+        return redirect()->back()->with('message', __('mail.email_sent'));
+    }
+
+    public function addedPaper()
+    {
+        $this->authorize('handleAny', PrintAccount::class);
+
+        Cache::forget('print.no-paper');
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function admin() {

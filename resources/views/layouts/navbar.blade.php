@@ -216,3 +216,13 @@
     </form>
     @endif
 </ul>
+
+@push('scripts')
+    <script>
+        //The href: mailto may not work on every device. In this case, show a notification.
+        var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
+        function dismiss() {
+            M.Toast.dismissAll();
+        };
+    </script>
+@endpush
