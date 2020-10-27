@@ -34,8 +34,6 @@ Route::get('/verification', [HomeController::class, 'verification'])->name('veri
 Route::get('/privacy_policy', [HomeController::class, 'privacyPolicy'])->name('privacy_policy');
 Route::get('/img/{filename}', [HomeController::class, 'getPicture']);
 Route::get('/setlocale/{locale}', [HomeController::class, 'setLocale'])->name('setlocale');
-Route::post('/report_bug', [HomeController::class, 'reportBug'])->name('reportbug');
-Route::get('/report_bug', [HomeController::class, 'indexReportBug'])->name('index_reportbug');
 
 Auth::routes();
 
@@ -48,6 +46,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::post('/color/{mode}', [HomeController::class, 'colorMode'])->name('set-color-mode');
+
+    Route::post('/report_bug', [HomeController::class, 'reportBug'])->name('reportbug');
+    Route::get('/report_bug', [HomeController::class, 'indexReportBug'])->name('index_reportbug');
 
     /** User related routes */
     Route::get('/user', [UserController::class, 'index'])->name('user');
