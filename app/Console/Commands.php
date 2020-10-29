@@ -38,6 +38,20 @@ class Commands
         return $result;
     }
 
+    public static function cancelPrintJob(string $jobID)
+    {
+        if (self::isDebugMode()) {
+            // cancel(1) exits with status code 0 if it succeeds
+            $result = ['output' => '', 'exit_code' => 0];
+        } else {
+            $command = "cancel " . $jobID;
+            Log::info($command);
+            $output = exec($command, $result, $exit_code);
+            $result = ['output' => $output, 'exit_code' => $exit_code];
+        }
+        return $result;
+    }
+
     public static function getPages($path)
     {
         if (self::isDebugMode()) {
