@@ -94,7 +94,8 @@ class BasicTest extends TestCase
             'localizations',
             'localizations/add',
             'faults/add',
-            'secretariat/users'
+            'secretariat/users',
+            'report_bug',
         ];
 
         $routeCollection = Route::getRoutes();
