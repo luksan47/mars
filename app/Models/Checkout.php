@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Checkout extends Model
 {
@@ -35,12 +36,16 @@ class Checkout extends Model
 
     public static function admin()
     {
-        return self::where('name', self::ADMIN)->firstOrFail();
+        return Cache::remember('checkout.'.self::ADMIN, 86400, function () {
+            return self::where('name', self::ADMIN)->firstOrFail();
+        });
     }
 
     public static function studentsCouncil()
     {
-        return self::where('name', self::STUDENTS_COUNCIL)->firstOrFail();
+        return Cache::remember('checkout.'.self::STUDENTS_COUNCIL, 86400, function () {
+            return self::where('name', self::STUDENTS_COUNCIL)->firstOrFail();
+        });
     }
 
     public function kktSum(Semester $semester)
