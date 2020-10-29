@@ -7,6 +7,7 @@ return [
     'change_password' => 'Jelszó megváltoztatása',
     'choose_from_menu' => 'Válassz egy menüpontot!',
     'choose_option' => 'Válassz...',
+    'description' => 'Leírás',
     'failed' => 'Hiba történt. Kérlek, írj a rendszergazdáknak!',
     'home' => 'Kezdőlap',
     'i_understand' => 'Értem',
@@ -30,5 +31,6 @@ return [
     'successfully_added' => 'Sikeres hozzáadás!',
     'successfully_deleted' => 'Sikeres törlés',
     'toggle-dark-mode' => 'Sötét/világos mód',
+    'view_issue' => 'Itt nézheted meg és követheted nyomon a bejelentett hibád állapotát.',
     'you_are_logged_in' => 'Sikeresen bejelentkeztél!',
 ];

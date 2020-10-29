@@ -17,46 +17,44 @@ With these steps you should be able to run Mars on your machine:
 1. Clone Mars: `git clone git@github.com:luksan47/mars.git`.
 2. Install [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/). (Or other virtualization platforms supported by Vagrant. Don't forget to reconfigure the `provider` in the steps below if you do so.)
 3. Follow the instructions in the [First steps](https://laravel.com/docs/8.x/homestead#first-steps) section:
-    * `vagrant box add laravel/homestead`
-    * `git clone https://github.com/laravel/homestead.git` from a folder where you want to set up Homestead
-    * go into this new directory
-    * `git checkout release`
-    * `init.bat` (`bash init.sh` on Linux)
+    - `vagrant box add laravel/homestead`
+    - `git clone https://github.com/laravel/homestead.git` from a folder where you want to set up Homestead
+    - go into this new directory
+    - `git checkout release`
+    - `init.bat` (`bash init.sh` on Linux)
 4. Set up Homestead: Copy and rename `Homestead.yaml.example` from this repository to `Homestead.yaml` in the Homestead directory (overwrite if needed). Modify this file by changing `folders: - map: /your/local/path/to/mars` .
 5. Create ssh keys to `~/.ssh/homestead_rsa.pub` and `~/.ssh/homestead_rsa`. (You can use something like `ssh-keygen -t rsa -b 4096 -C "your_email@example.com"`.)
-6. On Windows add the `192.168.10.10  mars.local` host entry to `C:\Windows\System32\drivers\etc\hosts`.
+6. On Windows add the `192.168.10.10 mars.local` host entry to `C:\Windows\System32\drivers\etc\hosts`.
 7. Go to your Homestead directory and Run `vagrant up` and `vagrant ssh` to set up and enter your virtual machine.
 8. In the project root (`cd mars`) run `composer install`
-9. Set up Mars: Copy and rename `.env.example` to `.env`, and change these settings: 
-`DB_DATABASE=homestead
-DB_USERNAME=homestead
-DB_PASSWORD=secret
-APP_URL=http://mars.local`.
-10. If you want to set up emails, change `MAIL_TEST_ADMIN` to your email (after seeding, you will be able to log in to the admin user with this email address) and set your email credentials (`MAIL_USERNAME` and `MAIL_PASSWORD`) - you might have to enable third party access to your email account.
-11. Run the following commands:
-   * Run `php artisan migrate:fresh --seed`.
-   * Run `php artisan key:generate`.
-   * Run `npm install` to install JS related dependencies.
-   * Run `npm run dev` to create the CSS and JS files in the `public` directory. 
-12. The project should be running at [mars.local](http://mars.local/).
+9. Set up Mars: Copy and rename `.env.example` to `.env`, and change these settings:
+   `DB_DATABASE=homestead DB_USERNAME=homestead DB_PASSWORD=secret APP_URL=http://mars.local`.
+10. Run the following commands:
 
-We like to use [PHPStorm](https://www.jetbrains.com/phpstorm/) for development. You can get a free license if you are a student.
-The project contains basic configuration for this IDE with the Homestead environment, just open the project root in PHPStorm.
+-   Run `php artisan migrate:fresh --seed`.
+-   Run `php artisan key:generate`.
+-   Run `npm install` to install JS related dependencies.
+-   Run `npm run dev` to create the CSS and JS files in the `public` directory.
 
-You can even use XDebug with this setup. Turn on listening for remote debug connections in PHPStorm and use the [XDebug](https://xdebug.org) browser extension in your favourite browser.
+11. The project should be running at [mars.local](http://mars.local/).
+
+### Optional steps
+
+-   You can add your personal access token from GitHub to use the GitHub API (eg. bug reports are sent through this). [You can generate a token here.](https://github.com/settings/tokens) You have to check the 'public_repo' scope.
+-   If you want to test emails, change `MAIL_TEST_ADMIN` to your email (after seeding, you will be able to log in to the admin user with this email address) and set your email credentials (`MAIL_USERNAME` and `MAIL_PASSWORD`) - you might have to enable third party access to your email account.
 
 ### For everyday use
 
 Most of the above setup is a one-time thing to do. However, whenever you start working on based on a newer version, you will have to run the following commands:
 
- * `npm run dev`: In case of recent UI changes (ie. JS or CSS), this will generate the new assets from `webpack.mix.js`. For frontend developers, `npm watch` might be useful -- it does the same, but also updates on change.
- * `php artisan migrate:fresh --seed`: This will migrate everything from scratch (useful if you work on changes in parallel) and seeds the database.
+-   `npm run dev`: In case of recent UI changes (ie. JS or CSS), this will generate the new assets from `webpack.mix.js`. For frontend developers, `npm watch` might be useful -- it does the same, but also updates on change.
+-   `php artisan migrate:fresh --seed`: This will migrate everything from scratch (useful if you work on changes in parallel) and seeds the database.
 
 You can log in to our seeded admin user with email `MAIL_TEST_ADMIN` (`example@eotvos.elte.hu` by default - you can find this in your .env file) and with password `asdasdasd`. See `database/seeds/UsersTableSeeder.php` for more predefined users.
 
 ## Keep it minimal
 
-The main problem with Urán 1.1 was its *reinventing the wheel* strategy. Laravel provides everything we need. Use it.
+The main problem with Urán 1.1 was its _reinventing the wheel_ strategy. Laravel provides everything we need. Use it.
 The other problem was the unnecessary features came before the most important ones. Therefore the now defined issues are minial, only
 contain the necessary parts of the system. After these are done, we can change the world. But first, build it.
 
@@ -81,7 +79,7 @@ git add --all  # or only your changes
 git commit # an editor comes up, the first line should look like: Issue #x: changed this and that
 # add more information if needed
 git fetch origin
-git rebase origin/master # resolve conflicts if something comes up 
+git rebase origin/master # resolve conflicts if something comes up
 git push origin your_feature_branch
 
 # open repo in your browser and you should see a Create PR option.
