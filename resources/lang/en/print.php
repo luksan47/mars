@@ -4,7 +4,7 @@ return [
     'CANCELLED' => 'Cancelled',
     'ERROR' => 'Error',
     'QUEUED' => 'Queued',
-    'SUCCESS' => 'Done',
+    'SUCCESS' => 'Completed',
     'add' => 'Add',
     'add_free_pages' => 'Add free pages',
     'added_paper' => 'Refilled paper',
