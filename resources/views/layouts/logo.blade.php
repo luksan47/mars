@@ -1,5 +1,5 @@
 <ul class="coli blue"style="padding:20px">
-    <a href="{{ url('/') }}">
+    <a href="{{ url('/') }}" @if(config('app.debug'))class="tooltipped" data-tooltip='<div>Icons made by monkik from www.flaticon.com</div>' @endif>
     <div class="row">
         <div class="col s12 valign-wrapper center-align">
             <img  style="height:70px" src="{{ config('app.logo_white_path') }}">
