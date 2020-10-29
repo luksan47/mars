@@ -78,8 +78,8 @@ class PrintControllerTest extends TestCase
         $response->assertStatus(403);
         $response = $this->post('/print/transfer_balance', []);
         $response->assertStatus(302);
-        \App\Models\PrintJob::factory()->create(['user_id' => $user->id]);
-        $response = $this->post('/print/print_jobs/' . $user->printJobs()->first()->id . '/cancel', []);
+        $printJob = \App\Models\PrintJob::factory()->create(['user_id' => $user->id]);
+        $response = $this->post('/print/print_jobs/' . $printJob->id . '/cancel', []);
         $response->assertStatus(200);
 
         $response = $this->put('/print/print', []);
@@ -117,8 +117,8 @@ class PrintControllerTest extends TestCase
         $response->assertStatus(302);
         $response = $this->post('/print/transfer_balance', []);
         $response->assertStatus(302);
-        \App\Models\PrintJob::factory()->create(['user_id' => $user->id]);
-        $response = $this->post('/print/print_jobs/' . $user->printJobs()->first()->id . '/cancel', []);
+        $printJob = \App\Models\PrintJob::factory()->create(['user_id' => $user->id]);
+        $response = $this->post('/print/print_jobs/' . $printJob->id . '/cancel', []);
         $response->assertStatus(200);
 
         $response = $this->put('/print/print', []);

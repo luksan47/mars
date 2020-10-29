@@ -10,6 +10,7 @@ use App\Models\FreePages;
 use App\Models\PrintAccount;
 use App\Models\PrintJob;
 use App\Models\PrintAccountHistory;
+use App\Mail\ChangedPrintBalance;
 use App\Utils\Printer;
 use App\Utils\TabulatorPaginator;
 use App\Models\Transaction;
@@ -109,9 +110,7 @@ class PrintController extends Controller
         $to_account->increment('balance', $balance);
 
         // Send notification mail
-        if (config('mail.active')) {
-            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
-        }
+        Mail::to($user)->queue(new ChangedPrintBalance($user, $balance, Auth::user()->name));
 
         return redirect()->back()->with('message', __('general.successful_transaction'));
     }
@@ -148,9 +147,7 @@ class PrintController extends Controller
         ]);
 
         // Send notification mail
-        if (config('mail.active')) {
-            Mail::to($user)->queue(new \App\Mail\ChangedPrintBalance($user, $balance, Auth::user()->name));
-        }
+        Mail::to($user)->queue(new ChangedPrintBalance($user, $balance, Auth::user()->name));
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
@@ -241,12 +238,32 @@ class PrintController extends Controller
     }
 
     public function cancelPrintJob($id) {
-        //TODO: actually cancel
         $printJob = PrintJob::findOrFail($id);
 
         $this->authorize('update', $printJob);
 
-        if ($printJob->state === PrintJob::QUEUED) $printJob->update(['state' => PrintJob::CANCELLED]);
+        if ($printJob->state === PrintJob::QUEUED) {
+            $result = Commands::cancelPrintJob($printJob->job_id);
+
+            if ($result['exit_code'] == 0) {
+                // Command was successful, job cancelled.
+                $printJob->state = PrintJob::CANCELLED;
+                // Reverting balance change
+                // TODO: test what happens when cancelled right before the end
+                $printAccount = $printJob->user->printAccount;
+                $printAccount->update(['last_modified_by' => Auth::user()->id]);
+                $printAccount->increment($printAccount->cost);
+            } else {
+                if (strpos($result['output'], "already canceled") !== false) {
+                    // TODO: return message and trigger modal?
+                } else if (strpos($result['output'], "already completed") !== false) {
+                    $printJob->state = PrintJob::SUCCESS;
+                } else {
+                    Log::warning("cannot cancel print job " . $printJob->job_id ." for unknown reasons: " . var_dump($result));
+                }
+            }
+            $printJob->save();
+        }
     }
 
     /** Private helper functions */

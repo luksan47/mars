@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Secretariat;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Semester;
 use App\Models\ImportItem;
@@ -112,14 +113,11 @@ class DocumentController extends Controller
         Gate::authorize('document.status-certificate');
 
         $url = route('documents.status-cert.show', ['id' => Auth::user()->id]);
-        if (config('mail.active')) {
-            $secretaries = User::whereHas('roles', function($q){
-                $q->where('name', \App\Models\Role::SECRETARY);
-            })->get();
-            foreach ($secretaries as $recipient) {
-                Mail::to($recipient)->queue(new \App\Mail\StateCertificateRequest($recipient->name, Auth::user()->name, $url));
-            }
+        $secretaries = User::role(Role::SECRETARY)->get();
+        foreach ($secretaries as $recipient) {
+            Mail::to($recipient)->queue(new \App\Mail\StateCertificateRequest($recipient->name, Auth::user()->name, $url));
         }
+
         return redirect()->back()->with('message', __('document.successful_request'));
     }
 

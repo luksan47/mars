@@ -12,7 +12,7 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ App\Models\Semester::current()->tag() }}
+                <span class="card-title">{{ App\Models\Semester::current()->tag }}
                 </span>
                 <table>
                     <tbody>
