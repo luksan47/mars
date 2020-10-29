@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 /** A semester is identified by a year and by it's either autumn or spring.
  * ie. a spring semester starting in february 2020 will be (2019, 2) since we write 2019/20/2.
@@ -59,9 +58,16 @@ class Semester extends Model
     }
 
     // For displaying semesters
-    public function tag()
+    public function getTagAttribute()
     {
         return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
+    }
+
+    public static function byTag(string $tag)
+    {
+        $parts = explode(self::SEPARATOR, $tag);
+
+        return self::getOrCreate($parts[0], $parts[2]);
     }
 
     public function datesToText()
@@ -114,7 +120,7 @@ class Semester extends Model
     {
         //create fields for the semester if not exist
         //TODO find a better way (#381)
-        if (DB::table('workshop_balances')->select('*')->where('semester_id', $this->id)->count() == 0) {
+        if (WorkshopBalance::where('semester_id', $this->id)->count() == 0) {
             foreach (Workshop::all() as $workshop) {
                 WorkshopBalance::create([
                     'semester_id' => $this->id,

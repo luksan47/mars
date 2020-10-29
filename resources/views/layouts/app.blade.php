@@ -59,40 +59,44 @@
         </div>
     </div>
     @include('utils.toast')
-    <script>
-    var cookieMessages = {
-        'dismiss': "@lang('cookie.dismiss')",
-        'allow': "@lang('cookie.allow')",
-        'deny': "@lang('cookie.deny')",
-        'link': "@lang('cookie.link')",
-        'cookie': "@lang('cookie.message')",
-        'header': "@lang('cookie.header')",
-    };
-    </script>
-    @if (config('app.debug'))
+    @push('scripts')
         <script>
-            $(document).ready(function(){
-                $('.tooltipped').tooltip();
-            });
+        var cookieMessages = {
+            'dismiss': "@lang('cookie.dismiss')",
+            'allow': "@lang('cookie.allow')",
+            'deny': "@lang('cookie.deny')",
+            'link': "@lang('cookie.link')",
+            'cookie': "@lang('cookie.message')",
+            'header': "@lang('cookie.header')",
+        };
         </script>
-    @endif
-    <script>
-        function toggleColorMode() {
-            var mode = (localStorage.getItem('mode') || 'dark') === 'dark' ? 'light' : 'dark';
-            localStorage.setItem('mode', mode);
-            if(localStorage.getItem('mode') === 'dark') {
-                document.querySelector('body').classList.add('dark');
-            } else {
-                document.querySelector('body').classList.remove('dark');
-            }
+        @if (config('app.debug'))
+            <script>
+                $(document).ready(function(){
+                    $('.tooltipped').tooltip();
+                });
+            </script>
+        @endif
+        <script>
+            function toggleColorMode() {
+                var mode = (localStorage.getItem('mode') || 'dark') === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('mode', mode);
+                if(localStorage.getItem('mode') === 'dark') {
+                    document.querySelector('body').classList.add('dark');
+                } else {
+                    document.querySelector('body').classList.remove('dark');
+                }
 
-            // Save as cookie
-            $.ajax({
-                type: "POST",
-                url: "{{ route('set-color-mode', [':mode']) }}".replace(':mode', mode),
-            });
-        }
-    </script>
+                // Save as cookie
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('set-color-mode', [':mode']) }}".replace(':mode', mode),
+                });
+            }
+        </script>
+    @endpush
+
+    @stack('scripts')
 </body>
 
 </html>

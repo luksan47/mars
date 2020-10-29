@@ -73,8 +73,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Printing */
     Route::get('/print', [PrintController::class, 'index'])->name('print');
-    Route::post('/print/no-paper', [PrintController::class, 'noPaper'])->name('print.no_paper.email');
-
+    Route::post('/print/no-paper', [PrintController::class, 'noPaper'])->name('print.no_paper');
+    Route::post('/print/added-paper', [PrintController::class, 'addedPaper'])->name('print.added_paper');
     Route::get('/print/free_pages/list', [PrintController::class, 'listFreePages'])->name('print.free_pages.list');
     Route::get('/print/print_jobs/list', [PrintController::class, 'listPrintJobs'])->name('print.print_jobs.list');
     Route::get('/print/free_pages/list/all', [PrintController::class, 'listAllFreePages'])->name('print.free_pages.list.all');
@@ -105,8 +105,9 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Admin Checkout **/
     Route::get('/network/admin/checkout', [AdminCheckoutController::class, 'showCheckout'])->name('admin.checkout');
-    Route::post('network/admin/checkout/print_to_checkout', [AdminCheckoutController::class, 'printToCheckout'])->name('admin.checkout.print_to_checkout');
+    Route::post('network/admin/checkout/print_to_checkout', [AdminCheckoutController::class, 'printToCheckout'])->name('admin.checkout.to_checkout');
     Route::post('/network/admin/checkout/transaction/add', [AdminCheckoutController::class, 'addTransaction'])->name('admin.checkout.transaction.add');
+    Route::get('/network/admin/checkout/transaction/delete/{transaction}', [EconomicController::class, 'deleteTransaction'])->name('admin.checkout.transaction.delete');
 
     /** Routers */
     Route::get('/routers', [RouterController::class, 'index'])->name('routers');
@@ -157,6 +158,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/economic_committee/transaction/delete/{transaction}', [EconomicController::class, 'deleteTransaction'])->name('economic_committee.transaction.delete');
     Route::get('/economic_committee/kktnetreg', [EconomicController::class, 'indexKKTNetreg'])->name('kktnetreg');
     Route::post('/economic_committee/kktnetreg/pay', [EconomicController::class, 'payKKTNetreg'])->name('kktnetreg.pay');
-    Route::post('/economic_committee/kktnetreg/to_checkout', [EconomicController::class, 'KKTNetregToCheckout'])->name('kktnetreg.to_checkout');
     Route::get('/economic_committee/calculate_workshop_balance', [EconomicController::class, 'calculateWorkshopBalance'])->name('economic_committee.workshop_balance');
+    Route::post('/economic_committee/kktnetreg/to_checkout', [EconomicController::class, 'KKTNetregToCheckout'])->name('economic_committee.to_checkout');
 });

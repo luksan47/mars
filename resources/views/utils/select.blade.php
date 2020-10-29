@@ -12,17 +12,20 @@
 @error($element_id)
 <span class="helper-text" data-error="{{ $message }}"></span>
 @enderror
-<script>
-  //Initialize materialize select
-  var instances;
-  $(document).ready(
-    function() {
-      var elems = $('#{{ $element_id }}');
-      const options = [
-        @foreach ($elements as $element)
-        { name : '{{ $element->name }}',  value : '{{ $element->id }}'},
-        @endforeach
-        ]
-      instances = M.FormSelect.init(elems, options);
-});
-</script>
+
+@push('scripts')
+    <script>
+        //Initialize materialize select
+        var instances;
+        $(document).ready(
+        function() {
+            var elems = $('#{{ $element_id }}');
+            const options = [
+            @foreach ($elements as $element)
+                { name : '{{ $element->name }}',  value : '{{ $element->id }}'},
+            @endforeach
+            ];
+            instances = M.FormSelect.init(elems, options);
+        });
+  </script>
+@endpush
