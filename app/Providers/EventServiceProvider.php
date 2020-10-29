@@ -5,12 +5,12 @@ namespace App\Providers;
 use App\Events\MacAddressDeleted;
 use App\Events\MacAddressSaved;
 use App\Listeners\AutoApproveMacAddresses;
-use App\Listeners\UpdatePhysicalIP;
 use App\Listeners\MailGate;
+use App\Listeners\UpdatePhysicalIP;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Mail\Events\MessageSending;
 
 class EventServiceProvider extends ServiceProvider
 {

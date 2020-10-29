@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\EducationalInformation;
 use App\Models\Faculty;
-use App\Http\Controllers\Controller;
 use App\Models\PersonalInformation;
 use App\Models\Role;
 use App\Models\Semester;
@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'user_type' => Role::COLLEGIST,
             'faculties' => Faculty::all(),
             'workshops' => Workshop::all(),
-            'countries' => require base_path('countries.php')
+            'countries' => require base_path('countries.php'),
         ]);
     }
 
@@ -63,7 +63,7 @@ class RegisterController extends Controller
             'user_type' => Role::TENANT,
             'faculties' => Faculty::all(),
             'workshops' => Workshop::all(),
-            'countries' => require base_path('countries.php')
+            'countries' => require base_path('countries.php'),
         ]);
     }
 
@@ -104,7 +104,8 @@ class RegisterController extends Controller
             case Role::TENANT:
                 return Validator::make($data, $common);
             case Role::COLLEGIST:
-                $data['educational_email'] = $data['educational_email'] . "@student.elte.hu";
+                $data['educational_email'] = $data['educational_email'].'@student.elte.hu';
+
                 return Validator::make($data, array_merge($common, $informationOfStudies));
             default:
                 throw new AuthorizationException();
@@ -154,7 +155,7 @@ class RegisterController extends Controller
                     'high_school' => $data['high_school'],
                     'neptun' => $data['neptun'],
                     'year_of_acceptance' => $data['year_of_acceptance'],
-                    'email' => $data['educational_email'] . "@student.elte.hu",
+                    'email' => $data['educational_email'].'@student.elte.hu',
                 ]);
                 foreach ($data['faculty'] as $key => $faculty) {
                     $user->faculties()->attach($faculty);
@@ -162,7 +163,7 @@ class RegisterController extends Controller
                 foreach ($data['workshop'] as $key => $workshop) {
                     $user->workshops()->attach($workshop);
                 }
-                $user->setStatus(Semester::ACTIVE, "Activated through registration");
+                $user->setStatus(Semester::ACTIVE, 'Activated through registration');
                 break;
             default:
                 throw new AuthorizationException();
