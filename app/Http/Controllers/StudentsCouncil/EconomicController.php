@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\StudentsCouncil;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Network\InternetController;
 use App\Models\Checkout;
 use App\Models\PaymentType;
 use App\Models\Role;
@@ -9,14 +11,11 @@ use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\WorkshopBalance;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Network\InternetController;
 use App\Utils\CheckoutHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-
 
 class EconomicController extends Controller
 {
@@ -36,9 +35,10 @@ class EconomicController extends Controller
 
         $view = view('student-council.economic-committee.app', $checkoutData);
 
-        if($redirected){
+        if ($redirected) {
             return $view->with('message', __('general.successfully_added'));
         }
+
         return $view;
     }
 
@@ -63,7 +63,7 @@ class EconomicController extends Controller
 
         return view('student-council.economic-committee.kktnetreg', $checkoutData)
             ->with('users', $users_has_to_pay_kktnetreg);
-}
+    }
 
     public function indexTransaction()
     {
@@ -124,15 +124,13 @@ class EconomicController extends Controller
         ]);
 
         $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
-        if (config('mail.active')) {
-            $internet_expiration_message = null;
-            if ($new_internet_expire_date !== null){
-                $internet_expiration_message = __('internet.expiration_extended', [
-                    'new_date' => $new_internet_expire_date->format('Y-m-d')
-                ]);
-            }
-            Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
+        $internet_expiration_message = null;
+        if ($new_internet_expire_date !== null) {
+            $internet_expiration_message = __('internet.expiration_extended', [
+                'new_date' => $new_internet_expire_date->format('Y-m-d'),
+            ]);
         }
+        Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
 
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
@@ -152,6 +150,7 @@ class EconomicController extends Controller
     {
         $checkout = Checkout::studentsCouncil();
         $this->createTransaction($request, $checkout);
+
         return redirect()->action(
             [EconomicController::class, 'index'], ['redirected' => true]
         );
@@ -161,10 +160,12 @@ class EconomicController extends Controller
     {
         $this->authorize('administrate', Checkout::studentsCouncil());
         WorkshopBalance::generateBalances();
+
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
-    public static function routeBase() {
+    public static function routeBase()
+    {
         return 'economic_committee';
     }
 }
