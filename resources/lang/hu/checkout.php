@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'EXPENSE' => 'Kiadás',
+    'INCOME' => 'Bevétel',
+    'KKT' => 'KKT',
+    'NETREG' => 'NetReg',
+    'PRINT' => 'Nyomtatás',
     'add_transaction_descr' => 'A tranzakció meg fog jelenni a statisztikában, és nem visszavonható. A bizottsági elnök jelszava szükséges, mivel a tranzakció közvetlenül a kasszába kerül.',
     'allocated_balance' => 'Kiosztott egyenleg',
     'amount' => 'Összeg',

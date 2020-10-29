@@ -7,16 +7,15 @@
 @section('student_council_module') active @endsection
 
 @section('content')
-
 <div class="row">
     <div class="col s12">
-        <div class="card">   
+        <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('checkout.checkout')</span>
                 <blockquote>
-                    @lang('checkout.current_balance'): 
+                    @lang('checkout.current_balance'):
                     <b class="coli-text text-orange"> {{ number_format($current_balance, 0, '.', ' ') }} Ft</b>.<br>
-                    @lang('checkout.current_balance_in_checkout'): 
+                    @lang('checkout.current_balance_in_checkout'):
                     <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
                 @can('handleAny', \App\Models\Checkout::class)
@@ -34,88 +33,56 @@
             </div>
         </div>
     </div>
-    @foreach($data as $row)
+    @foreach($semesters as $semester)
     @php
-    $semester = $row['semester'];
-    $transactions = $row['transactions'];
-    $workshop_balances = $row['workshop_balances']; 
+        $transactions = $semester->transactions;
     @endphp
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ $semester->tag().' ('. $semester->datesToText().')'}}</span>
+                <span class="card-title">{{ $semester->tag }}</span>
                 <div class="row">
                     <div class="col s12">
                         <table><tbody>
                             <tr><th colspan="3">@lang('checkout.incomes')</th></tr>
-                            <tr>
-                                <td>@lang('checkout.kkt') - @lang('checkout.kkt_long')</td>
-                                <td>
-                                    @can('administrate', \App\Models\Checkout::studentsCouncil())
-                                    <a href="{{ route('kktnetreg') }}" class="btn waves-effect">
-                                        @lang('checkout.details')</a>
-                                    @endcan
-                                </td>
-                                <td class="right"><nobr>{{ number_format($transactions['kkt'], 0, '.', ' ') }} Ft</nobr></td>
-                            </tr>
-                            @foreach($transactions['income'] as $transaction)
-                            <tr>
-                                <td>{{ $transaction->comment }}</td>
-                                <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
-                                <td class="right"><nobr>{{ number_format($transaction->amount, 0, '.', ' ') }} Ft</nobr></td>
-                            </tr>
-                            @endforeach
+                            @include('utils.checkout.sum', ['paymentType' => \App\Models\PaymentType::kkt()])
+                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::income()])
+
                             <tr><th colspan="3">@lang('checkout.expenses')</th></tr>
-                            @foreach($transactions['expense'] as $transaction)
-                            <tr>
-                                <td>{{ $transaction->comment }}</td>
-                                <td>{{ $transaction->created_at->format('Y. m. d.') }}</td>
-                                <td class="right"><nobr>{{ number_format($transaction->amount, 0, '.', ' ') }} Ft</nobr></td>
-                            </tr>
-                            @endforeach
+                            @include('utils.checkout.list', ['paymentType' => \App\Models\PaymentType::expense()])
                             <tr>
                                 <th colspan="2">@lang('checkout.sum')</th>
-                                <th class="right"><nobr>{{ number_format($transactions['sum'], 0, '.', ' ') }} Ft</nobr></th>
+                                <th class="right"><nobr>{{ number_format($semester->transactions->sum('amount'), 0, '.', ' ') }} Ft</nobr></th>
                             </tr>
                         </tbody></table>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
-                        <table class="centered" style="display: block;overflow-x:auto;">
+                        <table class="highlight responsive-table centered" style="display: block;overflow-x:auto;">
                             <thead>
                                 <tr>
-                                    <th>@lang('checkout.workshop_balances')</th>
+                                    <th class="valign-wrapper">@lang('checkout.workshop_balances')</th>
                                     <th>@lang('general.members')@if($semester->isCurrent())*@endif</th>
                                     <th>
                                         @lang('checkout.allocated_balance')
                                         @if($semester->isCurrent())
-                                        @can('administrate', \App\Models\Checkout::studentsCouncil())
-                                        <a href="{{ route('economic_committee.workshop_balance') }}" class="btn-floating btn-small grey waves-effect">
-                                            <i class="material-icons">refresh</i>
-                                        </a>
+                                            @can('administrate', \App\Models\Checkout::studentsCouncil())
+                                            <a href="{{ route('economic_committee.workshop_balance') }}" class="btn-floating btn-small grey waves-effect">
+                                                <i class="material-icons">refresh</i>
+                                            </a>
+                                            @endcan
                                         @endif
-                                        @endcan
                                     </th>
                                     <th>@lang('checkout.used_balance')</th>
                                     <th>@lang('checkout.remaining_balance')</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($workshop_balances as $workshop_balance)</th>
+                                @foreach($semester->workshopBalances as $workshop_balance)</th>
                                 <tr>
-                                    <td>{{ $workshop_balance->workshop->name }}</td>
-                                    <td>
-                                        @php
-                                        $workshop = $workshop_balance->workshop;
-                                        $payed_members = $workshop_balance->membersPayedKKTNetregInSemester($semester);
-                                        $payed_residents = $payed_members->filter(function($user, $key){ return $user->isResident();})->count();
-                                        $payed_externs = $payed_members->filter(function($user, $key){ return $user->isExtern();})->count();
-                                        $not_payed = $workshop->users->filter(function ($user, $key) use ($semester) {
-                                            return ($user->hasToPayKKTNetregInSemester($semester));})->count();
-                                        @endphp
-                                        {{ $payed_residents }} / {{ $payed_externs}} (+{{ $not_payed }})
-                                    </td>
+                                    <td class="valign-wrapper">{{ $workshop_balance->workshop->name }} </td>
+                                    <td>{{ $workshop_balance->payCountDisplayString($semester) }}</td>
                                     <td>{{ $workshop_balance->allocated_balance }}</td>
                                     <td>{{ $workshop_balance->used_balance }}</td>
                                     <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>
