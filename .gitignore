@@ -20,4 +20,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /.vagrant
+/.idea
 *.DS_Store
