@@ -26,15 +26,6 @@
                                 <a id="email_edit_btn" class="btn-floating right waves-effect waves-light"
                                     onclick="mail_editor()" style="margin-top:10px">
                                     <i class="material-icons">edit</i></a>
-                                <script>
-                                    function mail_editor(){
-                                            document.getElementById('email').disabled=false;
-                                            document.getElementById('email').value="";
-                                            document.getElementById('email').focus();
-                                            document.getElementById('email_edit_btn').classList.add('hide');
-                                            document.getElementById('email_send_btn').classList.remove('hide');
-                                        }
-                                </script>
                             </form>
                         @else
                         {{ $user->email }}
@@ -66,15 +57,6 @@
                                     <a id="phone_edit_btn" class="btn-floating right waves-effect waves-light"
                                         onclick="phone_editor()" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
-                                    <script>
-                                        function phone_editor(){
-                                                document.getElementById('phone_number').disabled=false;
-                                                document.getElementById('phone_number').value="+36 ";
-                                                document.getElementById('phone_edit_btn').classList.add('hide');
-                                                document.getElementById('phone_send_btn').classList.remove('hide');
-                                                document.getElementById('phone_format').classList.remove('hide');
-                                            }
-                                    </script>
                                 </form>
                             @else
                                 {{ $user->personalInformation->phone_number }}
@@ -108,3 +90,22 @@
     </div>
 </div>
 @endcan
+
+@push('name')
+    <script>
+        function phone_editor(){
+            document.getElementById('phone_number').disabled=false;
+            document.getElementById('phone_number').value="+36 ";
+            document.getElementById('phone_edit_btn').classList.add('hide');
+            document.getElementById('phone_send_btn').classList.remove('hide');
+            document.getElementById('phone_format').classList.remove('hide');
+        }
+        function mail_editor(){
+            document.getElementById('email').disabled=false;
+            document.getElementById('email').value="";
+            document.getElementById('email').focus();
+            document.getElementById('email_edit_btn').classList.add('hide');
+            document.getElementById('email_send_btn').classList.remove('hide');
+        }
+    </script>
+@endpush

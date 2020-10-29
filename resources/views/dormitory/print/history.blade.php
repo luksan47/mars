@@ -7,28 +7,27 @@
         $(document).ready(function() {
             var deleteButton = function(cell, formatterParams, onRendered) {
                 return $(
-                    "<button type=\"button\" class=\"btn waves-effect coli blue\">@lang('print.cancel_job')</button>"
+                    "<button type=\"button\" class=\"btn waves-effect btn-fixed-height  coli blue\">@lang('print.cancel_job')</button>"
                     ).click(function() {
-                    var data = cell.getRow().getData();
-                    //confirm('@lang('print.cancel_job')','@lang('print.confirm_cancel')','@lang('print.cancel')','@lang('print.cancel_job')',function() {
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ route('print.print_jobs.cancel', [':id']) }}"
-                                .replace(':id', data.id),
-                            success: function() {
-                                cell.getTable().setPage(cell.getTable()
-                                .getPage());
-                            },
-                            error: function(error) {
-                                ajaxError(
-                                    '@lang('internet.error')',
-                                    '@lang('internet.ajax_error')',
-                                    '@lang('internet.ok')',
-                                    error);
-                            }
-                        });
-                    //});
-                })[0];
+                        var data = cell.getRow().getData();
+                        // confirm('@lang('print.cancel_job')','@lang('print.confirm_cancel')','@lang('print.cancel')','@lang('print.cancel_job')',function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('print.print_jobs.cancel', [':id']) }}".replace(':id', data.id),
+                                success: function() {
+                                    cell.getTable().setPage(cell.getTable().getPage());
+                                },
+                                error: function(error) {
+                                    ajaxError(
+                                        '@lang('internet.error')',
+                                        '@lang('internet.ajax_error')',
+                                        '@lang('internet.ok')',
+                                        error
+                                    );
+                                }
+                            });
+                        // });
+                    })[0];
             };
             var dateFormatter = function(cell, formatterParams){
                 var value = cell.getValue();
@@ -86,7 +85,7 @@
                         }
                         @endcan
                     },
-                    /* {title: "", field: "id", headerSort: false, formatter: deleteButton}, */
+                    {title: "", field: "id", headerSort: false, formatter: deleteButton},
                 ],
             });
         });
