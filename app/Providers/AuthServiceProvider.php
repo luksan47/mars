@@ -46,7 +46,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole(Role::SECRETARY);
         });
         Gate::define('document.status-certificate', function ($user) {
-            return $user->isCollegist();
+            return $user->isCollegist() && $user->isActive();
         });
         Gate::define('document.register-statement', function ($user) {
             return $user->isCollegist()
