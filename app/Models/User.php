@@ -306,16 +306,15 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->activeSemesters->contains($semester);
     }
 
+    public function scopeActiveIn($query, $semester_id) {
+        return $query->whereHas('activeSemesters', function ($q) use ($semester_id) {
+            $q->where('id', $semester_id);
+        });
+    }
+
     public function isActive()
     {
         return $this->isActiveIn(Semester::current());
-    }
-
-    public function scopeIsActive()
-    {
-        return $this->whereHas('activeSemesters', function ($query) {
-            $query->where('id', Semester::current()->id);
-        });
     }
 
     public function isResident()
@@ -395,37 +394,12 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasMany('App\Models\Transaction', 'payer_id');
     }
 
-    public function hasToPayKKTNetreg()
-    {
-        return $this->hasToPayKKTNetregInSemester(Semester::current());
-    }
-
-    public function hasToPayKKTNetregInSemester($semester)
-    {
-        if (! $this->isActiveIn($semester)) {
-            return false;
-        }
-
-        $payed_kktnetreg = $this->transactions_payed()
-            ->where('semester_id', $semester->id)
-            ->where(function ($query) {
-                $query->where('payment_type_id', PaymentType::kkt()->id)
-                      ->orWhere('payment_type_id', PaymentType::netreg()->id);
-            })->get();
-
-        return $payed_kktnetreg->count() == 0;
-    }
-
-    public function KKTPayedInSemester($semester)
-    {
-        if ($this->hasToPayKKTNetregInSemester($semester)) {
-            return 0;
-        }
-
-        return $semester->transactions()
-            ->where('payment_type_id', PaymentType::kkt()->id)
-            ->where('payer_id', $this->id)
-            ->first();
+    public function scopeHasToPayKKTNetregInSemester($query, $semester_id) {
+        return $query->role(Role::COLLEGIST)->activeIn($semester_id)
+            ->whereDoesntHave('transactions_payed', function ($query) use ($semester_id) {
+                $query->where('semester_id', $semester_id);
+                $query->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id]);
+            });
     }
 
     public static function notifications()

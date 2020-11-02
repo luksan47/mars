@@ -79,10 +79,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($semester->workshopBalances as $workshop_balance)</th>
+                                @foreach($semester->workshopBalances as $workshop_balance)
                                 <tr>
                                     <td class="valign-wrapper">{{ $workshop_balance->workshop->name }} </td>
-                                    <td>{{ $workshop_balance->payCountDisplayString($semester) }}</td>
+                                    <td>{{ $workshop_balance->resident . ' - ' . $workshop_balance->extern . ' (+' . $workshop_balance->not_yet_paid . ')' }}</td>
                                     <td>{{ $workshop_balance->allocated_balance }}</td>
                                     <td>{{ $workshop_balance->used_balance }}</td>
                                     <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>
