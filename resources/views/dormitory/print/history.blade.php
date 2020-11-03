@@ -85,8 +85,32 @@
                         }
                         @endcan
                     },
+                    {
+                        title: "Origin state",
+                        field: "origin_state",
+                        sorter: "string",
+                        visible: false
+                    },
                     {title: "", field: "id", headerSort: false, formatter: deleteButton},
                 ],
+                rowFormatter: function(row){
+                    let colors = {
+                        QUEUED: "blue",
+                        CANCELLED: "yellow",
+                        ERROR: "red",
+                        SUCCESS: "green",
+                    };
+
+                    @foreach(\App\Models\PrintJob::STATES as $key => $state)
+                        var existColor = "{{$state}}" in colors;
+                        if (row.getData().origin_state == "{{$state}}" && existColor) {
+                            const children = row.getElement().childNodes;
+                            children.forEach((child) => {
+                                child.style.backgroundColor = colors["{{$state}}"];
+                            });
+                        }
+                    @endforeach
+                }
             });
         });
         </script>
