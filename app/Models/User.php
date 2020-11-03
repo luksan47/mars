@@ -306,7 +306,8 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->activeSemesters->contains($semester);
     }
 
-    public function scopeActiveIn($query, $semester_id) {
+    public function scopeActiveIn($query, $semester_id)
+    {
         return $query->whereHas('activeSemesters', function ($q) use ($semester_id) {
             $q->where('id', $semester_id);
         });
@@ -394,7 +395,8 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasMany('App\Models\Transaction', 'payer_id');
     }
 
-    public function scopeHasToPayKKTNetregInSemester($query, $semester_id) {
+    public function scopeHasToPayKKTNetregInSemester($query, $semester_id)
+    {
         return $query->role(Role::COLLEGIST)->activeIn($semester_id)
             ->whereDoesntHave('transactions_payed', function ($query) use ($semester_id) {
                 $query->where('semester_id', $semester_id);

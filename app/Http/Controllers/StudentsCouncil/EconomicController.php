@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Network\InternetController;
 use App\Models\Checkout;
 use App\Models\PaymentType;
-use App\Models\Role;
 use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;

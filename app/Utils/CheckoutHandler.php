@@ -52,7 +52,7 @@ trait CheckoutHandler
                     $query->where('checkout_id', $checkout->id);
                     $query->with('type');
                 },
-                'workshopBalances.workshop'
+                'workshopBalances.workshop',
             ]);
 
         $current_balance = $checkout->balance();
