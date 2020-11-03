@@ -29,6 +29,8 @@ class PrintJob extends Model
         'filename', 'filepath', 'user_id', 'state', 'job_id', 'cost',
     ];
 
+    protected $appends = ['origin_state'];
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -50,5 +52,10 @@ class PrintJob extends Model
 
             return $data;
         };
+    }
+
+    public function getOriginStateAttribute()
+    {
+        return strtoupper($this->state);
     }
 }
