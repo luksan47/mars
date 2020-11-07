@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Transaction;
 use App\Models\PaymentType;
+use App\Models\Transaction;
+use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
 {
@@ -20,9 +20,9 @@ class TransactionSeeder extends Seeder
             'payment_type_id' => array_rand([
                 PaymentType::kkt()->id,
                 PaymentType::netreg()->id,
-                PaymentType::print()->id
+                PaymentType::print()->id,
             ]),
-            'receiver_id' => 1
+            'receiver_id' => 1,
         ]);
     }
 }
