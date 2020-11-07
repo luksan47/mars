@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Checkout;
 
 class PaymentType extends Model
 {
@@ -21,6 +22,23 @@ class PaymentType extends Model
         self::NETREG,
         self::PRINT,
     ];
+
+    public static function forCheckout($type)
+    {
+        return Cache::remember('paymentTypesFor.'.$type, 86400, function () use ($type) {
+            $payment_types = [self::INCOME, self::EXPENSE];
+            if ($type == Checkout::ADMIN)
+            {
+                $payment_types[] = self::NETREG;
+                $payment_types[] = self::PRINT;
+            }
+            else if ($type == Checkout::STUDENTS_COUNCIL)
+            {
+                $payment_types[] = self::KKT;
+            }
+            return self::whereIn('name', $payment_types)->get();
+        });
+    }
 
     public static function income()
     {

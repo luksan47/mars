@@ -76,7 +76,7 @@
                     @foreach($transactions as $transaction)
                         @if($transaction->type->name == \App\Models\PaymentType::KKT)
                             <tr>
-                                <td>{{ $transaction->payer->name}}</td>
+                                <td>@if($transaction->payer){{$transaction->payer->name}}@endif</td>
                                 <td>
                                     @include('user.workshop_tags', ['user' => $transaction->payer])
                                 </td>
