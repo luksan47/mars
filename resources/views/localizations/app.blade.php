@@ -80,22 +80,31 @@
                     {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
                     $duplicate = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
+                    $valid = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', true)->first();
+                    {{-- valid is used to show approved translations. it might need a more efficient solution --}}
                     @endphp
                     @if(is_string($value) && $duplicate == null)
                     <div class="row scale-transition" style="margin:0" name="{{ $fname . '.' . $key }}">
                         <div class="col s5" style="padding: 0.8rem;">
                             {{ $value }}
                         </div>
+                        @if(is_string($value) && $valid != null)
                         <div class="col s6">
                             <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
-                                class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea>
+                                class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea> 
                         </div>
+                        @else
+                        <div class="col s6">
+                            <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
+                                class="materialize-textarea">-</textarea> {{-- Do we even need to show approved changes? --}}
+                        </div>
+                        @endif
                         <div class="col s1">
                             <button class="btn-floating waves-effect waves-light right" onclick="send('{{ App::getLocale() }}', '{{ $fname.'.'.$key }}', '{{ $lang }}')">
                                 <i class="material-icons">send</i>
                             </button>
                         </div>
-                    </div>
+                    </div>                     
                     @endif
                     @endforeach
                 </div>

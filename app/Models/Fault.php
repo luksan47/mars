@@ -9,8 +9,6 @@ class Fault extends Model
 {
     use NotificationCounter;
 
-    public $incrementing = true;
-    public $timestamps = true;
     protected $fillable = [
         'reporter_id',
         'location',
