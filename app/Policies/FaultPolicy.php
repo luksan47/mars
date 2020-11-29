@@ -40,8 +40,8 @@ class FaultPolicy
      * @param  \App\Models\Fault  $fault
      * @return mixed
      */
-    public function updateFaultStatus(User $user, Fault $fault)
+    public function update(User $user, Fault $fault)
     {
-        return $user->hasRole(Role::STAFF) || $fault === Fault::UNSEEN;
+        return $user->hasRole(Role::STAFF); // || getState($fault) === Fault::UNSEEN;
     }
 }

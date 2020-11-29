@@ -46,20 +46,22 @@ class FaultController extends Controller
     // TODO: validation
     public function updateStatus(Request $request)
     {
-        $status = $request['status'];
-        $this->authorize('updateFaultStatus', $status);
-        
-        //$auth = Auth::user()->hasRole(Role::STAFF) || Fault::getState($status) === Fault::UNSEEN;
-        
         $fault = Fault::findOrFail($request['id']);
-        $fault->update([
-            'status' => Fault::getState($status)
-        ]);
-        if ($status === Fault::UNSEEN) {
-            $this->notifyStaff($fault, /* reopen */ true);
-        }
+        $this->authorize('update', $fault);
+        
+        $status = $request['status'];
+        $auth = Auth::user()->hasRole(Role::STAFF) || Fault::getState($status) === Fault::UNSEEN;
+        //if ($auth) {
+            //$fault = Fault::findOrFail($request['id']);
+            $fault->update([
+                'status' => Fault::getState($status)
+            ]);
+            if ($status === Fault::UNSEEN) {
+                $this->notifyStaff($fault, /* reopen */ true);
+            }
+        //}
 
-        //return var_export($auth);
+        return var_export($auth);
     }
 
     public function notifyStaff(Fault $fault, bool $reopen = false)
