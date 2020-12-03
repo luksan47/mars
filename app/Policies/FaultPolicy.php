@@ -3,24 +3,13 @@
 namespace App\Policies;
 
 use App\Models\Fault;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FaultPolicy
 {
     use HandlesAuthorization;
-
-    // /**
-    // * Determine whether the user can view any fault.
-    // *
-    // * @param  \App\Models\User  $user
-    // * @return mixed
-    // */
-    //public function viewAny(User $user)
-    //{
-    //    return true;
-    //}
 
     /**
      * Determine whether the user can create fault.
@@ -37,11 +26,10 @@ class FaultPolicy
      * Determine whether the user can update the status of the fault.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Fault  $fault
      * @return mixed
      */
-    public function update(User $user, Fault $fault)
+    public function update(User $user)
     {
-        return $user->hasRole(Role::STAFF); // || getState($fault) === Fault::UNSEEN;
+        return $user->hasRole(Role::STAFF);
     }
 }
