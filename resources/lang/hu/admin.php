@@ -13,4 +13,5 @@ return [
     'statuses' => 'Státuszok',
     'user_management' => 'Felhasználók kezelése',
     'users_roles' => ' jogosultságai',
+    'document_requests' => 'Dokumentum kérelmek',
 ];

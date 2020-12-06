@@ -20,6 +20,7 @@ use App\Http\Controllers\Network\AdminCheckoutController;
 use App\Http\Controllers\Network\InternetController;
 use App\Http\Controllers\Network\RouterController;
 use App\Http\Controllers\Secretariat\DocumentController;
+use App\Http\Controllers\Secretariat\DocumentRequestController;
 use App\Http\Controllers\Secretariat\PermissionController;
 use App\Http\Controllers\Secretariat\RegistrationsController;
 use App\Http\Controllers\Secretariat\SecretariatController;
@@ -138,6 +139,9 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
         Route::post('/secretariat/permissions/{id}/edit/{role_id}', [PermissionController::class, 'edit'])->name('secretariat.permissions.edit');
         Route::post('/secretariat/permissions/{id}/remove/{role_id}/{object_id?}', [PermissionController::class, 'remove'])->name('secretariat.permissions.remove');
     });
+
+    /** Secretariat document page */
+    Route::get('/secretariat/documents', [DocumentRequestController::class, 'list'])->name('secretariat.document.list');
 
     /** Faults */
     Route::get('/faults', [FaultController::class, 'index'])->name('faults');

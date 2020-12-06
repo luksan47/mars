@@ -118,6 +118,15 @@
                                 </a>
                             </li>
                             @endcan
+
+                            <!-- document requests -->
+                            @can('viewAny', \App\Models\User::class)
+                            <li>
+                                <a class="waves-effect" href="{{ route('secretariat.document.list') }}">
+                                    <i class="material-icons left">description</i> @lang('admin.document_requests')
+                                </a>
+                            </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>

@@ -6,9 +6,11 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Semester;
 use App\Models\ImportItem;
+use App\Models\DocumentRequest;
 use App\Console\Commands;
 use App\Utils\Printer;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Secretariat\DocumentRequestController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -117,6 +119,15 @@ class DocumentController extends Controller
         foreach ($secretaries as $recipient) {
             Mail::to($recipient)->queue(new \App\Mail\StateCertificateRequest($recipient->name, Auth::user()->name, $url));
         }
+        /** Save request event */
+        $DRC = new DocumentRequestController();     // Needs revision!
+        $DRC->save_request('StatusCertificate');
+        /** Solution 2 (does not work)
+         * Refer to https://laravel.com/docs/8.x/responses#redirecting-controller-actions
+         *redirect()->action(
+         *    [DocumentRequestController::class, 'save_request'], ['request_name' => 'StatusCertificate']
+         *);
+         */
 
         return redirect()->back()->with('message', __('document.successful_request'));
     }

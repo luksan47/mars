@@ -14,7 +14,7 @@
                 <blockquote>
                     @lang('document.report')
                     <ul class="browser-default">
-                        <li>@lang('document.personal_computer')</li>
+                        <li>@lang('document.computer')</li>
                         <li>@lang('document.electronic_devices')</li>
                         <li>@lang('document.furnitures')</li>
                     </ul>
