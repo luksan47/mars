@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\MacAddress;
 use App\Models\PrintJob;
 use App\Models\WifiConnection;
+use App\Models\PrintAccount;
+use App\Models\PersonalInformation;
 use App\Models\EducationalInformation;
 
 use Illuminate\Database\Seeder;
@@ -35,6 +37,8 @@ class UsersTableSeeder extends Seeder
             'verified' => true,
         ]);
         $this->createCollegist($collegist);
+        $collegist->printAccount()->save(PrintAccount::factory()->make(['user_id' => $collegist->id]));
+        $collegist->personalInformation()->save(PersonalInformation::factory()->make(['user_id' => $collegist->id]));
 
         User::factory()->count(50)->create()->each(function ($user) {
             $this->createCollegist($user);
@@ -49,6 +53,8 @@ class UsersTableSeeder extends Seeder
             'verified' => true,
         ]);
         $this->createTenant($tenant);
+        $tenant->printAccount()->save(PrintAccount::factory()->make(['user_id' => $tenant->id]));
+        $tenant->personalInformation()->save(PersonalInformation::factory()->make(['user_id' => $tenant->id]));
 
         User::factory()->count(5)->create()->each(function ($user) {
             $this->createTenant($user);
