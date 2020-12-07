@@ -73,6 +73,30 @@ class UserController extends Controller
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
+    
+	public function updatemMothersName(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->hasPersonalInformation()) {
+            $validator = Validator::make($request->all(), [
+                'mothers_name' => 'required|string|max:225',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $user->personalInformation->update([
+                'mothers_name' => $request->mothers_name,
+            ]);
+        }
+
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
+    }
 
     public function updatePassword(Request $request)
     {

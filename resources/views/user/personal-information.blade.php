@@ -72,7 +72,29 @@
                     <tr>
                         <th scope="row">@lang('user.mothers_name')</th>
                         <td>
+							@if($modifiable_mothers_name ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update_mothers_name') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="mothers_name" type="mothers_name" name="mothers_name" size="30" 
+                                            @if(!($errors->has('mothers_name'))) disabled @endif 
+											style="margin:0" value="{{ old('mothers_name', $user->mothers_name) }}" required 
+											class="validate black-text @error('mothers_name') invalid @enderror">
+										@error('email')
+                                       <span class="helper-text" data-error="{{ $message }}"></span>
+                                    @enderror
+                                    </div>
+                                    <button id="mothers_name_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="mothers_name_btn" class="btn-floating right waves-effect waves-light"
+                                        onclick="mothers_name_editor()" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+                            @else
                             {{ $user->personalInformation->mothers_name }}
+                            @endif
+                            
                         </td>
                     </tr>
                     <tr>
