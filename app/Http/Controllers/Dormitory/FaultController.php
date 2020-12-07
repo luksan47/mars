@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Fault;
 use App\Models\Role;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -49,8 +48,7 @@ class FaultController extends Controller
         $this->authorize('update', Fault::class);
         
         $status = $request['status'];
-        $auth = Auth::user()->hasRole(Role::STAFF) || Fault::getState($status) === Fault::UNSEEN;
-        
+        $auth = Auth::user()->hasRole(Role::STAFF) || Fault::getState($status) === Fault::UNSEEN;        
         $fault = Fault::findOrFail($request['id']);
         $fault->update([
             'status' => Fault::getState($status)
@@ -64,14 +62,9 @@ class FaultController extends Controller
 
     public function notifyStaff(Fault $fault, bool $reopen = false)
     {
-        if (config('mail.active')) {
-            $staffs= Role::getUsers(Role::STAFF);
-            foreach ($staffs as $staff) {
-                Mail::to($staff)->queue(new \App\Mail\NewFault(
-                    $staff->name,
-                    $fault,
-                    $reopen));
-            }
+        $staffs = Role::getUsers(Role::STAFF);
+        foreach ($staffs as $staff) {
+            Mail::to($staff)->queue(new \App\Mail\NewFault($staff->name, $fault, $reopen));
         }
     }
 }

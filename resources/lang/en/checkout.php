@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'EXPENSE' => 'Expense',
+    'INCOME' => 'Income',
+    'KKT' => 'KKT',
+    'NETREG' => 'NetReg',
+    'PRINT' => 'Print',
     'add_transaction_descr' => 'This will appear on the statistics, and cannot be undone. The Committee leader\'s password is required since this will be applied to the checkout directly.',
     'allocated_balance' => 'Allocated balance',
     'amount' => 'Amount',

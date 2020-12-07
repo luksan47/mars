@@ -144,12 +144,11 @@
                             </li>
                             @endcan
 
-                            
                             <li>
                             <a class="waves-effect" href="{{ route('admin.checkout') }}">
                                 <i class="material-icons left">credit_card</i> @lang('admin.checkout')
                             </a>
-                            </li> 
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -193,20 +192,13 @@
                             <i class="material-icons left">sentiment_satisfied_alt</i>@lang('localizations.help_translate')</a></li>
 
                         <!-- report a bug -->
-                        <script>
-                            //The href: mailto may not work on every device. In this case, show a notification.
-                            var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
-                            function dismiss() {
-                                M.Toast.dismissAll();
-                            };
-                        </script>
-                        <li><a href="mailto:{{ config('test_mail') }}?Subject=[urán%20bug]" onclick="M.toast({html: myHTML, displayLength: 10000})">
+                        <li><a href="{{ route('index_reportbug') }}">
                             <i class="material-icons left">sentiment_very_dissatisfied</i>@lang('general.report_bug')</a></li>
                     </ul>
                 </div>
             </li>
             <li>
-                <a class="dark-toggle" href="#" onclick="toggleColorMode()" title="Dark/light"><i class="material-icons left">brightness_4</i> Toggle Dark Mode</a>
+                <a class="dark-toggle" href="#" onclick="toggleColorMode()" title="Dark/light"><i class="material-icons left">brightness_4</i>@lang('general.toggle-dark-mode')</a>
             </li>
             @endif
         </ul>
@@ -224,3 +216,13 @@
     </form>
     @endif
 </ul>
+
+@push('scripts')
+    <script>
+        //The href: mailto may not work on every device. In this case, show a notification.
+        var myHTML = "<span>@lang('general.if_mail_not_working')</span><button class='btn-flat toast-action' onclick='dismiss()'>OK</button>";
+        function dismiss() {
+            M.Toast.dismissAll();
+        };
+    </script>
+@endpush

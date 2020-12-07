@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Secretariat;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 
 class SemesterController extends Controller
@@ -11,7 +12,9 @@ class SemesterController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $collegists = User::collegists()->sortBy('name');
+        $collegists = User::role(Role::COLLEGIST)
+            ->with(['educationalInformation', 'allSemesters', 'roles'])
+            ->orderBy('name')->get();
 
         return view('secretariat.statuses.list', ['collegists' => $collegists]);
     }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class PaymentType extends Model
 {
@@ -23,26 +24,38 @@ class PaymentType extends Model
 
     public static function income()
     {
-        return self::where('name', self::INCOME)->firstOrFail();
+        return self::getFromCache(self::INCOME);
     }
 
     public static function expense()
     {
-        return self::where('name', self::EXPENSE)->firstOrFail();
+        return self::getFromCache(self::EXPENSE);
     }
 
     public static function kkt()
     {
-        return self::where('name', self::KKT)->firstOrFail();
+        return self::getFromCache(self::KKT);
     }
 
     public static function netreg()
     {
-        return self::where('name', self::NETREG)->firstOrFail();
+        return self::getFromCache(self::NETREG);
     }
 
     public static function print()
     {
-        return self::where('name', self::PRINT)->firstOrFail();
+        return self::getFromCache(self::PRINT);
+    }
+
+    public static function getFromCache($type)
+    {
+        return Cache::remember('paymentType.'.$type, 86400, function () use ($type) {
+            return self::where('name', $type)->firstOrFail();
+        });
+    }
+
+    public static function getByName(string $name)
+    {
+        return self::getFromCache($name);
     }
 }

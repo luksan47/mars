@@ -2,105 +2,84 @@
 
 namespace App\Http\Controllers\StudentsCouncil;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Network\InternetController;
 use App\Models\Checkout;
 use App\Models\PaymentType;
+use App\Models\Role;
 use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\WorkshopBalance;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Network\InternetController;
-
-use Carbon\Carbon;
+use App\Utils\CheckoutHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-
 class EconomicController extends Controller
 {
+    use CheckoutHandler;
+
     public function index($redirected = false)
     {
         $checkout = Checkout::studentsCouncil();
 
-        $this->authorize('view', $checkout);
+        $payment_types = [
+            PaymentType::INCOME,
+            PaymentType::EXPENSE,
+            PaymentType::KKT,
+        ];
 
-        $transactions = [];
-        $semesters = Semester::allUntilCurrent()
-            ->sortByDesc(function ($semester, $key) {
-                return $semester->getStartDate();
-            })->filter(function ($semester, $key){
-                return $semester->transactions()->count()>0;
-            });
+        $checkoutData = $this->getCheckout($checkout, $payment_types);
 
-        $data = [];
-        foreach ($semesters as $semester) {
-            //transactions
-            $transactions = [];
-            $transactions['income'] = $semester->transactionsInCheckout($checkout)
-                ->where('payment_type_id', PaymentType::income()->id)
-                ->get();
+        $view = view('student-council.economic-committee.app', $checkoutData);
 
-            $transactions['expense'] = $semester->transactionsInCheckout($checkout)
-                ->where('payment_type_id', PaymentType::expense()->id)
-                ->get();
-            $transactions['kkt'] = $checkout->kktSum($semester);
-            $transactions['sum'] = $semester->transactionsInCheckout($checkout)->sum('amount');
-
-            $data[] = [
-                'semester' => $semester,
-                'transactions' => $transactions,
-                'workshop_balances' => $semester->workshopBalances
-            ];
-        };
-
-        //checkout balances
-        $current_balance = $checkout->balance();
-        $current_balance_in_checkout = $checkout->balanceInCheckout();
-
-        if($redirected){
-            return view('student-council.economic-committee.app',[
-                'data' => $data,
-                'current_balance' => $current_balance,
-                'current_balance_in_checkout' => $current_balance_in_checkout,
-                ])->with('message', __('general.successfully_added'));
-        } else {
-            return view('student-council.economic-committee.app',[
-                'data' => $data,
-                'current_balance' => $current_balance,
-                'current_balance_in_checkout' => $current_balance_in_checkout]);
+        if ($redirected) {
+            return $view->with('message', __('general.successfully_added'));
         }
+
+        return $view;
     }
 
     public function indexKKTNetreg()
     {
-        $this->authorize('handleAny', Checkout::class);
+        $checkout = Checkout::studentsCouncil();
 
-        $my_transactions_not_in_checkout = Transaction::where('receiver_id', Auth::user()->id)
-            ->where('moved_to_checkout', null)
-            ->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id])
-            ->get();
-        $sum = $my_transactions_not_in_checkout->sum('amount');
+        $this->authorize('handleAny', $checkout);
 
-        $all_kktnetreg_transaction = Transaction::whereIn(
-            'payment_type_id',
-            [PaymentType::kkt()->id, PaymentType::netreg()->id]
-        )->get();
+        $payment_types = [
+            PaymentType::NETREG,
+            PaymentType::KKT,
+        ];
 
-        return view('student-council.economic-committee.kktnetreg', [
-            'users' => User::collegists(),
-            'my_transactions' => $my_transactions_not_in_checkout,
-            'sum_my_transactions' => $sum,
-            'all_transactions' => $all_kktnetreg_transaction,
-            'current_semester' => Semester::current()->tag()
-        ]);
-}
+        $users_has_to_pay_kktnetreg = User::role(Role::COLLEGIST)->isActive()
+            ->whereDoesntHave('transactions_payed', function ($query) use ($payment_types) {
+                $query->where('semester_id', Semester::current()->id);
+                $query->whereIn('payment_type_id', $this->paymenyTypeIDs($payment_types));
+            })->get();
+
+        $checkoutData = $this->getCurrentCheckout($checkout, $payment_types);
+
+        return view('student-council.economic-committee.kktnetreg', $checkoutData)
+            ->with('users', $users_has_to_pay_kktnetreg);
+    }
 
     public function indexTransaction()
     {
-        $this->authorize('handleAny', Checkout::class);
-        return view('student-council.economic-committee.transaction');
+        $checkout = Checkout::studentsCouncil();
+
+        $this->authorize('handleAny', $checkout);
+
+        $payment_types = [
+            PaymentType::INCOME,
+            PaymentType::EXPENSE,
+            PaymentType::KKT,
+        ];
+
+        $checkoutData = $this->getCheckout($checkout, $payment_types);
+
+        return view('student-council.economic-committee.transaction', $checkoutData);
     }
 
     public function payKKTNetreg(Request $request)
@@ -117,9 +96,6 @@ class EconomicController extends Controller
             'netreg' => 'required|integer|min:0',
         ]);
         $validator->validate();
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
 
         $payer = User::findOrFail($request->user_id);
 
@@ -148,15 +124,13 @@ class EconomicController extends Controller
         ]);
 
         $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
-        if (config('mail.active')) {
-            $internet_expiration_message = null;
-            if ($new_internet_expire_date !== null){
-                $internet_expiration_message = __('internet.expiration_extended', [
-                    'new_date' => $new_internet_expire_date->format('Y-m-d')
-                ]);
-            }
-            Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
+        $internet_expiration_message = null;
+        if ($new_internet_expire_date !== null) {
+            $internet_expiration_message = __('internet.expiration_extended', [
+                'new_date' => $new_internet_expire_date->format('Y-m-d'),
+            ]);
         }
+        Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
 
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
@@ -164,80 +138,34 @@ class EconomicController extends Controller
     public function KKTNetregToCheckout(Request $request)
     {
         $checkout = Checkout::studentsCouncil();
-        $this->authorize('addPayment', $checkout);
+        $payment_types = [
+            PaymentType::KKT,
+            PaymentType::NETREG,
+        ];
 
-        /* Moving the Netreg amount from Valasztmany to Admins is not tracked (yet) */
-        $validator = Validator::make($request->all(), [
-            'password' => 'required|in:'.$checkout->password,
-        ]);
-        $validator->validate();
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
-
-        $transactions = Transaction::where('receiver_id', Auth::user()->id)
-            ->whereIn('payment_type_id', [PaymentType::kkt()->id, PaymentType::netreg()->id])
-            ->where('moved_to_checkout', null)
-            ->get();
-
-        foreach ($transactions as $transaction) {
-            $transaction->update([
-                'moved_to_checkout' => Carbon::now(),
-            ]);
-        }
-
-        return redirect()->back()->with('message', __('general.successfully_added'));
+        return $this->toCheckout($request, $checkout, $payment_types);
     }
 
     public function addTransaction(Request $request)
     {
         $checkout = Checkout::studentsCouncil();
-        $this->authorize('administrate', $checkout);
-
-        $validator = Validator::make($request->all(), [
-            'comment' => 'required|string',
-            'amount' => 'required|integer',
-            'password' => 'required|in:'.$checkout->password,
-        ]);
-        $validator->validate();
-        if ($validator->fails()) {
-            return back()->withErros($validator)->withInput();
-        }
-
-        $type = $request->amount > 0 ? PaymentType::income()->id : PaymentType::expense()->id;
-
-        Transaction::create([
-            'checkout_id' => $checkout->id,
-            'receiver_id' => null,
-            'payer_id' => Auth::user()->id,
-            'semester_id' => Semester::current()->id,
-            'amount' => $request->amount,
-            'payment_type_id' => $type,
-            'comment' => $request->comment,
-            'moved_to_checkout' => Carbon::now(),
-        ]);
+        $this->createTransaction($request, $checkout);
 
         return redirect()->action(
             [EconomicController::class, 'index'], ['redirected' => true]
         );
     }
 
-    public function deleteTransaction(Request $request)
-    {
-        $transaction = Transaction::findOrFail($request->transaction);
-
-        $this->authorize('delete', $transaction);
-
-        $transaction->delete();
-        return redirect()->back()->with('message', __('general.successfully_deleted'));
-    }
-
     public function calculateWorkshopBalance(Semester $semester)
     {
         $this->authorize('administrate', Checkout::studentsCouncil());
         WorkshopBalance::generateBalances();
+
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
-    
+    public static function routeBase()
+    {
+        return 'economic_committee';
+    }
 }

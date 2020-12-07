@@ -1,7 +1,7 @@
 {{-- Input: $user and $semester --}}
 <tr>
     <td>
-        <b>{{ $semester->tag() }}</b>
+        <b>{{ $semester->tag }}</b>
     </td>
     <td>
         <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatusIn($semester)) }}" data-badge-caption="">

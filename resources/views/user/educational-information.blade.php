@@ -11,6 +11,10 @@
                         <td>{{ $user->educationalInformation->neptun ?? ''}}</td>
                     </tr>
                     <tr>
+                        <th scope="row">@lang('user.educational-email')</th>
+                        <td>{{ $user->educationalInformation->email ?? ''}}</td>
+                    </tr>
+                    <tr>
                         <th scope="row">@lang('user.faculty')</th>
                         <td>
                             <ul>
@@ -51,16 +55,10 @@
                                         data-badge-caption=""
                                         data-position="right"  data-tooltip="@lang('user.'.$user->getStatusIn($semester))"
                                         >
-                                        {{ $semester->tag() }}
-                                        
+                                        {{ $semester->tag }}
                                     </span>
                                 </li>
                                 @endforeach
-                                <script>
-                                $(document).ready(function(){
-                                    $('.tooltipped').tooltip();
-                                });
-                                </script>
                             </ul>
                         </td>
                     </tr>
@@ -70,3 +68,11 @@
 </div>
 @endif
 @endcan
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+    </script>
+@endpush
