@@ -79,16 +79,14 @@
                     @foreach ($expressions as $key => $value)
                     {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
-                    $duplicate = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
-                    $valid = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', true)->first();
-                    {{-- valid is used to show approved translations. it might need a more efficient solution --}}
+                    $translations = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key);
                     @endphp
-                    @if(is_string($value) && $duplicate == null)
+                    @if(is_string($value) && $translations->where('approved', false)->count() == 0)
                     <div class="row scale-transition" style="margin:0" name="{{ $fname . '.' . $key }}">
                         <div class="col s5" style="padding: 0.8rem;">
                             {{ $value }}
                         </div>
-                        @if(is_string($value) && $valid != null)
+                        @if($translations->where('approved', true)->count() != 0)
                         <div class="col s6">
                             <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
                                 class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea> 
@@ -96,7 +94,7 @@
                         @else
                         <div class="col s6">
                             <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
-                                class="materialize-textarea">-</textarea> {{-- Do we even need to show approved changes? --}}
+                                class="materialize-textarea"></textarea>
                         </div>
                         @endif
                         <div class="col s1">
