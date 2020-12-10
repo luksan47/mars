@@ -97,19 +97,14 @@
                     let colors = {
                         QUEUED: "blue",
                         CANCELLED: "yellow",
-                        ERROR: "red",
+                        ERROR: "#e57373",
                         SUCCESS: "green",
                     };
 
-                    @foreach(\App\Models\PrintJob::STATES as $key => $state)
-                        var existColor = "{{$state}}" in colors;
-                        if (row.getData().origin_state == "{{$state}}" && existColor) {
-                            const children = row.getElement().childNodes;
-                            children.forEach((child) => {
-                                child.style.backgroundColor = colors["{{$state}}"];
-                            });
-                        }
-                    @endforeach
+                    row.getElement().childNodes.forEach((child) => {
+                        child.style.backgroundColor = colors[row.getData().origin_state];
+                    });
+                    
                 }
             });
         });
