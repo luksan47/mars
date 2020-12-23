@@ -20,6 +20,8 @@ class FaultController extends Controller
     // TODO: validation
     public function addFault(Request $new)
     {
+        $this->authorize('create', Fault::class);
+
         $fault = Fault::create([
             'reporter_id' => Auth::User()->id,
             'location' => $new['location'],
@@ -43,17 +45,16 @@ class FaultController extends Controller
     // TODO: validation
     public function updateStatus(Request $request)
     {
+        $this->authorize('update', Fault::class);
+
         $status = $request['status'];
         $auth = Auth::user()->hasRole(Role::STAFF) || Fault::getState($status) === Fault::UNSEEN;
-
-        if ($auth) {
-            $fault = Fault::findOrFail($request['id']);
-            $fault->update([
-                'status' => Fault::getState($status),
-            ]);
-            if ($status === Fault::UNSEEN) {
-                $this->notifyStaff($fault, /* reopen */ true);
-            }
+        $fault = Fault::findOrFail($request['id']);
+        $fault->update([
+            'status' => Fault::getState($status),
+        ]);
+        if ($status === Fault::UNSEEN) {
+            $this->notifyStaff($fault, /* reopen */ true);
         }
 
         return var_export($auth);

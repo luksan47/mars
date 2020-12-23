@@ -18,7 +18,6 @@ class BasicTest extends TestCase
         'user',
         'faults',
         'faults/table',
-        'faults/update',
 
         // 200 routes
         '/',
