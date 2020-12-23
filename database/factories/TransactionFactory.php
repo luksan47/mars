@@ -39,11 +39,11 @@ class TransactionFactory extends Factory
                     case PaymentType::INCOME:
                         return null;
                     case PaymentType::KKT:
-                        return User::all()->random()->id;
+                        return User::where('verified', true)->get()->random()->id;
                     case PaymentType::NETREG:
-                        return User::all()->random()->id;
+                        return User::where('verified', true)->get()->random()->id;
                     case PaymentType::PRINT:
-                        return User::all()->random()->id;
+                        return User::where('verified', true)->get()->random()->id;
                     default:
                         return null;
                 }
@@ -56,11 +56,11 @@ class TransactionFactory extends Factory
                     case PaymentType::INCOME:
                         return null;
                     case PaymentType::KKT:
-                        return User::all()->random()->id;
+                        return User::where('verified', true)->get()->random()->id;
                     case PaymentType::NETREG:
-                        return User::all()->random()->id;
+                        return User::where('verified', true)->get()->random()->id;
                     case PaymentType::PRINT:
-                        return User::all()->random()->id;
+                        return User::where('verified', true)->get()->random()->id;
                     default:
                         return null;
                 }

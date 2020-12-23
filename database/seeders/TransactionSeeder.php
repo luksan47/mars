@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Checkout;
 use App\Models\PaymentType;
 use App\Models\Transaction;
+use App\Models\Semester;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
@@ -16,13 +18,5 @@ class TransactionSeeder extends Seeder
     public function run()
     {
         Transaction::factory()->count(300)->create();
-        Transaction::factory()->count(10)->create([
-            'payment_type_id' => array_rand([
-                PaymentType::kkt()->id,
-                PaymentType::netreg()->id,
-                PaymentType::print()->id,
-            ]),
-            'receiver_id' => 1,
-        ]);
     }
 }
