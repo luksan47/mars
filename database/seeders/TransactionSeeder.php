@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Checkout;
-use App\Models\PaymentType;
 use App\Models\Transaction;
-use App\Models\Semester;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
