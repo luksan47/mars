@@ -69,6 +69,8 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('asdasdasd'),
             'verified' => true,
         ]);
+        $user->printAccount()->save(PrintAccount::factory()->make(['user_id' => $user->id]));
+        $user->personalInformation()->save(PersonalInformation::factory()->make(['user_id' => $user->id]));
         MacAddress::factory()->count(3)->create(['user_id' => $user->id]);
         FreePages::factory()->count(5)->create(['user_id' => $user->id]);
         PrintJob::factory()->count(5)->create(['user_id' => $user->id]);
