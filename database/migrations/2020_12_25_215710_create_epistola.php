@@ -15,19 +15,22 @@ class CreateEpistola extends Migration
     {
         Schema::create('epistola', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('uploader_id')->nullable();
             $table->string('title');
             $table->string('subtitle')->nullable();
-            $table->longtext('description')->nullable(); //main text
-            $table->string('further_details')->nullable();
-            $table->string('website')->nullable();
-            $table->string('facebook_event')->nullable();
-            $table->string('registration')->nullable();
+            $table->longtext('description')->nullable();
+            $table->string('further_details_url')->nullable();
+            $table->string('website_url')->nullable();
+            $table->string('facebook_event_url')->nullable();
+            $table->string('fill_url')->nullable();
+            $table->string('registration_url')->nullable();
             $table->dateTime('registration_deadline')->nullable();
             $table->dateTime('filling_deadline')->nullable();
             $table->dateTime('date')->nullable();
-            $table->dateTime('end_date')->nullable(); //time interval if both provided
-            $table->string('picture')->nullable(); //path to main picture
-            $table->dateTime('valid_until'); //notifications should be sent before this date
+            $table->dateTime('time')->nullable();
+            $table->dateTime('end_date')->nullable();
+            $table->string('picture_path')->nullable();
+            $table->boolean('sent')->default(false);
         });
     }
 

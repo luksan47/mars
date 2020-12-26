@@ -26,6 +26,7 @@ use App\Http\Controllers\Secretariat\SecretariatController;
 use App\Http\Controllers\Secretariat\SemesterController;
 use App\Http\Controllers\Secretariat\UserController;
 use App\Http\Controllers\StudentsCouncil\EconomicController;
+use App\Http\Controllers\StudentsCouncil\EpistolaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -163,4 +164,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/economic_committee/kktnetreg/pay', [EconomicController::class, 'payKKTNetreg'])->name('kktnetreg.pay');
     Route::get('/economic_committee/calculate_workshop_balance', [EconomicController::class, 'calculateWorkshopBalance'])->name('economic_committee.workshop_balance');
     Route::post('/economic_committee/kktnetreg/to_checkout', [EconomicController::class, 'KKTNetregToCheckout'])->name('economic_committee.to_checkout');
+
+    Route::get('/communicational_committee', [EpistolaController::class, 'index'])->name('communicational_committee');
 });

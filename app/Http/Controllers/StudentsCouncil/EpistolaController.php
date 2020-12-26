@@ -10,6 +10,6 @@ class EpistolaController extends Controller
 {
     public function index(Request $request)
     {
-        return view('student-council.communicational-committee.epistola', ['news' => EpistolaNews::all()]);
+        return view('student-council.communicational-committee.epistola', ['news' => EpistolaNews::all()->sortByDesc('valid_until')]);
     }
 }
