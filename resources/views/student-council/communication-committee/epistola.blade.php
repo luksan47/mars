@@ -10,14 +10,14 @@
 @section('content')
 <div class="row">
     <div class="col s12">
-        <h3>Epistola Collegii
-            @can('create', \App\Models\EpistolaNews::class)
-            <a class="btn-floating" href="{{ route('epistola.new') }}"><i class="material-icons">add</i></a>
-            @endif
-            @can('send', \App\Models\EpistolaNews::class)
-            <a class="btn-floating green"><i class="material-icons">send</i></a>
-            @endif
-        </h3>
+        <span style="margin:20px;font-size:50px;font-family:'Playfair Display';font-variant: small-caps;" class="coli-text text-orange">
+            Epistola Collegii</span><br>
+        @can('send', \App\Models\EpistolaNews::class)
+        <a class="btn-floating green right" href="{{ route('epistola.send')}}"><i class="material-icons">send</i></a>
+        @endif
+        <span style="margin:20px;font-size:25px;font-family:'Playfair Display'" class="coli-text text-blue">
+            A Választmány hírlevele</span><br>
+
     </div>
 </div>
 <div class="row">
@@ -40,7 +40,7 @@
                     <p><i>{{$article->date_time}}</i></p>
                     @can('send', \App\Models\EpistolaNews::class)
                     @if($article->valid_until)
-                        <p><i @if($article->shouldBeSent()) class="red-text" @endif>Releváns eddig: {{$article->valid_until}}</i></p>
+                        <p><i @if($article->shouldBeSent()) class="red-text" @endif>Releváns {{$article->valid_until}}-ig.</i></p>
                     @endif
                     @endcan
                 </div>
@@ -79,7 +79,13 @@
     @php $i++; @endphp
     @endforeach
 </div>
-
+@can('create', \App\Models\EpistolaNews::class)
+<div class="fixed-action-btn">
+    <a class="btn-floating red" href="{{ route('epistola.new') }}">
+      <i class="large material-icons">add</i>
+    </a>
+</div>
+@endif
 @endsection
 
 @push('scripts')
