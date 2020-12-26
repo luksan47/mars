@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\EpistolaCollegii;
 use Image;
 
 use App\Models\EpistolaNews;
@@ -74,5 +75,12 @@ class EpistolaController extends Controller
             $epistola = EpistolaNews::create($values);
         }
         return response()->json($epistola);
+    }
+
+    public function send()
+    {
+        $this->authorize('send', EpistolaNews::class);
+        return (new EpistolaCollegii())->toMail();
+
     }
 }
