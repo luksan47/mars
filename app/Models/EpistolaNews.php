@@ -26,6 +26,6 @@ class EpistolaNews extends Model
         'date',
         'end_date', //time interval if both provided
         'picture', //path to main picture
-        'valid_until' //notifications should be sent before this date
+        'valid_until', //notifications should be sent before this date
     ];
 }
