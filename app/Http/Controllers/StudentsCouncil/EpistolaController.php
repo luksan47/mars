@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\StudentsCouncil;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
 use App\Models\EpistolaNews;
+use Illuminate\Http\Request;
 
 class EpistolaController extends Controller
 {
