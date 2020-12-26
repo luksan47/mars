@@ -24,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\Checkout::class => \App\Policies\CheckoutPolicy::class,
         \App\Models\Transaction::class => \App\Policies\TransactionPolicy::class,
         \App\Models\Fault::class => \App\Policies\FaultPolicy::class,
+        \App\Models\EpistolaNews::class => \App\Policies\EpistolaPolicy::class,
     ];
 
     /**

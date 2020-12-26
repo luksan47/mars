@@ -22,19 +22,30 @@ class EpistolaNewsFactory extends Factory
     public function definition()
     {
         return [
+            'uploader_id' => \App\Models\User::where('verified', true)->get()->random()->id,
             'title' => $this->faker->realText($maxNbChars = 50),
             'subtitle' => $this->faker->sentence(),
             'description' => $this->faker->text(500),
-            'further_details' => $this->faker->url(),
-            'website' => $this->faker->url(),
-            'facebook_event' => $this->faker->url(),
-            'registration' => $this->faker->url(),
-            'registration_deadline' => now()->addDays($this->faker->numberBetween(0, 100)),
-            'filling_deadline' => now()->addDays($this->faker->numberBetween(0, 100)),
-            'date' => now()->addDays($this->faker->numberBetween(0, 200)),
-            'end_date' => now()->addDays($this->faker->numberBetween(0, 200)),
-            'picture' => $this->faker->imageUrl(640, 480, true),
-            'valid_until' => now()->addDays($this->faker->numberBetween(0, 100)),
+            'further_details_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
+            'website_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
+            'facebook_event_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
+            'fill_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
+            'registration_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
+            'registration_deadline' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 100)) : null,
+            'filling_deadline' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 100)) : null,
+            'date' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 200)) : null,
+            'time' => function (array $attributes) {
+                if ($attributes['date'] != null && $this->faker->boolean(50))
+                    return now()->addDays($this->faker->numberBetween(0, 200));
+                return null;
+            },
+            'end_date' => function (array $attributes) {
+                if ($attributes['date'] != null && $attributes['time'] == null && $this->faker->boolean(50))
+                    return now()->addDays($this->faker->numberBetween(0, 200));
+                return null;
+            },
+            'picture_path' => $this->faker->boolean(50) ? $this->faker->imageUrl(640, 480, 'animals', true) : null,
+            'sent' => $this->faker->boolean(20),
         ];
     }
 }
