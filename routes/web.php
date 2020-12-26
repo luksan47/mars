@@ -165,5 +165,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/economic_committee/calculate_workshop_balance', [EconomicController::class, 'calculateWorkshopBalance'])->name('economic_committee.workshop_balance');
     Route::post('/economic_committee/kktnetreg/to_checkout', [EconomicController::class, 'KKTNetregToCheckout'])->name('economic_committee.to_checkout');
 
-    Route::get('/communicational_committee', [EpistolaController::class, 'index'])->name('communicational_committee');
+    Route::get('/communication_committee/epistola', [EpistolaController::class, 'index'])->name('epistola');
+    Route::get('/communication_committee/epistola/new', [EpistolaController::class, 'new'])->name('epistola.new');
+    Route::get('/communication_committee/epistola/edit/{epistola}', [EpistolaController::class, 'edit'])->name('epistola.edit');
+    Route::post('/communication_committee/epistola/update_or_create', [EpistolaController::class, 'updateOrCreate'])->name('epistola.update_or_create');
 });

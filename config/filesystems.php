@@ -55,6 +55,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'epistola' => [
+            'driver' => 'local',
+            'root' => public_path('img/epistola'),
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+
         'printing' => [
             'driver' => 'local',
             'root' => storage_path('app/printing_queue'),
