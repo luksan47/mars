@@ -24,11 +24,11 @@ class CreateEpistola extends Migration
             $table->string('facebook_event_url')->nullable();
             $table->string('fill_url')->nullable();
             $table->string('registration_url')->nullable();
-            $table->dateTime('registration_deadline')->nullable();
-            $table->dateTime('filling_deadline')->nullable();
-            $table->dateTime('date')->nullable();
+            $table->date('registration_deadline')->nullable();
+            $table->date('filling_deadline')->nullable();
+            $table->date('date')->nullable();
             $table->dateTime('time')->nullable();
-            $table->dateTime('end_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('picture_path')->nullable();
             $table->boolean('sent')->default(false);
         });

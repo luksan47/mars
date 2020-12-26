@@ -28,7 +28,7 @@ class EpistolaNewsFactory extends Factory
             'description' => $this->faker->text(500),
             'further_details_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
             'website_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
-            'facebook_event_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
+            'facebook_event_url' => $this->faker->boolean(50) ? 'https://www.facebook.com/events/' : null,
             'fill_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
             'registration_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
             'registration_deadline' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 100)) : null,
@@ -48,7 +48,7 @@ class EpistolaNewsFactory extends Factory
 
                 return null;
             },
-            'picture_path' => $this->faker->boolean(50) ? $this->faker->imageUrl(640, 480, 'animals', true) : null,
+            'picture_path' => $this->faker->boolean(50) ? $this->faker->imageUrl() : null,
             'sent' => $this->faker->boolean(20),
         ];
     }
