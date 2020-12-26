@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class EpistolaPolicy
@@ -25,5 +25,4 @@ class EpistolaPolicy
     {
         return $user->hasRoleWithObjectName(Role::STUDENT_COUNCIL, 'communication-leader');
     }
-
 }

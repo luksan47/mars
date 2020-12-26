@@ -35,13 +35,17 @@ class EpistolaNewsFactory extends Factory
             'filling_deadline' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 100)) : null,
             'date' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 200)) : null,
             'time' => function (array $attributes) {
-                if ($attributes['date'] != null && $this->faker->boolean(50))
+                if ($attributes['date'] != null && $this->faker->boolean(50)) {
                     return now()->addDays($this->faker->numberBetween(0, 200));
+                }
+
                 return null;
             },
             'end_date' => function (array $attributes) {
-                if ($attributes['date'] != null && $attributes['time'] == null && $this->faker->boolean(50))
+                if ($attributes['date'] != null && $attributes['time'] == null && $this->faker->boolean(50)) {
                     return now()->addDays($this->faker->numberBetween(0, 200));
+                }
+
                 return null;
             },
             'picture_path' => $this->faker->boolean(50) ? $this->faker->imageUrl(640, 480, 'animals', true) : null,
