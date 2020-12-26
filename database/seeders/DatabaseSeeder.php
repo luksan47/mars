@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(SemesterSeeder::class);
         $this->call(RouterSeeder::class);
+<<<<<<< HEAD
         $this->call(TransactionSeeder::class);
+=======
+        $this->call(EpistolaSeeder::class);
+>>>>>>> aff6238... View, improved properties
     }
 }
