@@ -169,5 +169,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::get('/communication_committee/epistola/new', [EpistolaController::class, 'new'])->name('epistola.new');
     Route::get('/communication_committee/epistola/edit/{epistola}', [EpistolaController::class, 'edit'])->name('epistola.edit');
     Route::post('/communication_committee/epistola/update_or_create', [EpistolaController::class, 'updateOrCreate'])->name('epistola.update_or_create');
+    Route::get('/communication_committee/epistola/preview', [EpistolaController::class, 'preview'])->name('epistola.preview');
     Route::get('/communication_committee/epistola/send', [EpistolaController::class, 'send'])->name('epistola.send');
 });
