@@ -25,7 +25,7 @@ class EpistolaNewsFactory extends Factory
             'uploader_id' => \App\Models\User::where('verified', true)->get()->random()->id,
             'title' => $this->faker->realText($maxNbChars = 50),
             'subtitle' => $this->faker->sentence(),
-            'description' => $this->faker->text(500),
+            'description' => $this->faker->paragraphs($this->faker->numberBetween(1,3), true),
             'further_details_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
             'website_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
             'facebook_event_url' => $this->faker->boolean(50) ? 'https://www.facebook.com/events/' : null,
@@ -36,7 +36,7 @@ class EpistolaNewsFactory extends Factory
             'date' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 200)) : null,
             'time' => function (array $attributes) {
                 if ($attributes['date'] != null && $this->faker->boolean(50)) {
-                    return now()->addDays($this->faker->numberBetween(0, 200));
+                    return now()->addMinutes($this->faker->numberBetween(0, 3600));
                 }
 
                 return null;

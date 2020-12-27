@@ -14,6 +14,6 @@ class EpistolaSeeder extends Seeder
      */
     public function run()
     {
-        EpistolaNews::factory()->count(10)->create();
+        EpistolaNews::factory()->count(5)->create();
     }
 }
