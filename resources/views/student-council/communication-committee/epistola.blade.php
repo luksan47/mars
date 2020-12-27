@@ -13,7 +13,8 @@
         <span style="margin:20px;font-size:50px;font-family:'Playfair Display';font-variant: small-caps;" class="coli-text text-orange">
             Epistola Collegii</span><br>
         @can('send', \App\Models\EpistolaNews::class)
-        <a class="btn-floating green right" href="{{ route('epistola.send')}}"><i class="material-icons">send</i></a>
+        <a class="btn-floating green right" style="margin-left: 10px" href="{{ route('epistola.send')}}"><i class="material-icons">send</i></a>
+        <a class="btn-floating grey right" href="{{ route('epistola.preview')}}"><i class="material-icons">remove_red_eye</i></a>
         @endif
         <span style="margin:20px;font-size:25px;font-family:'Playfair Display'" class="coli-text text-blue">
             A Választmány hírlevele</span><br>
