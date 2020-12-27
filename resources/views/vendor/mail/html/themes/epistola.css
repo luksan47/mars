@@ -40,7 +40,7 @@ a img {
 .title {
     margin:20px;
     font-size:50px;
-    font-family: 'Playfair Display';
+    font-family: 'Playfair Display', serif;
     font-variant: small-caps;
     color:#b38f2f;
 }
@@ -48,7 +48,7 @@ a img {
 .subtitle {
     margin:20px;
     font-size:25px;
-    font-family: 'Playfair Display';
+    font-family: 'Playfair Display', serif;
     color:#242851;
 }
 
@@ -59,28 +59,28 @@ a img {
     font-weight: bold;
     margin-top: 0;
     text-align: center;
-    font-family: 'Playfair Display';
+    font-family: 'Playfair Display', serif;
 }
 
 h1 {
-    color: black;
+    color: #0e0e0e;
     font-size: 16px;
     margin-top: 0;
     text-align: center;
-    font-family: 'Playfair Display';
+    font-family: 'Playfair Display', serif;;
 }
 
 h2{
     font-size: 20px;
     color: #242851;
     text-align: left;
-    font-family: 'Playfair Display';
+    font-family: 'Playfair Display', serif;
     margin-bottom: 0;
     margin-left: 20px;
 }
 h2 span {
     margin-left: 10px;
-    font-family: 'Playfair Display';
+    font-family: 'Playfair Display', serif;
 }
 
 h3 {
@@ -151,7 +151,7 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
-    font-family: 'Playfair Display';
+    font-family: 'Playfair Display', serif;
 }
 
 .header a {
@@ -186,7 +186,6 @@ img {
     border-radius: 2px;
     border-width: 1px;
     box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015);
-    margin: 20px auto;
     padding: 0;
     width: 570px;
 }
@@ -257,16 +256,6 @@ img {
 
 /* Buttons */
 
-.action {
-    -premailer-cellpadding: 0;
-    -premailer-cellspacing: 0;
-    -premailer-width: 100%;
-    margin: 30px auto;
-    padding: 0;
-    text-align: center;
-    width: 100%;
-}
-
 .button {
     -webkit-text-size-adjust: none;
     border-radius: 8px;
@@ -280,34 +269,6 @@ img {
     border-left: 10px solid #718096;
     border-right: 10px solid #718096;
     border-top: 3px solid #718096;
-}
-
-
-/* Panels */
-
-.panel {
-    border-left: #b38f2f solid 4px;
-    margin-top: 21px;
-    margin-left: 20px;
-}
-
-.panel-content {
-    background-color: #edf2f7;
-    color: #718096;
-    padding: 16px;
-}
-
-.panel-content p {
-    color: #718096;
-}
-
-.panel-item {
-    padding: 0;
-}
-
-.panel-item p:last-of-type {
-    margin-bottom: 0;
-    padding-bottom: 0;
 }
 
 /* Utilities */
