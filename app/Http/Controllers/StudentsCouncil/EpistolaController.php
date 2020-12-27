@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\EpistolaCollegii;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EpistolaCollegii;
 use Image;
 
 use App\Models\EpistolaNews;
@@ -15,7 +16,7 @@ class EpistolaController extends Controller
 {
     public function index()
     {
-        return view('student-council.communication-committee.epistola', ['news' => EpistolaNews::all()->sortBy('valid_until')]);
+        return view('student-council.communication-committee.epistola', ['news' => EpistolaNews::where('sent', false)->get()->sortBy('valid_until')]);
     }
 
     public function edit(EpistolaNews $epistola)
@@ -79,10 +80,23 @@ class EpistolaController extends Controller
         return redirect(route('epistola'))->with('message', $updated ? __('general.successful_modification') : __('general.successfully_added'));
     }
 
+    public function preview()
+    {
+        $this->authorize('send', EpistolaNews::class);
+
+        return (new EpistolaCollegii(EpistolaNews::where('sent', false)->get()))->toMail();
+    }
+
     public function send()
     {
         $this->authorize('send', EpistolaNews::class);
-        return (new EpistolaCollegii())->toMail();
+
+        $mail = new EpistolaCollegii(EpistolaNews::where('sent', false)->get());
+        Mail::to(env('MAIL_KOMMBIZ'))->send($mail);
+
+        EpistolaNews::where('sent', false)->update(['sent' => true]);
+
+        return back()->with('message', 'Elküldve a Bizottság e-mail címére.');
 
     }
 }
