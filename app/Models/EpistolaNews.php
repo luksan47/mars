@@ -46,9 +46,13 @@ class EpistolaNews extends Model
     {
         if($this->date == null) return null;
 
-        $datetime = $this->date->format('Y.m.d');
-        if ($this->time) $datetime .= $this->time->format(' h:m');
-        else if ($this->end_date) $datetime .= $this->end_date->format(' - Y.m.d');
+        $datetime = $this->date->format('Y.m.d.');
+        if ($this->time) {
+            $datetime .= $this->time->format(' h:m');
+        } elseif ($this->end_date) {
+            $datetime .= $this->end_date->format(' - Y.m.d.');
+        }
+
         return $datetime;
     }
 
