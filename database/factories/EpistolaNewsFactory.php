@@ -38,12 +38,14 @@ class EpistolaNewsFactory extends Factory
                 if ($attributes['date'] != null && $this->faker->boolean(50)) {
                     return now()->addMinutes($this->faker->numberBetween(0, 3600));
                 }
+
                 return null;
             },
             'end_date' => function (array $attributes) {
                 if ($attributes['date'] != null && $attributes['time'] == null && $this->faker->boolean(50)) {
                     return now()->addDays($this->faker->numberBetween(0, 200));
                 }
+
                 return null;
             },
             'picture_path' => $this->faker->boolean(50) ? $this->faker->imageUrl() : null,
