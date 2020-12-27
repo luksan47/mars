@@ -25,7 +25,7 @@ class EpistolaNewsFactory extends Factory
             'uploader_id' => \App\Models\User::where('verified', true)->get()->random()->id,
             'title' => $this->faker->realText($maxNbChars = 50),
             'subtitle' => $this->faker->sentence(),
-            'description' => $this->faker->paragraphs($this->faker->numberBetween(1,3), true),
+            'description' => $this->faker->paragraphs($this->faker->numberBetween(1, 3), true),
             'further_details_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
             'website_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
             'facebook_event_url' => $this->faker->boolean(50) ? 'https://www.facebook.com/events/' : null,
