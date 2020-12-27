@@ -76,6 +76,11 @@ h2{
     text-align: left;
     font-family: 'Playfair Display';
     margin-bottom: 0;
+    margin-left: 20px;
+}
+h2 span {
+    margin-left: 10px;
+    font-family: 'Playfair Display';
 }
 
 h3 {
@@ -83,24 +88,43 @@ h3 {
     font-weight: bold;
     font-variant: normal;
     margin-top: 0;
-    margin-left: 5px;
+    margin-left: 45px;
+}
+
+.warning {
+    margin-left: 20px;
+    font-size: 14px;
 }
 
 p {
     font-size: 16px;
     line-height: 1.5em;
-    margin-top: 0;
-    text-align: left;
+    margin:10px;
+    text-align: justify;
 }
 
+.description{
+    color:#242851;
+}
 p.sub {
     font-size: 12px;
 }
 
-img {
-    max-width: 100%;
+b {
+    color:#b38f2f;
 }
 
+img {
+    display: block;
+    max-width: 90%;
+    max-height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center {
+    text-align: center;
+}
 /* Layout */
 
 .wrapper {
@@ -162,7 +186,7 @@ img {
     border-radius: 2px;
     border-width: 1px;
     box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015);
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 0;
     width: 570px;
 }
@@ -245,45 +269,26 @@ img {
 
 .button {
     -webkit-text-size-adjust: none;
-    border-radius: 4px;
+    border-radius: 8px;
     color: #fff;
     display: inline-block;
     overflow: hidden;
     text-decoration: none;
+    margin:5px;
+    background-color: #718096;
+    border-bottom: 3px solid #718096;
+    border-left: 10px solid #718096;
+    border-right: 10px solid #718096;
+    border-top: 3px solid #718096;
 }
 
-.button-blue,
-.button-primary {
-    background-color: #2d3748;
-    border-bottom: 8px solid #2d3748;
-    border-left: 18px solid #2d3748;
-    border-right: 18px solid #2d3748;
-    border-top: 8px solid #2d3748;
-}
-
-.button-green,
-.button-success {
-    background-color: #48bb78;
-    border-bottom: 8px solid #48bb78;
-    border-left: 18px solid #48bb78;
-    border-right: 18px solid #48bb78;
-    border-top: 8px solid #48bb78;
-}
-
-.button-red,
-.button-error {
-    background-color: #e53e3e;
-    border-bottom: 8px solid #e53e3e;
-    border-left: 18px solid #e53e3e;
-    border-right: 18px solid #e53e3e;
-    border-top: 8px solid #e53e3e;
-}
 
 /* Panels */
 
 .panel {
-    border-left: #2d3748 solid 4px;
-    margin: 21px 0;
+    border-left: #b38f2f solid 4px;
+    margin-top: 21px;
+    margin-left: 20px;
 }
 
 .panel-content {

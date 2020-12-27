@@ -11,7 +11,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col s12">
+    <div class="col s12 l8 push-l2">
         <div class="card">
             <div class="card-content">
                 <div class="card-title">{{ $epistola->title ?? "Új hír"}}</div>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12 l3">
+                        <div class="input-field col s12 l6">
                             <input id="registration_url" name="registration_url" type="url" class="validate @error('registration_url') invalid @enderror"
                                 value="{{ $epistola->registration_url ?? old('registration_url')}}">
                             <label for="registration_url">Regisztrációs link</label>
@@ -109,7 +109,7 @@
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
-                        <div class="input-field col s12 l3">
+                        <div class="input-field col s12 l6">
                             <input id="registration_deadline" name="registration_deadline" type="text" class="validate datepicker @error('registration_deadline') invalid @enderror"
                                 value="{{ $epistola->registration_deadline ?? old('registration_deadline')}}"
                                 onfocus="M.Datepicker.getInstance(registration_deadline).open();">
@@ -118,7 +118,9 @@
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
-                        <div class="input-field col s12 l3">
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 l6">
                             <input id="fill_url" name="fill_url" type="url" class="validate @error('fill_url') invalid @enderror"
                                 value="{{ $epistola->fill_url ?? old('fill_url')}}">
                             <label for="fill_url">Kitöltési link</label>
@@ -126,7 +128,7 @@
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
-                        <div class="input-field col s12 l3">
+                        <div class="input-field col s12 l6">
                             <input id="filling_deadline" name="filling_deadline" type="text" class="validate datepicker @error('filling_deadline') invalid @enderror"
                                 value="{{ $epistola->filling_deadline ?? old('filling_deadline')}}"
                                 onfocus="M.Datepicker.getInstance(filling_deadline).open();">

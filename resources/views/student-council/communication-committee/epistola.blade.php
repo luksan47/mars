@@ -25,10 +25,10 @@
     @foreach ($news as $article)
     @if($i%3==0)</div><div class="row">@endif
         <div class="col s12 m6 l6 xl4">
-            <div class="card
+            <div class="card hoverable
                 @if($article->shouldBeSent())
                 @can('send', \App\Models\EpistolaNews::class)
-                    red lighten-4
+                    orange lighten-4
                 @endcan @endif">
                 <div class="card-image" style="overflow-x: auto;overflow-y: hidden;">
                     <img class="materialboxed" id="{{$article->id}}" src="{{ $article->picture_path ?? url('/img/committee-logos/kommbiz.jpg')}}" onerror="standby({{$article->id}})">
