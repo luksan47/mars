@@ -24,7 +24,20 @@ width: 100% !important;
 width: 100% !important;
 }
 }
+@-ms-viewport{
+    width: extend-to-zoom;
+    zoom: 1.0;
+}
+@viewport{
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
 </style>
+<div style="max-width: 800px;">
+<!--[if (gte mso 9)|(IE)]>
+    <table cellspacing="0" cellpadding="0" border="0" width="800"><tr><td>
+<![endif]-->
+<table cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 800px;">
 
 <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
 <tr>
@@ -68,7 +81,11 @@ width: 100% !important;
                         @endforeach
                         </ol>
                         </h2>
-                        <hr>
+                        <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr><td style="border-bottom:1px solid #242851;">&nbsp;</td></tr><tr>
+                              <td>&nbsp;</td>
+                            </tr>
+                          </table>
                         <p class="center">További eseményeket az <a href="{{route('epistola')}}" target="_blank" rel="noopener">Uránban várjuk feltöltésre</a>.</p>
                         @php
                             $names = $news->map(function($item) {return $item->uploader->name;})->unique()->toArray();
@@ -76,6 +93,9 @@ width: 100% !important;
                         <p class="center">Szerkesztette: {{ implode(", ",$names)}}.</p>
                     </td>
                 </tr>
+            </table>
+            <table cellpadding="0" cellspacing="0">
+            <tr><td style="height: 50px">&nbsp;</td></tr>
             </table>
             <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
@@ -145,5 +165,10 @@ width: 100% !important;
 </td>
 </tr>
 </table>
+</table>
+<!--[if (gte mso 9)|(IE)]>
+  </td></tr></table>
+<![endif]-->
+</div>
 </body>
 </html>

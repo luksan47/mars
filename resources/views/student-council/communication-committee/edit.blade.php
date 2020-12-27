@@ -166,7 +166,7 @@
                     </div>
                     <p style="">
                         <label>
-                            <input type="checkbox" name="approved"/>
+                            <input type="checkbox" name="approved" required/>
                             <span>Nem töltök fel szerzői jog oltalma alatt álló képet.</span>
                         </label>
                         @error('approved')
