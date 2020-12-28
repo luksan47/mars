@@ -50,30 +50,29 @@ class EpistolaController extends Controller
             'filling_deadline' => 'nullable|date',
             'approved' => 'nullable|required_with:picture_upload|accepted',
             'picture_upload' => 'nullable|image',
-            'picture_path' => ['nullable','url', function($attribute, $value, $fail) use ($request) {
-                if($request->picture_upload != null && $request->picture_path != null)
+            'picture_path' => ['nullable', 'url', function ($attribute, $value, $fail) use ($request) {
+                if ($request->picture_upload != null && $request->picture_path != null)
                     $fail('Fájl feltöltése és belinkelése együtt nem lehetséges.');
             }]
         ]);
         $validator->validate();
 
         //store and resize uploaded picture
-        if($request->picture_upload != null)
-        {
+        if ($request->picture_upload != null) {
             $path = $request->file('picture_upload')->store('', 'epistola');
-            Image::make(public_path('/img/epistola/'.$path))->resize(600, null, function ($constraint) {
+            Image::make(public_path('/img/epistola/' . $path))->resize(600, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save();
-            $picture_path = config('app.url').'/img/epistola/'.$path;
+            $picture_path = config('app.url') . '/img/epistola/' . $path;
         }
         $values = $request->except(['picture_path', 'id']);
         $values['picture_path'] = $picture_path ?? $request->picture_path;
         $values['uploader_id'] = Auth::user()->id;
         $epistola = EpistolaNews::find($request->id);
-        if($epistola){
+        if ($epistola) {
             $updated = true;
             $epistola->update($values);
-        }else{
+        } else {
             $updated = false;
             $epistola = EpistolaNews::create($values);
         }
@@ -84,7 +83,7 @@ class EpistolaController extends Controller
     {
         $this->authorize('send', EpistolaNews::class);
 
-        return (new EpistolaCollegii(EpistolaNews::where('sent', false)->get()))->toMail();
+        return (new EpistolaCollegii(EpistolaNews::where('sent', false)->get()));
     }
 
     public function send()
@@ -97,6 +96,5 @@ class EpistolaController extends Controller
         EpistolaNews::where('sent', false)->update(['sent' => true]);
 
         return back()->with('message', 'Elküldve a Bizottság e-mail címére.');
-
     }
 }
