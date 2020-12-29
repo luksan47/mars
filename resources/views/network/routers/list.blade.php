@@ -60,9 +60,12 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function(){
-        $('.tooltipped').tooltip();
-    });
-</script>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('.tooltipped').tooltip();
+        });
+    </script>
+@endpush

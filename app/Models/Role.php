@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Role extends Model
 {
@@ -101,7 +102,11 @@ class Role extends Model
     public static function possibleObjectsFor($name)
     {
         if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
-            return Workshop::all();
+            if (! Cache::get('workshop.all')) {
+                Cache::put('workshop.all', Workshop::all(), 60);
+            }
+
+            return Cache::get('workshop.all');
         }
         if ($name == self::LOCALE_ADMIN) {
             // Do we have this somewhere?
@@ -110,7 +115,7 @@ class Role extends Model
             return self::toSelectableCollection($locales);
         }
 
-        if ($name == 'student-council') {
+        if ($name == self::STUDENT_COUNCIL) {
             $student_council_members = [
                 'president',
                 'vice_president',
@@ -131,7 +136,7 @@ class Role extends Model
             return self::toSelectableCollection($student_council_members);
         }
 
-        if ($name == 'collegist') {
+        if ($name == self::COLLEGIST) {
             $collegists = [
                 'resident',
                 'extern',

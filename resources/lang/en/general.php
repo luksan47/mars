@@ -7,6 +7,7 @@ return [
     'change_password' => 'Change password',
     'choose_from_menu' => 'Select one of the menu options!',
     'choose_option' => 'Choose an option...',
+    'description' => 'Description',
     'failed' => 'An error occurred. Please contact system administrators!',
     'home' => 'Home',
     'i_understand' => 'I understand',
@@ -29,5 +30,7 @@ return [
     'successful_transaction' => 'Successful transaction!',
     'successfully_added' => 'Successfully added!',
     'successfully_deleted' => 'Successfully deleted',
+    'toggle-dark-mode' => 'Toggle dark mode',
+    'view_issue' => 'You can view and track your issue here.',
     'you_are_logged_in' => 'You are logged in.',
 ];

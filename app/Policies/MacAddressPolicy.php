@@ -86,7 +86,7 @@ class MacAddressPolicy
      * @param  \App\Models\MacAddress  $macAddress
      * @return mixed
      */
-    public function accept(User $user, MacAddress $macAddress)
+    public function accept(User $user)
     {
         return false;
     }

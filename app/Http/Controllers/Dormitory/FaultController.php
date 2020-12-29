@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Fault;
 use App\Models\Role;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -21,6 +20,8 @@ class FaultController extends Controller
     // TODO: validation
     public function addFault(Request $new)
     {
+        $this->authorize('create', Fault::class);
+
         $fault = Fault::create([
             'reporter_id' => Auth::User()->id,
             'location' => $new['location'],
@@ -44,17 +45,16 @@ class FaultController extends Controller
     // TODO: validation
     public function updateStatus(Request $request)
     {
+        $this->authorize('update', Fault::class);
+
         $status = $request['status'];
         $auth = Auth::user()->hasRole(Role::STAFF) || Fault::getState($status) === Fault::UNSEEN;
-
-        if ($auth) {
-            $fault = Fault::findOrFail($request['id']);
-            $fault->update([
-                'status' => Fault::getState($status)
-            ]);
-            if ($status === Fault::UNSEEN) {
-                $this->notifyStaff($fault, /* reopen */ true);
-            }
+        $fault = Fault::findOrFail($request['id']);
+        $fault->update([
+            'status' => Fault::getState($status),
+        ]);
+        if ($status === Fault::UNSEEN) {
+            $this->notifyStaff($fault, /* reopen */ true);
         }
 
         return var_export($auth);
@@ -62,14 +62,9 @@ class FaultController extends Controller
 
     public function notifyStaff(Fault $fault, bool $reopen = false)
     {
-        if (config('mail.active')) {
-            $staffs= Role::getUsers(Role::STAFF);
-            foreach ($staffs as $staff) {
-                Mail::to($staff)->queue(new \App\Mail\NewFault(
-                    $staff->name,
-                    $fault,
-                    $reopen));
-            }
+        $staffs = Role::getUsers(Role::STAFF);
+        foreach ($staffs as $staff) {
+            Mail::to($staff)->queue(new \App\Mail\NewFault($staff->name, $fault, $reopen));
         }
     }
 }

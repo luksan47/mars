@@ -21,13 +21,13 @@ return [
 
     'name' => env('APP_NAME', 'Urán'),
 
-    'version' => env('APP_VERSION', '3.4'),
+    'version' => env('APP_VERSION', '3.4.1'),
 
-    'logo_blue_path' => '/img/uran_blue.png',
+    'logo_blue_path' => env('APP_DEBUG', false) ? '/img/mars.png' : '/img/uran_blue.png',
 
-    'logo_white_path'  => '/img/uran_white.png',
+    'logo_white_path'  => env('APP_DEBUG', false) ? '/img/mars.png' : '/img/uran_white.png',
 
-    'logo_with_bg_path'  => '/img/uran_with_bg.png',
+    'logo_with_bg_path'  => env('APP_DEBUG', false) ? '/img/mars.png' : '/img/uran_with_bg.png',
 
     /*
     |--------------------------------------------------------------------------

@@ -53,6 +53,6 @@ class PrintJobPolicy
      */
     public function update(User $user, PrintJob $printJob)
     {
-        return $printJob->user_id == $user->id;
+        return $printJob->user_id === $user->id;
     }
 }

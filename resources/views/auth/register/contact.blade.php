@@ -6,19 +6,6 @@
             @endforeach
           </select>
           <label for="country">@lang('user.country')</label>
-          <script>
-            var instances;
-            $(document).ready(
-              function() {
-                var elems = $('#country');
-                const options = [
-                  @foreach ($countries as $country)
-                  { name : '{{ $country }}',  value : '{{ $country }}' },
-                  @endforeach
-                  ]
-                instances = M.FormSelect.init(elems, options);
-          });
-          </script>
           @error('country')
           <blockquote class="error">{{ $message }}</blockquote>
           @enderror
@@ -53,3 +40,19 @@
         @enderror
     </div>
 </div>
+
+@push('scripts')
+    {{-- TODO: replace with select utils --}}
+    <script>
+        var instances;
+        $(document).ready(function() {
+            var elems = $('#country');
+            const options = [
+            @foreach ($countries as $country)
+                { name : '{{ $country }}',  value : '{{ $country }}' },
+            @endforeach
+            ];
+            instances = M.FormSelect.init(elems, options);
+        });
+    </script>
+@endpush

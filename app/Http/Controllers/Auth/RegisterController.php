@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\EducationalInformation;
 use App\Models\Faculty;
-use App\Http\Controllers\Controller;
 use App\Models\PersonalInformation;
 use App\Models\Role;
 use App\Models\Semester;
@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'user_type' => Role::COLLEGIST,
             'faculties' => Faculty::all(),
             'workshops' => Workshop::all(),
-            'countries' => require base_path('countries.php')
+            'countries' => require base_path('countries.php'),
         ]);
     }
 
@@ -63,7 +63,7 @@ class RegisterController extends Controller
             'user_type' => Role::TENANT,
             'faculties' => Faculty::all(),
             'workshops' => Workshop::all(),
-            'countries' => require base_path('countries.php')
+            'countries' => require base_path('countries.php'),
         ]);
     }
 
@@ -76,32 +76,36 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $common = [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'place_of_birth' => ['required', 'string', 'max:255'],
-            'date_of_birth' => ['required', 'date_format:Y-m-d'],
-            'mothers_name' => ['required', 'string', 'max:255'],
-            'phone_number' => ['required', 'string', 'min:16', 'max:18'],
-            'country' => ['required', 'string', 'max:255'],
-            'county' => ['required', 'string', 'max:255'],
-            'zip_code' => ['required', 'string', 'max:31'],
-            'city' => ['required', 'string', 'max:255'],
-            'street_and_number' => ['required', 'string', 'max:255'],
-            'user_type' => ['required', 'exists:roles,name'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'place_of_birth' => 'required|string|max:255',
+            'date_of_birth' => 'required|date_format:Y-m-d',
+            'mothers_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|min:16|max:18',
+            'country' => 'required|string|max:255',
+            'county' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:31',
+            'city' => 'required|string|max:255',
+            'street_and_number' => 'required|string|max:255',
+            'user_type' => 'required|exists:roles,name',
         ];
         $informationOfStudies = [
-            'year_of_graduation' => ['required', 'integer', 'between:1895,'.date('Y')],
-            'high_school' => ['required', 'string', 'max:255'],
-            'neptun' => ['required', 'string', 'size:6'],
-            'year_of_acceptance' => ['required', 'integer', 'between:1895,'.date('Y')],
-            'faculty' => ['required', 'array', 'exists:faculties,id'],
-            'workshop' => ['required', 'array', 'exists:workshops,id'],
+            'year_of_graduation' => 'required|integer|between:1895,'.date('Y'),
+            'high_school' => 'required|string|max:255',
+            'neptun' => 'required|string|size:6',
+            'year_of_acceptance' => 'required|integer|between:1895,'.date('Y'),
+            'faculty' => 'required|array|exists:faculties,id',
+            'workshop' => 'required|array|exists:workshops,id',
+            'collegist_status' => 'required|integer|between:1,2',
+            'educational_email' => 'required|string|email|max:255|unique:educational_information,email',
         ];
         switch ($data['user_type']) {
             case Role::TENANT:
                 return Validator::make($data, $common);
             case Role::COLLEGIST:
+                $data['educational_email'] = $data['educational_email'].'@student.elte.hu';
+
                 return Validator::make($data, array_merge($common, $informationOfStudies));
             default:
                 throw new AuthorizationException();
@@ -142,7 +146,7 @@ class RegisterController extends Controller
                 $user->roles()->attach(Role::getId(Role::INTERNET_USER));
                 break;
             case Role::COLLEGIST:
-                $user->roles()->attach(Role::getId(Role::COLLEGIST));
+                $user->roles()->attach(Role::getId(Role::COLLEGIST), ['object_id' => $data['collegist_status']]);
                 $user->roles()->attach(Role::getId(Role::PRINTER));
                 $user->roles()->attach(Role::getId(Role::INTERNET_USER));
                 EducationalInformation::create([
@@ -151,6 +155,7 @@ class RegisterController extends Controller
                     'high_school' => $data['high_school'],
                     'neptun' => $data['neptun'],
                     'year_of_acceptance' => $data['year_of_acceptance'],
+                    'email' => $data['educational_email'].'@student.elte.hu',
                 ]);
                 foreach ($data['faculty'] as $key => $faculty) {
                     $user->faculties()->attach($faculty);
@@ -158,7 +163,7 @@ class RegisterController extends Controller
                 foreach ($data['workshop'] as $key => $workshop) {
                     $user->workshops()->attach($workshop);
                 }
-                $user->setStatus(Semester::ACTIVE, "Activated through registration");
+                $user->setStatus(Semester::ACTIVE, 'Activated through registration');
                 break;
             default:
                 throw new AuthorizationException();
@@ -166,9 +171,7 @@ class RegisterController extends Controller
         $user->internetAccess->setWifiUsername();
 
         // Send confirmation mail.
-        if (config('mail.active')) {
-            Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
-        }
+        Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
 
         return $user;
     }

@@ -1,7 +1,7 @@
 //custom color
 $coli: (
-  "blue": #242851,
-  "orange": #b38f2f,
+  "blue": if($isDebug == "true", #5e1a10, #242851),
+  "orange": if($isDebug == "true", #dc3c1c, #b38f2f),
   "lightblue": #6e76e5
 );
 //import and overwrite default colors
@@ -17,11 +17,11 @@ $secondary-color: color("coli", "orange");
 $success-color: color("blue-grey", "lighten-1");
 $link-color: color("coli", "orange");
 
-//import the remaining materialize style 
+//import the remaining materialize style
 //(will include the previous ones also, but it won't overwrite those)
 @import "node_modules/materialize-css/sass/materialize.scss";
 
-//overwrite some materialize classes
+/* overwrite some materialize classes */
 blockquote {
   margin: 20px 0;
   padding-left: 1.5rem;
@@ -36,24 +36,24 @@ blockquote {
 .sidenav .divider {
   margin: 0;
 }
+//enable multiline buttons if the text does not fit in
 .btn,
 .btn-flat {
-  border: $button-border;
-  border-radius: $button-radius;
-  display: inline-block;
-  height: inherit; //was $button-height originally - this enables multiline buttons if the text does not fit in
-  line-height: $button-height;
-  padding: $button-padding;
-  text-transform: uppercase;
-  vertical-align: middle;
-  -webkit-tap-highlight-color: transparent;
+  height: inherit;
 }
 .btn-fixed-height {
   height: $button-height;
 }
+.btn-floating {
+	&.btn-large {
+		height: $button-floating-large-size !important;
+	}
+	&.btn-small {
+		height: $button-floating-small-size !important;
+	}
+}
 
-
-// Settings for dark mode
+/* Settings for dark mode */
 $transition-effects: color 1s ease, background-color 0.5s ease;
 
 body {
@@ -143,6 +143,12 @@ body {
 			textarea{
 				color: #fff;
 			}
+		}
+		a{
+			color:#fff !important;
+		}
+		.black-text{
+			color:#fff !important;
 		}
 	}
 }
