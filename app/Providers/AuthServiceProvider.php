@@ -23,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\User::class => \App\Policies\UserPolicy::class,
         \App\Models\Checkout::class => \App\Policies\CheckoutPolicy::class,
         \App\Models\Transaction::class => \App\Policies\TransactionPolicy::class,
+        \App\Models\Fault::class => \App\Policies\FaultPolicy::class,
     ];
 
     /**
@@ -46,7 +47,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole(Role::SECRETARY);
         });
         Gate::define('document.status-certificate', function ($user) {
-            return $user->isCollegist();
+            return $user->isCollegist() && $user->isActive();
         });
         Gate::define('document.register-statement', function ($user) {
             return $user->isCollegist()
