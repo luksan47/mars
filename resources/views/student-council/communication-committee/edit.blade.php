@@ -14,7 +14,18 @@
     <div class="col s12 l8 push-l2">
         <div class="card">
             <div class="card-content">
+                @if($epistola)
+                <form method="POST" action="{{ route('epistola.delete', ['epistola' => $epistola->id]) }}">
+                    @csrf
+                    <button type="submit" class="btn-floating waves-effect right red" style="margin-right: 10px"><i class="material-icons">delete</i></button>
+                </form>
+                <form method="POST" action="{{ route('epistola.mark_as_sent', ['epistola' => $epistola->id]) }}">
+                    @csrf
+                    <button type="submit" class="btn-floating waves-effect right green" style="margin-right: 10px"><i class="material-icons">mark_email_read</i></button>
+                </form>
+                @endif
                 <div class="card-title">{{ $epistola->title ?? "Új hír"}}</div>
+
                 <form method="POST" action="{{ route('epistola.update_or_create') }}" enctype="multipart/form-data">
                     @csrf
                     @if($epistola)
