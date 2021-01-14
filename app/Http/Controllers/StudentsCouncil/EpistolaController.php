@@ -16,6 +16,7 @@ class EpistolaController extends Controller
 {
     public function index()
     {
+        $this->authorize('view', EpistolaNews::class);
         return view('student-council.communication-committee.epistola', ['news' => EpistolaNews::where('sent', false)->get()->sortBy('valid_until')]);
     }
 
@@ -52,7 +53,7 @@ class EpistolaController extends Controller
             'picture_upload' => 'nullable|image',
             'picture_path' => ['nullable', 'url', function ($attribute, $value, $fail) use ($request) {
                 if ($request->picture_upload != null && $request->picture_path != null)
-                    $fail('Fájl feltöltése és belinkelése együtt nem lehetséges.');
+                    $fail(__('validation.upload_with_link'));
             }]
         ]);
         $validator->validate();

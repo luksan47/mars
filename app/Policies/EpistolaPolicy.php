@@ -10,6 +10,12 @@ class EpistolaPolicy
 {
     use HandlesAuthorization;
 
+    public function view(User $user)
+    {
+        return $user->hasRoleBase(Role::COLLEGIST);
+        //return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['communication-leader', 'communication-member']);
+    }
+
     public function create(User $user)
     {
         return $user->hasRoleBase(Role::COLLEGIST);
