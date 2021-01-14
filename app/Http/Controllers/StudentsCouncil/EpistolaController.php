@@ -16,7 +16,13 @@ class EpistolaController extends Controller
     public function index(Request $request)
     {
         $this->authorize('view', EpistolaNews::class);
-        return view('student-council.communication-committee.epistola', ['news' => EpistolaNews::where('sent', false)->get()->sortBy('valid_until')]);
+        return view(
+            'student-council.communication-committee.app',
+            [
+                'not_sent' => EpistolaNews::where('sent', false)->get()->sortBy('valid_until'),
+                'sent' => EpistolaNews::where('sent', true)->get()->sortBy('valid_until')
+            ]
+        );
     }
 
     public function edit(EpistolaNews $epistola)
@@ -29,6 +35,27 @@ class EpistolaController extends Controller
     {
         $this->authorize('create', EpistolaNews::class);
         return view('student-council.communication-committee.edit', ['epistola' => []]);
+    }
+
+    public function restore(EpistolaNews $epistola)
+    {
+        $this->authorize('edit', EpistolaNews::class);
+        $epistola->update(['sent' => false]);
+        return redirect(route('epistola'))->with('message', __('general.successful_modification'));
+    }
+
+    public function markAsSent(EpistolaNews $epistola)
+    {
+        $this->authorize('edit', EpistolaNews::class);
+        $epistola->update(['sent' => true]);
+        return redirect(route('epistola'))->with('message', __('general.successful_modification'));
+    }
+
+    public function delete(EpistolaNews $epistola)
+    {
+        $this->authorize('edit', EpistolaNews::class);
+        $epistola->delete();
+        return redirect(route('epistola'))->with('message', __('general.successfully_deleted'));
     }
 
     public function updateOrCreate(Request $request)
