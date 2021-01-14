@@ -11,6 +11,8 @@ class EpistolaCollegii extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $epistolas;
+
     /**
      * Create a new message instance.
      *
