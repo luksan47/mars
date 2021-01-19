@@ -22,6 +22,21 @@ class PaymentType extends Model
         self::PRINT,
     ];
 
+    public static function forCheckout($type)
+    {
+        return Cache::remember('paymentTypesFor.'.$type, 86400, function () use ($type) {
+            $payment_types = [self::INCOME, self::EXPENSE];
+            if ($type == Checkout::ADMIN) {
+                $payment_types[] = self::NETREG;
+                $payment_types[] = self::PRINT;
+            } elseif ($type == Checkout::STUDENTS_COUNCIL) {
+                $payment_types[] = self::KKT;
+            }
+
+            return self::whereIn('name', $payment_types)->get();
+        });
+    }
+
     public static function income()
     {
         return self::getFromCache(self::INCOME);
