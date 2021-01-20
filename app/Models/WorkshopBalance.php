@@ -28,13 +28,13 @@ class WorkshopBalance extends Model
     /**
      * Generates all the workshops' allocated balance in the current semester.
      * For all active members in a workshop who payed kkt:
-     *      kkt * (isResident ? 0.6 : 0.45) / member's workshops' count
-    */
+     *      payed kkt * (isResident ? 0.6 : 0.45) / member's workshops' count
+     */
     public static function generateBalances($semester_id)
     {
         $workshops = Workshop::with('users:id')->get();
 
-        if(!self::where('semester_id', $semester_id)->count()) {
+        if (!self::where('semester_id', $semester_id)->count()) {
             $balances = [];
             foreach ($workshops as $workshop) {
                 $balances[] = [
@@ -51,8 +51,7 @@ class WorkshopBalance extends Model
             $q->where('name', Role::COLLEGIST);
         }, 'workshops:id'])->get()->keyBy('id')->all();
 
-        foreach($workshops as $workshop)
-        {
+        foreach ($workshops as $workshop) {
             $balance = 0;
             $resident = 0;
             $extern = 0;
@@ -74,7 +73,6 @@ class WorkshopBalance extends Model
                         $not_yet_paid++;
                     }
                 }
-
             }
             self::where(['semester_id' => $semester_id, 'workshop_id' => $workshop->id])
                 ->update([
