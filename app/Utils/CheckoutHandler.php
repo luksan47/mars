@@ -46,10 +46,14 @@ trait CheckoutHandler
             ->orderBy('part', 'desc')
             ->get()
             ->where('tag', '<=', $current_semester->tag)
-            ->load(['transactions' => function ($query) use ($checkout, $payment_type_ids) {
-                $query->whereIn('payment_type_id', $payment_type_ids);
-                $query->where('checkout_id', $checkout->id);
-            }, 'transactions.type']);
+            ->load([
+                'transactions' => function ($query) use ($checkout, $payment_type_ids) {
+                    $query->whereIn('payment_type_id', $payment_type_ids);
+                    $query->where('checkout_id', $checkout->id);
+                    $query->with('type');
+                },
+                'workshopBalances.workshop',
+            ]);
 
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();

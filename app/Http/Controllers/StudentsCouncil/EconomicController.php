@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Network\InternetController;
 use App\Models\Checkout;
 use App\Models\PaymentType;
-use App\Models\Role;
 use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
@@ -53,11 +52,7 @@ class EconomicController extends Controller
             PaymentType::KKT,
         ];
 
-        $users_has_to_pay_kktnetreg = User::role(Role::COLLEGIST)->isActive()
-            ->whereDoesntHave('transactions_payed', function ($query) use ($payment_types) {
-                $query->where('semester_id', Semester::current()->id);
-                $query->whereIn('payment_type_id', $this->paymenyTypeIDs($payment_types));
-            })->get();
+        $users_has_to_pay_kktnetreg = User::hasToPayKKTNetregInSemester(Semester::current()->id)->get();
 
         $checkoutData = $this->getCurrentCheckout($checkout, $payment_types);
 
@@ -123,6 +118,8 @@ class EconomicController extends Controller
             'moved_to_checkout' => null,
         ]);
 
+        WorkshopBalance::generateBalances(Semester::current()->id);
+
         $new_internet_expire_date = InternetController::extendUsersInternetAccess($payer);
         $internet_expiration_message = null;
         if ($new_internet_expire_date !== null) {
@@ -156,10 +153,10 @@ class EconomicController extends Controller
         );
     }
 
-    public function calculateWorkshopBalance(Semester $semester)
+    public function calculateWorkshopBalance()
     {
         $this->authorize('administrate', Checkout::studentsCouncil());
-        WorkshopBalance::generateBalances();
+        WorkshopBalance::generateBalances(Semester::current()->id);
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
