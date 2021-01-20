@@ -20,7 +20,7 @@ class CreateHomePageNews extends Migration
             $table->integer('user_id')->nullable();
             $table->timestamps();
         });
-        DB::table('home_page_news')->insert(['text' => ""]);
+        DB::table('home_page_news')->insert(['text' => '']);
     }
 
     /**
