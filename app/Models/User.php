@@ -316,7 +316,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /* Semester related getters */
 
-
     /**
      * Returns the semesters where the user has any status.
      */
@@ -334,7 +333,6 @@ class User extends Authenticatable implements HasLocalePreference
             ->wherePivot('status', '=', $status)
             ->withPivot('verified', 'comment');
     }
-
 
     /**
      * Returns the semesters where the user has the given status.
@@ -414,7 +412,6 @@ class User extends Authenticatable implements HasLocalePreference
         $this->setCollegistRole('resident');
     }
 
-
     /**
      * Set the collegist to be extern.
      * Only applies for collegists.
@@ -437,7 +434,6 @@ class User extends Authenticatable implements HasLocalePreference
         }
     }
 
-
     /**
      * Returns the collegist's status in the semester.
      * @param $semester semester id
@@ -446,7 +442,7 @@ class User extends Authenticatable implements HasLocalePreference
     public function getStatusIn($semester): string
     {
         $semesters = $this->allSemesters;
-        if (!$semesters->contains($semester)) {
+        if (! $semesters->contains($semester)) {
             return Semester::INACTIVE;
         }
 
@@ -538,6 +534,7 @@ class User extends Authenticatable implements HasLocalePreference
             ->where('payment_type_id', PaymentType::kkt()->id)
             ->where('semester_id', $semester->id)
             ->get();
+
         return $transaction ? $transaction->amount : 0;
     }
 
@@ -548,7 +545,6 @@ class User extends Authenticatable implements HasLocalePreference
     {
         return $this->payedKKTInSemester(Semester::current());
     }
-
 
     public static function notifications()
     {

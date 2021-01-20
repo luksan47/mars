@@ -76,7 +76,6 @@ trait CheckoutHandler
         $current_balance = $checkout->balance();
         $current_balance_in_checkout = $checkout->balanceInCheckout();
 
-
         return [
             'semesters' => $semesters,
             'current_balance' => $current_balance,
@@ -101,7 +100,7 @@ trait CheckoutHandler
     {
         $this->authorize('addPayment', $checkout);
         $validator = Validator::make($request->all(), [
-            'password' => 'required|in:' . $checkout->password,
+            'password' => 'required|in:'.$checkout->password,
         ]);
         $validator->validate();
 
@@ -132,7 +131,7 @@ trait CheckoutHandler
         $validator = Validator::make($request->all(), [
             'comment' => 'required|string',
             'amount' => 'required|integer',
-            'password' => 'required|in:' . $checkout->password,
+            'password' => 'required|in:'.$checkout->password,
         ]);
         $validator->validate();
 
@@ -179,7 +178,6 @@ trait CheckoutHandler
 
         return $user_transactions_not_in_checkout;
     }
-
 
     /**
      * Converts the paymentType names to the paymentType ids in an array.

@@ -45,7 +45,7 @@ class Checkout extends Model
      */
     public static function admin(): Checkout
     {
-        return Cache::remember('checkout.' . self::ADMIN, 86400, function () {
+        return Cache::remember('checkout.'.self::ADMIN, 86400, function () {
             return self::where('name', self::ADMIN)->firstOrFail();
         });
     }
@@ -55,7 +55,7 @@ class Checkout extends Model
      */
     public static function studentsCouncil(): Checkout
     {
-        return Cache::remember('checkout.' . self::STUDENTS_COUNCIL, 86400, function () {
+        return Cache::remember('checkout.'.self::STUDENTS_COUNCIL, 86400, function () {
             return self::where('name', self::STUDENTS_COUNCIL)->firstOrFail();
         });
     }
