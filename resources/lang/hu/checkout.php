@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'DOMINIK' => 'SZIA DOMINYIIIIIK',
     'EXPENSE' => 'Kiadás',
     'INCOME' => 'Bevétel',
     'KKT' => 'KKT',
