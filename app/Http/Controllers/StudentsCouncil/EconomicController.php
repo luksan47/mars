@@ -33,7 +33,7 @@ class EconomicController extends Controller
             'current_balance_in_checkout' => $checkout->balanceInCheckout(),
             'semesters' => $this->getTransactionsGroupedBySemesters($checkout, $payment_types),
             'checkout' => $checkout,
-            'route_base' => $this->routeBase()
+            'route_base' => $this->routeBase(),
         ]);
 
         if ($redirected) {

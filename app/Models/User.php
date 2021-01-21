@@ -442,7 +442,7 @@ class User extends Authenticatable implements HasLocalePreference
     public function getStatusIn($semester): string
     {
         $semesters = $this->allSemesters;
-        if (!$semesters->contains($semester)) {
+        if (! $semesters->contains($semester)) {
             return Semester::INACTIVE;
         }
 

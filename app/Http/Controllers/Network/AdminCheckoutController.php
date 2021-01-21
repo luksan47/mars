@@ -26,12 +26,13 @@ class AdminCheckoutController extends Controller
             'collected_transactions' => $this->getCollectedTransactions($payment_type_names),
             'semesters' => $this->getTransactionsGroupedBySemesters($checkout, $payment_type_ids),
             'checkout' => $checkout,
-            'route_base' => $this->routeBase()
+            'route_base' => $this->routeBase(),
         ]);
 
         if ($redirected) {
             return $view->with('message', __('general.successfully_added'));
         }
+
         return $view;
     }
 
