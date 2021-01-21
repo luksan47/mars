@@ -4,7 +4,6 @@ namespace App\Utils;
 
 use App\Models\Checkout;
 use App\Models\PaymentType;
-use App\Models\Role;
 use App\Models\Semester;
 use App\Models\Transaction;
 use App\Models\User;
@@ -12,8 +11,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Log;
 
 trait CheckoutHandler
 {
@@ -87,7 +84,7 @@ trait CheckoutHandler
     public function toCheckout(Request $request, array $payment_types)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
         ]);
         $validator->validate();
         $user = User::findOrFail($request->user_id);
