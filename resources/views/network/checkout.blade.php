@@ -21,8 +21,11 @@
                 </blockquote>
             </div>
         </div>
-        @can('addPayment', \App\Models\Checkout::admin())
+        @can('administrate', $checkout)
             <div class="row">
+                <div class="col s12">
+                    @include('utils.checkout.all-gathered-transactions')
+                </div>
                 <div class="col s12 xl6">
                     <div class="card">
                         <div class="card-content">
@@ -47,19 +50,8 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col s12">
-                                        <div class="input-field col s12">
-                                            <input id="password" name="password" type="password" required>
-                                            <label for="password">@lang('checkout.password')</label>
-                                            @error('password')
-                                                <span class="helper-text" data-error="{{ $message }}"></span>
-                                            @enderror
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="center-align">
-                                    <button type="submit" class="btn waves-effect">@lang('print.add')</button>
-                                </div>
+                                <button type="submit" class="btn-floating btn-large waves-effect right"><i class="large material-icons">payments</i></button>
                             </form>
                         </div>
                     </div>

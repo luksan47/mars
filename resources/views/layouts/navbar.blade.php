@@ -109,6 +109,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
 
                 {{-- Sysadmin module --}}
                 <li><div class="divider"></div></li>
@@ -136,23 +137,23 @@
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')
                                 </a>
                             </li>
+                            @endcan
                             <li>
                                 <a class="waves-effect" href="{{ route('routers') }}">
                                     <i class="material-icons left">router</i>@lang('router.router_monitor')
                                     @notification(\App\Models\Router::class)
                                 </a>
                             </li>
-                            @endcan
-
+                            @can('view', \App\Models\Checkout::admin())
                             <li>
-                            <a class="waves-effect" href="{{ route('admin.checkout') }}">
-                                <i class="material-icons left">credit_card</i> @lang('admin.checkout')
-                            </a>
+                                <a class="waves-effect" href="{{ route('admin.checkout') }}">
+                                    <i class="material-icons left">credit_card</i> @lang('admin.checkout')
+                                </a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
-                @endif
              </ul>
         </li>
     @endif

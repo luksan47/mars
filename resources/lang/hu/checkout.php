@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'DOMINIK' => 'SZIA DOMINYIIIIIK',
     'EXPENSE' => 'Kiadás',
     'INCOME' => 'Bevétel',
     'KKT' => 'KKT',
@@ -11,14 +12,16 @@ return [
     'amount' => 'Összeg',
     'checkout' => 'Kassza',
     'collected_by' => 'Átvette',
-    'collecting_kktnetreg_description' => 'Ennyivel tartozol a kassza felé. A kasszába az összeget a bizottsági elnök jelszavával tudod betenni. Ezután már nem lehet törölni a fenti tranzakciókat.',
+    'collecting_kktnetreg_description' => 'Ennyivel tartozol a kassza felé.',
     'current_balance' => 'Aktuális egyenleg',
     'current_balance_in_checkout' => 'Aktuális egyenleg a kasszában',
     'date' => 'Dátum',
     'description' => 'Leírás',
     'details' => 'Részletek',
     'expenses' => 'Kiadások',
-    'gathered_transactions' => 'A begyűjtött tranzakcióim',
+    'my_gathered_transactions' => 'A begyűjtött tranzakcióim',
+    'all_gathered_transactions' => 'Begyűjtött tranzakciók',
+    'all_gathered_transactions_descr' => 'Add a kasszához az alábbi összegeket, ha kifizették neked.',
     'in_checkout' => 'Kasszába került',
     'incomes' => 'Bevételek',
     'kkt' => 'KKT',

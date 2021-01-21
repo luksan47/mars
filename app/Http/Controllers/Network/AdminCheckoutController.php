@@ -12,19 +12,27 @@ class AdminCheckoutController extends Controller
 {
     use CheckoutHandler;
 
-    public function showCheckout()
+    public function showCheckout($redirected = false)
     {
-        $payment_types = [
-            PaymentType::INCOME,
-            PaymentType::EXPENSE,
-            PaymentType::PRINT,
-            PaymentType::NETREG,
-        ];
-        $checkoutData = $this->getCheckout(Checkout::admin(), $payment_types);
-        $user_transactions_not_in_checkout = $this->userTransactionsNotInCheckout($payment_types);
+        $checkout = Checkout::admin();
+        $payment_type_ids = PaymentType::forCheckout($checkout)->pluck('id')->toArray();
+        $payment_type_names = PaymentType::forCheckout($checkout)->pluck('name')->toArray();
+        $this->authorize('view', $checkout);
 
-        return view('network.checkout', $checkoutData)
-            ->with('user_transactions_not_in_checkout', $user_transactions_not_in_checkout);
+        $view = view('network.checkout', [
+            'current_balance' => $checkout->balance(),
+            'current_balance_in_checkout' => $checkout->balanceInCheckout(),
+            'user_transactions_not_in_checkout' => $this->userTransactionsNotInCheckout($payment_type_names),
+            'collected_transactions' => $this->getCollectedTransactions($payment_type_names),
+            'semesters' => $this->getTransactionsGroupedBySemesters($checkout, $payment_type_ids),
+            'checkout' => $checkout,
+            'route_base' => $this->routeBase()
+        ]);
+
+        if ($redirected) {
+            return $view->with('message', __('general.successfully_added'));
+        }
+        return $view;
     }
 
     public function printToCheckout(Request $request)

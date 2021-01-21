@@ -130,7 +130,9 @@ class Role extends Model
     public static function possibleObjectsFor($name)
     {
         if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
-            return Cache::remember('workshop.all', 60 * 60 * 24, Workshop::all());
+            return Cache::remember('workshop.all', 60 * 60 * 24, function () {
+                return Workshop::all();
+            });
         }
         if ($name == self::LOCALE_ADMIN) {
             $locales = array_keys(config('app.locales'));

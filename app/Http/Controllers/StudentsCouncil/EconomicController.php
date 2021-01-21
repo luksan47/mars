@@ -24,16 +24,17 @@ class EconomicController extends Controller
     public function index($redirected = false)
     {
         $checkout = Checkout::studentsCouncil();
+        $payment_types = PaymentType::forCheckout($checkout)->pluck('id')->toArray();
 
-        $payment_types = [
-            PaymentType::INCOME,
-            PaymentType::EXPENSE,
-            PaymentType::KKT,
-        ];
+        $this->authorize('view', $checkout);
 
-        $checkoutData = $this->getCheckout($checkout, $payment_types);
-
-        $view = view('student-council.economic-committee.app', $checkoutData);
+        $view = view('student-council.economic-committee.app', [
+            'current_balance' => $checkout->balance(),
+            'current_balance_in_checkout' => $checkout->balanceInCheckout(),
+            'semesters' => $this->getTransactionsGroupedBySemesters($checkout, $payment_types),
+            'checkout' => $checkout,
+            'route_base' => $this->routeBase()
+        ]);
 
         if ($redirected) {
             return $view->with('message', __('general.successfully_added'));
@@ -46,19 +47,21 @@ class EconomicController extends Controller
     {
         $checkout = Checkout::studentsCouncil();
 
-        $this->authorize('handleAny', $checkout);
+        $this->authorize('addKKTNetreg', Checkout::class);
 
         $payment_types = [
             PaymentType::NETREG,
             PaymentType::KKT,
         ];
 
-        $users_has_to_pay_kktnetreg = User::hasToPayKKTNetregInSemester(Semester::current()->id)->get();
-
-        $checkoutData = $this->getCurrentCheckout($checkout, $payment_types);
-
-        return view('student-council.economic-committee.kktnetreg', $checkoutData)
-            ->with('users', $users_has_to_pay_kktnetreg);
+        return view('student-council.economic-committee.kktnetreg', [
+            'users_not_payed' => User::hasToPayKKTNetregInSemester(Semester::current()->id)->get(),
+            'transactions' => $this->getTransactionsByPaymentTypes($checkout, $payment_types),
+            'user_transactions_not_in_checkout' => $this->userTransactionsNotInCheckout($payment_types),
+            'collected_transactions' => $this->getCollectedTransactions($payment_types),
+            'checkout' => $checkout,
+            'route_base' => $this->routeBase(),
+        ]);
     }
 
     public function indexTransaction()
@@ -67,15 +70,7 @@ class EconomicController extends Controller
 
         $this->authorize('handleAny', $checkout);
 
-        $payment_types = [
-            PaymentType::INCOME,
-            PaymentType::EXPENSE,
-            PaymentType::KKT,
-        ];
-
-        $checkoutData = $this->getCheckout($checkout, $payment_types);
-
-        return view('student-council.economic-committee.transaction', $checkoutData);
+        return view('student-council.economic-committee.transaction');
     }
 
     public function payKKTNetreg(Request $request)
@@ -83,8 +78,7 @@ class EconomicController extends Controller
         $valasztmany_checkout = Checkout::studentsCouncil();
         $admin_checkout = Checkout::admin();
 
-        $this->authorize('addPayment', $valasztmany_checkout);
-        $this->authorize('addPayment', $admin_checkout);
+        $this->authorize('addKKTNetreg', Checkout::class);
 
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer|exists:users,id',
@@ -127,6 +121,7 @@ class EconomicController extends Controller
                 'new_date' => Carbon::parse($new_internet_expire_date)->format('Y-m-d'),
             ]);
         }
+
         Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
 
         return redirect()->back()->with('message', __('general.successfully_added'));
@@ -135,12 +130,17 @@ class EconomicController extends Controller
     public function KKTNetregToCheckout(Request $request)
     {
         $checkout = Checkout::studentsCouncil();
+        $this->authorize('administrate', $checkout);
+        //will change the admin checkout's netregs too!
+
         $payment_types = [
             PaymentType::KKT,
             PaymentType::NETREG,
         ];
 
-        return $this->toCheckout($request, $checkout, $payment_types);
+        $this->toCheckout($request, $payment_types);
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
     public function addTransaction(Request $request)

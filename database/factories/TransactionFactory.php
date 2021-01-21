@@ -28,12 +28,12 @@ class TransactionFactory extends Factory
             'checkout_id' => Checkout::all()->random()->id,
             'semester_id' => \App\Models\Semester::all()->random()->id,
             'payment_type_id' => function (array $attributes) {
-                return PaymentType::forCheckout(Checkout::findOrFail($attributes['checkout_id'])->name)
+                return PaymentType::forCheckout(Checkout::findOrFail($attributes['checkout_id']))
                     ->random();
             },
             'receiver_id' => function (array $attributes) {
                 $payment_type = PaymentType::findOrFail($attributes['payment_type_id']);
-                switch ($payment_type->name){
+                switch ($payment_type->name) {
                     case PaymentType::EXPENSE:
                         return null;
                     case PaymentType::INCOME:
@@ -50,7 +50,7 @@ class TransactionFactory extends Factory
             },
             'payer_id' => function (array $attributes) {
                 $payment_type = PaymentType::findOrFail($attributes['payment_type_id']);
-                switch ($payment_type->name){
+                switch ($payment_type->name) {
                     case PaymentType::EXPENSE:
                         return null;
                     case PaymentType::INCOME:
@@ -67,7 +67,7 @@ class TransactionFactory extends Factory
             },
             'amount' => function (array $attributes) {
                 $payment_type = PaymentType::findOrFail($attributes['payment_type_id']);
-                switch ($payment_type->name){
+                switch ($payment_type->name) {
                     case PaymentType::EXPENSE:
                         return round($this->faker->numberBetween(-100000, -1000), -3);
                     case PaymentType::INCOME:
@@ -83,19 +83,20 @@ class TransactionFactory extends Factory
                 }
             },
             'comment' => $this->faker->sentence,
-            'moved_to_checkout' => (
-                $this->faker->boolean
+            'moved_to_checkout' => ($this->faker->boolean
                 &&  function (array $attributes) {
-                        $payment_type_name = PaymentType::findOrFail($attributes['payment_type_id'])->name;
-                        return in_array($payment_type_name, [PaymentType::KKT, PaymentType::NETREG, PaymentType::PRINT]);}
-                )
+                    $payment_type_name = PaymentType::findOrFail($attributes['payment_type_id'])->name;
+                    return in_array($payment_type_name, [PaymentType::KKT, PaymentType::NETREG, PaymentType::PRINT]);
+                })
                 ?   function (array $attributes) {
-                        return \App\Models\Semester::findOrFail($attributes['semester_id'])
-                            ->getStartDate()->addDays($this->faker->numberBetween(1, 100));}
+                    return \App\Models\Semester::findOrFail($attributes['semester_id'])
+                        ->getStartDate()->addDays($this->faker->numberBetween(1, 100));
+                }
                 :   null, //not in checkout
             'created_at' => function (array $attributes) {
                 return \App\Models\Semester::findOrFail($attributes['semester_id'])
-                    ->getStartDate()->addDays($this->faker->numberBetween(1, 100));}
+                    ->getStartDate()->addDays($this->faker->numberBetween(1, 100));
+            }
         ];
     }
 }

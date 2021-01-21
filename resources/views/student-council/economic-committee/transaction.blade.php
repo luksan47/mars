@@ -19,24 +19,17 @@
                     @csrf
                     <div class="row">
                         <div class="col s12">
-                            <div class="input-field col s12 m4 l4">
+                            <div class="input-field col s12 m6 l6">
                                 <input id="comment" name="comment" type="text" required>
                                 <label for="comment">@lang('checkout.description')</label>
                                 @error('comment')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                                 @enderror
                             </div>
-                            <div class="input-field col s12 m4 l4">
+                            <div class="input-field col s12 m6 l6">
                                 <input id="amount" name="amount" type="number" required>
                                 <label for="amount">@lang('checkout.amount')</label>
                                 @error('amount')
-                                <span class="helper-text" data-error="{{ $message }}"></span>
-                                @enderror
-                            </div>
-                            <div class="input-field col s12 m4 l4">
-                                <input id="password" name="password" type="password" required>
-                                <label for="password">@lang('checkout.password')</label>
-                                @error('password')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                                 @enderror
                             </div>
@@ -46,48 +39,6 @@
                 </form>
             </div>
         </div>
-
-        @foreach($semesters as $semester)
-        @php
-            $transactions = $semester->transactions;
-        @endphp
-            <div class="col s12">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">{{ $semester->tag }}</span>
-                        <table><tbody>
-                            <tr>
-                                <td>@lang('checkout.date')</td>
-                                <td>@lang('checkout.payed_by')</td>
-                                <td>@lang('checkout.collected_by')</td>
-                                <td>@lang('checkout.details')</td>
-                                <td>@lang('checkout.amount')</td>
-                                <td>@lang('checkout.in_checkout')</td>
-                            </tr>
-                                @foreach ($transactions as $transaction)
-                                    <tr>
-                                        <td>{{ $transaction->created_at }}</td>
-                                        <td>
-                                            @if($transaction->payer)
-                                                {{ $transaction->payer->name }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($transaction->receiver)
-                                                {{ $transaction->receiver->name }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{ $transaction->comment ?? $transaction->type->name }}</td>
-                                        <td>{{ $transaction->amount }} Ft</td>
-                                        <td>{{ $transaction->moved_to_checkout ?? '-'}}
-                                    </tr>
-                                @endforeach
-                        </tbody></table>
-                    </div>
-                </div>
-            </div>
-        @endforeach
     </div>
 </div>
 @endsection

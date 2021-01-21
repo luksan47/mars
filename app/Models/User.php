@@ -294,7 +294,7 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
-    public static function collegists(): iterable
+    public static function collegists()
     {
         return Role::getUsers(Role::COLLEGIST);
     }
@@ -442,7 +442,7 @@ class User extends Authenticatable implements HasLocalePreference
     public function getStatusIn($semester): string
     {
         $semesters = $this->allSemesters;
-        if (! $semesters->contains($semester)) {
+        if (!$semesters->contains($semester)) {
             return Semester::INACTIVE;
         }
 
@@ -507,6 +507,11 @@ class User extends Authenticatable implements HasLocalePreference
     public function transactions_payed()
     {
         return $this->hasMany('App\Models\Transaction', 'payer_id');
+    }
+
+    public function transactions_received()
+    {
+        return $this->hasMany('App\Models\Transaction', 'receiver_id');
     }
 
     /**

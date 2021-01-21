@@ -18,18 +18,22 @@
                     @lang('checkout.current_balance_in_checkout'):
                     <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
-                @can('handleAny', \App\Models\Checkout::class)
+
                 <div class="row">
+                    @can('addKKTNetreg', \App\Models\Checkout::class)
                     <div class="col s12 m12 l6 xl6" style="margin-bottom:5px">
                         <a href="{{ route('kktnetreg') }}" class="btn waves-effect" style="width:100%">
                             @lang('checkout.pay_kktnetreg')</a>
                     </div>
+                    @endcan
+                    @can('administrate', $checkout)
                     <div class="col s12 m12 l6 xl6" style="margin-bottom:5px">
                         <a href="{{ route('economic_committee.transaction') }}" class="btn waves-effect" style="width:100%">
                             @lang('checkout.other_transaction')</a>
                     </div>
+                    @endcan
                 </div>
-                @endcan
+
             </div>
         </div>
     </div>
