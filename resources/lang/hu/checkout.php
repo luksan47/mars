@@ -7,7 +7,7 @@ return [
     'KKT' => 'KKT',
     'NETREG' => 'NetReg',
     'PRINT' => 'Nyomtatás',
-    'add_transaction_descr' => 'A tranzakció meg fog jelenni a statisztikában, és nem visszavonható. A bizottsági elnök jelszava szükséges, mivel a tranzakció közvetlenül a kasszába kerül.',
+    'add_transaction_descr' => 'A tranzakció nyilvános és nem visszavonható.',
     'allocated_balance' => 'Kiosztott egyenleg',
     'amount' => 'Összeg',
     'checkout' => 'Kassza',
