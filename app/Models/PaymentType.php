@@ -22,14 +22,26 @@ class PaymentType extends Model
         self::PRINT,
     ];
 
-    public static function forCheckout($type)
+    /**
+     * Get the payment types belonging to a checkout.
+     * INCOME and EXPENSE belong to all checkout.
+     *
+     * Other, special types:
+     * ADMIN:            NETREG, PRINT
+     * STUDENTS_COUNCIL: KKT
+     *
+     * Uses cache.
+     * @param Checkout
+     * @return iterable collection of the payment types.
+     */
+    public static function forCheckout(Checkout $checkout): iterable
     {
-        return Cache::remember('paymentTypesFor.'.$type, 86400, function () use ($type) {
+        return Cache::remember('paymentTypesFor.'.$checkout, 86400, function () use ($checkout) {
             $payment_types = [self::INCOME, self::EXPENSE];
-            if ($type == Checkout::ADMIN) {
+            if ($checkout == Checkout::ADMIN) {
                 $payment_types[] = self::NETREG;
                 $payment_types[] = self::PRINT;
-            } elseif ($type == Checkout::STUDENTS_COUNCIL) {
+            } elseif ($checkout == Checkout::STUDENTS_COUNCIL) {
                 $payment_types[] = self::KKT;
             }
 
@@ -37,39 +49,49 @@ class PaymentType extends Model
         });
     }
 
-    public static function income()
+    public static function income(): PaymentType
     {
         return self::getFromCache(self::INCOME);
     }
 
-    public static function expense()
+    public static function expense(): PaymentType
     {
         return self::getFromCache(self::EXPENSE);
     }
 
-    public static function kkt()
+    public static function kkt(): PaymentType
     {
         return self::getFromCache(self::KKT);
     }
 
-    public static function netreg()
+    public static function netreg(): PaymentType
     {
         return self::getFromCache(self::NETREG);
     }
 
-    public static function print()
+    public static function print(): PaymentType
     {
         return self::getFromCache(self::PRINT);
     }
 
-    public static function getFromCache($type)
+    /**
+     * Get the paymentType by name. Uses cache.
+     * @param string payment type name
+     * @return PaymentType
+     */
+    public static function getFromCache(string $type): PaymentType
     {
         return Cache::remember('paymentType.'.$type, 86400, function () use ($type) {
             return self::where('name', $type)->firstOrFail();
         });
     }
 
-    public static function getByName(string $name)
+    /**
+     * Get the paymentType by name. Uses cache.
+     * @param string payment type name
+     * @return PaymentType
+     */
+    public static function getByName(string $name): PaymentType
     {
         return self::getFromCache($name);
     }

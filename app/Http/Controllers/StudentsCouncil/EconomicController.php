@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\WorkshopBalance;
 use App\Utils\CheckoutHandler;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -94,8 +95,7 @@ class EconomicController extends Controller
 
         $payer = User::findOrFail($request->user_id);
 
-        // Creating transactions even if amount is 0.
-        // Paying 0 means that the user payed their netreg+kkt depts (which is 0 in this case).
+        // Creating transactions
         $kkt = Transaction::create([
             'checkout_id' => $valasztmany_checkout->id,
             'receiver_id' => Auth::user()->id,
@@ -124,7 +124,7 @@ class EconomicController extends Controller
         $internet_expiration_message = null;
         if ($new_internet_expire_date !== null) {
             $internet_expiration_message = __('internet.expiration_extended', [
-                'new_date' => $new_internet_expire_date->format('Y-m-d'),
+                'new_date' => Carbon::parse($new_internet_expire_date)->format('Y-m-d'),
             ]);
         }
         Mail::to($payer)->queue(new \App\Mail\PayedTransaction($payer->name, [$kkt, $netreg], $internet_expiration_message));
@@ -149,7 +149,8 @@ class EconomicController extends Controller
         $this->createTransaction($request, $checkout);
 
         return redirect()->action(
-            [EconomicController::class, 'index'], ['redirected' => true]
+            [EconomicController::class, 'index'],
+            ['redirected' => true]
         );
     }
 
