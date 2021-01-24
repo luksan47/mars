@@ -74,7 +74,6 @@ class UserController extends Controller
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
     
-	public function updatemMothersName(Request $request)
     {
         $user = Auth::user();
 

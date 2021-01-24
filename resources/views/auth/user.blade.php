@@ -20,7 +20,7 @@
             </div>
         </div>
         {{-- Personal information --}}
-        @include('user.personal-information', ['user' => $user, 'modifiable_email' => true, 'modifiable_phone' => true])
+        @include('user.personal-information', ['user' => $user, 'modifiable_email' => true, 'modifiable_phone' => true, 'modifiable_mothers_name'=> true])
         {{-- Educational information --}}
         @include('user.educational-information', ['user' => $user])
 

@@ -87,8 +87,8 @@
                                     <button id="mothers_name_send_btn" class="btn-floating right waves-effect waves-light hide"
                                         type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
-                                    <a id="mothers_name_btn" class="btn-floating right waves-effect waves-light"
-                                        onclick="mothers_name_editor()" style="margin-top:10px">
+                                    <a id="mothers_name_edit_btn" class="btn-floating right waves-effect waves-light"
+                                        onclick=mothers_name_editor() style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                 </form>
                             @else
@@ -129,5 +129,13 @@
             document.getElementById('email_edit_btn').classList.add('hide');
             document.getElementById('email_send_btn').classList.remove('hide');
         }
+        function mothers_name_editor()
+			document.getElementById('mothers_name').disabled=false;
+            document.getElementById('mothers_name').value="";
+            document.getElementById('mothers_name').focus();
+            document.getElementById('mothers_name_edit_btn').classList.add('hide');
+            document.getElementById('mothers_name_send_btn').classList.remove('hide');
+        
+        {
     </script>
 @endpush
