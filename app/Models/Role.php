@@ -223,9 +223,9 @@ class Role extends Model
      * Create a collection with id and name of the items in an array.
      * The ids starts at 1.
      * @param array $items the items in the array will be the name attributes
-     * @return iterable collection
+     * @return collection
      */
-    private static function toSelectableCollection(array $items): iterable
+    private static function toSelectableCollection(array $items)
     {
         $objects = [];
         $id = 1;

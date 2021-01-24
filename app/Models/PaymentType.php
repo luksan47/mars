@@ -32,6 +32,7 @@ class PaymentType extends Model
      *
      * Uses cache.
      * @param Checkout
+     * @return collection of the payment types.
      */
     public static function forCheckout(Checkout $checkout)
     {
