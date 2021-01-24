@@ -29,8 +29,6 @@ return [
     'my_gathered_transactions' => 'My gathered transactions',
     'netreg' => 'Netreg',
     'new_transaction' => 'New transaction',
-    'other_transaction' => 'Other expense or income',
-    'password' => 'Checkout\'s password',
     'pay' => 'Payment',
     'pay_kkt_descr' => 'If someone pays you the KKT/Netreg, you should add it here. Only collegists with active status can be selected who did not payed. <br>The collegists will be notified by email and their internet access will be extended automatically.',
     'pay_kktnetreg' => 'Pay KKT and Netreg',

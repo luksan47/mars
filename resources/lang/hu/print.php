@@ -58,6 +58,7 @@ return [
     'spent_free_pages' => 'Felhasznált ingyenes oldalak',
     'state' => 'Állapot',
     'success' => 'Sikeres nyomtatás',
+    'transaction_descr' => 'A tranzakció az admin kasszába fog kerülni.',
     'transfer_money' => 'Felhasználható egyenleg utalása',
     'twosided' => 'Kétoldalas nyomtatás',
     'upload_money' => 'Pénzt feltölteni a rendszergazdáknál tudsz.',
