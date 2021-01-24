@@ -37,6 +37,9 @@ class AdminCheckoutController extends Controller
 
     public function printToCheckout(Request $request)
     {
+        $checkout = Checkout::admin();
+        $this->authorize('administrate', $checkout);
+
         $payment_types = [
             PaymentType::PRINT,
         ];
