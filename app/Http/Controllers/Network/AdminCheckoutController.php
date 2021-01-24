@@ -7,7 +7,6 @@ use App\Models\Checkout;
 use App\Models\PaymentType;
 use App\Utils\CheckoutHandler;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class AdminCheckoutController extends Controller
 {

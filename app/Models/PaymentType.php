@@ -35,7 +35,7 @@ class PaymentType extends Model
      */
     public static function forCheckout(Checkout $checkout)
     {
-        return Cache::remember('paymentTypesFor.' . $checkout, 86400, function () use ($checkout) {
+        return Cache::remember('paymentTypesFor.'.$checkout, 86400, function () use ($checkout) {
             $payment_types = [self::INCOME, self::EXPENSE];
             if ($checkout->name == Checkout::ADMIN) {
                 $payment_types[] = self::NETREG;
@@ -80,7 +80,7 @@ class PaymentType extends Model
      */
     public static function getFromCache(string $type): PaymentType
     {
-        return Cache::remember('paymentType.' . $type, 86400, function () use ($type) {
+        return Cache::remember('paymentType.'.$type, 86400, function () use ($type) {
             return self::where('name', $type)->firstOrFail();
         });
     }
