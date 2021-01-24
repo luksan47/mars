@@ -64,15 +64,6 @@ class EconomicController extends Controller
         ]);
     }
 
-    public function indexTransaction()
-    {
-        $checkout = Checkout::studentsCouncil();
-
-        $this->authorize('handleAny', $checkout);
-
-        return view('student-council.economic-committee.transaction');
-    }
-
     public function payKKTNetreg(Request $request)
     {
         $valasztmany_checkout = Checkout::studentsCouncil();

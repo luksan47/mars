@@ -2,10 +2,13 @@
 
 namespace App\Policies;
 
+use App\Models\Checkout;
+use App\Models\PaymentType;
 use App\Models\Role;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Log;
 
 class TransactionPolicy
 {
@@ -18,6 +21,24 @@ class TransactionPolicy
             return false;
         }
 
-        return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['economic-member', 'economic-leader']);
+        //print transaction should not be deleted as deleting won't change the user's print balance
+        if ($transaction->type->name == PaymentType::PRINT) {
+            return false;
+        }
+
+        if ($transaction->receiver->id != $user->id) {
+            //TODO return true for checkout handlers (we do not use that now)
+            return false;
+        }
+
+        if ($transaction->checkout->name == Checkout::admin()->name) {
+            return $user->hasRole(Role::NETWORK_ADMIN);
+        }
+
+        if ($transaction->checkout->name == Checkout::studentsCouncil()->name) {
+            return $user->hasRoleWithObjectNames(Role::STUDENT_COUNCIL, ['economic-member', 'economic-leader']);
+        }
+
+        return false;
     }
 }

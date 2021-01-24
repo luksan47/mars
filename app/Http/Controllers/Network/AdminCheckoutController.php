@@ -7,6 +7,7 @@ use App\Models\Checkout;
 use App\Models\PaymentType;
 use App\Utils\CheckoutHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AdminCheckoutController extends Controller
 {
@@ -15,16 +16,15 @@ class AdminCheckoutController extends Controller
     public function showCheckout($redirected = false)
     {
         $checkout = Checkout::admin();
-        $payment_type_ids = PaymentType::forCheckout($checkout)->pluck('id')->toArray();
-        $payment_type_names = PaymentType::forCheckout($checkout)->pluck('name')->toArray();
+        $payment_types = PaymentType::forCheckout($checkout)->pluck('id')->toArray();
         $this->authorize('view', $checkout);
 
         $view = view('network.checkout', [
             'current_balance' => $checkout->balance(),
             'current_balance_in_checkout' => $checkout->balanceInCheckout(),
-            'user_transactions_not_in_checkout' => $this->userTransactionsNotInCheckout($payment_type_names),
-            'collected_transactions' => $this->getCollectedTransactions($payment_type_names),
-            'semesters' => $this->getTransactionsGroupedBySemesters($checkout, $payment_type_ids),
+            'user_transactions_not_in_checkout' => $this->userTransactionsNotInCheckout([PaymentType::PRINT]),
+            'collected_transactions' => $this->getCollectedTransactions([PaymentType::PRINT]),
+            'semesters' => $this->getTransactionsGroupedBySemesters($checkout, $payment_types),
             'checkout' => $checkout,
             'route_base' => $this->routeBase(),
         ]);
@@ -38,12 +38,13 @@ class AdminCheckoutController extends Controller
 
     public function printToCheckout(Request $request)
     {
-        $checkout = Checkout::admin();
         $payment_types = [
             PaymentType::PRINT,
         ];
 
-        return $this->toCheckout($request, $checkout, $payment_types);
+        $this->toCheckout($request, $payment_types);
+
+        return redirect()->back()->with('message', __('general.successfully_added'));
     }
 
     public function addTransaction(Request $request)

@@ -16,10 +16,12 @@
                     </td>
                     <td>{{ $transaction->amount }} Ft</td>
                     <td>
+                        @can('delete', $transaction)
                         <a href="{{ route($route_base . '.transaction.delete', ['transaction' => $transaction->id]) }}"
                             class="btn-floating waves-effect right red">
                             <i class="material-icons">delete</i>
                         </a>
+                        @endcan
                     </td>
                 </tr>
                 @endforeach
