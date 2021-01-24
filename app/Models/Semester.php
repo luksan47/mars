@@ -54,7 +54,7 @@ class Semester extends Model
     /**
      * Returns the existing semesters until the current one (included).
      */
-    public static function allUntilCurrent(): iterable
+    public static function allUntilCurrent()
     {
         return Semester::all()->filter(function ($value, $key) {
             return $value->getStartDate() < Carbon::now();

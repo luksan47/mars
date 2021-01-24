@@ -130,7 +130,9 @@ class Role extends Model
     public static function possibleObjectsFor($name)
     {
         if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
-            return Cache::remember('workshop.all', 60 * 60 * 24, Workshop::all());
+            return Cache::remember('workshop.all', 60 * 60 * 24, function () {
+                return Workshop::all();
+            });
         }
         if ($name == self::LOCALE_ADMIN) {
             $locales = array_keys(config('app.locales'));
@@ -221,9 +223,9 @@ class Role extends Model
      * Create a collection with id and name of the items in an array.
      * The ids starts at 1.
      * @param array $items the items in the array will be the name attributes
-     * @return iterable collection
+     * @return collection
      */
-    private static function toSelectableCollection(array $items): iterable
+    private static function toSelectableCollection(array $items)
     {
         $objects = [];
         $id = 1;

@@ -294,7 +294,7 @@ class User extends Authenticatable implements HasLocalePreference
         return false;
     }
 
-    public static function collegists(): iterable
+    public static function collegists()
     {
         return Role::getUsers(Role::COLLEGIST);
     }

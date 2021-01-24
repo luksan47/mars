@@ -32,9 +32,9 @@ class PaymentType extends Model
      *
      * Uses cache.
      * @param Checkout
-     * @return iterable collection of the payment types.
+     * @return collection of the payment types.
      */
-    public static function forCheckout(Checkout $checkout): iterable
+    public static function forCheckout(Checkout $checkout)
     {
         return Cache::remember('paymentTypesFor.'.$checkout, 86400, function () use ($checkout) {
             $payment_types = [self::INCOME, self::EXPENSE];
