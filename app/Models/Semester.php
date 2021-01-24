@@ -54,7 +54,7 @@ class Semester extends Model
     /**
      * Returns the existing semesters until the current one (included).
      */
-    public static function allUntilCurrent(): iterable
+    public static function allUntilCurrent()
     {
         return Semester::all()->filter(function ($value, $key) {
             return $value->getStartDate() < Carbon::now();
@@ -67,7 +67,7 @@ class Semester extends Model
      */
     public function getTagAttribute(): string
     {
-        return $this->year.self::SEPARATOR.($this->year + 1).self::SEPARATOR.$this->part;
+        return $this->year . self::SEPARATOR . ($this->year + 1) . self::SEPARATOR . $this->part;
     }
 
     /**
@@ -85,7 +85,7 @@ class Semester extends Model
      */
     public function datesToText(): string
     {
-        return $this->getStartDate()->format('Y.m.d').'-'.$this->getEndDate()->format('Y.m.d');
+        return $this->getStartDate()->format('Y.m.d') . '-' . $this->getEndDate()->format('Y.m.d');
     }
 
     public function isAutumn(): bool
@@ -202,7 +202,7 @@ class Semester extends Model
     public static function current(): Semester
     {
         $today = Carbon::today()->format('Ymd');
-        if (! Cache::get('semester.current.'.$today)) {
+        if (!Cache::get('semester.current.' . $today)) {
             $now = Carbon::now();
             if ($now->month >= self::START_OF_SPRING_SEMESTER && $now->month <= self::END_OF_SPRING_SEMESTER) {
                 $part = 2;
@@ -214,10 +214,10 @@ class Semester extends Model
             }
             $current = Semester::getOrCreate($year, $part);
 
-            Cache::put('semester.current.'.$today, $current, Carbon::tomorrow());
+            Cache::put('semester.current.' . $today, $current, Carbon::tomorrow());
         }
 
-        return Cache::get('semester.current.'.$today);
+        return Cache::get('semester.current.' . $today);
     }
 
     /**
@@ -284,7 +284,7 @@ class Semester extends Model
      */
     public static function getOrCreate($year, $part): Semester
     {
-        if (! in_array($part, [1, 2])) {
+        if (!in_array($part, [1, 2])) {
             throw new InvalidArgumentException("The semester's part is not 1 or 2.");
         }
         $semester = Semester::firstOrCreate([
