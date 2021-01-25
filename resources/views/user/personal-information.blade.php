@@ -95,7 +95,7 @@
                                         <input id="date_of_birth" type="text" name="date_of_birth" size="30" 
                                             @if(!($errors->has('date_of_birth'))) disabled @endif
                                             style="margin:0" class="datepicker validate @error('date_of_birth') invalid @enderror"
-											value="{{ old('date_of_birth') }}" required onfocus="M.Datepicker.getInstance(date_of_birth).open();">
+											value="{{ old('date_of_birth', $user->personalInformation->date_of_birth) }}" required onfocus="M.Datepicker.getInstance(date_of_birth).open();">
                                         @error('date_of_birth')
                                         <span class="helper-text" data-error="{{ $message }}"></span>
                                         @enderror
@@ -122,7 +122,7 @@
                                         <input id="mothers_name" type="text" name="mothers_name" size="30" 
                                             @if(!($errors->has('mothers_name'))) disabled @endif 
 											style="margin:0" class="validate black-text @error('mothers_name') invalid @enderror"
-											value="{{ old('mothers_name', $user->mothers_name) }}" required>
+											value="{{ old('mothers_name', $user->personalInformation->mothers_name) }}" required>
 										@error('mothers_name')
 										<span class="helper-text" data-error="{{ $message }}"></span>
 										@enderror
