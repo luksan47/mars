@@ -52,14 +52,20 @@ class Role extends Model
         return $this->belongsToMany(User::class, 'role_users')->withPivot('object_id');
     }
 
-    public function name()
+    /**
+     * @return string the translated role
+     */
+    public function name(): string
     {
-        return __('role.'.$this->name);
+        return __('role.' . $this->name);
     }
 
+    /**
+     * Returns the object (with id and name) of the role or null if the role does not have.
+     */
     public function object()
     {
-        if (! $this->canHaveObject()) {
+        if (!$this->canHaveObject()) {
             return null;
         }
 
@@ -83,34 +89,53 @@ class Role extends Model
         return self::where('name', $roleName)->first()->id;
     }
 
-    public function canHaveObject()
+    /**
+     * Returns if the role can have objects
+     */
+    public function canHaveObject(): bool
     {
         return self::canHaveObjectFor($this->name);
     }
 
-    public static function canHaveObjectFor($name)
+    /**
+     * Returns if the role can have objects
+     * @return string object name
+     */
+    public static function canHaveObjectFor($name): bool
     {
         // TODO: PERMISSION_HANDLER could also be there
-        return in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::LOCALE_ADMIN, self::STUDENT_COUNCIL, self::COLLEGIST]);
+        return in_array($name, [
+            self::WORKSHOP_ADMINISTRATOR,
+            self::WORKSHOP_LEADER,
+            self::LOCALE_ADMIN,
+            self::STUDENT_COUNCIL,
+            self::COLLEGIST
+        ]);
     }
 
+    /**
+     * Returns the collection of the possible object for the role.
+     * @return collection of the objects with id (starting from 1, except workshops?) and name.
+     */
     public function possibleObjects()
     {
         return self::possibleObjectsFor($this->name);
     }
 
+    /**
+     * Returns the collection of the possible object for a role.
+     * @param string $name the role's name
+     * @return collection of the objects with id (starting from 1, except workshops?) and name.
+     */
     public static function possibleObjectsFor($name)
     {
         if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
-            if (! Cache::get('workshop.all')) {
-                Cache::put('workshop.all', Workshop::all(), 60);
-            }
-
-            return Cache::get('workshop.all');
+            return Cache::remember('workshop.all', 60 * 60 * 24, function () {
+                return Workshop::all();
+            });
         }
         if ($name == self::LOCALE_ADMIN) {
-            // Do we have this somewhere?
-            $locales = ['hu', 'en', 'la', 'fr', 'it', 'de', 'sp', 'gr'];
+            $locales = array_keys(config('app.locales'));
 
             return self::toSelectableCollection($locales);
         }
@@ -184,16 +209,22 @@ class Role extends Model
         }
     }
 
-    public function hasElevatedPermissions()
+    public function hasElevatedPermissions(): bool
     {
         return in_array($this->name, [self::PRINT_ADMIN, self::NETWORK_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
     }
 
-    public function hasTranslatedName()
+    public function hasTranslatedName(): bool
     {
         return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER]);
     }
 
+    /**
+     * Create a collection with id and name of the items in an array.
+     * The ids starts at 1.
+     * @param array $items the items in the array will be the name attributes
+     * @return collection
+     */
     private static function toSelectableCollection(array $items)
     {
         $objects = [];
@@ -207,6 +238,6 @@ class Role extends Model
 
     public function isSysAdmin()
     {
-        return in_array($this->name, [self::INTERNET_ADMIN]);
+        return in_array($this->name, [self::NETWORK_ADMIN]);
     }
 }

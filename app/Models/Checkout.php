@@ -22,48 +22,60 @@ class Checkout extends Model
         return $this->hasMany('App\Models\Transaction');
     }
 
-    public function balance()
+    /**
+     * @return int the sum of the transactions
+     */
+    public function balance(): int
     {
         return $this->transactions->sum('amount');
     }
 
-    public function balanceInCheckout()
+    /**
+     * @return int the sum of the transactions which are not moved to the checkout
+     */
+    public function balanceInCheckout(): int
     {
         return $this->transactions
             ->where('moved_to_checkout', '<>', null)
             ->sum('amount');
     }
 
-    public static function admin()
+    /**
+     * @return Checkout the admin checkout from cache
+     */
+    public static function admin(): Checkout
     {
         return Cache::remember('checkout.'.self::ADMIN, 86400, function () {
             return self::where('name', self::ADMIN)->firstOrFail();
         });
     }
 
-    public static function studentsCouncil()
+    /**
+     * @return Checkout the student council's checkout from cache
+     */
+    public static function studentsCouncil(): Checkout
     {
         return Cache::remember('checkout.'.self::STUDENTS_COUNCIL, 86400, function () {
             return self::where('name', self::STUDENTS_COUNCIL)->firstOrFail();
         });
     }
 
-    public function kktSum(Semester $semester)
+    public function kktSum(Semester $semester): int
     {
         return $this->transactionSum($semester, PaymentType::kkt()->id);
     }
 
-    public function netregSum(Semester $semester)
+    public function netregSum(Semester $semester): int
     {
         return $this->transactionSum($semester, PaymentType::netreg()->id);
     }
 
-    public function printSum(Semester $semester)
+    public function printSum(Semester $semester): int
     {
         return $this->transactionSum($semester, PaymentType::print()->id);
     }
 
-    public function transactionSum(Semester $semester, $typeId)
+    public function transactionSum(Semester $semester, $typeId): int
     {
         return $this->transactions
             ->where('payment_type_id', $typeId)
