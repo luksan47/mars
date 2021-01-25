@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function welcome()
     {
         if (Auth::user()) {
-            return view('home', ['information' => DB::table('home_page_news')->first()->text]);
+            return redirect('home');
         }
 
         return view('welcome');
@@ -47,7 +47,7 @@ class HomeController extends Controller
             ]);
             return redirect()->back()->with('message', __('general.successful_modification'));
         }
-        abort(401);
+        abort(403);
     }
 
     public function verification()
