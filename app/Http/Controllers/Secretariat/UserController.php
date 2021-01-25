@@ -73,7 +73,7 @@ class UserController extends Controller
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
-    
+    public function updateMothersName(Request $request)
     {
         $user = Auth::user();
 
@@ -90,6 +90,52 @@ class UserController extends Controller
 
             $user->personalInformation->update([
                 'mothers_name' => $request->mothers_name,
+            ]);
+        }
+
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+    public function updatePlaceOfBirth(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->hasPersonalInformation()) {
+            $validator = Validator::make($request->all(), [
+                'place_of_birth' => 'required|string|max:225',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $user->personalInformation->update([
+                'place_of_birth' => $request->place_of_birth,
+            ]);
+        }
+
+
+        return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+    public function updateDateOfBirth(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->hasPersonalInformation()) {
+            $validator = Validator::make($request->all(), [
+                'date_of_birth' => 'required|string|max:225',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $user->personalInformation->update([
+                'date_of_birth' => $request->date_of_birth,
             ]);
         }
 

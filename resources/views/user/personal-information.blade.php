@@ -66,7 +66,50 @@
                     <tr>
                         <th scope="row">@lang('user.place_and_date_of_birth')</th>
                         <td>
-                            {{ $user->personalInformation->place_of_birth }},  {{ $user->personalInformation->date_of_birth }}
+							@if($modifiable_place_of_birth ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update_place_of_birth') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="place_of_birth" type="text" name="place_of_birth" size="30" 
+                                            @if(!($errors->has('place_of_birth'))) disabled @endif 
+                                            style="margin:0" class="validate black-text @error('place_of_birth') invalid @enderror"
+                                            value="{{ old('place_of_birth', $user->personalInformation->place_of_birth ) }}" required>
+                                        @error('place_of_birth')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
+                                    </div>
+                                    <button id="place_of_birth_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="place_of_birth_edit_btn" class="btn-floating right waves-effect waves-light"
+                                        onclick="place_of_birth_editor()" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+							@else
+								{{ $user->personalInformation->place_of_birth }}
+							@endif
+							@if($modifiable_date_of_birth ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update_date_of_birth') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="date_of_birth" type="text" name="date_of_birth" size="30" 
+                                            @if(!($errors->has('date_of_birth'))) disabled @endif
+                                            style="margin:0" class="datepicker validate @error('date_of_birth') invalid @enderror"
+											value="{{ old('date_of_birth') }}" required onfocus="M.Datepicker.getInstance(date_of_birth).open();">
+                                        @error('date_of_birth')
+                                        <span class="helper-text" data-error="{{ $message }}"></span>
+                                        @enderror
+                                    </div>
+                                    <button id="date_of_birth_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="date_of_birth_edit_btn" class="btn-floating right waves-effect waves-light"
+                                        onclick="date_of_birth_editor()" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+							@else
+								{{ $user->personalInformation->date_of_birth }}
+							@endif
                         </td>
                     </tr>
                     <tr>
@@ -76,23 +119,23 @@
                                 <form method="POST" action="{{ route('secretariat.user.update_mothers_name') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="mothers_name" type="mothers_name" name="mothers_name" size="30" 
+                                        <input id="mothers_name" type="text" name="mothers_name" size="30" 
                                             @if(!($errors->has('mothers_name'))) disabled @endif 
-											style="margin:0" value="{{ old('mothers_name', $user->mothers_name) }}" required 
-											class="validate black-text @error('mothers_name') invalid @enderror">
-										@error('email')
-                                       <span class="helper-text" data-error="{{ $message }}"></span>
-                                    @enderror
+											style="margin:0" class="validate black-text @error('mothers_name') invalid @enderror"
+											value="{{ old('mothers_name', $user->mothers_name) }}" required>
+										@error('mothers_name')
+										<span class="helper-text" data-error="{{ $message }}"></span>
+										@enderror
                                     </div>
                                     <button id="mothers_name_send_btn" class="btn-floating right waves-effect waves-light hide"
                                         type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
                                     <a id="mothers_name_edit_btn" class="btn-floating right waves-effect waves-light"
-                                        onclick=mothers_name_editor() style="margin-top:10px">
+                                        onclick="mothers_name_editor()" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                 </form>
                             @else
-                            {{ $user->personalInformation->mothers_name }}
+								{{ $user->personalInformation->mothers_name }}
                             @endif
                             
                         </td>
@@ -113,7 +156,7 @@
 </div>
 @endcan
 
-@push('name')
+@push('scripts')
     <script>
         function phone_editor(){
             document.getElementById('phone_number').disabled=false;
@@ -129,13 +172,35 @@
             document.getElementById('email_edit_btn').classList.add('hide');
             document.getElementById('email_send_btn').classList.remove('hide');
         }
-        function mothers_name_editor()
+        function mothers_name_editor(){
 			document.getElementById('mothers_name').disabled=false;
             document.getElementById('mothers_name').value="";
             document.getElementById('mothers_name').focus();
             document.getElementById('mothers_name_edit_btn').classList.add('hide');
             document.getElementById('mothers_name_send_btn').classList.remove('hide');
-        
-        {
+		}
+		function place_of_birth_editor(){
+			document.getElementById('place_of_birth').disabled=false;
+            document.getElementById('place_of_birth').value="";
+            document.getElementById('place_of_birth').focus();
+            document.getElementById('place_of_birth_edit_btn').classList.add('hide');
+            document.getElementById('place_of_birth_send_btn').classList.remove('hide');
+		}
+		function date_of_birth_editor(){
+			document.getElementById('date_of_birth').disabled=false;
+            document.getElementById('date_of_birth').value="";
+            document.getElementById('date_of_birth').focus();
+            document.getElementById('date_of_birth_edit_btn').classList.add('hide');
+            document.getElementById('date_of_birth_send_btn').classList.remove('hide');
+		}
+		$(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                firstDay: 1,
+                yearRange: 50,
+                maxDate: new Date(),
+            });
+        });
+		
     </script>
 @endpush
