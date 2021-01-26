@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/asd', function () {
-    return response()->json(User::CommitteeLeader("asd"));
+    return response()->json(User::CommitteeLeader('asd'));
 });
 
 Route::get('/', [HomeController::class, 'welcome'])->name('index');

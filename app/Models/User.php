@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
-use phpDocumentor\Reflection\Types\Null_;
 
 class User extends Authenticatable implements HasLocalePreference
 {
@@ -332,17 +331,17 @@ class User extends Authenticatable implements HasLocalePreference
         })->first();
     }
 
-
     /**
      * @param string $roleObjectName the object name of a Student Council role
      * @return User|null the director
      */
     public static function CommitteeLeader($roleObjectName)
     {
-        if (!in_array($roleObjectName, Role::COMMITTEE_LEADERS)) 
-            throw new InvalidArgumentException($roleObjectName ." should be one of these: ". implode(", ",Role::COMMITTEE_LEADERS));
+        if (! in_array($roleObjectName, Role::COMMITTEE_LEADERS)) {
+            throw new InvalidArgumentException($roleObjectName.' should be one of these: '.implode(', ', Role::COMMITTEE_LEADERS));
+        }
 
-        return User::whereHas('roles', function ($q) use($roleObjectName){
+        return User::whereHas('roles', function ($q) use ($roleObjectName) {
             $q->where('role_id', Role::getId(Role::STUDENT_COUNCIL))
                 ->where('object_id', Role::getObjectIdByName(Role::STUDENT_COUNCIL, $roleObjectName));
         })->first();
@@ -395,7 +394,6 @@ class User extends Authenticatable implements HasLocalePreference
     {
         return self::CommitteeLeader(Role::ECONOMIC_LEADER);
     }
-
 
     public static function printers()
     {
@@ -530,7 +528,7 @@ class User extends Authenticatable implements HasLocalePreference
     public function getStatusIn($semester): string
     {
         $semesters = $this->allSemesters;
-        if (!$semesters->contains($semester)) {
+        if (! $semesters->contains($semester)) {
             return Semester::INACTIVE;
         }
 
