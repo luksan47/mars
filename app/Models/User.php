@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
+use phpDocumentor\Reflection\Types\Null_;
 
 class User extends Authenticatable implements HasLocalePreference
 {
@@ -313,6 +315,92 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasRoleBase('student-council');
     }
 
+    /**
+     * @return User|null the president
+     */
+    public static function president()
+    {
+        return User::whereHas('roles', function ($q) {
+            $q->where('role_id', Role::getId(Role::STUDENT_COUNCIL))
+                ->where('object_id', Role::getObjectIdByName(Role::STUDENT_COUNCIL, ROLE::PRESIDENT));
+        })->first();
+    }
+
+    /**
+     * @return User|null the director
+     */
+    public static function director()
+    {
+        return User::whereHas('roles', function ($q) {
+            $q->where('role_id', Role::getId(Role::DIRECTOR));
+        })->first();
+    }
+
+
+    /**
+     * @param string $roleObjectName the object name of a Student Council role
+     * @return User|null the director
+     */
+    public static function CommitteeLeader($roleObjectName)
+    {
+        if (!in_array($roleObjectName, Role::COMMITTEE_LEADERS)) 
+            throw new InvalidArgumentException($roleObjectName ." should be one of these: ". implode(", ",Role::COMMITTEE_LEADERS));
+
+        return User::whereHas('roles', function ($q) use($roleObjectName){
+            $q->where('role_id', Role::getId(Role::STUDENT_COUNCIL))
+                ->where('object_id', Role::getObjectIdByName(Role::STUDENT_COUNCIL, $roleObjectName));
+        })->first();
+    }
+
+    /**
+     * @return User|null the Communication Committe's leader
+     */
+    public static function CommunicationLeader()
+    {
+        return self::CommitteeLeader(Role::COMMUNICATION_LEADER);
+    }
+
+    /**
+     * @return User|null the Cultural Committe's leader
+     */
+    public static function CulturalLeader()
+    {
+        return self::CommitteeLeader(Role::CULTURAL_LEADER);
+    }
+
+    /**
+     * @return User|null the Sport Committe's leader
+     */
+    public static function SportLeader()
+    {
+        return self::CommitteeLeader(Role::SPORT_LEADER);
+    }
+
+    /**
+     * @return User|null the Science Committe's leader
+     */
+    public static function ScienceLeader()
+    {
+        return self::CommitteeLeader(Role::SCIENCE_LEADER);
+    }
+
+    /**
+     * @return User|null the Community Committe's leader
+     */
+    public static function CommunityLeader()
+    {
+        return self::CommitteeLeader(Role::COMMUNITY_LEADER);
+    }
+
+    /**
+     * @return User|null the Communication Committe's leader
+     */
+    public static function EconomicLeader()
+    {
+        return self::CommitteeLeader(Role::ECONOMIC_LEADER);
+    }
+
+
     public static function printers()
     {
         return Role::getUsers(Role::PRINTER);
@@ -452,7 +540,7 @@ class User extends Authenticatable implements HasLocalePreference
     public function getStatusIn($semester): string
     {
         $semesters = $this->allSemesters;
-        if (! $semesters->contains($semester)) {
+        if (!$semesters->contains($semester)) {
             return Semester::INACTIVE;
         }
 
