@@ -45,7 +45,9 @@ class PermissionController extends Controller
                 ]);
             }
         } else {
-            $user->roles()->attach($role_id);
+            if ($user->roles()->where('id', $role_id)->count() == 0){
+                $user->roles()->attach($role_id);
+            }
         }
 
         return back();

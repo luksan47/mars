@@ -26,9 +26,13 @@ use App\Http\Controllers\Secretariat\SecretariatController;
 use App\Http\Controllers\Secretariat\SemesterController;
 use App\Http\Controllers\Secretariat\UserController;
 use App\Http\Controllers\StudentsCouncil\EconomicController;
-use App\Http\Controllers\StudentsCouncil\EpistolaController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/asd', function () {
+    return response()->json(User::CommitteeLeader("asd"));
+});
 
 Route::get('/', [HomeController::class, 'welcome'])->name('index');
 Route::get('/verification', [HomeController::class, 'verification'])->name('verification');

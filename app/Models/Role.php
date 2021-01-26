@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Role extends Model
 {
@@ -20,6 +22,43 @@ class Role extends Model
     const LOCALE_ADMIN = 'locale-admin';
     const PERMISSION_HANDLER = 'permission-handler';
     const STUDENT_COUNCIL = 'student-council';
+
+    //Student committe role's objects
+    const PRESIDENT = 'president';
+    const VICE_PRESIDENT = 'vice_president';
+    const ECONOMIC_LEADER = 'economic-leader';
+    const ECONOMIC_MEMBER = 'economic-member';
+    const CULTURAL_LEADER = 'cultural-leader';
+    const CULTURAL_MEMBER = 'cultural-member';
+    const COMMUNITY_LEADER = 'community-leader';
+    const COMMUNITY_MEMBER = 'community-member';
+    const COMMUNICATION_LEADER = 'communication-leader';
+    const COMMUNICATION_MEMBER = 'communication-member';
+    const SPORT_LEADER = 'sport-leader';
+    const SPORT_MEMBER = 'sport-member';
+    const SCIENCE_LEADER = 'science-leader';
+    const SCIENCE_MEMBER = 'science-member';
+    const COMMITTEE_LEADERS = [
+        self::ECONOMIC_LEADER,
+        self::CULTURAL_LEADER,
+        self::COMMUNITY_LEADER,
+        self::COMMUNICATION_LEADER,
+        self::SPORT_LEADER,
+        self::SCIENCE_LEADER
+    ];
+    const STUDENT_COUNCIL_LEADERS = [
+        self::PRESIDENT,
+        self::VICE_PRESIDENT
+    ];
+
+    const STUDENT_COUNCIL_MEMBERS = [
+        self::ECONOMIC_LEADER,
+        self::CULTURAL_LEADER,
+        self::COMMUNITY_LEADER,
+        self::COMMUNICATION_LEADER,
+        self::SPORT_LEADER,
+        self::SCIENCE_LEADER
+    ];
 
     // Module-related roles
     const PRINTER = 'printer';
@@ -57,7 +96,52 @@ class Role extends Model
      */
     public function name(): string
     {
+        //TODO: workshop leader / administrator roles are translated elsewhere 
         return __('role.' . $this->name);
+    }
+
+    /**
+     * Returns true if the role can be attached to only one user at a time.
+     * TODO: make it static
+     * @param string $roleName
+     * @param string $objectName optional
+     * @return bool
+     */
+    public  function isUnique($roleName, $objectName = null): bool
+    {
+        if (!$this->canHaveObject()) {
+            return in_array($this->name, [
+                self::DIRECTOR
+            ]);
+        } else {
+            if ($this->name == self::STUDENT_COUNCIL) {
+                return in_array($this->object()->name, array_merge(self::COMMITTEE_LEADERS, self::PRESIDENT));
+            }
+            return in_array($this->name, [
+                self::WORKSHOP_ADMINISTRATOR,
+                self::WORKSHOP_LEADER
+            ]);
+        }
+    }
+
+
+    /**
+     * Returns true if the specified role can be attached to someone.
+     * TODO: make it static
+     */
+    public function canBeAttached()
+    {
+        if ($this->isUnique()) {
+            if ($this->canHaveObject()) {
+                if ($this->object() == null) return false;
+                return DB::table('role_users')
+                    ->where('role_id', $this->id, $this->id)
+                    ->where('object_id', $this->object()->id)
+                    ->count() == 0;
+            }
+            return DB::table('role_users')->where('role_id', $this->id)->count() == 0;
+        }
+        return true;
     }
 
     /**
@@ -72,10 +156,10 @@ class Role extends Model
         return $this->possibleObjects()->where('id', $this->pivot->object_id)->first();
     }
 
-    public static function getObjectIdByName($role, $objectName)
+    public static function getObjectIdByName($roleName, $objectName)
     {
-        $objects = self::possibleObjectsFor($role);
-
+        $objects = self::possibleObjectsFor($roleName);
+        Log::info('getObjectIdByName', ['objectName'=> $objectName, 'objects' => $objects, 'role' => $roleName]);
         return $objects->where('name', $objectName)->first()->id;
     }
 
@@ -170,7 +254,7 @@ class Role extends Model
             return self::toSelectableCollection($collegists);
         }
 
-        return [];
+        return collect([]);
     }
 
     public function color()
