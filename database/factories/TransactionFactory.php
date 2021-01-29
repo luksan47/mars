@@ -28,7 +28,7 @@ class TransactionFactory extends Factory
             'checkout_id' => Checkout::all()->random()->id,
             'semester_id' => \App\Models\Semester::all()->random()->id,
             'payment_type_id' => function (array $attributes) {
-                return PaymentType::forCheckout(Checkout::findOrFail($attributes['checkout_id'])->name)
+                return PaymentType::forCheckout(Checkout::findOrFail($attributes['checkout_id']))
                     ->random();
             },
             'receiver_id' => function (array $attributes) {

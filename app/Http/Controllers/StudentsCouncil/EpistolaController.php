@@ -20,8 +20,12 @@ class EpistolaController extends Controller
         return view(
             'student-council.communication-committee.app',
             [
-                'not_sent' => EpistolaNews::where('sent', false)->get()->sortBy('valid_until'),
-                'sent' => EpistolaNews::where('sent', true)->get()->sortBy('valid_until')
+                'not_sent' => EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+                    if ($result->valid_until == null)
+                        return PHP_INT_MAX;
+                    return $result->valid_until;
+                }),
+                'sent' => EpistolaNews::where('sent', true)->get()
             ]
         );
     }
@@ -76,7 +80,7 @@ class EpistolaController extends Controller
             'registration_deadline' => 'nullable|date',
             'fill_url' => 'nullable|url|required_with:registration_deadline',
             'filling_deadline' => 'nullable|date',
-            'approved' => 'nullable|required_with:picture_upload|accepted',
+            'approved' => 'nullable|required_with:picture_upload|accepted', //BUG: will be required always (picture_upload always exists)
             'picture_upload' => 'nullable|image',
             'picture_path' => ['nullable', 'url', function ($attribute, $value, $fail) use ($request) {
                 if ($request->picture_upload != null && $request->picture_path != null)
@@ -95,13 +99,14 @@ class EpistolaController extends Controller
         }
         $values = $request->except(['picture_path', 'id']);
         $values['picture_path'] = $picture_path ?? $request->picture_path;
-        $values['uploader_id'] = Auth::user()->id;
+        
         $epistola = EpistolaNews::find($request->id);
         if ($epistola) {
             $updated = true;
             $epistola->update($values);
         } else {
             $updated = false;
+            $values['uploader_id'] = Auth::user()->id;
             $epistola = EpistolaNews::create($values);
         }
         return redirect(route('epistola'))->with('message', $updated ? __('general.successful_modification') : __('general.successfully_added'));
@@ -111,14 +116,22 @@ class EpistolaController extends Controller
     {
         $this->authorize('send', EpistolaNews::class);
 
-        return (new EpistolaCollegii(EpistolaNews::where('sent', false)->get()));
+        return (new EpistolaCollegii(EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+            if ($result->valid_until == null)
+                return PHP_INT_MAX;
+            return $result->valid_until;
+        })));
     }
 
     public function send()
     {
         $this->authorize('send', EpistolaNews::class);
 
-        $mail = new EpistolaCollegii(EpistolaNews::where('sent', false)->get());
+        $mail = new EpistolaCollegii(EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+            if ($result->valid_until == null)
+                return PHP_INT_MAX;
+            return $result->valid_until;
+        }));
         Mail::to(env('MAIL_KOMMBIZ'))->send($mail);
 
         EpistolaNews::where('sent', false)->update(['sent' => true]);

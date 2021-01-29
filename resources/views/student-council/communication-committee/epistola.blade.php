@@ -26,7 +26,7 @@
     <div class="card-reveal">
         <span class="card-title grey-text text-darken-4">{{$article->title}}<i class="material-icons right">close</i></span>
         <i>{{$article->date_time}}</i>
-        <p>{{$article->description}}</p>
+        <p>@markdown($article->description)</p>
         @if($article->registration_deadline)
             <blockquote>Jelentkezési határidő:<br> <i>{{$article->registration_deadline}}</i></blockquote>
         @endif

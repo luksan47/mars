@@ -75,7 +75,7 @@
                             <!-- communication committee -->
                             <li>
                                 <a class="waves-effect" href="{{ route('epistola') }}">
-                                    <i class="material-icons left">rss_feed</i> @lang('role.communication-committee')
+                                    <i class="material-icons left">campaign</i> @lang('role.communication-committee')
                                 </a>
                             </li>
                         </ul>
