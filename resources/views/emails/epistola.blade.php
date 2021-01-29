@@ -86,7 +86,7 @@ width: 100% !important;
                               <td>&nbsp;</td>
                             </tr>
                           </table>
-                        <p class="center">További eseményeket az <a href="{{route('epistola')}}" target="_blank" rel="noopener">Uránban várjuk feltöltésre</a>.</p>
+                        <p class="center">További eseményeket az <a href="{{route('epistola')}}" target="_blank" rel="noopener">Uránban</a> várjuk feltöltésre.</p>
                         @php
                             $names = $news->map(function($item) {return $item->uploader->name;})->unique()->toArray();
                         @endphp
@@ -104,7 +104,7 @@ width: 100% !important;
                         @foreach ($news as $article)
                             <h2>{{ $i }}.<span>{{$article->title }}</span></h2>
                             <h3>{{$article->date_time}}</h3>
-                            <p class="description">{{ $article->description}}</p>
+                            <p class="description">@markdown($article->description)</p>
                             @if($article->picture_path)
                             <img src="{{ $article->picture_path }}">
                             @endif

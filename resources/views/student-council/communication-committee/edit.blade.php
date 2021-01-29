@@ -49,12 +49,13 @@
                             @enderror
                         </div>
                         <div class="input-field col s12">
+                            
                             <textarea id="description" class="materialize-textarea validate @error('description') invalid @enderror" name="description" required
                                 >{{ $epistola->description ?? old('description')}}</textarea>
                             <label for="description">Leírás*</label>
-                            @error('description')
-                                <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
+                            <span class="helper-text" @error('description') data-error="{{ $message }}" @enderror>Formázásra a 
+                                <a href="https://www.markdownguide.org/cheat-sheet/" target="__blank">Markdown jelölései</a> használhatóak.</span>
+                            
                         </div>
                     </div>
                     <div class="row">
@@ -161,12 +162,20 @@
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                                 @enderror
                             </div>
-
+                            <p style="">
+                                <label>
+                                    <input type="checkbox" name="approved" required/>
+                                    <span>Nem töltök fel szerzői jog oltalma alatt álló képet.*</span>
+                                </label>
+                                @error('approved')
+                                    <blockquote>{{$message}}</blockquote>
+                                @enderror
+                            </p>
                         </div>
                         <div class="input-field col s12 l6">
                             <input id="picture_path" name="picture_path" type="url" class="validate @error('picture_path') invalid @enderror"
                                 value="{{ $epistola->picture_path ?? old('picture_path')}}">
-                            <label for="picture_path">Kép linkje</label>
+                            <label for="picture_path">Vagy kép linkje</label>
                             @error('picture_path')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
@@ -175,15 +184,7 @@
                             @endif
                         </div>
                     </div>
-                    <p style="">
-                        <label>
-                            <input type="checkbox" name="approved" required/>
-                            <span>Nem töltök fel szerzői jog oltalma alatt álló képet.</span>
-                        </label>
-                        @error('approved')
-                            <blockquote>{{$message}}</blockquote>
-                        @enderror
-                    </p>
+                    
                 <button type="submit" class="btn-floating waves-effect right"><i class="material-icons">send</i></button>
                 </form>
             </div>
