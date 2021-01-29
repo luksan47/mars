@@ -49,13 +49,11 @@
                             @enderror
                         </div>
                         <div class="input-field col s12">
-                            
                             <textarea id="description" class="materialize-textarea validate @error('description') invalid @enderror" name="description" required
                                 >{{ $epistola->description ?? old('description')}}</textarea>
                             <label for="description">Leírás*</label>
                             <span class="helper-text" @error('description') data-error="{{ $message }}" @enderror>Formázásra a 
                                 <a href="https://www.markdownguide.org/cheat-sheet/" target="__blank">Markdown jelölései</a> használhatóak.</span>
-                            
                         </div>
                     </div>
                     <div class="row">
