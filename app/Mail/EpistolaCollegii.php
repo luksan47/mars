@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -32,7 +31,7 @@ class EpistolaCollegii extends Mailable
     public function build()
     {
         return $this
-            ->subject('Epistola Collegii - ' . now()->format('Y. m. d.'))
+            ->subject('Epistola Collegii - '.now()->format('Y. m. d.'))
             ->markdown('emails.epistola', ['news' => $this->epistolas]);
     }
 }

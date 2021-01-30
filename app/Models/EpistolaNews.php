@@ -29,7 +29,7 @@ class EpistolaNews extends Model
         'time',
         'end_date',
         'picture_path',
-        'sent'
+        'sent',
     ];
     protected $dates = ['date', 'time', 'end_date', 'valid_until', 'registration_deadline', 'filling_deadline'];
 
@@ -37,14 +37,18 @@ class EpistolaNews extends Model
     public function getValidUntilAttribute()
     {
         $date = (($this->registration_deadline ?? $this->filling_deadline) ?? $this->date);
-        if ($date)
+        if ($date) {
             return $date->format('Y.m.d');
+        }
+
         return null;
     }
 
     public function getDateTimeAttribute()
     {
-        if($this->date == null) return null;
+        if ($this->date == null) {
+            return null;
+        }
 
         $datetime = $this->date->format('Y.m.d.');
         if ($this->time) {
@@ -60,7 +64,7 @@ class EpistolaNews extends Model
     {
         return ($this->valid_until != null)
             && (now()->addDays(3)->format('Y.m.d') > $this->valid_until)
-            && !$this->sent;
+            && ! $this->sent;
     }
 
     public function uploader()
