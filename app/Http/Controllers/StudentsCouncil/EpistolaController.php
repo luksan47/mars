@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StudentsCouncil;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -10,6 +11,7 @@ use App\Mail\EpistolaCollegii;
 use Image;
 
 use App\Models\EpistolaNews;
+
 
 class EpistolaController extends Controller
 {
