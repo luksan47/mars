@@ -21,7 +21,7 @@
                             <blockquote>@lang('checkout.pay_kkt_descr')</blockquote>
                             <div class="input-field col s12 m12 l4">
                                 @include("utils.select", [
-                                    'elements' => $users,
+                                    'elements' => $users_not_payed,
                                     'element_id' => 'user_id',
                                     'required' => true])
                             </div>
@@ -48,6 +48,9 @@
             </div>
         </div>
     </div>
+    <div class="col s12">
+        @include('utils.checkout.all-gathered-transactions')
+    </div>
     <div class="col s12 xl6 push-xl6">
         @include('utils.checkout.gathered-transactions')
     </div>
@@ -56,7 +59,7 @@
             <div class="card-content">
                 <span class="card-title">@lang('checkout.users_have_to_pay') ({{ \App\Models\Semester::current()->tag }}) </span>
                 <table><tbody>
-                    @foreach($users as $user)
+                    @foreach($users_not_payed as $user)
                       <tr><td>{{ $user->name }}</td></tr>
                     @endforeach
                 </tbody></table>
@@ -76,7 +79,7 @@
                     @foreach($transactions as $transaction)
                         @if($transaction->type->name == \App\Models\PaymentType::KKT)
                             <tr>
-                                <td>{{ $transaction->payer->name}}</td>
+                                <td>{{ $transaction->payer->name }}</td>
                                 <td>
                                     @include('user.workshop_tags', ['user' => $transaction->payer])
                                 </td>

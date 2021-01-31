@@ -2,6 +2,7 @@
 /public/css
 /public/hot
 /public/js
+/public/img/epistola
 /public/storage
 /public/mix-manifest.json
 /storage/*.key
@@ -21,4 +22,7 @@ npm-debug.log
 yarn-error.log
 /.vagrant
 /.idea
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
 *.DS_Store

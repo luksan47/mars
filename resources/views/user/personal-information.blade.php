@@ -13,8 +13,8 @@
                                 @csrf
                                 <div class="input-field inline" style="margin:0">
                                     <input id="email" type="email" name="email" size="30" autocomplete="email"
-                                        @if(!($errors->has('email'))) disabled @endif 
-                                        style="margin:0" value="{{ old('email', $user->email) }}" required 
+                                        @if(!($errors->has('email'))) disabled @endif
+                                        style="margin:0" value="{{ old('email', $user->email) }}" required
                                         class="validate black-text @error('email') invalid @enderror">
                                     @error('email')
                                     <span class="helper-text" data-error="{{ $message }}"></span>
@@ -40,8 +40,8 @@
                                 <form method="POST" action="{{ route('secretariat.user.update_phone') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="phone_number" type="tel" name="phone_number" size="30" 
-                                            @if(!($errors->has('phone_number'))) disabled @endif 
+                                        <input id="phone_number" type="tel" name="phone_number" size="30"
+                                            @if(!($errors->has('phone_number'))) disabled @endif
                                             style="margin:0" class="validate black-text @error('phone_number') invalid @enderror"
                                             value="{{ old('phone_number', $user->personalInformation->phone_number ?? '') }}"
                                             pattern="[+][0-9]{1,4}\s[(][0-9]{1,4}[)]\s[-|0-9]*" minlength="16"

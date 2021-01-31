@@ -3,9 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use App\Models\Semester;
-use App\Models\Workshop;
 
 class WorkshopBalance extends Model
 {
@@ -28,56 +25,62 @@ class WorkshopBalance extends Model
         return $this->belongsTo('App\Models\Semester');
     }
 
-    public function membersPayedKKTNetreg()
-    {
-        return $this->payedKKTNetregInSemester(Semester::current());
-    }
-
-    public function membersPayedKKTNetregInSemester(Semester $semester)
-    {
-        return $this->workshop->users->filter(function ($user, $key) use ($semester) {
-            return $user->isActiveIn($semester) && (! $user->hasToPayKKTNetregInSemester($semester));
-        });
-    }
-
     /**
      * Generates all the workshops' allocated balance in the current semester.
-     * For all active members in a workshop who payed kkt: 
-     *      kkt * (isResident ? 0.6 : 0.45) / member's workshops' count
-    */
-    public static function generateBalances()
+     * For all active members in a workshop who payed kkt:
+     *      payed kkt * (isResident ? 0.6 : 0.45) / member's workshops' count
+     */
+    public static function generateBalances($semester_id)
     {
-        foreach(Workshop::all() as $workshop)
-        {
+        $workshops = Workshop::with('users:id')->get();
+
+        if (!self::where('semester_id', $semester_id)->count()) {
+            $balances = [];
+            foreach ($workshops as $workshop) {
+                $balances[] = [
+                    'semester_id' => $semester_id,
+                    'workshop_id' => $workshop->id
+                ];
+            }
+
+            self::insert($balances);
+        }
+
+        $users_has_to_pay_kktnetreg = User::hasToPayKKTNetregInSemester($semester_id)->pluck('id', 'id')->toArray();
+        $active_users = User::activeIn($semester_id)->with(['roles' => function ($q) {
+            $q->where('name', Role::COLLEGIST);
+        }, 'workshops:id'])->get()->keyBy('id')->all();
+
+        foreach ($workshops as $workshop) {
             $balance = 0;
+            $resident = 0;
+            $extern = 0;
+            $not_yet_paid = 0;
             foreach ($workshop->users as $member) {
-                if ($member->isActive() && !$member->hasToPayKKTNetreg())
-                {
-                    $balance += config('custom.kkt') *
-                        ($member->isResident() ? config('custom.workshop_balance_resident') : config('custom.workshop_balance_extern') ) /
-                        $member->workshops->count();
+                if (isset($active_users[$member->id])) {
+                    if (!isset($users_has_to_pay_kktnetreg[$member->id])) {
+                        $user = $active_users[$member->id];
+                        $amount = config('custom.kkt');
+                        if ($user->isResident()) {
+                            $amount *= config('custom.workshop_balance_resident');
+                            $resident++;
+                        } else {
+                            $amount *= config('custom.workshop_balance_extern');
+                            $extern++;
+                        }
+                        $balance += $amount / $user->workshops->count();
+                    } else {
+                        $not_yet_paid++;
+                    }
                 }
             }
-            self::updateOrInsert(
-                ['semester_id' => Semester::current()->id, 'workshop_id' => $workshop->id],
-                ['allocated_balance' => $balance]
-            );
+            self::where(['semester_id' => $semester_id, 'workshop_id' => $workshop->id])
+                ->update([
+                    'allocated_balance' => $balance,
+                    'extern' => $extern,
+                    'resident' => $resident,
+                    'not_yet_paid' => $not_yet_paid
+                ]);
         }
-    }
-
-    public function payCountDisplayString(Semester $semester)
-    {
-        $workshop = $this->workshop;
-        $payed_members = $this->membersPayedKKTNetregInSemester($semester);
-        $payed_residents = $payed_members->filter(function($user, $key){
-            return $user->isResident();
-        })->count();
-        $payed_externs = $payed_members->filter(function($user, $key){
-            return $user->isExtern();
-        })->count();
-        $not_payed = $workshop->users->filter(function ($user, $key) use ($semester) {
-            return ($user->hasToPayKKTNetregInSemester($semester));
-        })->count();
-        return $payed_residents . ' - ' . $payed_externs . ' (+' . $not_payed . ')';
     }
 }

@@ -79,23 +79,30 @@
                     @foreach ($expressions as $key => $value)
                     {{-- Not shown if the expression have an ongoing, unapproved change --}}
                     @php
-                    $duplicate = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key)->where('approved', false)->first();
+                    $translations = App\Models\LocalizationContribution::where('language', App::getLocale())->where('key',  $fname.'.'.$key);
                     @endphp
-                    @if(is_string($value) && $duplicate == null)
+                    @if(is_string($value) && $translations->where('approved', false)->count() == 0)
                     <div class="row scale-transition" style="margin:0" name="{{ $fname . '.' . $key }}">
                         <div class="col s5" style="padding: 0.8rem;">
                             {{ $value }}
                         </div>
+                        @if($translations->where('approved', true)->count() != 0)
                         <div class="col s6">
                             <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
-                                class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea>
+                                class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea> 
                         </div>
+                        @else
+                        <div class="col s6">
+                            <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
+                                class="materialize-textarea"></textarea>
+                        </div>
+                        @endif
                         <div class="col s1">
                             <button class="btn-floating waves-effect waves-light right" onclick="send('{{ App::getLocale() }}', '{{ $fname.'.'.$key }}', '{{ $lang }}')">
                                 <i class="material-icons">send</i>
                             </button>
                         </div>
-                    </div>
+                    </div>                     
                     @endif
                     @endforeach
                 </div>

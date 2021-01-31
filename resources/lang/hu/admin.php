@@ -2,7 +2,7 @@
 
 return [
     'accept' => 'Elfogad',
-    'admin' => 'Admin',
+    'admin' => 'Rendszergazda',
     'checkout' => 'Rendszergazdai kassza',
     'handle_registrations' => 'Regisztrációk kezelése',
     'other_permissions' => 'További jogosultságok',

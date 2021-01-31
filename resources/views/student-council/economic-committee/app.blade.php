@@ -18,20 +18,15 @@
                     @lang('checkout.current_balance_in_checkout'):
                     <b class="coli-text text-orange"> {{ number_format($current_balance_in_checkout, 0, '.', ' ') }} Ft</b>.<br>
                 </blockquote>
-                @can('handleAny', \App\Models\Checkout::class)
-                <div class="row">
-                    <div class="col s12 m12 l6 xl6" style="margin-bottom:5px">
-                        <a href="{{ route('kktnetreg') }}" class="btn waves-effect" style="width:100%">
-                            @lang('checkout.pay_kktnetreg')</a>
-                    </div>
-                    <div class="col s12 m12 l6 xl6" style="margin-bottom:5px">
-                        <a href="{{ route('economic_committee.transaction') }}" class="btn waves-effect" style="width:100%">
-                            @lang('checkout.other_transaction')</a>
-                    </div>
-                </div>
+                @can('addKKTNetreg', \App\Models\Checkout::class)
+                    <a href="{{ route('kktnetreg') }}" class="btn waves-effect">
+                        @lang('checkout.kktnetreg')</a>
                 @endcan
             </div>
         </div>
+    </div>
+    <div class="col s12">
+        @include('utils.checkout.add-transaction')
     </div>
     @foreach($semesters as $semester)
     @php
@@ -79,10 +74,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($semester->workshopBalances as $workshop_balance)</th>
+                                @foreach($semester->workshopBalances as $workshop_balance)
                                 <tr>
                                     <td class="valign-wrapper">{{ $workshop_balance->workshop->name }} </td>
-                                    <td>{{ $workshop_balance->payCountDisplayString($semester) }}</td>
+                                    <td>{{ $workshop_balance->resident . ' - ' . $workshop_balance->extern . ' (+' . $workshop_balance->not_yet_paid . ')' }}</td>
                                     <td>{{ $workshop_balance->allocated_balance }}</td>
                                     <td>{{ $workshop_balance->used_balance }}</td>
                                     <td>{{ $workshop_balance->allocated_balance - $workshop_balance->used_balance }}</td>

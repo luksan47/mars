@@ -44,7 +44,7 @@ class InternetAccess extends Model
         return $this->hasMany('App\Models\WifiConnection', 'wifi_username', 'wifi_username');
     }
 
-    public function reachedWifiConnectionLimit()
+    public function reachedWifiConnectionLimit(): bool
     {
         return $this->wifiConnections->count() > $this->wifi_connection_limit;
     }

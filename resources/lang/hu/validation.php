@@ -144,4 +144,5 @@ return [
     'uploaded' => 'A(z) :attribute feltöltése sikertelen.',
     'url' => 'A(z) :attribute érvénytelen link.',
     'uuid' => ':attribute érvényes UUID-val kell rendelkezzen.',
+    'upload_with_link' => 'Fájl feltöltése és belinkelése együtt nem lehetséges.',
 ];

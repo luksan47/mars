@@ -9,16 +9,18 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
-        "barryvdh/laravel-ide-helper": "^2.6",
         "fideloper/proxy": "^4.0",
+        "graham-campbell/markdown": "^13.1",
+        "intervention/image": "^2.5",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.8",
         "facade/ignition": "^2.3.6",
-        "fzaninotto/faker": "^1.4",
-        "laravel/homestead": "^9.2",
+        "fakerphp/faker": "^1.13",
+        "laravel/homestead": "^11.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.0"
@@ -58,6 +60,13 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "@php artisan ide-helper:refresh"
+        ],
+        "post-install-cmd": [
+            "@php artisan ide-helper:refresh"
         ]
     }
 }

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Secretariat;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\Semester;
 use App\Models\User;
+use App\Models\WorkshopBalance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -105,6 +107,8 @@ class UserController extends Controller
             } else {
                 $user->setExtern();
             }
+
+            WorkshopBalance::generateBalances(Semester::current()->id);
         } else {
             return response()->json(null, 400);
         }
@@ -147,11 +151,14 @@ class UserController extends Controller
     public function updateSemesterStatus($id, $semester, $status)
     {
         $user = User::findOrFail($id);
+        $semester = Semester::find($semester);
 
         // TODO
         $this->authorize('view', $user);
 
-        $user->setStatusFor(\App\Models\Semester::find($semester), $status);
+        $user->setStatusFor($semester, $status);
+
+        WorkshopBalance::generateBalances($semester->id);
 
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
@@ -164,6 +171,8 @@ class UserController extends Controller
         $user = User::findOrFail($user);
 
         $user->workshops()->detach($workshop);
+
+        WorkshopBalance::generateBalances(Semester::current()->id);
     }
 
     public function addUserWorkshop(Request $request, $user)
@@ -183,6 +192,8 @@ class UserController extends Controller
                 ->withInput();
         }
         $user->workshops()->attach($request->workshop_id);
+
+        WorkshopBalance::generateBalances(Semester::current()->id);
 
         return redirect()->back()->with('message', __('general.successfully_added'));
     }
