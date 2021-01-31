@@ -64,7 +64,6 @@ class UserController extends Controller
         }
         //TODO: educational information
 
-
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
 
