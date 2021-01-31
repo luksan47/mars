@@ -60,6 +60,11 @@ return [
             'root' => storage_path('app/printing_queue'),
         ],
 
+        'epistola' => [
+            'driver' => 'local',
+            'root' => public_path('img/epistola'),
+        ],
+
         'latex' => [
             'driver' => 'local',
             'root' => storage_path('app/latex'),
