@@ -54,8 +54,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** User related routes */
     Route::get('/user', [UserController::class, 'index'])->name('user');
-    Route::post('/secretariat/user/update_email', [UserController::class, 'updateEmail'])->name('secretariat.user.update_email');
-    Route::post('/secretariat/user/update_phone', [UserController::class, 'updatePhone'])->name('secretariat.user.update_phone');
+    Route::post('/secretariat/user/update', [UserController::class, 'update'])->name('secretariat.user.update');
     Route::get('/secretariat/user/list', [UserController::class, 'list'])->name('secretariat.user.list');
     Route::get('/secretariat/user/show/{id}', [UserController::class, 'show'])->name('secretariat.user.show');
     Route::get('/secretariat/user/semesters/{id}', [UserController::class, 'semesters'])->name('secretariat.user.semesters');
