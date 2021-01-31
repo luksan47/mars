@@ -115,7 +115,7 @@
                 <li><div class="divider"></div></li>
                 <li class="@yield('admin_module')">
                     <a class="collapsible-header waves-effect" style="padding-left:32px">
-                        <i class="material-icons left">edit</i>
+                        <i class="material-icons left">admin_panel_settings</i>
                         @lang('admin.admin')
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>

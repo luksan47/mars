@@ -129,13 +129,13 @@ trait CheckoutHandler
         ]);
     }
 
-    // public function deleteTransaction(Transaction $transaction)
-    // {
-    //     $this->authorize('delete', $transaction);
-    //     $transaction->delete();
+    public function deleteTransaction(Transaction $transaction)
+    {
+        $this->authorize('delete', $transaction);
+        $transaction->delete();
 
-    //     return redirect()->back()->with('message', __('general.successfully_deleted'));
-    // }
+        return redirect()->back()->with('message', __('general.successfully_deleted'));
+    }
 
     /**
      * Return the transactions received by the authenticated user,
@@ -154,14 +154,6 @@ trait CheckoutHandler
             ->where('moved_to_checkout', null)
             ->whereIn('payment_type_id', $payment_type_ids)
             ->get();
-    }
-
-    public function deleteTransaction(Transaction $transaction)
-    {
-        $this->authorize('delete', $transaction);
-        $transaction->delete();
-
-        return redirect()->back()->with('message', __('general.successfully_deleted'));
     }
 
     /**
