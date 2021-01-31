@@ -8,8 +8,8 @@
                 <tr>
                     <th scope="row">@lang('registration.email')</th>
                     <td>
-                        @if($modifiable_email ?? false)
-                            <form method="POST" action="{{ route('secretariat.user.update_email') }}">
+                        @if($modifiable ?? false)
+                            <form method="POST" action="{{ route('secretariat.user.update') }}">
                                 @csrf
                                 <div class="input-field inline" style="margin:0">
                                     <input id="email" type="email" name="email" size="30" autocomplete="email"
@@ -20,11 +20,11 @@
                                     <span class="helper-text" data-error="{{ $message }}"></span>
                                     @enderror
                                 </div>
-                                <button id="email_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                <button id="email_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
                                     type="submit" style="margin-top:10px">
                                     <i class="material-icons">send</i></button>
-                                <a id="email_edit_btn" class="btn-floating right waves-effect waves-light"
-                                    onclick="mail_editor()" style="margin-top:10px">
+                                <a id="email_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                    onclick="editor('email')" style="margin-top:10px">
                                     <i class="material-icons">edit</i></a>
                             </form>
                         @else
@@ -36,8 +36,8 @@
                     <tr>
                         <th scope="row">@lang('user.phone_number')</th>
                         <td>
-                            @if($modifiable_phone ?? false)
-                                <form method="POST" action="{{ route('secretariat.user.update_phone') }}">
+                            @if($modifiable ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
                                         <input id="phone_number" type="tel" name="phone_number" size="30"
@@ -51,10 +51,10 @@
                                         <span class="helper-text" data-error="{{ $message }}"></span>
                                         @enderror
                                     </div>
-                                    <button id="phone_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                    <button id="phone_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
                                         type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
-                                    <a id="phone_edit_btn" class="btn-floating right waves-effect waves-light"
+                                    <a id="phone_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
                                         onclick="phone_editor()" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                 </form>
@@ -66,8 +66,8 @@
                     <tr>
                         <th scope="row">@lang('user.place_and_date_of_birth')</th>
                         <td>
-							@if($modifiable_place_of_birth ?? false)
-                                <form method="POST" action="{{ route('secretariat.user.update_place_of_birth') }}">
+							@if($modifiable ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
                                         <input id="place_of_birth" type="text" name="place_of_birth" size="30" 
@@ -78,33 +78,33 @@
                                         <span class="helper-text" data-error="{{ $message }}"></span>
                                         @enderror
                                     </div>
-                                    <button id="place_of_birth_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                    <button id="place_of_birth_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
                                         type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
-                                    <a id="place_of_birth_edit_btn" class="btn-floating right waves-effect waves-light"
-                                        onclick="place_of_birth_editor()" style="margin-top:10px">
+                                    <a id="place_of_birth_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('place_of_birth')" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                 </form>
 							@else
 								{{ $user->personalInformation->place_of_birth }}
 							@endif
-							@if($modifiable_date_of_birth ?? false)
-                                <form method="POST" action="{{ route('secretariat.user.update_date_of_birth') }}">
+							@if($modifiable ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
                                         <input id="date_of_birth" type="text" name="date_of_birth" size="30" 
                                             @if(!($errors->has('date_of_birth'))) disabled @endif
-                                            style="margin:0" class="datepicker validate @error('date_of_birth') invalid @enderror"
+                                            style="margin:0" class="datepicker black-text validate @error('date_of_birth') invalid @enderror"
 											value="{{ old('date_of_birth', $user->personalInformation->date_of_birth) }}" required onfocus="M.Datepicker.getInstance(date_of_birth).open();">
                                         @error('date_of_birth')
                                         <span class="helper-text" data-error="{{ $message }}"></span>
                                         @enderror
                                     </div>
-                                    <button id="date_of_birth_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                    <button id="date_of_birth_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
                                         type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
-                                    <a id="date_of_birth_edit_btn" class="btn-floating right waves-effect waves-light"
-                                        onclick="date_of_birth_editor()" style="margin-top:10px">
+                                    <a id="date_of_birth_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('date_of_birth')" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                 </form>
 							@else
@@ -115,8 +115,8 @@
                     <tr>
                         <th scope="row">@lang('user.mothers_name')</th>
                         <td>
-							@if($modifiable_mothers_name ?? false)
-                                <form method="POST" action="{{ route('secretariat.user.update_mothers_name') }}">
+							@if($modifiable ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
                                         <input id="mothers_name" type="text" name="mothers_name" size="30" 
@@ -127,11 +127,11 @@
 										<span class="helper-text" data-error="{{ $message }}"></span>
 										@enderror
                                     </div>
-                                    <button id="mothers_name_send_btn" class="btn-floating right waves-effect waves-light hide"
+                                    <button id="mothers_name_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
                                         type="submit" style="margin-top:10px">
                                         <i class="material-icons">send</i></button>
-                                    <a id="mothers_name_edit_btn" class="btn-floating right waves-effect waves-light"
-                                        onclick="mothers_name_editor()" style="margin-top:10px">
+                                    <a id="mothers_name_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('mothers_name')" style="margin-top:10px">
                                         <i class="material-icons">edit</i></a>
                                 </form>
                             @else
@@ -158,41 +158,21 @@
 
 @push('scripts')
     <script>
+        function editor(attribute){
+            document.getElementById(attribute).disabled=false;
+            document.getElementById(attribute).value="";
+            document.getElementById(attribute).focus();
+            document.getElementById(attribute+'_send_btn').classList.remove('hide');
+            document.getElementById(attribute+'_edit_btn').classList.add('hide');
+        }
         function phone_editor(){
             document.getElementById('phone_number').disabled=false;
             document.getElementById('phone_number').value="+36 ";
+            document.getElementById('phone_number').focus();
             document.getElementById('phone_edit_btn').classList.add('hide');
             document.getElementById('phone_send_btn').classList.remove('hide');
             document.getElementById('phone_format').classList.remove('hide');
         }
-        function mail_editor(){
-            document.getElementById('email').disabled=false;
-            document.getElementById('email').value="";
-            document.getElementById('email').focus();
-            document.getElementById('email_edit_btn').classList.add('hide');
-            document.getElementById('email_send_btn').classList.remove('hide');
-        }
-        function mothers_name_editor(){
-			document.getElementById('mothers_name').disabled=false;
-            document.getElementById('mothers_name').value="";
-            document.getElementById('mothers_name').focus();
-            document.getElementById('mothers_name_edit_btn').classList.add('hide');
-            document.getElementById('mothers_name_send_btn').classList.remove('hide');
-		}
-		function place_of_birth_editor(){
-			document.getElementById('place_of_birth').disabled=false;
-            document.getElementById('place_of_birth').value="";
-            document.getElementById('place_of_birth').focus();
-            document.getElementById('place_of_birth_edit_btn').classList.add('hide');
-            document.getElementById('place_of_birth_send_btn').classList.remove('hide');
-		}
-		function date_of_birth_editor(){
-			document.getElementById('date_of_birth').disabled=false;
-            document.getElementById('date_of_birth').value="";
-            document.getElementById('date_of_birth').focus();
-            document.getElementById('date_of_birth_edit_btn').classList.add('hide');
-            document.getElementById('date_of_birth_send_btn').classList.remove('hide');
-		}
 		$(document).ready(function() {
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',

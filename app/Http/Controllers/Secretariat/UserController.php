@@ -31,12 +31,16 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function updateEmail(Request $request)
+    public function update(Request $request)
     {
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:225|unique:users',
+            'email' => 'email|max:225|unique:users',
+            'phone_number' => 'string|min:16|max:18',
+            'mothers_name' => 'string|max:225',
+            'place_of_birth' => 'string|max:225',
+            'date_of_birth' => 'string|max:225',
         ]);
 
         if ($validator->fails()) {
@@ -44,100 +48,14 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $user->update([
-            'email' => $request->email,
-        ]);
-
-        return redirect()->back()->with('message', __('general.successful_modification'));
-    }
-
-    public function updatePhone(Request $request)
-    {
-        $user = Auth::user();
-
-        if ($user->hasPersonalInformation()) {
-            $validator = Validator::make($request->all(), [
-                'phone_number' => 'required|string|min:16|max:18',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            $user->personalInformation->update([
-                'phone_number' => $request->phone_number,
-            ]);
+        if($request->has('email')){
+            $user->update(['email' => $request->email]);
         }
-
-        return redirect()->back()->with('message', __('general.successful_modification'));
-    }
-    public function updateMothersName(Request $request)
-    {
-        $user = Auth::user();
-
-        if ($user->hasPersonalInformation()) {
-            $validator = Validator::make($request->all(), [
-                'mothers_name' => 'required|string|max:225',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            $user->personalInformation->update([
-                'mothers_name' => $request->mothers_name,
-            ]);
+        if ($user->hasPersonalInformation() && $request->hasAny(['phone_number', 'mothers_name', 'place_of_birth', 'date_of_birth'])){
+            //TODO: address
+            $user->personalInformation->update($request->all());
         }
-
-
-        return redirect()->back()->with('message', __('general.successful_modification'));
-    }
-    public function updatePlaceOfBirth(Request $request)
-    {
-        $user = Auth::user();
-
-        if ($user->hasPersonalInformation()) {
-            $validator = Validator::make($request->all(), [
-                'place_of_birth' => 'required|string|max:225',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            $user->personalInformation->update([
-                'place_of_birth' => $request->place_of_birth,
-            ]);
-        }
-
-
-        return redirect()->back()->with('message', __('general.successful_modification'));
-    }
-    public function updateDateOfBirth(Request $request)
-    {
-        $user = Auth::user();
-
-        if ($user->hasPersonalInformation()) {
-            $validator = Validator::make($request->all(), [
-                'date_of_birth' => 'required|string|max:225',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            $user->personalInformation->update([
-                'date_of_birth' => $request->date_of_birth,
-            ]);
-        }
+        //TODO: educational information
 
 
         return redirect()->back()->with('message', __('general.successful_modification'));

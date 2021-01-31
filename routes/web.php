@@ -53,11 +53,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** User related routes */
     Route::get('/user', [UserController::class, 'index'])->name('user');
-    Route::post('/secretariat/user/update_email', [UserController::class, 'updateEmail'])->name('secretariat.user.update_email');
-    Route::post('/secretariat/user/update_phone', [UserController::class, 'updatePhone'])->name('secretariat.user.update_phone');
-    Route::post('/secretariat/user/update_mothers_name',[UserController::class, 'updateMothersName'])->name('secretariat.user.update_mothers_name');
-    Route::post('/secretariat/user/update_place_of_birth',[UserController::class, 'updatePlaceOfBirth'])->name('secretariat.user.update_place_of_birth');
-    Route::post('/secretariat/user/update_date_of_birth',[UserController::class, 'updateDateOfBirth'])->name('secretariat.user.update_date_of_birth');
+    Route::post('/secretariat/user/update', [UserController::class, 'update'])->name('secretariat.user.update');
     Route::get('/secretariat/user/list', [UserController::class, 'list'])->name('secretariat.user.list');
     Route::get('/secretariat/user/show/{id}', [UserController::class, 'show'])->name('secretariat.user.show');
     Route::get('/secretariat/user/semesters/{id}', [UserController::class, 'semesters'])->name('secretariat.user.semesters');
