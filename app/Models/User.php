@@ -509,6 +509,11 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasMany('App\Models\Transaction', 'payer_id');
     }
 
+    public function transactions_received()
+    {
+        return $this->hasMany('App\Models\Transaction', 'receiver_id');
+    }
+
     /**
      * Scope a query to only include users who has to pay kkt or netreg in the given semester.
      *

@@ -144,4 +144,5 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'upload_with_link' => 'File uploading and linking at the same time is not available.',
 ];

@@ -23,11 +23,11 @@ class PaymentType extends Model
     ];
 
     /**
-     * Get the payment types belonging to a checkout.
+     * Get the payment types (collection) belonging to a checkout.
      * INCOME and EXPENSE belong to all checkout.
      *
      * Other, special types:
-     * ADMIN:            NETREG, PRINT
+     * ADMIN: NETREG, PRINT;
      * STUDENTS_COUNCIL: KKT
      *
      * Uses cache.
@@ -38,10 +38,10 @@ class PaymentType extends Model
     {
         return Cache::remember('paymentTypesFor.'.$checkout, 86400, function () use ($checkout) {
             $payment_types = [self::INCOME, self::EXPENSE];
-            if ($checkout == Checkout::ADMIN) {
+            if ($checkout->name == Checkout::ADMIN) {
                 $payment_types[] = self::NETREG;
                 $payment_types[] = self::PRINT;
-            } elseif ($checkout == Checkout::STUDENTS_COUNCIL) {
+            } elseif ($checkout->name == Checkout::STUDENTS_COUNCIL) {
                 $payment_types[] = self::KKT;
             }
 

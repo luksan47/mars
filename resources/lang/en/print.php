@@ -58,6 +58,7 @@ return [
     'spent_free_pages' => 'Free pages spent',
     'state' => 'State',
     'success' => 'Success',
+    'transaction_descr' => 'A transaction will be added to the admin checkout.',
     'transfer_money' => 'Transfer money',
     'twosided' => 'Two-sided printing',
     'upload_money' => 'You can upload money to your account at the system admins.',
