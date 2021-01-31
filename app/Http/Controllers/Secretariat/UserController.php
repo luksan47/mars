@@ -54,12 +54,12 @@ class UserController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        if($request->has('email')){
+        if ($request->has('email')) {
             $user->update(['email' => $request->email]);
         }
         if ($user->hasPersonalInformation() && $request->hasAny(
-            ['place_of_birth','date_of_birth','mothers_name','phone_number','country','county','zip_code','city','street_and_number',]
-        )){
+            ['place_of_birth', 'date_of_birth', 'mothers_name', 'phone_number', 'country', 'county', 'zip_code', 'city', 'street_and_number']
+        )) {
             $user->personalInformation->update($request->all());
         }
         //TODO: educational information
