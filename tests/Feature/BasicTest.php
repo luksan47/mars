@@ -31,8 +31,7 @@ class BasicTest extends TestCase
         'password/reset/{token}',
         'register/guest',
         'secretariat/user/update_password',
-        'secretariat/user/update_email',
-        'secretariat/user/update_phone',
+        'secretariat/user/update',
     ];
 
     /**
