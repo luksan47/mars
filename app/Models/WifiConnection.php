@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Utils\NotificationCounter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class WifiConnection extends Model
 {
-    use HasFactory;
+    use HasFactory, NotificationCounter;
 
     protected $table = 'wifi_connections';
     protected $primaryKey = 'id';
@@ -47,5 +48,10 @@ class WifiConnection extends Model
         }
 
         return 'green';
+    }
+
+    public static function notifications()
+    {
+        return User::role(Role::INTERNET_USER)->select('id')->get()->where('reachedWifiConnectionLimit', true)->count();
     }
 }
