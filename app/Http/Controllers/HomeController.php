@@ -42,7 +42,7 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user->hasElevatedPermissions() || $user->hasRoleBase(Role::STUDENT_COUNCIL)) {
             DB::table('home_page_news')->update([
-                'text' => $request->text,
+                'text' => $request->text ?? "",
                 'user_id' => $user->id
             ]);
             return redirect()->back()->with('message', __('general.successful_modification'));
