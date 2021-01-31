@@ -22,7 +22,7 @@
                 <span class="card-title">@lang('general.information')</span>
                 <form id="info_form" method="POST" action="{{ route('home.edit') }}">
                     @csrf
-                    <p id="info_text">{{ $information == "" ? "Adj hozzá valamit lenn." : $information}}</p>
+                    <p id="info_text">@markdown($information == "" ? "Adj hozzá valamit lenn." : $information)</p>
                     <div id="info_input"></div>
                 </form>
             </div>
