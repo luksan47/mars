@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -19,7 +20,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home', ['information' => DB::table('home_page_news')->first()->text]);
     }
 
     public function colorMode($mode)
@@ -34,6 +35,19 @@ class HomeController extends Controller
         }
 
         return view('welcome');
+    }
+
+    public function editNews(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->hasRoleBase(Role::STUDENT_COUNCIL)) {
+            DB::table('home_page_news')->update([
+                'text' => $request->text ?? "",
+                'user_id' => $user->id
+            ]);
+            return redirect()->back()->with('message', __('general.successful_modification'));
+        }
+        abort(403);
     }
 
     public function verification()
@@ -55,10 +69,11 @@ class HomeController extends Controller
     /**
      * E-mails need to access the logo.
      */
-    public function getPicture($filename){
+    public function getPicture($filename)
+    {
         $path = public_path() . '//img//' . $filename;
 
-        if(!File::exists($path)) {
+        if (!File::exists($path)) {
             return response()->json(['message' => 'Image not found'], 404);
         }
 
@@ -84,15 +99,15 @@ class HomeController extends Controller
         //personal auth token from your github.com account - see CONTRIBUTING.md
         $token = env('GITHUB_AUTH_TOKEN');
 
-        $url = "https://api.github.com/repos/".env('GITHUB_REPO')."/issues";
+        $url = "https://api.github.com/repos/" . env('GITHUB_REPO') . "/issues";
 
         //request details, removing slashes and sanitize content
         $title = htmlspecialchars(stripslashes('Reported bug'), ENT_QUOTES);
         $body = htmlspecialchars(stripslashes($request->description), ENT_QUOTES);
-        $body .= '\n\n> This bug is reported by '.$username.' and generated automatically.';
+        $body .= '\n\n> This bug is reported by ' . $username . ' and generated automatically.';
 
         //build json post
-        $post = '{"title": "'. $title .'","body": "'. $body .'","labels": ["bug"] }';
+        $post = '{"title": "' . $title . '","body": "' . $body . '","labels": ["bug"] }';
 
         //set file_get_contents header info
         $opts = [
@@ -102,7 +117,7 @@ class HomeController extends Controller
                     'User-Agent: request',
                     'Content-type: application/x-www-form-urlencoded',
                     'Accept: application/vnd.github.v3+json',
-                    'Authorization: token '. $token,
+                    'Authorization: token ' . $token,
                 ],
                 'content' => $post
             ]
