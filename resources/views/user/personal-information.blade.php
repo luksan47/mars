@@ -143,10 +143,108 @@
                     <tr>
                         <th scope="row">@lang('user.address')</th>
                         <td>
+                            @if($modifiable ?? false)
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="country" type="text" name="country" size="30" 
+                                            placeholder="@lang('user.country')"
+                                            @if(!($errors->has('country'))) disabled @endif 
+											style="margin:0" class="validate black-text @error('country') invalid @enderror"
+											value="{{ old('country', $user->personalInformation->country) }}" required>
+										@error('country')
+										<span class="helper-text" data-error="{{ $message }}"></span>
+										@enderror
+                                    </div>
+                                    <button id="country_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="country_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('country')" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="county" type="text" name="county" size="30" 
+                                            placeholder="@lang('user.county')"
+                                            @if(!($errors->has('country'))) disabled @endif 
+											style="margin:0" class="validate black-text @error('county') invalid @enderror"
+											value="{{ old('county', $user->personalInformation->county) }}" required>
+										@error('county')
+										<span class="helper-text" data-error="{{ $message }}"></span>
+										@enderror
+                                    </div>
+                                    <button id="county_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="county_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('county')" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="zip_code" type="text" name="zip_code" size="30" 
+                                            placeholder="@lang('user.zip_code')"
+                                            @if(!($errors->has('country'))) disabled @endif 
+											style="margin:0" class="validate black-text @error('zip_code') invalid @enderror"
+											value="{{ old('zip_code', $user->personalInformation->zip_code) }}" required>
+										@error('zip_code')
+										<span class="helper-text" data-error="{{ $message }}"></span>
+										@enderror
+                                    </div>
+                                    <button id="zip_code_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="zip_code_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('zip_code')" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="city" type="text" name="city" size="30" 
+                                            placeholder="@lang('user.city')"
+                                            @if(!($errors->has('country'))) disabled @endif 
+											style="margin:0" class="validate black-text @error('city') invalid @enderror"
+											value="{{ old('city', $user->personalInformation->city) }}" required>
+										@error('city')
+										<span class="helper-text" data-error="{{ $message }}"></span>
+										@enderror
+                                    </div>
+                                    <button id="city_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="city_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('city')" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+                                <form method="POST" action="{{ route('secretariat.user.update') }}">
+                                    @csrf
+                                    <div class="input-field inline" style="margin:0">
+                                        <input id="street_and_number" type="text" name="street_and_number" size="30" 
+                                            placeholder="@lang('user.street_and_number')"
+                                            @if(!($errors->has('country'))) disabled @endif 
+											style="margin:0" class="validate black-text @error('street_and_number') invalid @enderror"
+											value="{{ old('street_and_number', $user->personalInformation->street_and_number) }}" required>
+										@error('street_and_number')
+										<span class="helper-text" data-error="{{ $message }}"></span>
+										@enderror
+                                    </div>
+                                    <button id="street_and_number_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
+                                        type="submit" style="margin-top:10px">
+                                        <i class="material-icons">send</i></button>
+                                    <a id="street_and_number_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                        onclick="editor('street_and_number')" style="margin-top:10px">
+                                        <i class="material-icons">edit</i></a>
+                                </form>
+                            @else
                             {{ $user->personalInformation->country }}, <small>{{ $user->personalInformation->county }}</small>
                             <br>
                             {{ $user->personalInformation->zip_code }} {{ $user->personalInformation->city }},
                             <small>{{ $user->personalInformation->street_and_number }} </small>
+                            @endif
                         </td>
                     </tr>
                 @endif

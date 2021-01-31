@@ -36,11 +36,17 @@ class UserController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
+            //only one should exist at a time
             'email' => 'email|max:225|unique:users',
             'phone_number' => 'string|min:16|max:18',
             'mothers_name' => 'string|max:225',
             'place_of_birth' => 'string|max:225',
             'date_of_birth' => 'string|max:225',
+            'country' => 'string|max:255',
+            'county' => 'string|max:255',
+            'zip_code' => 'string|max:31',
+            'city' => 'string|max:255',
+            'street_and_number' => 'string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -51,8 +57,9 @@ class UserController extends Controller
         if($request->has('email')){
             $user->update(['email' => $request->email]);
         }
-        if ($user->hasPersonalInformation() && $request->hasAny(['phone_number', 'mothers_name', 'place_of_birth', 'date_of_birth'])){
-            //TODO: address
+        if ($user->hasPersonalInformation() && $request->hasAny(
+            ['place_of_birth','date_of_birth','mothers_name','phone_number','country','county','zip_code','city','street_and_number',]
+        )){
             $user->personalInformation->update($request->all());
         }
         //TODO: educational information
