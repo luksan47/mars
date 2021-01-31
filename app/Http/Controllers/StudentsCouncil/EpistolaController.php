@@ -15,18 +15,26 @@ use App\Models\EpistolaNews;
 
 class EpistolaController extends Controller
 {
-    public function index(Request $request)
+
+    const IMAGE_TARGET_SIZE = 800;
+
+    public function index()
     {
         $this->authorize('view', EpistolaNews::class);
+        
+        //sort by valid_until property with null values at the end
+        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+            if ($result->valid_until == null)
+                return PHP_INT_MAX;
+            return $result->valid_until;
+        });
+
+        $sent = EpistolaNews::where('sent', true)->get();
         return view(
             'student-council.communication-committee.app',
             [
-                'not_sent' => EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
-                    if ($result->valid_until == null)
-                        return PHP_INT_MAX;
-                    return $result->valid_until;
-                }),
-                'sent' => EpistolaNews::where('sent', true)->get()
+                'unsent' => $unsent,
+                'sent' => $sent,
             ]
         );
     }
@@ -93,7 +101,7 @@ class EpistolaController extends Controller
         //store and resize uploaded picture
         if ($request->picture_upload != null) {
             $path = $request->file('picture_upload')->store('', 'epistola');
-            Image::make(public_path('/img/epistola/' . $path))->resize(600, null, function ($constraint) {
+            Image::make(public_path('/img/epistola/' . $path))->resize(self::IMAGE_TARGET_SIZE, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save();
             $picture_path = config('app.url') . '/img/epistola/' . $path;
@@ -117,23 +125,26 @@ class EpistolaController extends Controller
     {
         $this->authorize('send', EpistolaNews::class);
 
-        return (new EpistolaCollegii(EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
             if ($result->valid_until == null)
                 return PHP_INT_MAX;
             return $result->valid_until;
-        })));
+        });
+
+        return (new EpistolaCollegii($unsent));
     }
 
     public function send()
     {
         $this->authorize('send', EpistolaNews::class);
 
-        $mail = new EpistolaCollegii(EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
             if ($result->valid_until == null)
                 return PHP_INT_MAX;
             return $result->valid_until;
-        }));
-        Mail::to(env('MAIL_KOMMBIZ'))->send($mail);
+        });
+
+        Mail::to(env('MAIL_KOMMBIZ'))->send(new EpistolaCollegii($unsent));
 
         EpistolaNews::where('sent', false)->update(['sent' => true]);
 

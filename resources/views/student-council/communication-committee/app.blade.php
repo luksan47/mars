@@ -32,7 +32,7 @@
     </div>
 </div>
 <div class="row">
-    @forelse ($not_sent as $article)
+    @forelse ($unsent as $article)
         @if($loop->index % 3 == 0)</div><div class="row">@endif
         <div class="col s12 m6 l6 xl4">
             @include('student-council.communication-committee.epistola', ['article'=> $article])
