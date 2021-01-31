@@ -191,6 +191,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
+        //GrahamCampbell\Markdown\Facades\Markdown::class,
 
         /*
          * Application Service Providers...

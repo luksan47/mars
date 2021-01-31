@@ -67,11 +67,14 @@ class BasicTest extends TestCase
         $user = User::factory()->create(['verified' => false]);
 
         $working_routes = ['verification'];
-        $skipped_routes = [
-            'privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}',
-            // TODO:
+        $skipped_routes = ['privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}',
+            // TODO: test these routes separately
             'network/admin/checkout/transaction/delete/{transaction}',
             'economic_committee/transaction/delete/{transaction}',
+            'communication_committee/epistola/edit/{epistola}',
+            'communication_committee/epistola/restore/{epistola}',
+            'communication_committee/epistola/mark_as_sent/{epistola}',
+            'communication_committee/epistola/delete/{epistola}',
         ];
         //$forbidden_routes = array_merge($this->protected_localization_routes);
         $routeCollection = Route::getRoutes();
