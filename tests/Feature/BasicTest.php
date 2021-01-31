@@ -67,7 +67,8 @@ class BasicTest extends TestCase
         $user = User::factory()->create(['verified' => false]);
 
         $working_routes = ['verification'];
-        $skipped_routes = ['privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}',
+        $skipped_routes = [
+            'privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}',
             // TODO: test these routes separately
             'network/admin/checkout/transaction/delete/{transaction}',
             'economic_committee/transaction/delete/{transaction}',
