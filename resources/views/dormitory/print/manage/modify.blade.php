@@ -1,5 +1,6 @@
 @can('modify', \App\Models\PrintAccount::class)
 <span class="card-title">@lang('print.modify_print_balance')</span>
+<blockquote>@lang('print.transaction_descr')</blockquote>
 <div class="row">
 <form method="POST" action="{{ route('print.modify') }}">
         @csrf

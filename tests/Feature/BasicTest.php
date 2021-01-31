@@ -85,8 +85,7 @@ class BasicTest extends TestCase
                 $response->assertStatus(200);
             } elseif (in_array($route->uri(), $skipped_routes)) {
                 // Skipping these...
-            }else {
-
+            } else {
                 $this->assertTrue(in_array($response->status(), [302, 403]), "Got " . $response->status() . " for " . $route->uri());
             }
         }
@@ -96,7 +95,8 @@ class BasicTest extends TestCase
     {
         $user = User::factory()->create(['verified' => true]);
 
-        $skipped_routes = ['privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}',
+        $skipped_routes = [
+            'privacy_policy', 'img/{filename}', 'test_mails/{mail}/{send?}',
             // These cause some problem... TODO: figure them out
             'localizations',
             'localizations/add',

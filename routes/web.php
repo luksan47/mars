@@ -157,7 +157,6 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Students' Council */
     Route::get('/economic_committee', [EconomicController::class, 'index'])->name('economic_committee');
-    Route::get('/economic_committee/transaction', [EconomicController::class, 'indexTransaction'])->name('economic_committee.transaction');
     Route::post('/economic_committee/transaction/add', [EconomicController::class, 'addTransaction'])->name('economic_committee.transaction.add');
     Route::get('/economic_committee/transaction/delete/{transaction}', [EconomicController::class, 'deleteTransaction'])->name('economic_committee.transaction.delete');
     Route::get('/economic_committee/kktnetreg', [EconomicController::class, 'indexKKTNetreg'])->name('kktnetreg');
