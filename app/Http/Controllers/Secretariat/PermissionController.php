@@ -39,8 +39,12 @@ class PermissionController extends Controller
         $object_id = $request[$roleName] ?? null;
 
         $user_id = Role::canBeAttached($role_id, $object_id);
-        if ($user_id < -1) abort(500, 'The role cannot be assigned.');
-        if ($user_id > 0) return back()->with('message', __('role.role_unavailable', ['user' => User::find($user_id)->name]));
+        if ($user_id < -1) {
+            abort(500, 'The role cannot be assigned.');
+        }
+        if ($user_id > 0) {
+            return back()->with('message', __('role.role_unavailable', ['user' => User::find($user_id)->name]));
+        }
         //0 means ok:
         if ($object_id) {
             if ($user->roles()->where('id', $role_id)->wherePivot('object_id', $object_id)->count() == 0) {
