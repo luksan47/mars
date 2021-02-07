@@ -47,4 +47,5 @@ return [
     'vice_president' => 'Vice president',
     'workshop-administrator' => 'Workshop administrator',
     'workshop-leader' => 'Workshop leader',
+    'role_unavailable' => 'This role is unique and currently it belongs to someone else.'
 ];

@@ -35,10 +35,14 @@ class PermissionController extends Controller
         $user = User::find($id);
 
         $this->authorize('updatePermission', [$user, $role_id]);
+        $roleName = Role::find($role_id)->name;
+        $object_id = $request[$roleName] ?? null;
 
-        $role = Role::find($role_id);
-        if ($role->canHaveObject()) {
-            $object_id = $request[$role->name];
+        $user_id = Role::canBeAttached($role_id, $object_id);
+        if ($user_id < -1) abort(500, 'The role cannot be assigned.');
+        if ($user_id > 0) return back()->with('message', __('role.role_unavailable', ['user' => User::find($user_id)->name]));
+        //0 means ok:
+        if ($object_id) {
             if ($user->roles()->where('id', $role_id)->wherePivot('object_id', $object_id)->count() == 0) {
                 $user->roles()->attach([
                     $role_id => ['object_id' => $object_id],

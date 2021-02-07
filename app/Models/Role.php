@@ -102,7 +102,7 @@ class Role extends Model
 
     /**
      * Returns true if the role can be attached to only one user at a time.
-     * @param string $roleName
+     * @param int $roleId
      * @param string $objectName optional. Returns false if the object is null for a role which can have objects.
      * @return bool
      */
@@ -127,25 +127,29 @@ class Role extends Model
 
     /**
      * Returns true if the specified role can be attached to someone.
-     * @param string $roleName
-     * @param string $objectName optional. Returns false if the object is null for a role which can have objects.
-     * @return bool
+     * @param int $roleId
+     * @param int $objectId optional. Returns -1 if the object is null for a role which can have objects and contrariwise.
+     * @return int 0 if the role can be attached, -1 if mentioned above, and an id for the user which assigned to a unique role otherwise
      */
-    public function canBeAttached($roleName, $objectName = null): bool
+    public static function canBeAttached($roleId, $objectId = null): int
     {
-        if (self::isUnique($roleName, $objectName)) {
-            $id = self::getId($roleName);
+        $roleName = self::findOrFail($roleId)->name;
+        $object = self::possibleObjectsFor($roleName)->find($objectId);
+        if (self::isUnique($roleName, ($object ? $object->name : null))) {
             if (self::canHaveObjectFor($roleName)) {
-                if ($objectName == null) return false;
-                $object_id = self::getObjectIdByName($roleName, $objectName);
-                return DB::table('role_users')
-                    ->where('role_id', $id)
-                    ->where('object_id', $object_id)
-                    ->count() == 0;
+                if ($object == null) return -1;
+                $row = DB::table('role_users')
+                    ->where('role_id', $roleId)
+                    ->where('object_id', $objectId)
+                    ->first();
+                return ($row ? $row->user_id : 0);
             }
-            return DB::table('role_users')->where('role_id', $id)->count() == 0;
+            if ($objectId != null) return -1;
+
+            $row = DB::table('role_users')->where('role_id', $roleId)->first();
+            return ($row ? $row->user_id : 0);
         }
-        return true;
+        return 0;
     }
 
     /**
@@ -186,7 +190,7 @@ class Role extends Model
     }
 
     /**
-     * Returns if the role can have objects
+     * Returns if the role can have objects.
      * @return string object name
      */
     public static function canHaveObjectFor($name): bool
