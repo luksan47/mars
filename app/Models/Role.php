@@ -102,22 +102,22 @@ class Role extends Model
 
     /**
      * Returns true if the role can be attached to only one user at a time.
-     * TODO: make it static
      * @param string $roleName
-     * @param string $objectName optional
+     * @param string $objectName optional. Returns false if the object is null for a role which can have objects.
      * @return bool
      */
-    public  function isUnique($roleName, $objectName = null): bool
+    public static function isUnique($roleName, $objectName = null): bool
     {
-        if (!$this->canHaveObject()) {
-            return in_array($this->name, [
+        if (!self::canHaveObjectFor($roleName)) {
+            return in_array($roleName, [
                 self::DIRECTOR
             ]);
         } else {
-            if ($this->name == self::STUDENT_COUNCIL) {
-                return in_array($this->object()->name, array_merge(self::COMMITTEE_LEADERS, self::PRESIDENT));
+            if ($objectName == null) return false;
+            if ($roleName == self::STUDENT_COUNCIL) {
+                return in_array($objectName, array_merge(self::COMMITTEE_LEADERS, [self::PRESIDENT]));
             }
-            return in_array($this->name, [
+            return in_array($roleName, [
                 self::WORKSHOP_ADMINISTRATOR,
                 self::WORKSHOP_LEADER
             ]);
@@ -127,19 +127,23 @@ class Role extends Model
 
     /**
      * Returns true if the specified role can be attached to someone.
-     * TODO: make it static
+     * @param string $roleName
+     * @param string $objectName optional. Returns false if the object is null for a role which can have objects.
+     * @return bool
      */
-    public function canBeAttached()
+    public function canBeAttached($roleName, $objectName = null): bool
     {
-        if ($this->isUnique()) {
-            if ($this->canHaveObject()) {
-                if ($this->object() == null) return false;
+        if (self::isUnique($roleName, $objectName)) {
+            $id = self::getId($roleName);
+            if (self::canHaveObjectFor($roleName)) {
+                if ($objectName == null) return false;
+                $object_id = self::getObjectIdByName($roleName, $objectName);
                 return DB::table('role_users')
-                    ->where('role_id', $this->id, $this->id)
-                    ->where('object_id', $this->object()->id)
+                    ->where('role_id', $id)
+                    ->where('object_id', $object_id)
                     ->count() == 0;
             }
-            return DB::table('role_users')->where('role_id', $this->id)->count() == 0;
+            return DB::table('role_users')->where('role_id', $id)->count() == 0;
         }
         return true;
     }
@@ -159,7 +163,7 @@ class Role extends Model
     public static function getObjectIdByName($roleName, $objectName)
     {
         $objects = self::possibleObjectsFor($roleName);
-        Log::info('getObjectIdByName', ['objectName'=> $objectName, 'objects' => $objects, 'role' => $roleName]);
+        Log::info('getObjectIdByName', ['objectName' => $objectName, 'objects' => $objects, 'role' => $roleName]);
         return $objects->where('name', $objectName)->first()->id;
     }
 
