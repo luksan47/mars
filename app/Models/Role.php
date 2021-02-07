@@ -167,7 +167,6 @@ class Role extends Model
     public static function getObjectIdByName($roleName, $objectName)
     {
         $objects = self::possibleObjectsFor($roleName);
-        Log::info('getObjectIdByName', ['objectName' => $objectName, 'objects' => $objects, 'role' => $roleName]);
         return $objects->where('name', $objectName)->first()->id;
     }
 
