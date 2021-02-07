@@ -47,5 +47,5 @@ return [
     'vice_president' => 'Alelnök',
     'workshop-administrator' => 'Műhelytitkár',
     'workshop-leader' => 'Műhelyvezető',
-    'role_unavailable' => 'Ez a jogosultság egyedi és most :user van hozzárendelve.'
+    'role_unavailable' => 'Ez a jogosultság egyedi és most :user van hozzárendelve.',
 ];
