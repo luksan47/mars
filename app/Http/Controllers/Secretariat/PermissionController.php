@@ -43,6 +43,10 @@ class PermissionController extends Controller
         if ($user_id > 0) return back()->with('message', __('role.role_unavailable', ['user' => User::find($user_id)->name]));
         //0 means ok:
         if ($object_id) {
+            if ($roleName == Role::COLLEGIST && $user->isCollegist()) {
+                //change resident/extern status
+                $user->roles()->where('id', $role_id)->update(['object_id' => $object_id]);
+            }
             if ($user->roles()->where('id', $role_id)->wherePivot('object_id', $object_id)->count() == 0) {
                 $user->roles()->attach([
                     $role_id => ['object_id' => $object_id],

@@ -134,7 +134,7 @@ class Role extends Model
     public static function canBeAttached($roleId, $objectId = null): int
     {
         $roleName = self::findOrFail($roleId)->name;
-        $object = self::possibleObjectsFor($roleName)->find($objectId);
+        $object = self::possibleObjectsFor($roleName)->firstWhere('id', $objectId);
         if (self::isUnique($roleName, ($object ? $object->name : null))) {
             if (self::canHaveObjectFor($roleName)) {
                 if ($object == null) return -1;
