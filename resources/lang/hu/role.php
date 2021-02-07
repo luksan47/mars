@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'admin' => 'Admin',
+    'admin' => 'Rendszergazda',
     'collegist' => 'Collegista',
     'communication-committee' => 'Kommunikációs Bizottság',
     'communication-leader' => 'Kommunikációs bizottsági elnök',
@@ -47,4 +47,5 @@ return [
     'vice_president' => 'Alelnök',
     'workshop-administrator' => 'Műhelytitkár',
     'workshop-leader' => 'Műhelyvezető',
+    'role_unavailable' => 'Ez a jogosultság egyedi és most valaki máshoz van rendelve.'
 ];
