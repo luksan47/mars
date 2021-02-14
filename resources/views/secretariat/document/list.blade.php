@@ -25,10 +25,10 @@
                         @foreach ($requests as $request)
                         <tr>
                             <td>
-                                {{ $request->name }}
+                                {{ $request->user->name ?? 'Name not found' }}
                             </td>
                             <td>
-                                {{ $request->neptun }}
+                                {{ $request->user->educationalInformation->neptun ?? 'Neptun code not found'}}
                             </td>
                             <td>
                                 @if ($request->document_type === 'StatusCertificate')    
@@ -38,7 +38,7 @@
                                 @endif
                             </td>
                             <td>
-                                {{ $request->date_of_request }}
+                                {{ $request->created_at->format('Y-m-d h:m') }}
                             </td>
                         </tr>
                         @endforeach

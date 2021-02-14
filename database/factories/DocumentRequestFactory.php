@@ -12,10 +12,8 @@ class DocumentRequestFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'neptun' => $this->faker->regexify('[A-Z0-9]{6}'),
             'document_type' => 'StatusCertificate',     // Might add other document types later
-            'date_of_request' => $this->faker->unique()->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
+            'created_at' => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
         ];
     }
 }

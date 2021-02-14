@@ -14,10 +14,10 @@ class CreateDocumentRequest extends Migration
     public function up()
     {
         Schema::create('document_requests', function (Blueprint $table) {
-            $table->string('name');
-            $table->char('neptun', 6)->nullable();
+            $table->bigIncrements('id');
+            $table->integer('user_id')->default(0);
             $table->string('document_type');
-            $table->date('date_of_request')->nullable();
+            $table->timestamps();
         });
     }
 

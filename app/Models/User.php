@@ -145,6 +145,13 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->internetAccess->reachedWifiConnectionLimit();
     }
 
+    /* Document request related getters */
+
+    public function documentRequests()
+    {
+        return $this->hasMany('App\Models\DocumentRequest');
+    }
+
     /* Basic information of the user */
 
     public function setVerified(): void

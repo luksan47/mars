@@ -9,17 +9,14 @@ class DocumentRequest extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
-        'name',
-        'neptun',
         'document_type',
-        'date_of_request',
     ];
 
-    public function getDate()
+    public function user()
     {
-        return $this->date_of_request;
+        return $this->belongsTo(User::class);
     }
 }
