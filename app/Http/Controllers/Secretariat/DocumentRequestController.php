@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Secretariat;
 
 use App\Http\Controllers\Controller;
 use App\Models\DocumentRequest;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class DocumentRequestController extends Controller
 {

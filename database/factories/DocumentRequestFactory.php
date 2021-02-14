@@ -12,7 +12,7 @@ class DocumentRequestFactory extends Factory
     public function definition()
     {
         return [
-            'document_type' => 'StatusCertificate',     // Might add other document types later
+            'document_type' => DocumentRequest::STATUS_CERTIFICATE,     // Might add other document types later
             'created_at' => $this->faker->dateTimeBetween($startDate = '-1 years', $endDate = 'now'),
         ];
     }

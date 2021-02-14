@@ -11,6 +11,11 @@ class DocumentRequest extends Model
 
     public $timestamps = true;
 
+    const STATUS_CERTIFICATE = 'StatusCertificate';
+    const TYPES = [
+        self::STATUS_CERTIFICATE,
+    ];
+
     protected $fillable = [
         'document_type',
     ];

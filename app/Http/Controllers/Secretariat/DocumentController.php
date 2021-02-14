@@ -121,10 +121,10 @@ class DocumentController extends Controller
         }
 
         /* Save request event */
-        
+
         $user = Auth::user();
         $request = DocumentRequest::create([
-            'document_type' => 'StatusCertificate',
+            'document_type' => DocumentRequest::STATUS_CERTIFICATE,
         ]);
         $user->documentRequests()->save($request);
 
