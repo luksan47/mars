@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\StudentsCouncil\EpistolaController;
+use App\Models\EpistolaNews;
 use App\Models\Role;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -20,7 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['information' => DB::table('home_page_news')->first()->text]);
+
+        $response = Gate::inspect('view', EpistolaNews::class);
+        if ($response->allowed()) {
+            $epistola = EpistolaController::getActiveNews();
+        }
+        return view('home', [
+            'information' => DB::table('home_page_news')->first()->text,
+            'epistola' => $epistola
+        ]);
     }
 
     public function colorMode($mode)
