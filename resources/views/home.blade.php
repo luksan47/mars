@@ -66,5 +66,11 @@ $("#edit_btn").click(function() {
         $("#info_form").submit();
     }
 });
+function standby(id) {
+    document.getElementById(id).src = "{{ url('/img/committee-logos/kommbiz.jpg') }}"
+}
+$(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
 </script>
 @endpush
