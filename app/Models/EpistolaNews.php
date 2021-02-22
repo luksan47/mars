@@ -63,7 +63,7 @@ class EpistolaNews extends Model
     {
         return ($this->valid_until != null)
             && (now()->addDays(7)->format('Y.m.d') > $this->valid_until)
-            && !$this->sent;
+            && ! $this->sent;
     }
 
     public function uploader()

@@ -32,12 +32,14 @@ class EpistolaNewsFactory extends Factory
                 if ($attributes['details_name_1'] != null) {
                     return $this->faker->url();
                 }
+
                 return null;
             },
             'details_url_2' => function (array $attributes) {
                 if ($attributes['details_name_2'] != null) {
                     return $this->faker->url();
                 }
+
                 return null;
             },
             'deadline_name' => $this->faker->boolean(50) ? $this->faker->realText(20) : null,
@@ -45,6 +47,7 @@ class EpistolaNewsFactory extends Factory
                 if ($attributes['deadline_date'] != null) {
                     return now()->addDays($this->faker->numberBetween(0, 100));
                 }
+
                 return null;
             },
             'date' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 200)) : null,
