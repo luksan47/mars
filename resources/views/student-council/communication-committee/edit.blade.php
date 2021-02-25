@@ -49,7 +49,6 @@
                             @enderror
                         </div>
                         <div class="input-field col s12">
-                            
                             <textarea id="description" class="materialize-textarea validate @error('description') invalid @enderror" name="description" required
                                 >{{ $epistola->description ?? old('description')}}</textarea>
                             <label for="description">Leírás*</label>
@@ -103,6 +102,8 @@
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="input-field col s12 l6">
                             <input id="details_name_2" name="details_name_2" type="text" class="validate @error('details_name_2') invalid @enderror"
                                 value="{{ $epistola->details_name_2 ?? old('details_name_2')}}">
@@ -119,6 +120,8 @@
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="input-field col s12 l6">
                             <input id="deadline_name" name="deadline_name" type="text" class="validate @error('deadline_name') invalid @enderror"
                                 value="{{ $epistola->deadline_name ?? old('deadline_name') }}">

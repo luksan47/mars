@@ -82,7 +82,7 @@ class EpistolaController extends Controller
             'date' => 'nullable|date|required_with:time,end_date',
             'time' => 'nullable|date_format:H:i',
             'end_date' => 'nullable|date',
-            'details_name_1' => 'nullable|string|required_with:details_url_!',
+            'details_name_1' => 'nullable|string|required_with:details_url_1',
             'details_url_1' => 'nullable|url|required_with:details_name_1',
             'details_name_2' => 'nullable|string|required_with:details_url_2',
             'details_url_2' => 'nullable|url|required_with:details_name_2',

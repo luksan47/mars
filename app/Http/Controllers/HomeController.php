@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -23,14 +22,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $response = Gate::inspect('view', EpistolaNews::class);
-        if ($response->allowed()) {
+        if (Auth::user()->can('view', EpistolaNews::class)) {
             $epistola = EpistolaController::getActiveNews();
         }
         return view('home', [
             'information' => DB::table('home_page_news')->first()->text,
-            'epistola' => $epistola
+            'epistola' => $epistola ?? null
         ]);
     }
 
