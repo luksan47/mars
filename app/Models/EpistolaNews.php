@@ -18,25 +18,24 @@ class EpistolaNews extends Model
         'title',
         'subtitle',
         'description',
-        'further_details_url',
-        'website_url',
-        'facebook_event_url',
-        'fill_url',
-        'registration_url',
-        'registration_deadline',
-        'filling_deadline',
         'date',
         'time',
         'end_date',
+        'details_name_1',
+        'details_name_2',
+        'details_url_1',
+        'details_url_2',
+        'deadline_name',
+        'deadline_date',
         'picture_path',
         'sent',
     ];
-    protected $dates = ['date', 'time', 'end_date', 'valid_until', 'registration_deadline', 'filling_deadline'];
+    protected $dates = ['date', 'time', 'end_date', 'valid_until', 'deadline_date'];
 
     //notifications should be sent before this date
     public function getValidUntilAttribute()
     {
-        $date = (($this->registration_deadline ?? $this->filling_deadline) ?? $this->date);
+        $date = ($this->deadline_date ?? $this->date);
         if ($date) {
             return $date->format('Y.m.d');
         }
@@ -63,7 +62,7 @@ class EpistolaNews extends Model
     public function shouldBeSent()
     {
         return ($this->valid_until != null)
-            && (now()->addDays(3)->format('Y.m.d') > $this->valid_until)
+            && (now()->addDays(7)->format('Y.m.d') > $this->valid_until)
             && ! $this->sent;
     }
 

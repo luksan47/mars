@@ -1,12 +1,17 @@
 //custom color
 $coli: (
-  "blue": if($isDebug == "true", #5e1a10, #242851),
-  "orange": if($isDebug == "true", #dc3c1c, #b38f2f),
-  "lightblue": #6e76e5
+    "blue": if($isDebug == "true", #5e1a10, #242851),
+    "orange": if($isDebug == "true", #dc3c1c, #b38f2f),
+    "lightblue": #6e76e5
 );
 //import and overwrite default colors
 @import "node_modules/materialize-css/sass/components/color-variables";
-$colors: map-merge($colors,("coli": $coli));
+$colors: map-merge(
+    $colors,
+    (
+        "coli": $coli
+    )
+);
 
 //create color classes
 @import "node_modules/materialize-css/sass/components/color-classes";
@@ -23,143 +28,173 @@ $link-color: color("coli", "orange");
 
 /* overwrite some materialize classes */
 blockquote {
-  margin: 20px 0;
-  padding-left: 1.5rem;
-  border-left: 5px solid $secondary-color !important;
-  &.error {
-    color: $secondary-color;
-  }
+    margin: 20px 0;
+    padding-left: 1.5rem;
+    border-left: 5px solid $secondary-color !important;
+    &.error {
+        color: $secondary-color;
+    }
 }
 .breadcrumb {
-  cursor:default;
+    cursor: default;
 }
 .sidenav .divider {
-  margin: 0;
+    margin: 0;
 }
 //enable multiline buttons if the text does not fit in
 .btn,
 .btn-flat {
-  height: inherit;
+    height: inherit;
 }
 .btn-fixed-height {
-  height: $button-height;
+    height: $button-height;
 }
 .btn-floating {
-	&.btn-large {
-		height: $button-floating-large-size !important;
-	}
-	&.btn-small {
-		height: $button-floating-small-size !important;
-	}
+    &.btn-large {
+        height: $button-floating-large-size !important;
+    }
+    &.btn-small {
+        height: $button-floating-small-size !important;
+    }
 }
 
 /* Settings for dark mode */
 $transition-effects: color 1s ease, background-color 0.5s ease;
 
 body {
-	transition: $transition-effects;
-	&.dark {
-		background-color: #000000;
-		color: #fff;
-		.card {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.divider {
-			opacity: 0.2;
-		}
-		.tabulator {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.tabulator-col {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.tabulator-col-content {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.tabulator-page {
-			color: #fff;
-		}
-		.collapsible-body{
-			background-color: rgba(25, 25, 25, 255)
-		}
-		.dropdown-trigger{
-			color: #fff;
-		}
-		.caret{
-			fill: #fff;
-		}
-		.selected {
-			span{
-				color: #fff;
-			}
-		}
-		.input-field{
-			input{
-				color: #fff;
-			}
-		}
-		.dropdown-content {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.datepicker-calendar{
-			color: #000000;
-			.dropdown-trigger{
-				color: #000000
-			}
-			.caret{
-				fill: #000000
-			}
-		}
-		.sidenav {
-			background-color: rgba(25, 25, 25, 255);
-			li {
-				a {
-					&:not(.subheader){
-						color: #fff;
-						&:hover {
-							background-color: #3B4043;
-						}
-					}
-					&.subheader {
-						color:#9AA0A6;
-					}
-					.material-icons {
-						color: #9AA0A6;
-					}
-				}
-			}
+    transition: $transition-effects;
+    &.dark {
+        background-color: #000000;
+        color: #fff;
+        .card {
+            background-color: rgba(25, 25, 25, 255);
         }
-		.collection {
-			border: 1px solid rgba(255,255,255,0.2);
-			.collection-item {
-				background-color: rgba(255,255,255,0.2);
-				border-bottom: 1px solid rgba(255,255,255,0.2);
-			}
-		}
-		textarea{
-			color: #fff;
-		}
-		.input-field{
-			textarea{
-				color: #fff;
-			}
-		}
-		a{
-			color:#fff !important;
-		}
-		.black-text{
-			color:#fff !important;
-		}
-	}
+        .divider {
+            opacity: 0.2;
+        }
+        .tabulator {
+            background-color: rgba(25, 25, 25, 255);
+        }
+        .tabulator-col {
+            background-color: rgba(25, 25, 25, 255);
+        }
+        .tabulator-col-content {
+            background-color: rgba(25, 25, 25, 255);
+        }
+        .tabulator-page {
+            color: #fff;
+        }
+        .collapsible-body {
+            background-color: rgba(25, 25, 25, 255);
+        }
+        .dropdown-trigger {
+            color: #fff;
+        }
+        .caret {
+            fill: #fff;
+        }
+        .selected {
+            span {
+                color: #fff;
+            }
+        }
+        .input-field {
+            input {
+                color: #fff;
+            }
+        }
+        .dropdown-content {
+            background-color: rgba(25, 25, 25, 255);
+        }
+        .datepicker-calendar {
+            color: #000000;
+            .dropdown-trigger {
+                color: #000000;
+            }
+            .caret {
+                fill: #000000;
+            }
+        }
+        .sidenav {
+            background-color: rgba(25, 25, 25, 255);
+            li {
+                a {
+                    &:not(.subheader) {
+                        color: #fff;
+                        &:hover {
+                            background-color: #3b4043;
+                        }
+                    }
+                    &.subheader {
+                        color: #9aa0a6;
+                    }
+                    .material-icons {
+                        color: #9aa0a6;
+                    }
+                }
+            }
+        }
+        .collection {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            .collection-item {
+                background-color: rgba(255, 255, 255, 0.2);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+        }
+        textarea {
+            color: #fff;
+        }
+        .input-field {
+            textarea {
+                color: #fff;
+            }
+        }
+        a {
+            color: #fff !important;
+        }
+        .black-text {
+            color: #fff !important;
+        }
+    }
 }
 
 //other, custom classes
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Opera and Firefox */
+}
+
+@mixin column-count($ct) {
+    -webkit-column-count: $ct;
+    -moz-column-count: $ct;
+    column-count: $ct;
+}
+
+.cards-container {
+    column-break-inside: avoid;
+    .card {
+        display: inline-block;
+        overflow: visible;
+    }
+}
+
+@media #{$small-and-down} {
+    .cards-container {
+        @include column-count(1);
+    }
+}
+@media #{$medium-and-up} {
+    .cards-container {
+        @include column-count(2);
+    }
+}
+@media #{$large-and-up} {
+    .cards-container {
+        @include column-count(3);
+    }
 }

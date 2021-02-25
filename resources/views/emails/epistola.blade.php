@@ -73,11 +73,9 @@ width: 100% !important;
                             A mai hírlevélben a következő témákról lesz szó:
                         </h1>
 
-                        @php $i=1; @endphp
                         @foreach ($news as $article)
-                            <h2>{{ $i }}.<span>{{$article->title }}</span></h2>
+                            <h2>{{ $loop->iteration }}.<span>{{$article->title }}</span></h2>
                             <h3>{{ $article->subtitle}}</h3>
-                            @php $i++; @endphp
                         @endforeach
                         </ol>
                         </h2>
@@ -86,7 +84,7 @@ width: 100% !important;
                               <td>&nbsp;</td>
                             </tr>
                           </table>
-                        <p class="center">További eseményeket az <a href="{{route('epistola')}}" target="_blank" rel="noopener">Uránban</a> várjuk feltöltésre.</p>
+                        <p class="center">További eseményeket, ajánlókat az <a href="{{route('epistola')}}" target="_blank" rel="noopener">Uránba</a> vagy a Kommunikációs Bizottság email címére várunk.</p>
                         @php
                             $names = $news->map(function($item) {return $item->uploader->name;})->unique()->toArray();
                         @endphp
@@ -100,38 +98,24 @@ width: 100% !important;
             <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
                     <td class="content-cell">
-                        @php $i=1; @endphp
                         @foreach ($news as $article)
-                            <h2>{{ $i }}.<span>{{$article->title }}</span></h2>
+                            <h2>{{ $loop->iteration }}.<span>{{$article->title }}</span></h2>
                             <h3>{{$article->date_time}}</h3>
                             <p class="description">@markdown($article->description)</p>
                             @if($article->picture_path)
                             <img src="{{ $article->picture_path }}">
                             @endif
                             <div style="margin-left: 10px">
-                                @if($article->further_details_url)
-                                <a href="{{$article->further_details_url}}" class="button" target="_blank" rel="noopener">További részletek</a>
+                                @if($article->details_name_1)
+                                <a href="{{$article->details_url_1}}" class="button" target="_blank" rel="noopener">{{ $article->details_name_1 }}</a>
                                 @endif
-                                @if($article->website_url)
-                                <a href="{{$article->website_url}}" class="button" target="_blank" rel="noopener">Weboldal</a>
-                                @endif
-                                @if($article->facebook_event_url)
-                                <a href="{{$article->facebook_event_url}}" class="button" target="_blank" rel="noopener">Facebook esemény</a>
-                                @endif
-                                @if($article->fill_url)
-                                <a href="{{$article->fill_url}}" class="button" target="_blank" rel="noopener">Kitöltés</a>
-                                @endif
-                                @if($article->registration_url)
-                                <a href="{{$article->registration_url}}" class="button" target="_blank" rel="noopener">Regisztráció</a>
+                                @if($article->details_name_2)
+                                <a href="{{$article->details_url_2}}" class="button" target="_blank" rel="noopener">{{ $article->details_name_2 }}</a>
                                 @endif
                             </div>
-                            @if($article->registration_deadline)
-                            <div class="warning">Regisztráció határideje: <i>{{$article->registration_deadline->format('Y. m. d.')}}</i></div>
+                            @if($article->deadline_date)
+                            <div class="warning">{{ $article->deadline_name}}: <i>{{$article->deadline_date->format('Y. m. d.')}}</i></div>
                             @endif
-                            @if($article->filling_deadline)
-                            <div class="warning">Kitöltés határideje: <i>{{$article->filling_deadline->format('Y. m. d.')}}</i></div>
-                            @endif
-                            @php $i++; @endphp
                         @endforeach
                     </td>
                 </tr>
