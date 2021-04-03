@@ -6,7 +6,9 @@ use App\View\Components\Input;
 
 class Text extends Input
 {
-    public $onlyInput, $message;
+    public $onlyInput;
+    public $message;
+
     /**
      * Create a new text input instance.
      * @param $onlyInput if provided, the content will not be wrapped in an input-field
