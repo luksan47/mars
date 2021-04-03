@@ -8,7 +8,9 @@ abstract class Input extends Component
 {
     public $id;
     public $lang;
-    public $s, $m, $l;
+    public $s;
+    public $m;
+    public $l;
     public $value;
 
     /**
@@ -30,7 +32,7 @@ abstract class Input extends Component
     public function __construct($id, $langFile, $s = 12, $m = 12, $l = 12)
     {
         $this->id = $id;
-        $this->lang = $langFile . "." . $id;
+        $this->lang = $langFile.'.'.$id;
         $this->s = $s;
         $this->m = $m;
         $this->l = $l;
