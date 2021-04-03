@@ -19,26 +19,15 @@
                     <blockquote class="error">{{ $message }}</blockquote>
                     @enderror
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input type="email" id="email" name="email"
-                                class="validate @error('email') invalid @enderror" value="{{ old('email') }}"
-                                autocomplete="email" autofocus required>
-                            <label for="email">@lang('registration.email')</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="password" type="password" class="validate @error('email') invalid @enderror"
-                                name="password" required autocomplete="current-password">
-                            <label for="password">@lang('registration.password')</label>
-                            @if (Route::has('password.request'))
-                            <span class="helper-text">
-                                <a href="{{ route('password.request') }}">
-                                    @lang('registration.forgotpwd')
-                                </a>
-                            </span>
-                            @endif
-                        </div>
+                        <x-input.text id="email"    type="email"    lang_file="registration" required autocomplete="email" autofocus/>
+                        <x-input.text id="password" type="password" lang_file="registration" required autocomplete="current-password"/>
+                        @if (Route::has('password.request'))
+                        <span class="helper-text right">
+                            <a href="{{ route('password.request') }}">
+                                @lang('registration.forgotpwd')
+                            </a>
+                        </span>
+                        @endif
                     </div>
                 </div>
                 <div class="card-action">
