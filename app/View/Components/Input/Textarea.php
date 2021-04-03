@@ -10,6 +10,7 @@ class Textarea extends Input
     {
         parent::__construct($id, $locale, $text, $s, $m, $l, $xl, $onlyInput);
     }
+
     /**
      * Get the view / contents that represent the component.
      *

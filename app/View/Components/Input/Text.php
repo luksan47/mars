@@ -7,6 +7,7 @@ use App\View\Components\Input;
 class Text extends Input
 {
     public $helper;
+
     /**
      * Create a new text input instance.
      * @param string $helper helper message

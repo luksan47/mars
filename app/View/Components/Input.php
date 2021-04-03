@@ -9,7 +9,10 @@ abstract class Input extends Component
 {
     public $id;
     public $label;
-    public $s, $m, $l, $xl;
+    public $s;
+    public $m;
+    public $l;
+    public $xl;
     public $value;
     public $onlyInput;
 
@@ -32,9 +35,11 @@ abstract class Input extends Component
      */
     public function __construct($id = null, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false)
     {
-        if (($id == null || $locale == null) && $text == null) throw new InvalidArgumentException('At least one of ($id + $locale) or $text must be given. id: ' . $id . ', locale: ' . $locale . ' text: ' . $text);
+        if (($id == null || $locale == null) && $text == null) {
+            throw new InvalidArgumentException('At least one of ($id + $locale) or $text must be given. id: '.$id.', locale: '.$locale.' text: '.$text);
+        }
         $this->id = $id;
-        $this->label = __($text ?? ($locale . '.' . $id));
+        $this->label = __($text ?? ($locale.'.'.$id));
         $this->s = $s;
         $this->m = $m;
         $this->l = $l;
