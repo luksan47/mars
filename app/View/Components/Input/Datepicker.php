@@ -6,13 +6,15 @@ use App\View\Components\Input;
 
 class Datepicker extends Input
 {
-    public $format, $yearRange;
+    public $format;
+    public $yearRange;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($id, $langFile, $format = null, $yearRange = null,  $s = 12, $m = null, $l = null, $xl = null)
+    public function __construct($id, $langFile, $format = null, $yearRange = null, $s = 12, $m = null, $l = null, $xl = null)
     {
         parent::__construct($id, $langFile, $s, $m, $l, $xl);
         $this->format = $format ?? 'yyyy-mm-dd';

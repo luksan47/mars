@@ -7,6 +7,7 @@ use App\View\Components\Input;
 class Button extends Input
 {
     public $text;
+
     /**
      * Create a new component instance.
      *

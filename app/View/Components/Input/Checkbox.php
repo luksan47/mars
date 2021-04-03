@@ -7,9 +7,10 @@ use Illuminate\View\Component;
 class Checkbox extends Component
 {
     public $text;
+
     /**
      * Create a new button instance.
-     * The button's type is submit by default,
+     * The button's type is submit by default,.
      * @return void
      */
     public function __construct($text)
