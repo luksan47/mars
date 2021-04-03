@@ -7,7 +7,7 @@
         'class' => 'btn waves-effect'
     ])}}
 >
-@lang($text)
+{{$label}}
 </button>
 @if(!$onlyInput)
 </div>

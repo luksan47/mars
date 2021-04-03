@@ -31,14 +31,14 @@
                 <div class="card-content">
                     <div class="card-title">@lang('general.change_password')</div>
                     <div class="row" style="margin-bottom: 0">
-                        <x-input.text id='old_password' lang_file="registration" type='password' required autocomplete="password"/>
-                        <x-input.text s=6 id='new_password' lang_file="registration" type='password' required autocomplete="new-password"/>
-                        <x-input.text s=6 id='confirmpwd' lang_file="registration" name="new_password_confirmation" type='password' required autocomplete="new-password"/>
+                        <x-input.text id='old_password' locale="registration" type='password' required autocomplete="password"/>
+                        <x-input.text s=6 id='new_password' locale="registration" type='password' required autocomplete="new-password"/>
+                        <x-input.text s=6 id='confirmpwd' locale="registration" name="new_password_confirmation" type='password' required autocomplete="new-password"/>
                     </div>
                 </div>
                 <div class="card-action">
                     <div class="row" style="margin-bottom: 0">
-                        <x-input.button class="right" text="general.change_password"/>
+                        <x-input.button only_input class="right" text="general.change_password"/>
                     </div>
                 </div>
             </form>

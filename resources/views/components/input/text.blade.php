@@ -11,9 +11,9 @@
             'name' => $id
         ])}}
     >
-    <label for="{{$id}}">@lang($lang)</label>
-    @if($message ?? null)
-    <span class="helper-text">{{ $message }}</span>
+    <label for="{{$id}}">{{$label}}</label>
+    @if($helper ?? null)
+    <span class="helper-text">{{ $helper }}</span>
     @endif
     @error($id)
         <span class="helper-text" data-error="{{ $message }}"></span>

@@ -11,8 +11,8 @@
                 <blockquote>@lang('faults.fault_description')</blockquote>
                 <form id="send-fault" class="form-horizontal" method="POST" action=" {{ route('faults.add') }} ">
                     @csrf
-                    <x-input.text id="location" lang_file="faults" autofocus required/>
-                    <x-input.textarea id="description" lang_file="faults" required/>
+                    <x-input.text id="location" locale="faults" autofocus required/>
+                    <x-input.textarea id="description" locale="faults" required/>
                     <x-input.button class="right" text="faults.submit"/>
                 </form>
                 @include('dormitory.faults.list')

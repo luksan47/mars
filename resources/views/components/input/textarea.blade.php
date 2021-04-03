@@ -1,8 +1,14 @@
+@if(!$onlyInput)
 <div class="input-field col s{{$s}} m{{$m}} l{{$l}} xl{{$xl}}">
+@endif
     <textarea
-        class="materialize-textarea validate"
-        name="{{$id}}"
         id="{{$id}}"
-        {{$attributes}}></textarea>
-    <label for="{{$id}}">@lang($lang)</label>
+        {{$attributes->merge([
+            'name' => $id,
+            'class' => "materialize-textarea validate"
+        ])}}></textarea>
+    <label for="{{$id}}">{{$label}}</label>
 </div>
+@if(!$onlyInput)
+</div>
+@endif

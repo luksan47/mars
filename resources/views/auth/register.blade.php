@@ -27,9 +27,9 @@
                     {{--basic information--}}
                     <div class="section">
                         <div class="row">
-                            <x-input.text id="email"      type="email"    lang_file="registration" required autocomplete="email" autofocus/>
-                            <x-input.text id="password"   lang_file="registration" type="password" required autocomplete="new-password"/>
-                            <x-input.text id="confirmpwd" lang_file="registration" name="password_confirmation" type="password" required autocomplete="new-password"/>
+                            <x-input.text id="email"      type="email"    locale="registration" required autocomplete="email" autofocus/>
+                            <x-input.text id="password"   locale="registration" type="password" required autocomplete="new-password"/>
+                            <x-input.text id="confirmpwd" locale="registration" name="password_confirmation" type="password" required autocomplete="new-password"/>
                         </div>
                         <input type="text" name="user_type" id="user_type" value="{{ $user_type }}" readonly hidden>
                     </div>
@@ -38,13 +38,13 @@
                     <div class="section">
                         <div class="card-title">@lang('user.user_data')</div>
                         <div class="row">
-                            <x-input.text id='name' required autocomplete='name' lang_file='user'/>
-                            <x-input.text l=6 id='place_of_birth' required lang_file='user'/>
-                            <x-input.datepicker l=6 id='date_of_birth' required lang_file='user'/>
-                            <x-input.text id='mothers_name' required lang_file='user'/>
+                            <x-input.text id='name' required autocomplete='name' locale='user'/>
+                            <x-input.text l=6 id='place_of_birth' required locale='user'/>
+                            <x-input.datepicker l=6 id='date_of_birth' required locale='user'/>
+                            <x-input.text id='mothers_name' required locale='user'/>
                             <x-input.text id='phone_number' type='tel' value='+36 ' required
                                 pattern="[+][0-9]{1,4}\s[(][0-9]{1,4}[)]\s[-|0-9]*" minlength="16" maxlength="18"
-                                lang_file='user' message='+36 (20) 123-4567'/>
+                                locale='user' message='+36 (20) 123-4567'/>
                         </div>
                     </div>
                     <div class="divider"></div>
@@ -79,10 +79,10 @@
                                 </script>
                             @endpush
                         </div>
-                        <x-input.text l=6 id='county'        lang_file='user' required/>
-                        <x-input.text l=6 id='zip_code'      lang_file='user' type='number' required/>
-                        <x-input.text id='city'              lang_file='user' required/>
-                        <x-input.text id='street_and_number' lang_file='user' required/>
+                        <x-input.text l=6 id='county'        locale='user' required/>
+                        <x-input.text l=6 id='zip_code'      locale='user' type='number' required/>
+                        <x-input.text id='city'              locale='user' required/>
+                        <x-input.text id='street_and_number' locale='user' required/>
                     </div>
                     @if($user_type == \App\Models\Role::COLLEGIST)
                     <div class="divider"></div>
@@ -90,10 +90,10 @@
                     <div class="section">
                         <div class="card-title">@lang('user.information_of_studies')</div>
                         <div class="row">
-                            <x-input.text id='high_school' lang_file='user' required/>
-                            <x-input.text s=6 id='year_of_graduation' lang_file='user' type='number' min="1895" :max="date('Y')" required/>
-                            <x-input.text s=6 id='year_of_acceptance' lang_file='user' type='number' min="1895" :max="date('Y')" required/>
-                            <x-input.text s=6 id='neptun' lang_file='user' required/>
+                            <x-input.text id='high_school' locale='user' required/>
+                            <x-input.text s=6 id='year_of_graduation' locale='user' type='number' min="1895" :max="date('Y')" required/>
+                            <x-input.text s=6 id='year_of_acceptance' locale='user' type='number' min="1895" :max="date('Y')" required/>
+                            <x-input.text s=6 id='neptun' locale='user' required/>
                             {{--status--}}
                             <div class="input-field col s6">
                                 @include('utils.select', [
@@ -104,7 +104,7 @@
                             {{--email--}}
                             <div class="col s12">
                                 <div class="input-field s6 inline" style="margin-left:0">
-                                    <x-input.text only_input=true id='educational_email' lang_file='user' required/>
+                                    <x-input.text only_input id='educational_email' locale='user' required/>
                                 </div>
                                 @student.elte.hu
                             </div>
@@ -114,7 +114,7 @@
                                 @foreach($faculties as $faculty)
                                 <p>
                                     @php $checked = old('faculty') !== null && in_array($faculty->id, old('faculty')) @endphp
-                                    <x-input.checkbox :text="$faculty->name" name="faculty[]" value="{{$faculty->id}}" :checked='$checked' @endif />
+                                    <x-input.checkbox only_input :text="$faculty->name" name="faculty[]" value="{{$faculty->id}}" :checked='$checked' @endif />
                                 </p>
                                 @endforeach
                                 @error('faculty')
@@ -127,7 +127,7 @@
                                 @foreach($workshops as $workshop)
                                 <p>
                                     @php $checked = old('workshop') !== null && in_array($faculty->id, old('workshop')) @endphp
-                                    <x-input.checkbox :text="$workshop->name" name="workshop[]" value="{{$workshop->id}}" :checked='$checked' @endif />
+                                    <x-input.checkbox only_input :text="$workshop->name" name="workshop[]" value="{{$workshop->id}}" :checked='$checked' @endif />
                                 </p>
                                 @endforeach
                                 @error('workshop')
@@ -148,9 +148,7 @@
                                             target="_blank">@lang('auth.privacy_policy').</a></span>
                                 </label></p>
                             </div>
-                            <div class="col s12 l4">
-                                <p><x-input.button class='right' lang_file='general' id='register'/></p>
-                            </div>
+                            <x-input.button l=4 class='right' text='general.register'/>
                         </div>
                     </div>
                 </div>

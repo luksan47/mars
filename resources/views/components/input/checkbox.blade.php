@@ -4,10 +4,11 @@
 <label>
     <input
         type="checkbox"
-        {{$attributes}}
-        class="filled-in checkbox-color"
+        {{$attributes->merge([
+            'classs' => "filled-in checkbox-color"
+        ])}}
     >
-    <span>@lang($text)</span>
+    <span>{{$label}}</span>
 </label>
 @if(!$onlyInput)
 </p></div>

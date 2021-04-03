@@ -14,9 +14,9 @@ class Datepicker extends Input
      *
      * @return void
      */
-    public function __construct($id, $langFile, $format = null, $yearRange = null, $s = 12, $m = null, $l = null, $xl = null)
+    public function __construct($id, $format = null, $yearRange = null, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false)
     {
-        parent::__construct($id, $langFile, $langKey, $s, $m, $l, $xl);
+        parent::__construct($id, $locale, $text, $s, $m, $l, $xl, $onlyInput);
         $this->format = $format ?? 'yyyy-mm-dd';
         $this->yearRange = $yearRange ?? 50;
     }

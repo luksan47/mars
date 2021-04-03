@@ -6,20 +6,16 @@ use App\View\Components\Input;
 
 class Text extends Input
 {
-    public $onlyInput;
-    public $message;
-
+    public $helper;
     /**
      * Create a new text input instance.
-     * @param $onlyInput if provided, the content will not be wrapped in an input-field
-     * @param $message helper message
+     * @param string $helper helper message
      * @return void
      */
-    public function __construct($id, $langFile, $langKey = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $message = null)
+    public function __construct($id, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $helper = null)
     {
-        parent::__construct($id, $langFile, $langKey, $s, $m, $l, $xl);
-        $this->onlyInput = $onlyInput;
-        $this->message = $message;
+        parent::__construct($id, $locale, $text, $s, $m, $l, $xl, $onlyInput);
+        $this->helper = $helper;
     }
 
     /**

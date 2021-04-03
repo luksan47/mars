@@ -1,6 +1,8 @@
 {{-- Do not forget to add "enctype='multipart/form-data'" to the form! --}}
 
-<div class="file-field input-field col s{{$s}} m{{$m}} l{{$l}} xl{{$xl}}">
+@if(!$onlyInput)
+<div class="input-field file-field col s{{$s}} m{{$m}} l{{$l}} xl{{$xl}}">
+@endif
     <div class="btn waves-effect">
         <span>File</span>
         <input
@@ -14,11 +16,13 @@
     <div class="file-path-wrapper">
         <input
             class="file-path @error($id) invalid @enderror"
-            placeholder="@lang($lang)"
+            placeholder="{{$label}}"
             type="text"
             disabled>
         @error($id)
             <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>
+@if(!$onlyInput)
 </div>
+@endif
