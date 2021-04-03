@@ -13,9 +13,9 @@ class Text extends Input
      * @param $message helper message
      * @return void
      */
-    public function __construct($id, $langFile, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $message = null)
+    public function __construct($id, $langFile, $langKey = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $message = null)
     {
-        parent::__construct($id, $langFile, $s, $m, $l, $xl);
+        parent::__construct($id, $langFile, $langKey, $s, $m, $l, $xl);
         $this->onlyInput = $onlyInput;
         $this->message = $message;
     }

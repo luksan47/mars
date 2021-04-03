@@ -8,9 +8,7 @@ abstract class Input extends Component
 {
     public $id;
     public $lang;
-    public $s;
-    public $m;
-    public $l;
+    public $s, $m, $l, $xl;
     public $value;
 
     /**
@@ -22,6 +20,7 @@ abstract class Input extends Component
      * See https://laravel.com/docs/8.x/blade#components for more details.
      * @param $id input id and name
      * @param $langFile the label will be @lang($langFile.$id)
+     * @param $langKey if provided, the label will be @lang($langFile.$langKey)
      * @param $s size for small displays (default: 12)
      * @param $m size for medium displays  (default: 12)
      * @param $l size for large displays (default: 12)
@@ -29,13 +28,14 @@ abstract class Input extends Component
      * @param $attributes any other attribute given will be added to the input tag
      * @return void
      */
-    public function __construct($id, $langFile, $s, $m, $l)
+    public function __construct($id, $langFile, $langKey, $s, $m, $l, $xl)
     {
         $this->id = $id;
-        $this->lang = $langFile.'.'.$id;
+        $this->lang = $langFile . '.' . ($langKey ?? $id);
         $this->s = $s;
         $this->m = $m;
         $this->l = $l;
+        $this->xl = $xl;
     }
 
     /**

@@ -1,4 +1,4 @@
-<div class="input-field col s{{$s}} m{{$m}} l{{$l}}">
+<div class="input-field col s{{$s}} m{{$m}} l{{$l}} xl{{$xl}}">
     <input
         type="text"
         class="datepicker_{{$id}} validate @error($id) invalid @enderror"
@@ -21,7 +21,6 @@
                 format: '{{$format}}',
                 firstDay: 1,
                 yearRange: {{$yearRange}},
-                maxDate: new Date(),
             });
         });
     </script>

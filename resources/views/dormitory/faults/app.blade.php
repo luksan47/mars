@@ -11,18 +11,9 @@
                 <blockquote>@lang('faults.fault_description')</blockquote>
                 <form id="send-fault" class="form-horizontal" method="POST" action=" {{ route('faults.add') }} ">
                     @csrf
-                    <div class="input-field col s12">
-                        <input type="text" form="send-fault" id="location" name="location" autofocus required>
-                        <label for="location">@lang('faults.location')</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <textarea class="materialize-textarea" form="send-fault" name="description"
-                            id="description"></textarea>
-                        <label for="description">@lang('faults.description')</label>
-                    </div>
-                    <div class="col s12">
-                        <p><button class="btn waves-effect right" type="submit">@lang('faults.submit')</button></p>
-                    </div>
+                    <x-input.text id="location" lang_file="faults" autofocus required/>
+                    <x-input.textarea id="description" lang_file="faults" required/>
+                    <x-input.button class="right" text="faults.submit"/>
                 </form>
                 @include('dormitory.faults.list')
             </div>

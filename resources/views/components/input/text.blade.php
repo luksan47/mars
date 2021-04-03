@@ -1,5 +1,5 @@
 @if(!$onlyInput)
-<div class="input-field col s{{$s}} m{{$m}} l{{$l}}">
+<div class="input-field col s{{$s}} m{{$m}} l{{$l}} xl{{$xl}}">
 @endif
     <input
         id="{{$id}}"

@@ -1,3 +1,6 @@
+@if(!$onlyInput)
+<div class="input-field col s{{$s}} m{{$m}} l{{$l}} xl{{$xl}}">
+@endif
 <button
     {{$attributes->merge([
         'type' => 'submit',
@@ -6,3 +9,6 @@
 >
 @lang($text)
 </button>
+@if(!$onlyInput)
+</div>
+@endif

@@ -10,13 +10,8 @@
                 <div class="input-field col s12 m12 l5">
                     @include("utils.select", ['elements' => $users, 'element_id' => 'user_to_send'])
                 </div>
-                <div class="input-field col s12 m12 l5">
-                    <input id="balance" name="balance" type="number" min="1" value="{{ old('balance') }}" required>
-                    <label for="balance">@lang('print.amount')</label>
-                </div>
-                <div class="input-field col s12 m12 l2">
-                    <button class="btn waves-effect right" type="submit">@lang('print.send')</button>
-                </div>
+                <x-input.text l=5 id="balance" type="number" min="1" required lang_file="print" lang_key="amount"/>
+                <x-input.button l=2 class="right" text="print.send"/>
             </div>
         </form>
     </div>

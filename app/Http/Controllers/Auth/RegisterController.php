@@ -12,7 +12,6 @@ use App\Models\User;
 use App\Models\Workshop;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -76,7 +75,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        Log::info('registration data', [$data]);
         $common = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',

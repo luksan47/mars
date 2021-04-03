@@ -6,15 +6,20 @@ use Illuminate\View\Component;
 
 class Checkbox extends Component
 {
-    public $text;
+    public $text, $onlyInput, $s, $m, $l, $xl;
     /**
      * Create a new button instance.
      * The button's type is submit by default,
      * @return void
      */
-    public function __construct($text)
+    public function __construct($text, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false)
     {
         $this->text = $text;
+        $this->onlyInput = $onlyInput;
+        $this->s = $s;
+        $this->m = $m;
+        $this->l = $l;
+        $this->xl = $xl;
     }
 
     /**

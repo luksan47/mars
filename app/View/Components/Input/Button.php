@@ -6,15 +6,20 @@ use App\View\Components\Input;
 
 class Button extends Input
 {
-    public $text;
+    public $text, $onlyInput, $s, $m, $l, $xl;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($text)
+    public function __construct($text, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false)
     {
         $this->text = $text;
+        $this->onlyInput = $onlyInput;
+        $this->s = $s;
+        $this->m = $m;
+        $this->l = $l;
+        $this->xl = $xl;
     }
 
     /**
