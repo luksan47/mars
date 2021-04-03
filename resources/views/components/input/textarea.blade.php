@@ -8,7 +8,6 @@
             'class' => "materialize-textarea validate"
         ])}}></textarea>
     <label for="{{$id}}">{{$label}}</label>
-</div>
 @if(!$onlyInput)
 </div>
 @endif
