@@ -27,7 +27,7 @@ abstract class Input extends Component
      * @param $attributes any other attribute given will be added to the input tag
      * @return void
      */
-    public function __construct($id, $langFile, $s = 12, $m = 12, $l = 12)
+    public function __construct($id, $langFile, $s, $m, $l)
     {
         $this->id = $id;
         $this->lang = $langFile . "." . $id;

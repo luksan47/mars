@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Workshop;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -75,6 +76,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        Log::info('registration data', [$data]);
         $common = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -91,10 +93,10 @@ class RegisterController extends Controller
             'user_type' => 'required|exists:roles,name',
         ];
         $informationOfStudies = [
-            'year_of_graduation' => 'required|integer|between:1895,'.date('Y'),
+            'year_of_graduation' => 'required|integer|between:1895,' . date('Y'),
             'high_school' => 'required|string|max:255',
             'neptun' => 'required|string|size:6',
-            'year_of_acceptance' => 'required|integer|between:1895,'.date('Y'),
+            'year_of_acceptance' => 'required|integer|between:1895,' . date('Y'),
             'faculty' => 'required|array|exists:faculties,id',
             'workshop' => 'required|array|exists:workshops,id',
             'collegist_status' => 'required|integer|between:1,2',
@@ -104,7 +106,7 @@ class RegisterController extends Controller
             case Role::TENANT:
                 return Validator::make($data, $common);
             case Role::COLLEGIST:
-                $data['educational_email'] = $data['educational_email'].'@student.elte.hu';
+                $data['educational_email'] = $data['educational_email'] . '@student.elte.hu';
 
                 return Validator::make($data, array_merge($common, $informationOfStudies));
             default:
@@ -155,7 +157,7 @@ class RegisterController extends Controller
                     'high_school' => $data['high_school'],
                     'neptun' => $data['neptun'],
                     'year_of_acceptance' => $data['year_of_acceptance'],
-                    'email' => $data['educational_email'].'@student.elte.hu',
+                    'email' => $data['educational_email'] . '@student.elte.hu',
                 ]);
                 foreach ($data['faculty'] as $key => $faculty) {
                     $user->faculties()->attach($faculty);

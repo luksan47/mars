@@ -2,7 +2,7 @@
 @php
   $elements = $elements->sortBy('name')
 @endphp
-<select searchable="@lang('general.search')" id="{{ $element_id }}" name="{{ $element_id }}" 
+<select searchable="@lang('general.search')" id="{{ $element_id }}" name="{{ $element_id }}"
   @if($required ?? false) required @endif>
   <option value="" disabled selected>@if($label ?? null) {{$label}} @else @lang('general.choose_option') @endif</option>
   @foreach ($elements as $element)

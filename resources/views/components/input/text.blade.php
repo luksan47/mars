@@ -1,17 +1,23 @@
+@if(!$onlyInput)
 <div class="input-field col s{{$s}} m{{$m}} l{{$l}}">
+@endif
     <input
         id="{{$id}}"
-        name="{{$id}}"
         class="validate @error($id) invalid @enderror"
-        {{-- defeault values --}}
-        {{$attributes->merge([
+        value="{{old($id) ?? $attributes->get('value')}}"
+        {{-- Default values + other provided attributes --}}
+        {{$attributes->whereDoesntStartWith('value')->merge([
             'type' => 'text',
-            'value' => old($id),
+            'name' => $id
         ])}}
-        {{-- this also adds other provided values --}}
     >
     <label for="{{$id}}">@lang($lang)</label>
+    @if($message ?? null)
+    <span class="helper-text">{{ $message }}</span>
+    @endif
     @error($id)
         <span class="helper-text" data-error="{{ $message }}"></span>
     @enderror
+@if(!$onlyInput)
 </div>
+@endif

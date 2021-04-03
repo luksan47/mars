@@ -31,12 +31,10 @@
                     </div>
                 </div>
                 <div class="card-action">
-                    <label class="right">
-                        <input type="checkbox" name="remember" id="remember" class="filled-in checkbox-color"
-                            {{ old('remember') ? 'checked' : '' }} />
-                        <span>@lang('registration.remember')</span>
-                    </label>
-                    <button class="btn waves-effect" type="submit">@lang('general.login')</button>
+                    <span class="right">
+                    <x-input.checkbox text="registration.remember" name="remember" :checked="old('remember')"/>
+                    </span>
+                    <x-input.button text="general.login"/>
                 </div>
             </form>
         </div>

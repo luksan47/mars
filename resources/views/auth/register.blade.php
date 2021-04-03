@@ -11,6 +11,9 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="card-content">
+                    @foreach ($errors->all() as $error)
+                    <blockquote>{{ $error }}</blockquote>
+                    @endforeach
                     <blockquote>
                         @if($user_type == \App\Models\Role::COLLEGIST)
                         <a href="{{ route('register.guest') }}">
@@ -21,25 +24,117 @@
                         @endif
                     </blockquote>
                     <div class="divider"></div>
+                    {{--basic information--}}
                     <div class="section">
-                        @include("auth.register.basic")
+                        <div class="row">
+                            <x-input.text id="email"      type="email"    lang_file="registration" required autocomplete="email" autofocus/>
+                            <x-input.text id="password"   lang_file="registration" type="password" required autocomplete="new-password"/>
+                            <x-input.text id="confirmpwd" lang_file="registration" name="password_confirmation" type="password" required autocomplete="new-password"/>
+                        </div>
                         <input type="text" name="user_type" id="user_type" value="{{ $user_type }}" readonly hidden>
                     </div>
                     <div class="divider"></div>
+                    {{--personal information--}}
                     <div class="section">
                         <div class="card-title">@lang('user.user_data')</div>
-                        @include("auth.register.personal")
+                        <div class="row">
+                            <x-input.text id='name' required autocomplete='name' lang_file='user'/>
+                            <x-input.text l=6 id='place_of_birth' required lang_file='user'/>
+                            <x-input.datepicker l=6 id='date_of_birth' required lang_file='user'/>
+                            <x-input.text id='mothers_name' required lang_file='user'/>
+                            <x-input.text id='phone_number' type='tel' value='+36 ' required
+                                pattern="[+][0-9]{1,4}\s[(][0-9]{1,4}[)]\s[-|0-9]*" minlength="16" maxlength="18"
+                                lang_file='user' message='+36 (20) 123-4567'/>
+                        </div>
                     </div>
                     <div class="divider"></div>
+                    {{--contact information--}}
                     <div class="section">
                     <div class="card-title">@lang('user.contact')</div>
-                        @include("auth.register.contact")
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select searchable="@lang('general.search')" id="country" name="country">
+                                @foreach ($countries as $country)
+                                <option value="{{ $country }}" @if($country=="Hungary") selected @endif>{{ $country }} </option>
+                                @endforeach
+                              </select>
+                              <label for="country">@lang('user.country')</label>
+                              @error('country')
+                              <blockquote class="error">{{ $message }}</blockquote>
+                              @enderror
+
+                              @push('scripts')
+                                {{-- TODO: replace with select utils --}}
+                                <script>
+                                    var instances;
+                                    $(document).ready(function() {
+                                        var elems = $('#country');
+                                        const options = [
+                                        @foreach ($countries as $country)
+                                            { name : '{{ $country }}',  value : '{{ $country }}' },
+                                        @endforeach
+                                        ];
+                                        instances = M.FormSelect.init(elems, options);
+                                    });
+                                </script>
+                            @endpush
+                        </div>
+                        <x-input.text l=6 id='county'        lang_file='user' required/>
+                        <x-input.text l=6 id='zip_code'      lang_file='user' type='number' required/>
+                        <x-input.text id='city'              lang_file='user' required/>
+                        <x-input.text id='street_and_number' lang_file='user' required/>
                     </div>
                     @if($user_type == \App\Models\Role::COLLEGIST)
                     <div class="divider"></div>
+                    {{--educational information--}}
                     <div class="section">
                         <div class="card-title">@lang('user.information_of_studies')</div>
-                        @include("auth.register.information_of_studies")
+                        <div class="row">
+                            <x-input.text id='high_school' lang_file='user' required/>
+                            <x-input.text s=6 id='year_of_graduation' lang_file='user' type='number' min="1895" :max="date('Y')" required/>
+                            <x-input.text s=6 id='year_of_acceptance' lang_file='user' type='number' min="1895" :max="date('Y')" required/>
+                            <x-input.text s=6 id='neptun' lang_file='user' required/>
+                            {{--status--}}
+                            <div class="input-field col s6">
+                                @include('utils.select', [
+                                    'elements' => \App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)->map(function ($object) {
+                                        return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];
+                                }), 'element_id' => 'collegist_status', 'label' => __('user.status'), 'required' => true])
+                            </div>
+                            {{--email--}}
+                            <div class="col s12">
+                                <div class="input-field s6 inline" style="margin-left:0">
+                                    <x-input.text only_input=true id='educational_email' lang_file='user' required/>
+                                </div>
+                                @student.elte.hu
+                            </div>
+                            {{--faculty--}}
+                            <div class="input-field col s12">
+                                <p><label>@lang('user.faculty')</label></p>
+                                @foreach($faculties as $faculty)
+                                <p>
+                                    @php $checked = old('faculty') !== null && in_array($faculty->id, old('faculty')) @endphp
+                                    <x-input.checkbox :text="$faculty->name" name="faculty[]" value="{{$faculty->id}}" :checked='$checked' @endif />
+                                </p>
+                                @endforeach
+                                @error('faculty')
+                                <blockquote class="error">@lang('user.faculty_must_be_filled')</blockquote>
+                                @enderror
+                            </div>
+                            {{--workshop--}}
+                            <div class="input-field col s12">
+                                <p><label>@lang('user.workshop')</label></p>
+                                @foreach($workshops as $workshop)
+                                <p>
+                                    @php $checked = old('workshop') !== null && in_array($faculty->id, old('workshop')) @endphp
+                                    <x-input.checkbox :text="$workshop->name" name="workshop[]" value="{{$workshop->id}}" :checked='$checked' @endif />
+                                </p>
+                                @endforeach
+                                @error('workshop')
+                                <blockquote class="error">@lang('user.workshop_must_be_filled')</blockquote>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     @endif
                     <div class="divider"></div>
@@ -50,13 +145,11 @@
                                     <input type="checkbox" name="gdpr" id="qdpr" value="qdpr" required
                                         class="filled-in checkbox-color" />
                                     <span>@lang('auth.i_agree_to') <a href="{{ route('privacy_policy') }}"
-                                            target="_blank">@lang('auth.privacy_policy')</a></span>
+                                            target="_blank">@lang('auth.privacy_policy').</a></span>
                                 </label></p>
                             </div>
                             <div class="col s12 l4">
-                                <p><button class="btn waves-effect right"
-                                    type="submit">@lang('general.register')
-                                </button></p>
+                                <p><x-input.button class='right' lang_file='general' id='register'/></p>
                             </div>
                         </div>
                     </div>
