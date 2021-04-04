@@ -6,7 +6,10 @@ use App\View\Components\Input;
 
 class Select extends Input
 {
-    public $elements, $withoutPlaceholder, $default;
+    public $elements;
+    public $withoutPlaceholder;
+    public $default;
+
     /**
      * Create a new select component instance with a search field.
      * @param $elements elements that can be selected. Id and name tags will be used if exists, otherwise the value itself.

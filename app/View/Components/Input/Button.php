@@ -6,7 +6,8 @@ use App\View\Components\Input;
 
 class Button extends Input
 {
-    public $floating, $icon;
+    public $floating;
+    public $icon;
 
     public function __construct($floating = false, $icon = null, $id = null, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false)
     {
