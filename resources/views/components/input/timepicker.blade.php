@@ -3,9 +3,9 @@
 @endif
     <input
         type="text"
-        class="datepicker_{{$id}} validate @error($id) invalid @enderror"
+        class="timepicker_{{$id}} validate @error($id) invalid @enderror"
         id="{{$id}}"
-        onfocus="M.Datepicker.getInstance({{$id}}).open();"
+        onfocus="M.Timepicker.getInstance('{{$id}}').open();"
         value="{{old($id) ?? $attributes->get('value')}}"
         {{-- Default values + other provided attributes --}}
         {{$attributes->whereDoesntStartWith('value')->merge([
@@ -23,11 +23,9 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $('.datepicker_{{$id}}').datepicker({
-                format: '{{$format}}',
-                firstDay: 1,
-                yearRange: {{$yearRange}},
-                showClearBtn: true
+            $('.timepicker_{{$id}}').timepicker({
+                showClearBtn: true,
+                twelveHour: false,
             });
         });
     </script>
