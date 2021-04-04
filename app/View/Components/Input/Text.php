@@ -6,7 +6,8 @@ use App\View\Components\Input;
 
 class Text extends Input
 {
-    public $helper, $withoutLabel;
+    public $helper;
+    public $withoutLabel;
 
     /**
      * Create a new text input instance.
