@@ -3,10 +3,10 @@
 @endif
     <textarea
         id="{{$id}}"
-        {{$attributes->merge([
+        {{$attributes->whereDoesntStartWith('value')->merge([
             'name' => $id,
             'class' => "materialize-textarea validate"
-        ])}}></textarea>
+        ])}}>{{old($id) ?? $attributes->get('value')}}</textarea>
     <label for="{{$id}}">{{$label}}</label>
     @error($attributes->get('value') ?? $id)
         <span class="helper-text" data-error="{{ $message }}"></span>

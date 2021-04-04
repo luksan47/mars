@@ -11,7 +11,7 @@
             'name' => $id
         ])}}
     >
-    @if(!$attributes->get('hidden'))
+    @if(!$attributes->get('hidden') && !$withoutLabel)
     <label for="{{$id}}">{{$label}}</label>
     @endif
     @if($helper ?? null)

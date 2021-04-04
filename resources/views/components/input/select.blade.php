@@ -5,7 +5,7 @@
         searchable="@lang('general.search')"
         id="{{ $id }}"
         {{-- Required is not supported because the select does not support validation --}}
-        {{$attributes->whereDoesntStartWith('required')->merge([
+        {{$attributes->whereDoesntStartWith('required')->whereDoesntStartWith('placeholder')->merge([
             'name' => $id
         ])}}
         >
@@ -14,19 +14,20 @@
             value=""
             disabled="true"
             selected="true">
-            @lang('general.choose_option')
+            {{ $attributes->get('placeholder') ?? __('general.choose_option') }}
         </option>
         @endif
         @foreach ($elements as $element)
             <option
                 value="{{ $element->id ?? $element }}"
-                @if($default != null && (($element->id ?? $element) == $default)) selected="true" @endif>
-                {{ $element->name ?? $element }}
+                @if($default != null && (($element->id ?? $element) == $default || ($element->name ?? $element) == $default)) selected="true" @endif>
+                @lang($element->name ?? $element)
             </option>
         @endforeach
     </select>
-
+    @if(!$withoutLabel)
     <label for="{{$id}}">{{$label}}</label>
+    @endif
     @error($attributes->get('value') ?? $id)
         <span class="helper-text red-text">{{ $message }}</span>
     @enderror

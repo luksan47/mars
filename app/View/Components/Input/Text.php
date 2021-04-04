@@ -6,17 +6,18 @@ use App\View\Components\Input;
 
 class Text extends Input
 {
-    public $helper;
+    public $helper, $withoutLabel;
 
     /**
      * Create a new text input instance.
      * @param string $helper helper message
      * @return void
      */
-    public function __construct($id, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $helper = null)
+    public function __construct($id, $withoutLabel = false, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $helper = null)
     {
         parent::__construct($id, $locale, $text, $s, $m, $l, $xl, $onlyInput);
         $this->helper = $helper;
+        $this->withoutLabel = $withoutLabel;
     }
 
     /**

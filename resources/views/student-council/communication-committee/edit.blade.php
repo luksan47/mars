@@ -17,11 +17,11 @@
                 @if($epistola)
                 <form method="POST" action="{{ route('epistola.delete', ['epistola' => $epistola->id]) }}">
                     @csrf
-                    <button type="submit" class="btn-floating waves-effect right red" style="margin-right: 10px"><i class="material-icons">delete</i></button>
+                    <x-input.button floating class="right red" style="margin-right: 10px" icon="delete" />
                 </form>
                 <form method="POST" action="{{ route('epistola.mark_as_sent', ['epistola' => $epistola->id]) }}">
                     @csrf
-                    <button type="submit" class="btn-floating waves-effect right green" style="margin-right: 10px"><i class="material-icons">mark_email_read</i></button>
+                    <x-input.button floating class="right green" style="margin-right: 10px" icon="mark_email_read"/>
                 </form>
                 @endif
                 <div class="card-title">{{ $epistola->title ?? "Új hír"}}</div>
@@ -32,29 +32,15 @@
                     <input type="hidden" name="id" value="{{$epistola->id}}">
                     @endif
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="title" name="title" type="text" class="validate @error('title') invalid @enderror" required
-                                value="{{ $epistola->title ?? old('title')}}">
-                            <label for="title">Cím*</label>
-                            @error('title')
-                                <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
-                        <div class="input-field col s12">
-                            <input id="subtitle" name="subtitle" type="text" class="validate @error('subtitle') invalid @enderror" required
-                                value="{{ $epistola->subtitle ?? old('subtitle')}}">
-                            <label for="subtitle">Alcím*</label>
-                            @error('subtitle')
-                                <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
-                        <div class="input-field col s12">
-                            <textarea id="description" class="materialize-textarea validate @error('description') invalid @enderror" name="description" required
-                                >{{ $epistola->description ?? old('description')}}</textarea>
-                            <label for="description">Leírás*</label>
-                            <span class="helper-text" @error('description') data-error="{{ $message }}" @enderror>Formázásra a 
-                                <a href="https://www.markdownguide.org/cheat-sheet/" target="__blank">Markdown jelölései</a> használhatóak.</span>
-                            
+                        <x-input.text id="title" :value="$epistola->title" text="Cím*" required/>
+                        <x-input.text id="subtitle" :value="$epistola->subtitle" text="Alcím*" required/>
+                        <x-input.textarea id="description" :value="$epistola->description" text="Leírás*" required/>
+                        <div class="col s12">
+                        <blockquote>
+                            Formázásra a
+                            <a href='https://www.markdownguide.org/cheat-sheet/' target='__blank'>Markdown jelölései</a>
+                             használhatóak.
+                        </blockquote>
                         </div>
                     </div>
                     <div class="row">

@@ -1,3 +1,5 @@
+{{-- Obsolete, use blade components instead! }}
+
 {{-- In order to use this blade, we need to pass an $elements array with id and name, and UID for the page. $required is optional --}}
 @php
   $elements = $elements->sortBy('name')
