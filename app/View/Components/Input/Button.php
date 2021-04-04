@@ -6,7 +6,8 @@ use App\View\Components\Input;
 
 class Button extends Input
 {
-    public $floating, $icon;
+    public $floating;
+    public $icon;
 
     /**
      * Create a new button instance. The button will be a link if the href attribute is provided.
