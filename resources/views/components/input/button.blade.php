@@ -4,10 +4,14 @@
 <button
     {{$attributes->merge([
         'type' => 'submit',
-        'class' => 'btn waves-effect'
+        'class' => 'waves-effect '.($floating ? "btn-floating" : 'btn')
     ])}}
 >
+@if($icon)
+<i class="material-icons">{{$icon}}</i>
+@else
 {{$label}}
+@endif
 </button>
 @if(!$onlyInput)
 </div>

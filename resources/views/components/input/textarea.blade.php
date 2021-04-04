@@ -8,6 +8,9 @@
             'class' => "materialize-textarea validate"
         ])}}></textarea>
     <label for="{{$id}}">{{$label}}</label>
+    @error($attributes->get('value') ?? $id)
+        <span class="helper-text" data-error="{{ $message }}"></span>
+    @enderror
 @if(!$onlyInput)
 </div>
 @endif

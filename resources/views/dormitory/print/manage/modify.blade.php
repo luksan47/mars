@@ -4,13 +4,9 @@
 <div class="row">
 <form method="POST" action="{{ route('print.modify') }}">
         @csrf
-        <div class="input-field col s12 m12 l5">
-            @include("utils.select", ['elements' => $users, 'element_id' => 'user_id_modify'])
-        </div>
+        <x-input.select l=5 id="user_id_modify" text="general.user" :elements="$users"/>
         <x-input.text l=5 id="balance" type="number" required locale="print"/>
-        <div class="input-field col s12 m12 l2">
-            <x-input.button class="right" text="print.add"/>
-        </div>
+        <x-input.button l=2 class="right" text="print.add"/>
     </form>
 </div>
 @endif

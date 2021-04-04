@@ -19,7 +19,7 @@
             placeholder="{{$label}}"
             type="text"
             disabled>
-        @error($id)
+        @error($attributes->get('value') ?? $id)
             <span class="helper-text" data-error="{{ $message }}"></span>
         @enderror
     </div>

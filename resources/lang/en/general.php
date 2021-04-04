@@ -33,6 +33,7 @@ return [
     'successfully_added' => 'Successfully added!',
     'successfully_deleted' => 'Successfully deleted',
     'toggle-dark-mode' => 'Toggle dark mode',
+    'user' => 'User',
     'view_issue' => 'You can view and track your issue here.',
     'you_are_logged_in' => 'You are logged in.',
 ];

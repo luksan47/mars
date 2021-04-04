@@ -11,9 +11,6 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="card-content">
-                    @foreach ($errors->all() as $error)
-                    <blockquote>{{ $error }}</blockquote>
-                    @endforeach
                     <blockquote>
                         @if($user_type == \App\Models\Role::COLLEGIST)
                         <a href="{{ route('register.guest') }}">
@@ -24,6 +21,9 @@
                         @endif
                     </blockquote>
                     <div class="divider"></div>
+                    @foreach ($errors->all() as $error)
+                        <blockquote class="error">{{ $error }}</blockquote>
+                    @endforeach
                     {{--basic information--}}
                     <div class="section">
                         <div class="row">
@@ -52,33 +52,7 @@
                     <div class="section">
                     <div class="card-title">@lang('user.contact')</div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <select searchable="@lang('general.search')" id="country" name="country">
-                                @foreach ($countries as $country)
-                                <option value="{{ $country }}" @if($country=="Hungary") selected @endif>{{ $country }} </option>
-                                @endforeach
-                              </select>
-                              <label for="country">@lang('user.country')</label>
-                              @error('country')
-                              <blockquote class="error">{{ $message }}</blockquote>
-                              @enderror
-
-                              @push('scripts')
-                                {{-- TODO: replace with select utils --}}
-                                <script>
-                                    var instances;
-                                    $(document).ready(function() {
-                                        var elems = $('#country');
-                                        const options = [
-                                        @foreach ($countries as $country)
-                                            { name : '{{ $country }}',  value : '{{ $country }}' },
-                                        @endforeach
-                                        ];
-                                        instances = M.FormSelect.init(elems, options);
-                                    });
-                                </script>
-                            @endpush
-                        </div>
+                        <x-input.select id="country" :elements="$countries" default="Hungary" locale="user"/>
                         <x-input.text l=6 id='county'        locale='user' required/>
                         <x-input.text l=6 id='zip_code'      locale='user' type='number' required/>
                         <x-input.text id='city'              locale='user' required/>
@@ -94,14 +68,10 @@
                             <x-input.text s=6 id='year_of_graduation' locale='user' type='number' min="1895" :max="date('Y')" required/>
                             <x-input.text s=6 id='year_of_acceptance' locale='user' type='number' min="1895" :max="date('Y')" required/>
                             <x-input.text s=6 id='neptun' locale='user' required/>
-                            {{--status--}}
-                            <div class="input-field col s6">
-                                @include('utils.select', [
-                                    'elements' => \App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)->map(function ($object) {
-                                        return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];
-                                }), 'element_id' => 'collegist_status', 'label' => __('user.status'), 'required' => true])
-                            </div>
-                            {{--email--}}
+                            @php $elements = \App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)->map(function ($object) {
+                                return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];});
+                            @endphp
+                            <x-input.select s=6 id="collegist_status" text="user.status" :elements="$elements"/>
                             <div class="col s12">
                                 <div class="input-field s6 inline" style="margin-left:0">
                                     <x-input.text only_input id='educational_email' locale='user' required/>
@@ -126,7 +96,7 @@
                                 <p><label>@lang('user.workshop')</label></p>
                                 @foreach($workshops as $workshop)
                                 <p>
-                                    @php $checked = old('workshop') !== null && in_array($faculty->id, old('workshop')) @endphp
+                                    @php $checked = old('workshop') !== null && in_array($workshop->id, old('workshop')) @endphp
                                     <x-input.checkbox only_input :text="$workshop->name" name="workshop[]" value="{{$workshop->id}}" :checked='$checked' @endif />
                                 </p>
                                 @endforeach
