@@ -19,7 +19,7 @@ class FaultPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole(Role::STAFF) || $user->hasRole(Role::COLLEGIST) || $user->hasRole(Role::TENANT);
+        return $user->hasRole(Role::STAFF) || $user->hasRoleBase(Role::COLLEGIST) || $user->hasRole(Role::TENANT);
     }
 
     /**
