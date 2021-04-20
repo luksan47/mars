@@ -49,7 +49,6 @@
                             @enderror
                         </div>
                         <div class="input-field col s12">
-                            
                             <textarea id="description" class="materialize-textarea validate @error('description') invalid @enderror" name="description" required
                                 >{{ $epistola->description ?? old('description')}}</textarea>
                             <label for="description">Leírás*</label>
@@ -78,7 +77,7 @@
                         </div>
                         <div class="input-field col s12 l5">
                             <input id="end_date" name="end_date" type="text" class="validate datepicker @error('end_date') invalid @enderror"
-                                value="{{ old('end_date') ?? ($epistola && $epistola->end_date ? $epistola->end_date->format('h:m') : "") }}"
+                                value="{{ old('end_date') ?? ($epistola && $epistola->end_date ? $epistola->end_date->format('Y-m-d') : "") }}"
                                 onfocus="M.Datepicker.getInstance(end_date).open();">
                             <label for="end_date">Esemény vége</label>
                             @error('end_date')
@@ -87,65 +86,56 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12 l4">
-                            <input id="further_details_url" name="further_details_url" type="url" class="validate @error('further_details_url') invalid @enderror"
-                                value="{{ $epistola->further_details_url ?? old('further_details_url')}}">
-                            <label for="further_details_url">További részletek</label>
-                            @error('further_details_url')
+                        <div class="input-field col s12 l6">
+                            <input id="details_name_1" name="details_name_1" type="text" class="validate @error('details_name_1') invalid @enderror"
+                                value="{{ $epistola->details_name_1 ?? old('details_name_1') }}">
+                            <label for="details_name_1">További  infó neve</label>
+                            @error('details_name_1')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
-                        <div class="input-field col s12 l4">
-                            <input id="website_url" name="website_url" type="url" class="validate @error('website_url') invalid @enderror"
-                                value="{{ $epistola->website_url ?? old('website_url')}}">
-                            <label for="website_url">Weboldal</label>
-                            @error('website_url')
-                                <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
-                        <div class="input-field col s12 l4">
-                            <input id="facebook_event_url" name="facebook_event_url" type="url" class="validate @error('facebook_event_url') invalid @enderror"
-                                value="{{ $epistola->facebook_event_url ?? old('facebook_event_url')}}">
-                            <label for="facebook_event_url">Facebook esemény</label>
-                            @error('facebook_event_url')
+                        <div class="input-field col s12 l6">
+                            <input id="details_url_1" name="details_url_1" type="url" class="validate @error('details_url_1') invalid @enderror"
+                                value="{{ $epistola->details_url_1 ?? old('details_url_1')}}">
+                            <label for="details_url_1">További infó url</label>
+                            @error('details_url_1')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 l6">
-                            <input id="registration_url" name="registration_url" type="url" class="validate @error('registration_url') invalid @enderror"
-                                value="{{ $epistola->registration_url ?? old('registration_url')}}">
-                            <label for="registration_url">Regisztrációs link</label>
-                            @error('registration_url')
+                            <input id="details_name_2" name="details_name_2" type="text" class="validate @error('details_name_2') invalid @enderror"
+                                value="{{ $epistola->details_name_2 ?? old('details_name_2')}}">
+                            <label for="details_name_2">További infó neve</label>
+                            @error('details_name_2')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
                         <div class="input-field col s12 l6">
-                            <input id="registration_deadline" name="registration_deadline" type="text" class="validate datepicker @error('registration_deadline') invalid @enderror"
-                                value="{{ $epistola->registration_deadline ?? old('registration_deadline')}}"
-                                onfocus="M.Datepicker.getInstance(registration_deadline).open();">
-                            <label for="registration_deadline">Regisztráció határideje</label>
-                            @error('registration_deadline')
+                            <input id="details_url_2" name="details_url_2" type="url" class="validate @error('details_url_2') invalid @enderror"
+                                value="{{ $epistola->details_url_2 ?? old('details_url_2')}}">
+                            <label for="details_url_2">További infó url</label>
+                            @error('details_url_2')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12 l6">
-                            <input id="fill_url" name="fill_url" type="url" class="validate @error('fill_url') invalid @enderror"
-                                value="{{ $epistola->fill_url ?? old('fill_url')}}">
-                            <label for="fill_url">Kitöltési link</label>
-                            @error('fill_url')
+                            <input id="deadline_name" name="deadline_name" type="text" class="validate @error('deadline_name') invalid @enderror"
+                                value="{{ $epistola->deadline_name ?? old('deadline_name') }}">
+                            <label for="deadline_name">Határidő neve</label>
+                            @error('deadline_name')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
                         <div class="input-field col s12 l6">
-                            <input id="filling_deadline" name="filling_deadline" type="text" class="validate datepicker @error('filling_deadline') invalid @enderror"
-                                value="{{ $epistola->filling_deadline ?? old('filling_deadline')}}"
-                                onfocus="M.Datepicker.getInstance(filling_deadline).open();">
-                            <label for="filling_deadline">Kitöltés határideje</label>
-                            @error('filling_deadline')
+                            <input id="deadline_date" name="deadline_date" type="text" class="validate datepicker @error('deadline_date') invalid @enderror"
+                                value="{{ old('deadline_date') ?? ($epistola && $epistola->deadline_date ? $epistola->deadline_date->format('Y-m-d') : "")}}"
+                                onfocus="M.Datepicker.getInstance(deadline_date).open();">
+                            <label for="deadline_date">Határidő</label>
+                            @error('deadline_date')
                                 <span class="helper-text" data-error="{{ $message }}"></span>
                             @enderror
                         </div>
@@ -164,8 +154,8 @@
                             </div>
                             <p style="">
                                 <label>
-                                    <input type="checkbox" name="approved" required/>
-                                    <span>Nem töltök fel szerzői jog oltalma alatt álló képet.*</span>
+                                    <input type="checkbox" name="approved" />
+                                    <span>Nem töltök fel szerzői jog oltalma alatt álló képet.</span>
                                 </label>
                                 @error('approved')
                                     <blockquote>{{$message}}</blockquote>
@@ -184,7 +174,9 @@
                             @endif
                         </div>
                     </div>
-                    
+                    @if($epistola)
+                    <p>Feltöltő: {{$epistola->uploader->name}}</p>
+                    @endif
                 <button type="submit" class="btn-floating waves-effect right"><i class="material-icons">send</i></button>
                 </form>
             </div>

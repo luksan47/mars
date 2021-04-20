@@ -26,13 +26,30 @@ class EpistolaNewsFactory extends Factory
             'title' => $this->faker->realText($maxNbChars = 50),
             'subtitle' => $this->faker->sentence(),
             'description' => $this->faker->paragraphs($this->faker->numberBetween(1, 3), true),
-            'further_details_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
-            'website_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
-            'facebook_event_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
-            'fill_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
-            'registration_url' => $this->faker->boolean(50) ? $this->faker->url() : null,
-            'registration_deadline' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 100)) : null,
-            'filling_deadline' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 100)) : null,
+            'details_name_1' => $this->faker->boolean(50) ? $this->faker->realText(20) : null,
+            'details_name_2' => $this->faker->boolean(50) ? $this->faker->realText(20) : null,
+            'details_url_1' => function (array $attributes) {
+                if ($attributes['details_name_1'] != null) {
+                    return $this->faker->url();
+                }
+
+                return null;
+            },
+            'details_url_2' => function (array $attributes) {
+                if ($attributes['details_name_2'] != null) {
+                    return $this->faker->url();
+                }
+
+                return null;
+            },
+            'deadline_name' => $this->faker->boolean(50) ? $this->faker->realText(20) : null,
+            'deadline_date' => function (array $attributes) {
+                if ($attributes['deadline_date'] != null) {
+                    return now()->addDays($this->faker->numberBetween(0, 100));
+                }
+
+                return null;
+            },
             'date' => $this->faker->boolean(50) ? now()->addDays($this->faker->numberBetween(0, 200)) : null,
             'time' => function (array $attributes) {
                 if ($attributes['date'] != null && $this->faker->boolean(50)) {
