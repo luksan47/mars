@@ -89,7 +89,7 @@
                         @if($translations->where('approved', true)->count() != 0)
                         <div class="col s6">
                             <textarea id="{{ $lang . '.' . $fname . '.' . $key }}"
-                                class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea> 
+                                class="materialize-textarea">@lang($fname.'.'.($fname == 'validation' ? 'attributes.' : '').$key)</textarea>
                         </div>
                         @else
                         <div class="col s6">
@@ -102,7 +102,7 @@
                                 <i class="material-icons">send</i>
                             </button>
                         </div>
-                    </div>                     
+                    </div>
                     @endif
                     @endforeach
                 </div>

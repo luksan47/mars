@@ -63,9 +63,7 @@
                                         @lang('checkout.allocated_balance')
                                         @if($semester->isCurrent())
                                             @can('administrate', \App\Models\Checkout::studentsCouncil())
-                                            <a href="{{ route('economic_committee.workshop_balance') }}" class="btn-floating btn-small grey waves-effect">
-                                                <i class="material-icons">refresh</i>
-                                            </a>
+                                            <x-input.button :href="route('economic_committee.workshop_balance')" floating class="btn-small grey" icon="refresh" />
                                             @endcan
                                         @endif
                                     </th>
