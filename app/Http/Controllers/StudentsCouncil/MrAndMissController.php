@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StudentsCouncil;
 
 use App\Http\Controllers\Controller;
+use App\Models\EpistolaNews;
 use App\Models\MrAndMissCategory;
 use App\Models\MrAndMissVote;
 use App\Models\Semester;
