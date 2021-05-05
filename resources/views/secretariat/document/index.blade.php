@@ -21,11 +21,11 @@
                             <td>@lang('document.register-statement')</td>
                             <td></td>
                             <td>
-                                <a href="{{ route('documents.register-statement.download') }}" type="submit" class="btn waves-effect coli">@lang('document.download')</a>
+                                <x-input.button :href="route('documents.register-statement.download')" text="document.download" />
                             </td>
                             <td>
                                 @can('print.print')
-                                <a href="{{ route('documents.register-statement.print') }}" type="submit" class="btn waves-effect coli blue">@lang('document.print')</a>
+                                <x-input.button :href="route('documents.register-statement.print')" class="coli blue" text="document.print" />
                                 @endcan
                             </td>
                         </tr>
@@ -34,14 +34,14 @@
                         <tr>
                             <td>@lang('document.import')</td>
                             <td>
-                                <a href="{{ route('documents.import.show') }}" type="submit" class="btn waves-effect coli">@lang('document.fill_out')</a>
+                                <x-input.button :href="route('documents.import.show')" text="document.fill_out" />
                             </td>
                             <td>
-                                <a href="{{ route('documents.import.download') }}" type="submit" class="btn waves-effect coli">@lang('document.download')</a>
+                                <x-input.button :href="route('documents.import.download')" text="document.download" />
                             </td>
                             <td>
                                 @can('print.print')
-                                <a href="{{ route('documents.import.print') }}" type="submit" class="btn waves-effect coli blue">@lang('document.print')</a>
+                                <x-input.button :href="route('documents.import.print')" class="coli blue" text="document.print" />
                                 @endcan
                             </td>
                         </tr>
@@ -51,10 +51,10 @@
                             <td>@lang('document.status-cert')</td>
                             <td></td>
                             <td>
-                                <a href="{{ route('documents.status-cert.download') }}" type="submit" class="btn waves-effect coli">@lang('document.download')</a>
+                                <x-input.button :href="route('documents.status-cert.download')" text="document.download" />
                             </td>
                             <td>
-                                <a href="{{ route('documents.status-cert.request') }}" type="submit" class="btn waves-effect coli blue">@lang('document.request')</a>
+                                <x-input.button :href="route('documents.status-cert.request')" class="coli blue" text="document.request" />
                             </td>
                         </tr>
                         @endcan

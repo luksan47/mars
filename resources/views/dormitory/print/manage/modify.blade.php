@@ -4,19 +4,9 @@
 <div class="row">
 <form method="POST" action="{{ route('print.modify') }}">
         @csrf
-        <div class="input-field col s12 m12 l5">
-            @include("utils.select", ['elements' => $users, 'element_id' => 'user_id_modify'])
-        </div>
-        <div class="input-field col s12 m12 l5">
-            <input id="balance" name="balance" type="number" class="validate @error('balance') invalid @enderror" required>
-            <label for="balance">@lang('print.balance')</label>
-            @error('balance')
-            <span class="helper-text" data-error="{{ $message }}"></span>
-            @enderror
-        </div>
-        <div class="input-field col s12 m12 l2">
-            <button type="submit" class="btn waves-effect right">@lang('print.add')</button>
-        </div>
+        <x-input.select l=5 id="user_id_modify" text="general.user" :elements="$users"/>
+        <x-input.text l=5 id="balance" type="number" required locale="print"/>
+        <x-input.button l=2 class="right" text="print.add"/>
     </form>
 </div>
 @endif
