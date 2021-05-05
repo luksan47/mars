@@ -32,16 +32,12 @@
                                     <form method="POST" action="{{ route('documents.import.add') }}">
                                         @csrf
                                         <td>
-                                            <input type="text" name="item" placeholder="@lang('document.item')"
-                                                autofocus maxlength="100" required>
+                                            <x-input.text id="item" locale="document" autofocus maxlength="100" required />
                                         </td>
                                         <td>
-                                            <input type="text" name="serial_number"
-                                                placeholder="@lang('document.serial_number')" maxlength="30">
+                                            <x-input.text id="serial_number" locale="document" maxlength="30" />
                                         <td>
-                                            <button class="btn-floating right waves-effect waves-light" type="submit">
-                                                <i class="material-icons">add</i>
-                                            </button>
+                                            <x-input.button floating class="right" icon="add"/>
                                         </td>
                                     </form>
                                 </tr>
@@ -52,10 +48,8 @@
                                     <td>
                                         <form method="POST" action="{{ route('documents.import.remove') }}">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $item->id }}">
-                                            <button class="btn-floating right waves-effect waves-light" type="submit">
-                                                <i class="material-icons">remove</i>
-                                            </button>
+                                            <x-input.text hidden id="id" :value="$item->id" />
+                                            <x-input.button floating class="right" icon="remove" />
                                         </form>
                                     </td>
                                 </tr>

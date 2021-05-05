@@ -8,6 +8,7 @@
                 <tr>
                     <th scope="row">@lang('registration.email')</th>
                     <td>
+                        {{-- TODO rewrite with blade components --}}
                         @if($modifiable ?? false)
                             <form method="POST" action="{{ route('secretariat.user.update') }}">
                                 @csrf

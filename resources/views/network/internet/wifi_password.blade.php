@@ -32,8 +32,7 @@
             <div class="input-field col s12 m12 l12 xl4">
                 <form action="{{ route('internet.wifi_password.reset') }}" method="post">
                     @csrf
-                    <button class="btn waves-effect right" type="submit"
-                        name="action">@lang('internet.generate_new_pwd')</button>
+                    <x-input.button class="right" id="action" text="internet.generate_new_pwd"/>
                 </form>
             </div>
         </div>

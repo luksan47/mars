@@ -12,19 +12,12 @@
                     <blockquote class='error'>{{ session('status') }}</blockquote>
                     @endif
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="email" name="email" type="email" class="validate @error('email') invalid @enderror" value="{{ old('email') }}"
-                                required autocomplete="email" autofocus>
-                            <label for="email">@lang('registration.email')</label>
-                            @error('email')
-                            <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
+                        <x-input.text id="email" locale="registration" type="email" autofocus required autocomplete="email"/>
                     </div>
                 </div>
                 <div class="card-action">
                     <div class="row">
-                            <button type="submit" class="btn waves-effect right">@lang('passwords.resetpwd')</button>
+                        <x-input.button only_input text="passwords.resetpwd" class="right"/>
                     </div>
                 </div>
             </form>

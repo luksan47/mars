@@ -10,32 +10,14 @@
                 <div class="card-content">
                     <div class="card-title"> @lang('passwords.resetpwd')</div>
                     <div class="row">
-                        <div class="input-field col s12">
-                            <input id="email" name="email" type="email" class="validate @error('email') invalid @enderror"
-                                value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-                            <label for="email">@lang('registration.email')</label>
-                            @error('email')
-                            <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
-                        <div class="input-field col s12">
-                            <input id="password" name="password" type="password" class="validate @error('password') invalid @enderror" required
-                                autocomplete="new-password">
-                            <label for="password">@lang('registration.password')</label>
-                            @error('password')
-                            <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
-                        <div class="input-field col s12">
-                            <input id="password-confirm" name="password_confirmation" type="password" class="validate @error('password') invalid @enderror"
-                                required autocomplete="new-password">
-                            <label for="password-confirm">@lang('registration.confirmpwd')</label>
-                        </div>
+                        <x-input.text id="email"      locale="registration" type="email" :value="$email" required autocomplete="email" autofocus/>
+                        <x-input.text id="password"   locale="registration" type="password" required autocomplete="new-password"/>
+                        <x-input.text id="confirmpwd" locale="registration" name="password_confirmation" type="password" required autocomplete="new-password"/>
                     </div>
                 </div>
                 <div class="card-action">
                     <div class="row">
-                        <button type="submit" class="btn waves-effect right">@lang('passwords.resetpwd')</button>
+                        <x-input.button only_input text="passwords.resetpwd" class="right"/>
                     </div>
                 </div>
             </form>

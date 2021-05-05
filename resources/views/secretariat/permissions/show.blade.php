@@ -22,15 +22,13 @@
                             <td>{{ $role->name() }}</td>
                             <td>
                                 @if($role->canHaveObject())
-                                    {{ $role->object()->name ?? ''}}
+                                    {{ __('role.'.$role->object()->name) ?? ''}}
                                 @endif
                             </td>
                             <td>
                                 <form action="{{ route('secretariat.permissions.remove', ['id' => $user->id, 'role_id' => $role->id, 'object_id' => $role->pivot->object_id]) }}" method="post">
                                 @csrf
-                                <button type="submit" class="btn-floating waves-effect waves-light right red">
-                                    <i class="material-icons">delete</i>
-                                </button>
+                                <x-input.button floating class="right red" icon="delete" />
                                 </form>
                             </td>
                         </tr>
@@ -43,34 +41,24 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('admin.other_permissions') </span>
-                <table>
-                    <tbody>
-                        @foreach (App\Models\Role::all()->sortBy('name') as $role)
-                            @if(!$user->roles->contains($role) || $role->canHaveObject())
-                            <tr>
-                                <td>{{ $role->name() }}</td>
-                                <td>
-                                <div class="row" style="padding:0;margin:0">
-                                <form action="{{ route('secretariat.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
-                                    @csrf
-                                    <div class="col s10">
-                                        @if($role->canHaveObject())
-                                            @include("utils.select", ['elements' => $role->possibleObjects(), 'element_id' => $role->name, 'label' => ''])
-                                        @endif
-                                    </div>
-                                    <div class="col s2">
-                                        <button type="submit" class="btn-floating waves-effect waves-light right green">
-                                            <i class="material-icons">add</i>
-                                        </button>
-                                    </div>
-                                </form>
-                                </div>
-                                </td>
-                            </tr>
+                <div class="row">
+                @foreach (App\Models\Role::all()->sortBy('name') as $role)
+                    @if(!$user->roles->contains($role) || $role->canHaveObject())
+                        <form action="{{ route('secretariat.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
+                            @csrf
+                            @if($role->canHaveObject())
+                                @php $elements = $role->possibleObjects()->map(function ($object) {
+                                    return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];});
+                                @endphp
+                                <x-input.select s=11 without_label :elements="$elements" :id="$role->name" :placeholder="__('role.'.$role->name)"/>
+                            @else
+                                <x-input.text s=11 without_label id="blank" :value="__('role.'.$role->name)" disabled/>
                             @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                            <div class="input-field col s1"><x-input.button floating class="right green" icon="add" /></div>
+                        </form>
+                    @endif
+                @endforeach
+                </div>
             </div>
         </div>
     </div>
