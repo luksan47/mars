@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class MrAndMissCategory extends Model
 {
+    public $timestamps = true;
 
-  public $timestamps = true;
-
-  protected $fillable = [
-    'title', 'mr', 'created_by', 'hidden', 'public', 'custom'
-  ];
-
+    protected $fillable = [
+        'title', 'mr', 'created_by', 'hidden', 'public', 'custom',
+    ];
 }

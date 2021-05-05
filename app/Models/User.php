@@ -561,22 +561,23 @@ class User extends Authenticatable implements HasLocalePreference
      */
     public function mrAndMissVotesGiven()
     {
-      return $this->hasMany('App\Models\MrAndMissVote', 'voter');
+        return $this->hasMany('App\Models\MrAndMissVote', 'voter');
     }
 
     public function mrAndMissVotesGot()
     {
-      return $this->hasMany('App\Models\MrAndMissVote', 'votee');
+        return $this->hasMany('App\Models\MrAndMissVote', 'votee');
     }
 
     public function votedFor($category)
     {
-      $votes = $this->mrAndMissVotesGiven()
+        $votes = $this->mrAndMissVotesGiven()
         ->where('category', $category->id)
         ->where('semester', Semester::current()->id);
-      if ($votes->count() > 0) {
-        return ['voted' => true, 'vote' => $votes->first()];
-      }
-      return ['voted' => false];
+        if ($votes->count() > 0) {
+            return ['voted' => true, 'vote' => $votes->first()];
+        }
+
+        return ['voted' => false];
     }
 }
