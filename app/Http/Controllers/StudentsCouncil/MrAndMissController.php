@@ -16,7 +16,7 @@ class MrAndMissController extends Controller
 
     public function indexVote()
     {
-        // TODO $this->authorize('view', MrAndMissCategory::class);
+        $this->authorize('view', EpistolaNews::class); // TODO
 
         $categories = MrAndMissCategory::where('hidden', false)->get();
 
@@ -32,6 +32,8 @@ class MrAndMissController extends Controller
 
     public function saveVote(Request $request)
     {
+      $this->authorize('view', EpistolaNews::class); // TODO
+
       $categories = MrAndMissCategory::where('hidden', false)->get();
       foreach ($categories as $category) {
 
@@ -65,6 +67,8 @@ class MrAndMissController extends Controller
 
     public function customVote(Request $request)
     {
+      $this->authorize('view', EpistolaNews::class); // TODO
+
       $category = MrAndMissCategory::create([
         'title' => $request['mr-or-miss'] . ' ' . $request->title,
         'mr' => $request['mr-or-miss'] == "Mr",
