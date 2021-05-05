@@ -555,4 +555,29 @@ class User extends Authenticatable implements HasLocalePreference
     {
         return self::withoutGlobalScope('verified')->where('verified', false)->count();
     }
+
+    /**
+     * Mr and Miss functions.
+     */
+    public function mrAndMissVotesGiven()
+    {
+        return $this->hasMany('App\Models\MrAndMissVote', 'voter');
+    }
+
+    public function mrAndMissVotesGot()
+    {
+        return $this->hasMany('App\Models\MrAndMissVote', 'votee');
+    }
+
+    public function votedFor($category)
+    {
+        $votes = $this->mrAndMissVotesGiven()
+        ->where('category', $category->id)
+        ->where('semester', Semester::current()->id);
+        if ($votes->count() > 0) {
+            return ['voted' => true, 'vote' => $votes->first()];
+        }
+
+        return ['voted' => false];
+    }
 }
