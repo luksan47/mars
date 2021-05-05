@@ -72,10 +72,16 @@
                                     <i class="material-icons left">attach_money</i> @lang('role.economic-committee')
                                 </a>
                             </li>
-                            <!-- economic committee -->
+                            <!-- communication committee -->
                             <li>
                                 <a class="waves-effect" href="{{ route('epistola') }}">
                                     <i class="material-icons left">campaign</i> @lang('role.communication-committee')
+                                </a>
+                            </li>
+                            <!-- community committee -->
+                            <li>
+                                <a class="waves-effect" href="{{ route('mr_and_miss.vote') }}">
+                                    <i class="material-icons left">how_to_vote</i> @lang('mr-and-miss.mr-and-miss')
                                 </a>
                             </li>
                         </ul>
