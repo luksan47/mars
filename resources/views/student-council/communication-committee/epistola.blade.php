@@ -16,9 +16,9 @@
     style="cursor:pointer">
         <span class="card-title ">{{$article->title}}</span>
         @if($article->sent)
-        <a class="btn-floating waves-effect waves-light grey right" href="{{route('epistola.restore', ['epistola' => $article->id])}}"><i class="material-icons">restore</i></a>
+        <x-input.button floating class="grey right" :href="route('epistola.restore', ['epistola' => $article->id])" icon="restore" />
         @else
-        <a class="btn-floating waves-effect waves-light grey right" href="{{route('epistola.edit', ['epistola' => $article->id])}}"><i class="material-icons">edit</i></a>
+        <x-input.button floating class="grey right" :href="route('epistola.edit', ['epistola' => $article->id])" icon="edit" />
         @endif
         <p>{{$article->subtitle}}</p>
         <p><i>{{$article->date_time}}</i></p>

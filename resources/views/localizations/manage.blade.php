@@ -39,15 +39,15 @@
                             <td>
                                 <form method="POST" action="{{ route('localizations.delete') }}">
                                     @csrf
-                                    <input type="number" name="id" value="{{ $contribution->id }}" hidden>
-                                    <button type="submit" class="btn-floating waves-effect waves-light red"><i class="material-icons">clear</i></button>
+                                    <x-input.text type="number" id="id" :value="$contribution->id" hidden/>
+                                    <x-input.button floating class="red" icon="clear" />
                                 </form>
                             </td>
                             <td>
                                 <form method="POST" action="{{ route('localizations.approve') }}">
                                     @csrf
-                                    <input type="number" name="id" value="{{ $contribution->id }}" hidden>
-                                    <button type="submit" class="btn-floating waves-effect waves-light green"><i class="material-icons">done</i></button>
+                                    <x-input.text type="number" id="id" :value="$contribution->id" hidden/>
+                                    <x-input.button floating class="green" icon="done" />
                                 </form>
                             </td>
                         </tr>
@@ -63,7 +63,7 @@
                         {{-- This should be deleted later: --}}
                         <form method="POST" action="{{ route('localizations.approve_all') }}">
                             @csrf
-                            <button type="submit" class="btn waves-effect right">Approve all</button>
+                            <x-input.button only_input class="right" text="Approve all"/>
                         </form>
                         @endif
                     </div>

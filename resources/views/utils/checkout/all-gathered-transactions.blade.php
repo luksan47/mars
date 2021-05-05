@@ -12,9 +12,7 @@
                         <form method="POST" action="{{ route($route_base . '.to_checkout') }}">
                             @csrf
                             <input type="hidden" name="user_id" value="{{$collegist->id}}">
-                            <button type="submit" class="btn-floating waves-effect right green">
-                                <i class="material-icons">payments</i>
-                            </button>
+                            <x-input.button floating class="right green" icon="payments"/>
                         </form>
                     </td>
                 </tr>

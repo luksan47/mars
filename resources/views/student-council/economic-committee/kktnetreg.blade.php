@@ -19,31 +19,12 @@
                     <div class="row">
                         <div class="col s12">
                             <blockquote>@lang('checkout.pay_kkt_descr')</blockquote>
-                            <div class="input-field col s12 m12 l4">
-                                @include("utils.select", [
-                                    'elements' => $users_not_payed,
-                                    'element_id' => 'user_id',
-                                    'required' => true])
-                            </div>
-                            <div class="input-field col s12 m6 l4">
-                                <input id="kkt" name="kkt" type="number" required min="0"
-                                    value="{{ config('custom.kkt') }}">
-                                <label for="kkt">@lang('checkout.kkt')</label>
-                                @error('kkt')
-                                    <span class="helper-text" data-error="{{ $message }}"></span>
-                                @enderror
-                            </div>
-                            <div class="input-field col s12 m6 l4">
-                                <input id="netreg" name="netreg" type="number" required min="0"
-                                    value="{{ config('custom.netreg') }}">
-                                <label for="netreg">@lang('checkout.netreg')</label>
-                                @error('netreg')
-                                    <span class="helper-text" data-error="{{ $message }}"></span>
-                                @enderror
-                            </div>
+                            <x-input.select l=4 :elements="$users_not_payed" id="user_id" text="general.user" />
+                            <x-input.text  m=6 l=4 id="kkt" type="number" required min="0" :value="config('custom.kkt')" />
+                            <x-input.text  m=6 l=4 id="netreg" type="number" required min="0" :value="config('custom.netreg')" />
                         </div>
                     </div>
-                    <button type="submit" class="btn-floating btn-large waves-effect right"><i class="large material-icons">send</i></button>
+                    <x-input.button floating class="btn-large right" icon="send" />
                 </form>
             </div>
         </div>

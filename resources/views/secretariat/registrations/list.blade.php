@@ -26,12 +26,9 @@
                             </td>
                             <td>
                                 <div class="right">
-                                    <a href="{{ route('secretariat.registrations.show', ['id' => $user->id]) }}" class="btn-floating waves-effect">
-                                        <i class="material-icons">search</i></a>
-                                    <a href=" {{ route('secretariat.registrations.accept', ['id' => $user->id]) }}" class="btn-floating green waves-effect">
-                                        <i class="material-icons">done</i></a>
-                                    <a href="{{ route('secretariat.registrations.reject', ['id' => $user->id]) }}" class="btn-floating red waves-effect">
-                                        <i class="material-icons">block</i></a>
+                                    <x-input.button :href="route('secretariat.registrations.show',   ['id' => $user->id])" floating icon="search"/>
+                                    <x-input.button :href="route('secretariat.registrations.accept', ['id' => $user->id])" floating icon="done" class="green"/>
+                                    <x-input.button :href="route('secretariat.registrations.reject', ['id' => $user->id])" floating icon="block" class="red"/>
                                 </div>
                             </td>
                         </tr>

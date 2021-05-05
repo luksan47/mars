@@ -6,24 +6,10 @@
         <form method="POST" action="{{ route($route_base . '.transaction.add') }}">
             @csrf
             <div class="row">
-                <div class="col s12">
-                    <div class="input-field col s12 m6 l6">
-                        <input id="comment" name="comment" type="text" required>
-                        <label for="comment">@lang('checkout.description')</label>
-                        @error('comment')
-                        <span class="helper-text" data-error="{{ $message }}"></span>
-                        @enderror
-                    </div>
-                    <div class="input-field col s12 m6 l6">
-                        <input id="amount" name="amount" type="number" required>
-                        <label for="amount">@lang('checkout.amount')</label>
-                        @error('amount')
-                        <span class="helper-text" data-error="{{ $message }}"></span>
-                        @enderror
-                    </div>
-                </div>
+                <x-input.text m=6 l=6 id="comment" required text="checkout.description" />
+                <x-input.text m=6 l=6 id="amount" required locale="checkout" />
             </div>
-            <button type="submit" class="btn-floating btn-large waves-effect right"><i class="large material-icons">payments</i></button>
+            <x-input.button floating class="btn=large right" icon="payments" />
         </form>
     </div>
 </div>

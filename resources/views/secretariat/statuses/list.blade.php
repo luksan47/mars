@@ -23,7 +23,7 @@
                                 @if($user->hasEducationalInformation())
                                 <br>{{ $user->educationalInformation->neptun ?? '' }}
                                 @endif
-                            </td>   
+                            </td>
                             <td>
                                 <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
                                     @lang("user." . $user->getStatus())
@@ -34,7 +34,7 @@
                                     <label>
                                     @lang('role.extern')
                                     <input type="checkbox" name="resident" onchange="setStatus({{$user->id}}, this.checked)"
-                                        @if($user->isResident()) checked @endif 
+                                        @if($user->isResident()) checked @endif
                                         @can('viewPermissionFor', $user) @else disabled @endcan>
                                     <span class="lever"></span>
                                     @lang('role.resident')
@@ -47,8 +47,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="{{ route('secretariat.user.semesters', ['id' => $user->id]) }}" class="btn-floating coli blue waves-effect right">
-                                        <i class="material-icons">event_note</i></a>
+                                <x-input.button :href="route('secretariat.user.semesters', ['id' => $user->id])" class="coli blue right" icon="event_note" floating />
                             </td>
                         @endforeach
                     </tbody>

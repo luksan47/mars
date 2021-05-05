@@ -1,9 +1,29 @@
 {{-- needs js tooltip initializer --}}
-<a href="{{ route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::ACTIVE]) }}" class="btn-floating green waves-effect tooltipped" data-position="bottom"  data-tooltip="@lang('user.ACTIVE')">
-    <i class="material-icons">rowing</i></a>
-<a href="{{ route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::INACTIVE]) }}" class="btn-floating grey waves-effect tooltipped" data-tooltip="@lang('user.INACTIVE')">
-    <i class="material-icons">power</i></a>
-<a href="{{ route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::DEACTIVATED]) }}" class="btn-floating red waves-effect tooltipped" data-tooltip="@lang('user.DEACTIVATED')">
-    <i class="material-icons">directions_run</i></a>
-<a href="{{ route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::PASSIVE]) }}" class="btn-floating waves-effect tooltipped" data-tooltip="@lang('user.PASSIVE')">
-    <i class="material-icons">self_improvement</i></a>
+<x-input.button
+    :href="route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::ACTIVE])"
+    floating
+    class="green tooltipped"
+    data-position="bottom"
+    :data-tooltip="__('user.ACTIVE')"
+    icon="rowing"/>
+<x-input.button
+    :href="route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::INACTIVE])"
+    floating
+    class="grey tooltipped"
+    data-position="bottom"
+    :data-tooltip="__('user.INACTIVE')"
+    icon="power"/>
+<x-input.button
+    :href="route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::DEACTIVATED])"
+    floating
+    class="red tooltipped"
+    data-position="bottom"
+    :data-tooltip="__('user.DEACTIVATED')"
+    icon="directions_run"/>
+<x-input.button
+    :href="route('secretariat.user.semesters.update', ['id' => $user->id, 'semester' => $semester->id, 'status' => \App\Models\Semester::PASSIVE])"
+    floating
+    class="tooltipped"
+    data-position="bottom"
+    :data-tooltip="__('user.PASSIVE')"
+    icon="self_improvement"/>
