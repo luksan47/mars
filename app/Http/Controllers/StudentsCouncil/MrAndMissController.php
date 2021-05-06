@@ -31,28 +31,35 @@ class MrAndMissController extends Controller
 
     public function saveVote(Request $request)
     {
+        //return response()->json($request);
         $this->authorize('view', EpistolaNews::class); // TODO
 
         $categories = MrAndMissCategory::where('hidden', false)->get();
         foreach ($categories as $category) {
-            if ($request['raw-'.$category->id] !== null) {
+            if ($request['raw-' . $category->id] !== null) {
                 MrAndMissVote::updateOrCreate([
                     'voter' => Auth::user()->id,
                     'category' => $category->id,
                     'semester' => Semester::current()->id,
                 ], [
                     'votee_id' => null,
-                    'votee_name' => $request['raw-'.$category->id],
+                    'votee_name' => $request['raw-' . $category->id],
                 ]);
-            } elseif ($request['select-'.$category->id] !== null) {
+            } elseif ($request['select-' . $category->id] !== null && $request['select-' . $category->id] !== 'null') {
                 MrAndMissVote::updateOrCreate([
                     'voter' => Auth::user()->id,
                     'category' => $category->id,
                     'semester' => Semester::current()->id,
                 ], [
-                    'votee_id' => $request['select-'.$category->id],
+                    'votee_id' => $request['select-' . $category->id],
                     'votee_name' => null,
                 ]);
+            } else {
+                MrAndMissVote::where([
+                    'voter' => Auth::user()->id,
+                    'category' => $category->id,
+                    'semester' => Semester::current()->id
+                ])->delete();
             }
         }
 
@@ -68,7 +75,7 @@ class MrAndMissController extends Controller
         $this->authorize('view', EpistolaNews::class); // TODO
 
         $category = MrAndMissCategory::create([
-            'title' => $request['mr-or-miss'].' '.$request->title,
+            'title' => $request['mr-or-miss'] . ' ' . $request->title,
             'mr' => $request['mr-or-miss'] == 'Mr',
             'created_by' => Auth::user()->id,
             'public' => $request['is-public'] == 'on',
@@ -85,7 +92,7 @@ class MrAndMissController extends Controller
         ]);
 
         return redirect()->back()
-        ->with('activate_custom', 'true')
-        ->with('message', __('general.successful_modification'));
+            ->with('activate_custom', 'true')
+            ->with('message', __('general.successful_modification'));
     }
 }
