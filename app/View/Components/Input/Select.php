@@ -10,6 +10,7 @@ class Select extends Input
     public $withoutPlaceholder;
     public $withoutLabel;
     public $default;
+    public $allowEmpty;
 
     /**
      * Create a new select component instance with a search field.
@@ -19,13 +20,14 @@ class Select extends Input
      * @param $default the default value (the id will be matched)
      * @return void
      */
-    public function __construct($id, $elements, $withoutPlaceholder = false, $withoutLabel = false, $default = null, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false)
+    public function __construct($id, $elements, $withoutPlaceholder = false, $withoutLabel = false, $default = null, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $allowEmpty = false)
     {
         parent::__construct($id, $locale, $text, $s, $m, $l, $xl, $onlyInput);
         $this->elements = (isset($elements[0]->name) ? $elements->sortBy('name') : $elements);
         $this->withoutPlaceholder = $withoutPlaceholder;
         $this->withoutLabel = $withoutLabel;
         $this->default = $default;
+        $this->allowEmpty = $allowEmpty;
     }
 
     /**

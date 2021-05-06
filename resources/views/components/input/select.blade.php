@@ -17,12 +17,14 @@
             {{ $attributes->get('placeholder') ?? __('general.choose_option') }}
         </option>
         @endif
+        @if($allowEmpty)
+        <option value=null></option>
+        @endif
         @foreach ($elements as $element)
             <option
                 value="{{ $element->id ?? $element }}"
-                @if($default != null && (($element->id ?? $element) == $default || ($element->name ?? $element) == $default)) selected="true" @endif>
-                @lang($element->name ?? $element)
-            </option>
+                @if($default != null && (($element->id ?? $element) == $default || ($element->name ?? $element) == $default)) selected="true" @endif
+                >@lang($element->name ?? $element)</option>
         @endforeach
     </select>
     @if(!$withoutLabel)
