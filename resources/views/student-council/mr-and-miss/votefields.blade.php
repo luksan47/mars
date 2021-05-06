@@ -16,7 +16,7 @@
                 hidden
               @endif
             >
-              <x-input.select only-input :id="'select-' . $category->id" :elements="$users" placeholder="" without-label
+              <x-input.select only-input :id="'select-' . $category->id" :elements="$users" without-placeholder allow-empty without-label
                   :default="($voteInfo['voted'] && $voteInfo['vote']->votee_id !== null ? $voteInfo['vote']->votee_id : null)"
                 />
             </div>
