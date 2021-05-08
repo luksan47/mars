@@ -22,7 +22,7 @@ mix.js('resources/js/materialize_custom.js', 'public/js/materialize.js') // We u
    ], 'public/js/')
    // Compile SASS
    .sass('resources/sass/materialize.scss', 'public/css/', {
-        data: '$isDebug:\'' + process.env.APP_DEBUG + '\';'
+        additionalData: '$isDebug:\'' + process.env.APP_DEBUG + '\';'
     })
    // Add common styles here
    .styles([
