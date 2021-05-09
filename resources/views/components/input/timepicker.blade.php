@@ -20,13 +20,4 @@
 </div>
 @endif
 
-@push('scripts')
-    <script>
-        $(document).ready(function() {
-            $('.timepicker').timepicker({
-                showClearBtn: true,
-                twelveHour: false,
-            });
-        });
-    </script>
-@endpush
+@include('components.input.init.timepicker')
