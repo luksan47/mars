@@ -38,7 +38,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             //only one should exist at a time
             'email' => 'email|max:225|unique:users',
-            'phone_number' => 'string|min:16|max:18',
+            'phone_number' => 'string|min:8|max:18',
             'mothers_name' => 'string|max:225',
             'place_of_birth' => 'string|max:225',
             'date_of_birth' => 'string|max:225',
