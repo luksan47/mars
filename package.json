@@ -27,6 +27,7 @@
         "jquery": "^3.5.1",
         "materialize-css": "^1.0.0",
         "moment": "^2.29.1",
+        "particles.js": "^2.0.0",
         "tabulator-tables": "^4.8.2"
     }
 }
