@@ -9,5 +9,5 @@ return [
     'Server Error' => 'Szerverhiba',
     'Service Unavailable' => 'Nem elérhető',
     'contact' => 'Ha a probléma továbbra is fennmarad, értesítsd a rendszergazdákat, vagy ha hibát találtál, ',
-    'report' => 'jelezd azt!'
+    'report' => 'jelezd azt!',
 ];

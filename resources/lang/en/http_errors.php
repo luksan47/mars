@@ -9,5 +9,5 @@ return [
     'Server Error' => 'Server Error',
     'Service Unavailable' => 'Service Unavailable',
     'contact' => 'If the problem persists, please contact the administrators or',
-    'report' => 'report a bug.'
+    'report' => 'report a bug.',
 ];
