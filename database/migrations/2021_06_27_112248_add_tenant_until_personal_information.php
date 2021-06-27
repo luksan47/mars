@@ -13,7 +13,7 @@ class AddTenantUntilPersonalInformation extends Migration
      */
     public function up()
     {
-        Schema::table('personal_information',function (Blueprint $table){
+        Schema::table('personal_information', function (Blueprint $table) {
             $table->date('tenant_until')->nullable();
         });
     }

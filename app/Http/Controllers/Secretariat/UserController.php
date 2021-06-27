@@ -47,7 +47,7 @@ class UserController extends Controller
             'zip_code' => 'string|max:31',
             'city' => 'string|max:255',
             'street_and_number' => 'string|max:255',
-            'tenant_until'=>'string|max:225'
+            'tenant_until'=>'string|max:225',
         ]);
 
         if ($validator->fails()) {
