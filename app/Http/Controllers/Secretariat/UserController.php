@@ -47,6 +47,7 @@ class UserController extends Controller
             'zip_code' => 'string|max:31',
             'city' => 'string|max:255',
             'street_and_number' => 'string|max:255',
+            'tenant_until'=>'string|max:225'
         ]);
 
         if ($validator->fails()) {
@@ -58,7 +59,7 @@ class UserController extends Controller
             $user->update(['email' => $request->email]);
         }
         if ($user->hasPersonalInformation() && $request->hasAny(
-            ['place_of_birth', 'date_of_birth', 'mothers_name', 'phone_number', 'country', 'county', 'zip_code', 'city', 'street_and_number']
+            ['place_of_birth', 'date_of_birth', 'mothers_name', 'phone_number', 'country', 'county', 'zip_code', 'city', 'street_and_number', 'tenant_until']
         )) {
             $user->personalInformation->update($request->all());
         }

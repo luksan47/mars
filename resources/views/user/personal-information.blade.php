@@ -248,6 +248,36 @@
                             @endif
                         </td>
                     </tr>
+                    @if ($user->hasRole(\App\Models\Role::TENANT))
+                        <tr>
+                            <th scope="row">@lang('user.tenant_until')</th>
+                            <td>
+                                @if($modifiable ?? false)
+                                    <form method="POST" action="{{ route('secretariat.user.update') }}">
+                                        @csrf
+                                        <div class="input-field inline" style="margin:0">
+                                            <input id="tenant_until" type="text" name="tenant_until" size="30" 
+                                                @if(!($errors->has('tenant_until'))) disabled @endif
+                                                style="margin:0" class="datepicker black-text validate @error('tenant_until') invalid @enderror"
+                                                value="{{ old('tenant_until', $user->personalInformation->tenant_until) }}" required onfocus="M.Datepicker.getInstance(tenant_until).open();">
+                                            @error('tenant_until')
+                                            <span class="helper-text" data-error="{{ $message }}"></span>
+                                            @enderror
+                                        </div>
+                                        <button id="tenant_until_send_btn" class="btn-floating right waves-effect waves-light hide btn-small"
+                                            type="submit" style="margin-top:10px">
+                                            <i class="material-icons">send</i></button>
+                                        <a id="tenant_until_edit_btn" class="btn-floating right waves-effect waves-light btn-small"
+                                            onclick="editor('tenant_until')" style="margin-top:10px">
+                                            <i class="material-icons">edit</i></a>
+                                    </form>
+                                @else
+                                    {{ $user->personalInformation->tenant_until }}
+                                @endif
+                                
+                            </td>
+                        </tr>
+                    @endif
                 @endif
             </tbody>
         </table>
@@ -277,7 +307,7 @@
                 format: 'yyyy-mm-dd',
                 firstDay: 1,
                 yearRange: 50,
-                maxDate: new Date(),
+                //maxDate: new Date(),
             });
         });
 		
