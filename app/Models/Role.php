@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class Role extends Model
 {
@@ -96,7 +95,7 @@ class Role extends Model
      */
     public function name(): string
     {
-        //TODO: workshop leader / administrator roles are translated elsewhere 
+        //TODO: workshop leader / administrator roles are translated elsewhere
         return __('role.' . $this->name);
     }
 
@@ -126,7 +125,7 @@ class Role extends Model
 
 
     /**
-     * Returns true if the specified role can be attached to someone.
+     * Checks if the specified role can be attached to someone.
      * @param int $roleId
      * @param int $objectId optional. Returns -1 if the object is null for a role which can have objects and contrariwise.
      * @return int 0 if the role can be attached, -1 if mentioned above, and an id for the user which assigned to a unique role otherwise
