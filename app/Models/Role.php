@@ -126,9 +126,12 @@ class Role extends Model
 
     /**
      * Checks if the specified role can be attached to someone.
+     * Object id is required if the role can have objects. (returns -1)
+     * If a role is unique and taken, returns the user's id who is attached to that role.
+     * Returns 0 if the role can be attached.
      * @param int $roleId
-     * @param int $objectId optional. Returns -1 if the object is null for a role which can have objects and contrariwise.
-     * @return int 0 if the role can be attached, -1 if mentioned above, and an id for the user which assigned to a unique role otherwise
+     * @param int $objectId optional
+     * @return int 0, -1, or a user id.
      */
     public static function canBeAttached($roleId, $objectId = null): int
     {
