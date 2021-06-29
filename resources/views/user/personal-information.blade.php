@@ -45,7 +45,7 @@
                                             @if(!($errors->has('phone_number'))) disabled @endif
                                             style="margin:0" class="validate black-text @error('phone_number') invalid @enderror"
                                             value="{{ old('phone_number', $user->personalInformation->phone_number ?? '') }}"
-                                            pattern="[+][0-9]{1,4}\s[(][0-9]{1,4}[)]\s[-|0-9]*" minlength="16"
+                                            pattern="[+][0-9]{1,4}[-\s()0-9]*" minlength="8"
                                             maxlength="18" required>
                                         <span id="phone_format" class="helper-text hide">+36 (20) 123-4567</span>
                                         @error('phone_number')
@@ -71,8 +71,8 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="place_of_birth" type="text" name="place_of_birth" size="30" 
-                                            @if(!($errors->has('place_of_birth'))) disabled @endif 
+                                        <input id="place_of_birth" type="text" name="place_of_birth" size="30"
+                                            @if(!($errors->has('place_of_birth'))) disabled @endif
                                             style="margin:0" class="validate black-text @error('place_of_birth') invalid @enderror"
                                             value="{{ old('place_of_birth', $user->personalInformation->place_of_birth ) }}" required>
                                         @error('place_of_birth')
@@ -93,7 +93,7 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="date_of_birth" type="text" name="date_of_birth" size="30" 
+                                        <input id="date_of_birth" type="text" name="date_of_birth" size="30"
                                             @if(!($errors->has('date_of_birth'))) disabled @endif
                                             style="margin:0" class="datepicker black-text validate @error('date_of_birth') invalid @enderror"
 											value="{{ old('date_of_birth', $user->personalInformation->date_of_birth) }}" required onfocus="M.Datepicker.getInstance(date_of_birth).open();">
@@ -120,8 +120,8 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="mothers_name" type="text" name="mothers_name" size="30" 
-                                            @if(!($errors->has('mothers_name'))) disabled @endif 
+                                        <input id="mothers_name" type="text" name="mothers_name" size="30"
+                                            @if(!($errors->has('mothers_name'))) disabled @endif
 											style="margin:0" class="validate black-text @error('mothers_name') invalid @enderror"
 											value="{{ old('mothers_name', $user->personalInformation->mothers_name) }}" required>
 										@error('mothers_name')
@@ -138,7 +138,7 @@
                             @else
 								{{ $user->personalInformation->mothers_name }}
                             @endif
-                            
+
                         </td>
                     </tr>
                     <tr>
@@ -148,9 +148,9 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="country" type="text" name="country" size="30" 
+                                        <input id="country" type="text" name="country" size="30"
                                             placeholder="@lang('user.country')"
-                                            @if(!($errors->has('country'))) disabled @endif 
+                                            @if(!($errors->has('country'))) disabled @endif
 											style="margin:0" class="validate black-text @error('country') invalid @enderror"
 											value="{{ old('country', $user->personalInformation->country) }}" required>
 										@error('country')
@@ -167,9 +167,9 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="county" type="text" name="county" size="30" 
+                                        <input id="county" type="text" name="county" size="30"
                                             placeholder="@lang('user.county')"
-                                            @if(!($errors->has('country'))) disabled @endif 
+                                            @if(!($errors->has('country'))) disabled @endif
 											style="margin:0" class="validate black-text @error('county') invalid @enderror"
 											value="{{ old('county', $user->personalInformation->county) }}" required>
 										@error('county')
@@ -186,9 +186,9 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="zip_code" type="text" name="zip_code" size="30" 
+                                        <input id="zip_code" type="text" name="zip_code" size="30"
                                             placeholder="@lang('user.zip_code')"
-                                            @if(!($errors->has('country'))) disabled @endif 
+                                            @if(!($errors->has('country'))) disabled @endif
 											style="margin:0" class="validate black-text @error('zip_code') invalid @enderror"
 											value="{{ old('zip_code', $user->personalInformation->zip_code) }}" required>
 										@error('zip_code')
@@ -205,9 +205,9 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="city" type="text" name="city" size="30" 
+                                        <input id="city" type="text" name="city" size="30"
                                             placeholder="@lang('user.city')"
-                                            @if(!($errors->has('country'))) disabled @endif 
+                                            @if(!($errors->has('country'))) disabled @endif
 											style="margin:0" class="validate black-text @error('city') invalid @enderror"
 											value="{{ old('city', $user->personalInformation->city) }}" required>
 										@error('city')
@@ -224,9 +224,9 @@
                                 <form method="POST" action="{{ route('secretariat.user.update') }}">
                                     @csrf
                                     <div class="input-field inline" style="margin:0">
-                                        <input id="street_and_number" type="text" name="street_and_number" size="30" 
+                                        <input id="street_and_number" type="text" name="street_and_number" size="30"
                                             placeholder="@lang('user.street_and_number')"
-                                            @if(!($errors->has('country'))) disabled @endif 
+                                            @if(!($errors->has('country'))) disabled @endif
 											style="margin:0" class="validate black-text @error('street_and_number') invalid @enderror"
 											value="{{ old('street_and_number', $user->personalInformation->street_and_number) }}" required>
 										@error('street_and_number')
@@ -310,6 +310,6 @@
                 //maxDate: new Date(),
             });
         });
-		
+
     </script>
 @endpush
