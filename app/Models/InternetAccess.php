@@ -28,8 +28,8 @@ class InternetAccess extends Model
     public function setWifiUsername($username = null)
     {
         if ($username === null) {
-            if ($this->user->isCollegist() && isset($this->personalInformation)) {
-                $username = $this->personalInformation->neptun;
+            if ($this->user->isCollegist() && isset($this->user->educationalInformation)) {
+                $username = $this->user->educationalInformation->neptun;
             } else {
                 $username = 'wifiuser'.$this->user_id;
             }

@@ -45,6 +45,9 @@
                             <x-input.text id='phone_number' type='tel' required
                                 pattern="[+][0-9]{1,4}[-\s()0-9]*" minlength="8" maxlength="18"
                                 locale='user' helper='+36 (20) 123-4567'/>
+                            @if ($user_type == \App\Models\Role::TENANT)
+                              <x-input.datepicker id='tenant_until' required locale='user'/>
+                            @endif
                         </div>
                     </div>
                     <div class="divider"></div>

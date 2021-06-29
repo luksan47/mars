@@ -103,7 +103,7 @@ class RegisterController extends Controller
         ];
         switch ($data['user_type']) {
             case Role::TENANT:
-                return Validator::make($data, $common);
+                return Validator::make($data, $common + ['tenant_until'=>'required|date_format:Y-m-d']);
             case Role::COLLEGIST:
                 $data['educational_email'] = $data['educational_email'].'@student.elte.hu';
 
@@ -130,6 +130,7 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'place_of_birth' => $data['place_of_birth'],
             'date_of_birth' => $data['date_of_birth'],
+            'tenant_until' => $data['tenant_until'] ?? null,
             'mothers_name' => $data['mothers_name'],
             'phone_number' => $data['phone_number'],
             'country' => $data['country'],
