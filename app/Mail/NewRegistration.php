@@ -11,19 +11,17 @@ class NewRegistration extends Mailable
     use Queueable, SerializesModels;
 
     public string $recipient;
-    public string $registered_user;
-    public bool $is_collegist;
+    public \App\Models\User $user;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(string $recipient, string $registered_user, bool $is_collegist)
+    public function __construct(string $recipient,  \App\Models\User $user)
     {
-        $this->recipient = $recipient;
-        $this->registered_user = $registered_user;
-        $this->is_collegist = $is_collegist;
+        $this->recipient=$recipient;
+        $this->user=$user;
     }
 
     /**
