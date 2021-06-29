@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewRegistration;
 use App\Models\EducationalInformation;
 use App\Models\Faculty;
 use App\Models\PersonalInformation;
@@ -174,7 +175,15 @@ class RegisterController extends Controller
 
         // Send confirmation mail.
         Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
-
+        // Send notification about new user to the admins and to the secretaries.
+        $admins = User::role(Role::NETWORK_ADMIN)->get();
+        $secretaries = User::role(Role::SECRETARY)->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin)->send(new NewRegistration($admin->name, $user->name, $user->isCollegist()));            
+        }
+        foreach($secretaries as $secretary){
+            Mail::to($secretary)->send(new NewRegistration($secretary->name, $user->name, $user->isCollegist())); 
+        }
         return $user;
     }
 }
