@@ -177,11 +177,12 @@ class RegisterController extends Controller
         $admins = User::role(Role::NETWORK_ADMIN)->get();
         $secretaries = User::role(Role::SECRETARY)->get();
         foreach ($admins as $admin) {
-            Mail::to($admin)->send(new NewRegistration($admin->name, $user->name, $user->isCollegist()));            
+            Mail::to($admin)->send(new NewRegistration($admin->name, $user->name, $user->isCollegist()));
         }
-        foreach($secretaries as $secretary){
-            Mail::to($secretary)->send(new NewRegistration($secretary->name, $user->name, $user->isCollegist())); 
+        foreach ($secretaries as $secretary) {
+            Mail::to($secretary)->send(new NewRegistration($secretary->name, $user->name, $user->isCollegist()));
         }
+
         return $user;
     }
 }
