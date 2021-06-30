@@ -135,10 +135,14 @@ body {
             }
         }
         .collection {
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-style: solid;
+			border-width: 1px 0px;
+			border-color: #9AA0A6;
             .collection-item {
-                background-color: rgba(255, 255, 255, 0.2);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                background-color: rgba(255,255,255,0.2);
+				border-style: solid;
+				border-width: 1px 0px;
+				border-color: #9AA0A6;
             }
         }
         textarea {
@@ -149,129 +153,12 @@ body {
                 color: #fff;
             }
         }
-        a {
-            color: #fff !important;
-        }
         .black-text {
             color: #fff !important;
         }
     }
 }
 
-.btn,
-.btn-flat {
-  border: $button-border;
-  border-radius: $button-radius;
-  display: inline-block;
-  height: inherit; //was $button-height originally - this enables multiline buttons if the text does not fit in
-  line-height: $button-height;
-  padding: $button-padding;
-  text-transform: uppercase;
-  vertical-align: middle;
-  -webkit-tap-highlight-color: transparent;
-}
-.btn-fixed-height {
-  height: $button-height;
-}
-
-
-// Settings for dark mode
-$transition-effects: color 1s ease, background-color 0.5s ease;
-
-body {
-	transition: $transition-effects;
-	&.dark {
-		background-color: #000000;
-		color: #fff;
-		.card {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.divider {
-			opacity: 0.2;
-		}
-		.tabulator {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.tabulator-col {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.tabulator-col-content {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.tabulator-page {
-			color: #fff;
-		}
-		.collapsible-body{
-			background-color: rgba(25, 25, 25, 255)
-		}
-		.dropdown-trigger{
-			color: #fff;
-		}
-		.caret{
-			fill: #fff;
-		}
-		.selected {
-			span{
-				color: #fff;
-			}
-		}
-		.input-field{
-			input{
-				color: #fff;
-			}
-		}
-		.dropdown-content {
-			background-color: rgba(25, 25, 25, 255);
-		}
-		.datepicker-calendar{
-			color: #000000;
-			.dropdown-trigger{
-				color: #000000
-			}
-			.caret{
-				fill: #000000
-			}
-		}
-		.sidenav {
-			background-color: rgba(25, 25, 25, 255);
-			li {
-				a {
-					&:not(.subheader){
-						color: #fff;
-						&:hover {
-							background-color: #3B4043;
-						}
-					}
-					&.subheader {
-						color:#9AA0A6;
-					}
-					.material-icons {
-						color: #9AA0A6;
-					}
-				}
-			}
-        }
-		.collection {
-			border-style: solid;
-			border-width: 1px 0px;
-			border-color: #9AA0A6;
-			.collection-item {
-				background-color: rgba(255,255,255,0.2);
-				border-style: solid;
-				border-width: 1px 0px;
-				border-color: #9AA0A6;
-			}
-		}
-		textarea{
-			color: #fff;
-		}
-		.input-field{
-			textarea{
-				color: #fff;
-			}
-		}
-	}
-}
 //other, custom classes
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
