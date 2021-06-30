@@ -5,15 +5,9 @@ return [
     'approved_registration' => 'Your registration have been approved.',
     'dear' => 'Dear',
     'email_sent' => 'System administrators notified.',
-<<<<<<< HEAD
     'more_info' => 'More information',
     'new-registration-subject' => 'New registration',
     'new_registration' => 'A new tenant, :registered_user just registered to Urán. Approve or deny their request.',
-=======
-    'new-registration-subject' => 'New registration',
-    'new_registration_collegist' => 'A new collegist, :registered_user just registered to Urán. Approve or deny their request.',
-    'new_registration_tenant' => 'A new tenant, :registered_user just registered to Urán. Approve or deny their request.',
->>>>>>> ade84f8 (email on new registration)
     'no-paper-subject' => 'Printer ran out of paper',
     'no_paper' => ':reporter just reported that there is no paper in the printer.',
     'router_status_warning' => 'Router down!',
