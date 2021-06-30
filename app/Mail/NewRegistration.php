@@ -18,10 +18,10 @@ class NewRegistration extends Mailable
      *
      * @return void
      */
-    public function __construct(string $recipient,  \App\Models\User $user)
+    public function __construct(string $recipient, \App\Models\User $user)
     {
-        $this->recipient=$recipient;
-        $this->user=$user;
+        $this->recipient = $recipient;
+        $this->user = $user;
     }
 
     /**
