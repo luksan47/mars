@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class RegistrationsController extends Controller
 {
@@ -19,8 +22,27 @@ class RegistrationsController extends Controller
 
     public function index()
     {
-        $users = User::withoutGlobalScope('verified')->where('verified', false)->with('educationalInformation')->get();
-
+        $users=[];
+        $user=Auth::user();
+        if($user->hasRole(Role::NETWORK_ADMIN)){
+            $users = User::withoutGlobalScope('verified')->where('verified', false)->with('educationalInformation')->get();
+        }else if($user->hasAnyRole([Role::SECRETARY, Role::DIRECTOR])){
+            $users = User::withoutGlobalScope('verified')->where('verified', false)
+            ->whereHas('roles', function (Builder $query) {
+                $query->where('name', Role::COLLEGIST);
+            })
+            ->with('educationalInformation')
+            ->get();
+        }else if($user->hasRole(Role::STAFF)){
+            $users = User::withoutGlobalScope('verified')->where('verified', false)
+            ->whereHas('roles', function (Builder $query) {
+                $query->where('name', Role::TENANT);
+            })
+            ->with('educationalInformation')
+            ->get();
+        }
+        
+        
         return view('secretariat.registrations.list', ['users' => $users]);
     }
 

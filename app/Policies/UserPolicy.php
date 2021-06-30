@@ -23,7 +23,10 @@ class UserPolicy
     public function viewPersonalInformation(User $user, User $target)
     {
         // TODO: later internet admins should be removed
-        return $user->hasAnyRole([Role::NETWORK_ADMIN, Role::SECRETARY]) || $user->id == $target->id;
+        return $user->hasRole(Role::NETWORK_ADMIN) 
+            || ($target->hasRole(Role::COLLEGIST) && $user->hasRole(Role::SECRETARY)) 
+            || $user->id == $target->id 
+            || ($target->hasRole(Role::TENANT) && $user->hasRole(Role::STAFF));
     }
 
     public function viewEducationalInformation(User $user, User $target)

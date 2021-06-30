@@ -14,10 +14,10 @@
 @lang('user.tenant_until'): {{$personal->tenant_until}}
 @endcomponent
 <div class="row">
-@component('mail::button', ['url'=> route('secretariat.registrations.accept', ['id' => $user->id])])<!--todo url-->
+@component('mail::button', ['url'=> route('secretariat.registrations.accept', ['id' => $user->id])])
 @lang('user.accept')    
 @endcomponent
-@component('mail::button', ['url'=> route('secretariat.registrations.show', ['id' => $user->id])])<!--todo url-->
+@component('mail::button', ['url'=> route('secretariat.registrations.show', ['id' => $user->id])])
 @lang('mail.more_info')    
 @endcomponent
 </div>
