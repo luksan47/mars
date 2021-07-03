@@ -89,7 +89,7 @@
                 </li>
                 @endcan
                 <!-- secretariat module -->
-                @if(Auth::user()->hasElevatedPermissions())
+                @if(Auth::user()->hasElevatedPermissions() || Auth::user()->hasRole(\App\Models\Role::STAFF))
 
                 <li><div class="divider"></div></li>
                 <li class="@yield('secretariat_module')">

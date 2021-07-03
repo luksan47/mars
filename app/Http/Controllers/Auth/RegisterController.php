@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewRegistration;
 use App\Models\EducationalInformation;
 use App\Models\Faculty;
 use App\Models\PersonalInformation;
@@ -174,6 +175,13 @@ class RegisterController extends Controller
 
         // Send confirmation mail.
         Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
+        // Send notification about new tenant to the staff.
+        if (! $user->isCollegist()) {
+            $staff = User::role(Role::STAFF)->get();
+            foreach ($staff as $person) {
+                Mail::to($person)->send(new NewRegistration($person->name, $user));
+            }
+        }
 
         return $user;
     }
