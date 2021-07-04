@@ -42,9 +42,12 @@
                             <x-input.text l=6 id='place_of_birth' required locale='user'/>
                             <x-input.datepicker l=6 id='date_of_birth' required locale='user'/>
                             <x-input.text id='mothers_name' required locale='user'/>
-                            <x-input.text id='phone_number' type='tel' value='+36 ' required
-                                pattern="[+][0-9]{1,4}\s[(][0-9]{1,4}[)]\s[-|0-9]*" minlength="16" maxlength="18"
-                                locale='user' message='+36 (20) 123-4567'/>
+                            <x-input.text id='phone_number' type='tel' required
+                                pattern="[+][0-9]{1,4}[-\s()0-9]*" minlength="8" maxlength="18"
+                                locale='user' helper='+36 (20) 123-4567'/>
+                            @if ($user_type == \App\Models\Role::TENANT)
+                              <x-input.datepicker id='tenant_until' required locale='user'/>
+                            @endif
                         </div>
                     </div>
                     <div class="divider"></div>

@@ -69,6 +69,7 @@ return [
     'tanito_eso_vokepzo_kar' => 'Tanító- és Óvóképző Kar',
     'tarsadalomtudomanyi_kar' => 'Társadalomtudományi Kar',
     'tarsadalomtudomanyi_muhely' => 'Társadalomtudományi műhely',
+    'tenant_until' => 'Planned departure',
     'termeszettudomanyi_kar' => 'Természettudományi Kar',
     'törtenesz_muhely' => 'Történész műhely',
     'user_data' => 'User data',

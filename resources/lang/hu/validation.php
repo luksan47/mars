@@ -154,8 +154,8 @@ return [
     'string' => 'A(z) :attribute szöveg kell, hogy legyen.',
     'timezone' => 'A(z) :attribute nem létező időzona.',
     'unique' => 'A(z) :attribute már foglalt.',
+    'upload_with_link' => 'Fájl feltöltése és belinkelése együtt nem lehetséges.',
     'uploaded' => 'A(z) :attribute feltöltése sikertelen.',
     'url' => 'A(z) :attribute érvénytelen link.',
     'uuid' => ':attribute érvényes UUID-val kell rendelkezzen.',
-    'upload_with_link' => 'Fájl feltöltése és belinkelése együtt nem lehetséges.',
 ];
