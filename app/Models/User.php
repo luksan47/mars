@@ -14,6 +14,16 @@ class User extends Authenticatable implements HasLocalePreference
 {
     use NotificationCounter, Notifiable, HasFactory;
 
+    const ROLE_APPLICANT = 'applicant';
+    const ROLE_USER = 'user';
+    const ROLE_ADMIN = 'admin';
+
+    const ROLES = [
+        self::ROLE_ADMIN,
+        self::ROLE_USER,
+        self::ROLE_APPLICANT,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -579,5 +589,47 @@ class User extends Authenticatable implements HasLocalePreference
         }
 
         return ['voted' => false];
+    }
+
+
+    /**
+     * Admission related functions.
+     */
+
+    public function application()
+    {
+        return $this->hasOne('App\Models\Applications')->get();
+    }
+
+
+    public function hasApplication()
+    {
+        return isset($this->application);
+    }
+/* TODO: make one day this into a reality */
+    public function permissions(){
+        return $this->hasMany('App\Models\Permissions');
+    }
+
+    public function getWorkshopPermissionsAttribute(){
+        return array_filter(
+                $this->permissions->all(),
+                function( &$permission ){
+                    return (key_exists($permission['permission'], Permissions::WORKSHOPS));
+                }
+            );
+    }
+
+    public function getListPermissionsAttribute(){
+        return array_filter(
+                $this->permissions->all(),
+                function( &$permission ){
+                    return (key_exists($permission['permission'], Permissions::LISTS));
+                }
+            );
+    }
+
+    public function getPermissionsAttribute(){
+        return Permissions::where('user_id',$this->id)->get();
     }
 }

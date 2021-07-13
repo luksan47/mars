@@ -20,6 +20,7 @@ class Role extends Model
     const LOCALE_ADMIN = 'locale-admin';
     const PERMISSION_HANDLER = 'permission-handler';
     const STUDENT_COUNCIL = 'student-council';
+    const ADMISSION_HANDLER = 'admission-handler';
 
     // Module-related roles
     const PRINTER = 'printer';
@@ -41,6 +42,7 @@ class Role extends Model
         self::LOCALE_ADMIN,
         self::PERMISSION_HANDLER,
         self::STUDENT_COUNCIL,
+        self::ADMISSION_HANDLER,
     ];
 
     protected $fillable = [
@@ -109,7 +111,8 @@ class Role extends Model
             self::WORKSHOP_LEADER,
             self::LOCALE_ADMIN,
             self::STUDENT_COUNCIL,
-            self::COLLEGIST
+            self::COLLEGIST,
+            self::ADMISSION_HANDLER,
         ]);
     }
 
@@ -129,7 +132,7 @@ class Role extends Model
      */
     public static function possibleObjectsFor($name)
     {
-        if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER])) {
+        if (in_array($name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER, self::ADMISSION_HANDLER])) {
             return Cache::remember('workshop.all', 60 * 60 * 24, function () {
                 return Workshop::all();
             });
