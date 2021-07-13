@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admission;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Applications;
 use App\Models\Uploads;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
@@ -76,6 +76,7 @@ class UploadController extends Controller
         Storage::delete($file['file_path']);
 
         Uploads::where('id', $request->input('id'))->where('applications_id', $application_id)->delete();
+
         return redirect()->back()->with('success', 'A fájl eltávolításrakerült!');
     }
 }

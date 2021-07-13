@@ -23,7 +23,7 @@ class CreateUploadsTable extends Migration
             $table->timestamps();
 
             $table->foreign('applications_id')->references('id')->on('applications');
-           // $table->foreign('id')->references('file_id_profile')->on('applications');
+            // $table->foreign('id')->references('file_id_profile')->on('applications');
         });
     }
 
@@ -36,7 +36,7 @@ class CreateUploadsTable extends Migration
     {
         Schema::table('uploads', function (Blueprint $table) {
             $table->dropForeign('applications_id');
-           // $table->dropForeign('id');
+            // $table->dropForeign('id');
         });
         Schema::dropIfExists('uploads');
     }

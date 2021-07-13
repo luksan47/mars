@@ -25,8 +25,6 @@ class Permissions extends Model
     const PERMISSION_WORKSHOP_HISTORY = 'w_history';
     const PERMISSION_WORKSHOP_ECONOMY = 'w_economy';
 
-
-
     const NAME_WORKSHOP_ENGLISH = 'Angol-Amerikai műhely';
     const NAME_WORKSHOP_BIO_CHEM = 'Biológia-Kémia műhely';
     const NAME_WORKSHOP_FILOLOGY = 'Klasszika-filológia műhely';
@@ -51,9 +49,10 @@ class Permissions extends Model
         //TODO: maybe make this better
         return str_replace('_', '-', substr($workshop_code, 2));
     }
+
     public static function cast_workshop_url_to_code(string $workshop_url): string
     {
-        return 'w_' . str_replace('-', '_', $workshop_url);
+        return 'w_'.str_replace('-', '_', $workshop_url);
     }
 
     public static function cast_permission_code_to_url(string $workshop_code): string
@@ -61,111 +60,113 @@ class Permissions extends Model
         //TODO: maybe make this better
         return str_replace('_', '-', substr($workshop_code, 2));
     }
+
     public static function cast_persmission_url_to_code(string $workshop_url): string
     {
-        return 'p_' . str_replace('-', '_', $workshop_url);
+        return 'p_'.str_replace('-', '_', $workshop_url);
     }
 
     public static function id_permission_code_exist(string $permission_code): bool
     {
         return key_exists($permission_code, self::PERMISSIONS);
     }
-/*
-    const ADMINISTRATION_PERMISSIONS = [
-        self::PERMISSION_LIST_FINAL_APPLICATIONS,
-        self::PERMISSION_LIST_INPROGRESS_APPLICATIONS,
-    ];
 
-   const WORKSHOP_PERMISSIONS = [
-        self::PERMISSION_WORKSHOP_ENGLISH,
-        self::PERMISSION_WORKSHOP_BIO_CHEM,
-        self::PERMISSION_WORKSHOP_FILOLOGY,
-        self::PERMISSION_WORKSHOP_PHILOSOPHY,
-        self::PERMISSION_WORKSHOP_FRENCH,
-        self::PERMISSION_WORKSHOP_GERMAN,
-        self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I,
-        self::PERMISSION_WORKSHOP_HUNGARIAN,
-        self::PERMISSION_WORKSHOP_MATH_PHYSICS,
-        self::PERMISSION_WORKSHOP_GEOGRAPHY,
-        self::PERMISSION_WORKSHOP_ITALIAN,
-        self::PERMISSION_WORKSHOP_ORIENTAL,
-        self::PERMISSION_WORKSHOP_SCANDINAVIAN,
-        self::PERMISSION_WORKSHOP_SPANISH,
-        self::PERMISSION_WORKSHOP_SLAV,
-        self::PERMISSION_WORKSHOP_SOCIAL,
-        self::PERMISSION_WORKSHOP_HISTORY,
-        self::PERMISSION_WORKSHOP_ECONOMY,
-    ];
+    /*
+        const ADMINISTRATION_PERMISSIONS = [
+            self::PERMISSION_LIST_FINAL_APPLICATIONS,
+            self::PERMISSION_LIST_INPROGRESS_APPLICATIONS,
+        ];
 
-    const PERMISSIONS_NAMES = [
-        self::PERMISSION_LIST_FINAL_APPLICATIONS => 'Véglegesített jelentkezések megtekintése',
-        self::PERMISSION_LIST_INPROGRESS_APPLICATIONS => 'Folyamatbanlévő jelentkezések megtekintése',
+       const WORKSHOP_PERMISSIONS = [
+            self::PERMISSION_WORKSHOP_ENGLISH,
+            self::PERMISSION_WORKSHOP_BIO_CHEM,
+            self::PERMISSION_WORKSHOP_FILOLOGY,
+            self::PERMISSION_WORKSHOP_PHILOSOPHY,
+            self::PERMISSION_WORKSHOP_FRENCH,
+            self::PERMISSION_WORKSHOP_GERMAN,
+            self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I,
+            self::PERMISSION_WORKSHOP_HUNGARIAN,
+            self::PERMISSION_WORKSHOP_MATH_PHYSICS,
+            self::PERMISSION_WORKSHOP_GEOGRAPHY,
+            self::PERMISSION_WORKSHOP_ITALIAN,
+            self::PERMISSION_WORKSHOP_ORIENTAL,
+            self::PERMISSION_WORKSHOP_SCANDINAVIAN,
+            self::PERMISSION_WORKSHOP_SPANISH,
+            self::PERMISSION_WORKSHOP_SLAV,
+            self::PERMISSION_WORKSHOP_SOCIAL,
+            self::PERMISSION_WORKSHOP_HISTORY,
+            self::PERMISSION_WORKSHOP_ECONOMY,
+        ];
 
-        self::PERMISSION_WORKSHOP_ENGLISH => 'Angol-Amerikai műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_BIO_CHEM => 'Biológia-Kémia műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_FILOLOGY => 'Klasszika-filológia műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_PHILOSOPHY => 'Filozófia műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_FRENCH => 'Francia műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_GERMAN => 'Germanisztika műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I => 'Informatikai műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_HUNGARIAN => 'Magyar műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_MATH_PHYSICS => 'Matematika-Fizika műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_GEOGRAPHY => 'Földrajz-Földtud.-Környezettud. műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_ITALIAN => 'Olasz műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_ORIENTAL => 'Orientalisztika műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_SCANDINAVIAN => 'Skandinavisztika műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_SPANISH => 'Spanyol műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_SLAV => 'Szlavisztika műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_SOCIAL => 'Társadalomtudományi műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_HISTORY => 'Történész műhely listájának megtekintése',
-        self::PERMISSION_WORKSHOP_ECONOMY => 'Gazdálkodástudományi műhely listájának megtekintése',
-    ];
+        const PERMISSIONS_NAMES = [
+            self::PERMISSION_LIST_FINAL_APPLICATIONS => 'Véglegesített jelentkezések megtekintése',
+            self::PERMISSION_LIST_INPROGRESS_APPLICATIONS => 'Folyamatbanlévő jelentkezések megtekintése',
 
-    const PERMISSIONS_NAMES_SHORT = [
-        self::PERMISSION_LIST_FINAL_APPLICATIONS => 'Véglegesített jelentkezések',
-        self::PERMISSION_LIST_INPROGRESS_APPLICATIONS => 'Folyamatbanlévő jelentkezések',
+            self::PERMISSION_WORKSHOP_ENGLISH => 'Angol-Amerikai műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_BIO_CHEM => 'Biológia-Kémia műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_FILOLOGY => 'Klasszika-filológia műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_PHILOSOPHY => 'Filozófia műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_FRENCH => 'Francia műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_GERMAN => 'Germanisztika műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I => 'Informatikai műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_HUNGARIAN => 'Magyar műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_MATH_PHYSICS => 'Matematika-Fizika műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_GEOGRAPHY => 'Földrajz-Földtud.-Környezettud. műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_ITALIAN => 'Olasz műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_ORIENTAL => 'Orientalisztika műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_SCANDINAVIAN => 'Skandinavisztika műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_SPANISH => 'Spanyol műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_SLAV => 'Szlavisztika műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_SOCIAL => 'Társadalomtudományi műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_HISTORY => 'Történész műhely listájának megtekintése',
+            self::PERMISSION_WORKSHOP_ECONOMY => 'Gazdálkodástudományi műhely listájának megtekintése',
+        ];
 
-        self::PERMISSION_WORKSHOP_ENGLISH => self::NAME_WORKSHOP_ENGLISH,
-        self::PERMISSION_WORKSHOP_BIO_CHEM => self::NAME_WORKSHOP_BIO_CHEM,
-        self::PERMISSION_WORKSHOP_FILOLOGY => self::NAME_WORKSHOP_FILOLOGY,
-        self::PERMISSION_WORKSHOP_PHILOSOPHY => self::NAME_WORKSHOP_PHILOSOPHY,
-        self::PERMISSION_WORKSHOP_FRENCH => self::NAME_WORKSHOP_FRENCH,
-        self::PERMISSION_WORKSHOP_GERMAN => self::NAME_WORKSHOP_GERMAN,
-        self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I => self::NAME_WORKSHOP_INFORMATICS_WITH_AN_I,
-        self::PERMISSION_WORKSHOP_HUNGARIAN => self::NAME_WORKSHOP_HUNGARIAN,
-        self::PERMISSION_WORKSHOP_MATH_PHYSICS => self::NAME_WORKSHOP_MATH_PHYSICS,
-        self::PERMISSION_WORKSHOP_GEOGRAPHY => self::NAME_WORKSHOP_GEOGRAPHY,
-        self::PERMISSION_WORKSHOP_ITALIAN => self::NAME_WORKSHOP_ITALIAN,
-        self::PERMISSION_WORKSHOP_ORIENTAL => self::NAME_WORKSHOP_ORIENTAL,
-        self::PERMISSION_WORKSHOP_SCANDINAVIAN => self::NAME_WORKSHOP_SCANDINAVIAN,
-        self::PERMISSION_WORKSHOP_SPANISH => self::NAME_WORKSHOP_SPANISH,
-        self::PERMISSION_WORKSHOP_SLAV => self::NAME_WORKSHOP_SLAV,
-        self::PERMISSION_WORKSHOP_SOCIAL => self::NAME_WORKSHOP_SOCIAL,
-        self::PERMISSION_WORKSHOP_HISTORY => self::NAME_WORKSHOP_HISTORY,
-        self::PERMISSION_WORKSHOP_ECONOMY => self::NAME_WORKSHOP_ECONOMY,
-    ];
+        const PERMISSIONS_NAMES_SHORT = [
+            self::PERMISSION_LIST_FINAL_APPLICATIONS => 'Véglegesített jelentkezések',
+            self::PERMISSION_LIST_INPROGRESS_APPLICATIONS => 'Folyamatbanlévő jelentkezések',
+
+            self::PERMISSION_WORKSHOP_ENGLISH => self::NAME_WORKSHOP_ENGLISH,
+            self::PERMISSION_WORKSHOP_BIO_CHEM => self::NAME_WORKSHOP_BIO_CHEM,
+            self::PERMISSION_WORKSHOP_FILOLOGY => self::NAME_WORKSHOP_FILOLOGY,
+            self::PERMISSION_WORKSHOP_PHILOSOPHY => self::NAME_WORKSHOP_PHILOSOPHY,
+            self::PERMISSION_WORKSHOP_FRENCH => self::NAME_WORKSHOP_FRENCH,
+            self::PERMISSION_WORKSHOP_GERMAN => self::NAME_WORKSHOP_GERMAN,
+            self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I => self::NAME_WORKSHOP_INFORMATICS_WITH_AN_I,
+            self::PERMISSION_WORKSHOP_HUNGARIAN => self::NAME_WORKSHOP_HUNGARIAN,
+            self::PERMISSION_WORKSHOP_MATH_PHYSICS => self::NAME_WORKSHOP_MATH_PHYSICS,
+            self::PERMISSION_WORKSHOP_GEOGRAPHY => self::NAME_WORKSHOP_GEOGRAPHY,
+            self::PERMISSION_WORKSHOP_ITALIAN => self::NAME_WORKSHOP_ITALIAN,
+            self::PERMISSION_WORKSHOP_ORIENTAL => self::NAME_WORKSHOP_ORIENTAL,
+            self::PERMISSION_WORKSHOP_SCANDINAVIAN => self::NAME_WORKSHOP_SCANDINAVIAN,
+            self::PERMISSION_WORKSHOP_SPANISH => self::NAME_WORKSHOP_SPANISH,
+            self::PERMISSION_WORKSHOP_SLAV => self::NAME_WORKSHOP_SLAV,
+            self::PERMISSION_WORKSHOP_SOCIAL => self::NAME_WORKSHOP_SOCIAL,
+            self::PERMISSION_WORKSHOP_HISTORY => self::NAME_WORKSHOP_HISTORY,
+            self::PERMISSION_WORKSHOP_ECONOMY => self::NAME_WORKSHOP_ECONOMY,
+        ];
 
 
-    const WORKSHOPS_OLD = [
-        self::PERMISSION_WORKSHOP_ENGLISH => self::NAME_WORKSHOP_ENGLISH,
-        self::PERMISSION_WORKSHOP_BIO_CHEM => self::NAME_WORKSHOP_BIO_CHEM,
-        self::PERMISSION_WORKSHOP_FILOLOGY => self::NAME_WORKSHOP_FILOLOGY,
-        self::PERMISSION_WORKSHOP_PHILOSOPHY => self::NAME_WORKSHOP_PHILOSOPHY,
-        self::PERMISSION_WORKSHOP_FRENCH => self::NAME_WORKSHOP_FRENCH,
-        self::PERMISSION_WORKSHOP_GERMAN => self::NAME_WORKSHOP_GERMAN,
-        self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I => self::NAME_WORKSHOP_INFORMATICS_WITH_AN_I,
-        self::PERMISSION_WORKSHOP_HUNGARIAN => self::NAME_WORKSHOP_HUNGARIAN,
-        self::PERMISSION_WORKSHOP_MATH_PHYSICS => self::NAME_WORKSHOP_MATH_PHYSICS,
-        self::PERMISSION_WORKSHOP_GEOGRAPHY => self::NAME_WORKSHOP_GEOGRAPHY,
-        self::PERMISSION_WORKSHOP_ITALIAN => self::NAME_WORKSHOP_ITALIAN,
-        self::PERMISSION_WORKSHOP_ORIENTAL => self::NAME_WORKSHOP_ORIENTAL,
-        self::PERMISSION_WORKSHOP_SCANDINAVIAN => self::NAME_WORKSHOP_SCANDINAVIAN,
-        self::PERMISSION_WORKSHOP_SPANISH => self::NAME_WORKSHOP_SPANISH,
-        self::PERMISSION_WORKSHOP_SLAV => self::NAME_WORKSHOP_SLAV,
-        self::PERMISSION_WORKSHOP_SOCIAL => self::NAME_WORKSHOP_SOCIAL,
-        self::PERMISSION_WORKSHOP_HISTORY => self::NAME_WORKSHOP_HISTORY,
-        self::PERMISSION_WORKSHOP_ECONOMY => self::NAME_WORKSHOP_ECONOMY,
-    ];*/
+        const WORKSHOPS_OLD = [
+            self::PERMISSION_WORKSHOP_ENGLISH => self::NAME_WORKSHOP_ENGLISH,
+            self::PERMISSION_WORKSHOP_BIO_CHEM => self::NAME_WORKSHOP_BIO_CHEM,
+            self::PERMISSION_WORKSHOP_FILOLOGY => self::NAME_WORKSHOP_FILOLOGY,
+            self::PERMISSION_WORKSHOP_PHILOSOPHY => self::NAME_WORKSHOP_PHILOSOPHY,
+            self::PERMISSION_WORKSHOP_FRENCH => self::NAME_WORKSHOP_FRENCH,
+            self::PERMISSION_WORKSHOP_GERMAN => self::NAME_WORKSHOP_GERMAN,
+            self::PERMISSION_WORKSHOP_INFORMATICS_WITH_AN_I => self::NAME_WORKSHOP_INFORMATICS_WITH_AN_I,
+            self::PERMISSION_WORKSHOP_HUNGARIAN => self::NAME_WORKSHOP_HUNGARIAN,
+            self::PERMISSION_WORKSHOP_MATH_PHYSICS => self::NAME_WORKSHOP_MATH_PHYSICS,
+            self::PERMISSION_WORKSHOP_GEOGRAPHY => self::NAME_WORKSHOP_GEOGRAPHY,
+            self::PERMISSION_WORKSHOP_ITALIAN => self::NAME_WORKSHOP_ITALIAN,
+            self::PERMISSION_WORKSHOP_ORIENTAL => self::NAME_WORKSHOP_ORIENTAL,
+            self::PERMISSION_WORKSHOP_SCANDINAVIAN => self::NAME_WORKSHOP_SCANDINAVIAN,
+            self::PERMISSION_WORKSHOP_SPANISH => self::NAME_WORKSHOP_SPANISH,
+            self::PERMISSION_WORKSHOP_SLAV => self::NAME_WORKSHOP_SLAV,
+            self::PERMISSION_WORKSHOP_SOCIAL => self::NAME_WORKSHOP_SOCIAL,
+            self::PERMISSION_WORKSHOP_HISTORY => self::NAME_WORKSHOP_HISTORY,
+            self::PERMISSION_WORKSHOP_ECONOMY => self::NAME_WORKSHOP_ECONOMY,
+        ];*/
 
     const WORKSHOP_TYPE_DOGESZ = 't_dogesz';
     const WORKSHOP_TYPE_BOLCSESZ = 't_bolcsesz';
@@ -178,7 +179,6 @@ class Permissions extends Model
     const PERMISSION_LIST_FINAL_APPLICATIONS = 'p_list_final_applications';
     const PERMISSION_LIST_INPROGRESS_APPLICATIONS = 'p_list_inprogress_applications';
     const PERMISSION_LIST_USERS = 'p_list_users';
-
 
     const PERMISSIONS = [
         /* 'code' => [
@@ -396,7 +396,6 @@ class Permissions extends Model
             'type' => self::WORKSHOP_TYPE_DOGESZ,
         ],
     ];
-
 
     //const LEVEL_VIEW = 'view';
     //const LEVEL_ADMIN = 'admin';

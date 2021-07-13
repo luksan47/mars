@@ -3,23 +3,21 @@
 namespace App\Http\Controllers\Admission;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Finalise;
 use App\Models\Applications;
 use App\Models\Uploads;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\Finalise;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicantController extends Controller
 {
-
-
     public function showProfile()
     {
         $user_id = Auth::user()->id;
         $application = Applications::find_prepare($user_id);
-        $uploads = Uploads::where('applications_id',$application['id'])->get();
+        $uploads = Uploads::where('applications_id', $application['id'])->get();
 
         return view('applicant.profile')->with(['application' => $application, 'uploads' => $uploads]);
     }
@@ -75,12 +73,13 @@ class ApplicantController extends Controller
     private $validation_messages = [
         'inf_name.required' => 'nah man...',
     ];
+
     public function updateApplication(Request $request)
     {
         $this->validate($request, $this->validation_rules/*, $this->validation_messages*/);
 
         $user_id = Auth::user()->id;
-        Applications::where('user_id',$user_id)->update([
+        Applications::where('user_id', $user_id)->update([
             'inf_name' => $request->input('inf_name'),
             'inf_birthdate' => $request->input('inf_birthdate'),
             'inf_mothers_name' => $request->input('inf_mothers_name'),
@@ -118,13 +117,14 @@ class ApplicantController extends Controller
             'misc_caesar_mail' => $request->input('misc_caesar_mail'),
         ]);
 
-        return redirect( route('applicant.profile') )->with('succes', 'Adatok mentésre kerültek!');
+        return redirect(route('applicant.profile'))->with('succes', 'Adatok mentésre kerültek!');
     }
 
-    public function final(){
+    public function final()
+    {
         $user_id = Auth::user()->id;
         $application = Applications::find_prepare($user_id);
-        $uploads = Uploads::where('applications_id',$application['id'])->get();
+        $uploads = Uploads::where('applications_id', $application['id'])->get();
 
         return view('applicant.final')->with(['application' => $application, 'uploads' => $uploads]);
     }
@@ -161,42 +161,44 @@ class ApplicantController extends Controller
 
         'profile_picture_path',
     ];
-    public function finalise(Request $request){
 
-	if( mktime(23,59,59,8,15,2020) < time() ){
-		return redirect('home')->with('error','Sajnáljuk, de a jelentkezési határidő lejárt!');
-	}
+    public function finalise(Request $request)
+    {
+        if (mktime(23, 59, 59, 8, 15, 2020) < time()) {
+            return redirect('home')->with('error', 'Sajnáljuk, de a jelentkezési határidő lejárt!');
+        }
 
-       // throw 'alma';
+        // throw 'alma';
         $user_id = Auth::user()->id;
-       // $data = Applications::find_prepare($user_id);
-        $data = Applications::where('user_id',$user_id)->get()[0];
+        // $data = Applications::find_prepare($user_id);
+        $data = Applications::where('user_id', $user_id)->get()[0];
 
         $valid = true;
-        foreach($this->required_filds as $requirement){
-            if(!isset($data[$requirement])){
+        foreach ($this->required_filds as $requirement) {
+            if (! isset($data[$requirement])) {
                 $valid = false;
                 break;
             }
         }
 
-        if($valid){
-            Applications::where('user_id',$user_id)->update([
+        if ($valid) {
+            Applications::where('user_id', $user_id)->update([
                 'status' => Applications::STATUS_FINAL,
             ]);
 
             $user = auth()->user();
             $user['name'] = $data['inf_name'];
-            Mail::to( $user )->queue( new Finalise( $user ) );
+            Mail::to($user)->queue(new Finalise($user));
 
-            return redirect('home')->with('success','Jelentkezés véglegesítésre került! :)');
-        } else{
-            return redirect()->back()->with('error','Nincs még minden szükséges mező kitöltve!');
+            return redirect('home')->with('success', 'Jelentkezés véglegesítésre került! :)');
+        } else {
+            return redirect()->back()->with('error', 'Nincs még minden szükséges mező kitöltve!');
         }
     }
 
-    public function profilePictureUpdate(Request $request){ //TODO: resize picture
-        $this->validate($request,[
+    public function profilePictureUpdate(Request $request)
+    { //TODO: resize picture
+        $this->validate($request, [
             'profile_picture_file' => 'required|mimes:jpg,jpeg,png,gif,svg',
         ]);
 
@@ -205,15 +207,14 @@ class ApplicantController extends Controller
         $user_id = auth()->user()->id;
         $preveous_path = Applications::where('user_id', $user_id)->take(1)->get(['id'])[0]['profile_picture_path'];
 
-        if( $preveous_path !== null ){
+        if ($preveous_path !== null) {
             Storage::delete($preveous_path);
         }
 
-        Applications::where('user_id',$user_id)->update([
+        Applications::where('user_id', $user_id)->update([
             'profile_picture_path' => $path,
         ]);
 
-        return redirect()->back()->with('success','Kép feltöltésre került');
+        return redirect()->back()->with('success', 'Kép feltöltésre került');
     }
-
 }

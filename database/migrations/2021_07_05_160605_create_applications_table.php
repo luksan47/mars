@@ -57,7 +57,7 @@ class CreateApplicationsTable extends Migration
             $table->text('misc_caesar_mail')->nullable();
 
             $table->text('profile_picture_path')->nullable();
-           // $table->json('file_uploads')->nullable();
+            // $table->json('file_uploads')->nullable();
 
             $table->timestamps();
 
@@ -76,8 +76,8 @@ class CreateApplicationsTable extends Migration
     {
         Schema::table('applications', function (Blueprint $table) {
             $table->dropForeign('user_id');
-          /*  $table->dropForeign('file_id_profile');
-            $table->dropForeign('id');*/
+            /*  $table->dropForeign('file_id_profile');
+              $table->dropForeign('id');*/
         });
         Schema::dropIfExists('applications');
     }

@@ -11,6 +11,11 @@
 |
 */
 
+use App\Http\Controllers\Admission\AdminController;
+use App\Http\Controllers\Admission\ApplicantController;
+use App\Http\Controllers\Admission\ApplicationsController;
+use App\Http\Controllers\Admission\ListController;
+use App\Http\Controllers\Admission\UploadController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dormitory\FaultController;
 use App\Http\Controllers\Dormitory\PrintController;
@@ -28,11 +33,6 @@ use App\Http\Controllers\Secretariat\UserController;
 use App\Http\Controllers\StudentsCouncil\EconomicController;
 use App\Http\Controllers\StudentsCouncil\EpistolaController;
 use App\Http\Controllers\StudentsCouncil\MrAndMissController;
-use App\Http\Controllers\Admission\ApplicantController;
-use App\Http\Controllers\Admission\ApplicationsController;
-use App\Http\Controllers\Admission\UploadController;
-use App\Http\Controllers\Admission\AdminController;
-use App\Http\Controllers\Admission\ListController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -185,60 +185,56 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/community_committee/mr_and_miss/vote/custom', [MrAndMissController::class, 'customVote'])->name('mr_and_miss.vote.custom');
 });
 
-
 // Applicant routes
-Route::group(['middleware' => ['auth','web','checkPassReset', 'can:isApplicant'], 'prefix' => 'admission'], function () {
+Route::group(['middleware' => ['auth', 'web', 'checkPassReset', 'can:isApplicant'], 'prefix' => 'admission'], function () {
+    Route::get('/profile', [ApplicantController::class, 'showProfile'])->name('applicant.profile');
 
-  Route::get('/profile',[ApplicantController::class, 'showProfile'])->name('applicant.profile');
+    Route::group(['middleware' => ['can:hasApplicationAndUnFinalised']], function () {
+        Route::get('/profile/edit', [ApplicantController::class, 'editApplication'])->name('applicant.profile.edit');
+        Route::post('/profile/update', [ApplicantController::class, 'updateApplication'])->name('applicant.profile.update');
 
-  Route::group(['middleware' => ['can:hasApplicationAndUnFinalised']], function () {
+        Route::get('/upload', [UploadController::class, 'index'])->name('applicant.uploads');
+        Route::get('/upload/edit', [UploadController::class, 'edit'])->name('applicant.uploads.edit');
+        Route::put('/upload/upload', [UploadController::class, 'upload'])->name('applicant.uploads.upload');
+        Route::delete('/upload/delete', [UploadController::class, 'delete'])->name('applicant.uploads.delete');
 
-      Route::get('/profile/edit', [ApplicantController::class, 'editApplication'])->name('applicant.profile.edit');
-      Route::post('/profile/update', [ApplicantController::class, 'updateApplication'])->name('applicant.profile.update');
+        Route::put('/upload/profile-picture', [ApplicantController::class, 'profilePictureUpdate'])->name('applicant.uploads.profile_picture.update');
 
-      Route::get('/upload',[UploadController::class, 'index'])->name('applicant.uploads');
-      Route::get('/upload/edit',[UploadController::class, 'edit'])->name('applicant.uploads.edit');
-      Route::put('/upload/upload',[UploadController::class, 'upload'])->name('applicant.uploads.upload');
-      Route::delete('/upload/delete',[UploadController::class, 'delete'])->name('applicant.uploads.delete');
-
-      Route::put('/upload/profile-picture',[ApplicantController::class, 'profilePictureUpdate'])->name('applicant.uploads.profile_picture.update');
-
-      Route::get('/profile/final',[ApplicantController::class, 'final'])->name('applicant.final');
-      Route::post('/profile/final/send',[ApplicantController::class, 'finalise'])->name('applicant.final.send');
-  });
+        Route::get('/profile/final', [ApplicantController::class, 'final'])->name('applicant.final');
+        Route::post('/profile/final/send', [ApplicantController::class, 'finalise'])->name('applicant.final.send');
+    });
 });
 
-
 Route::get('/felveteli', function () {
-  return view('landing_end');
+    return view('landing_end');
 });
 
 // User routes
-Route::group(['middleware' => ['auth','can:isUserOrAdmin'], 'prefix' => 'admission/user'], function () {
-  Route::get('/profile',[App\Http\Controllers\Admission\UserController::class, 'profile'])->name('user.profile');
-  Route::get('/applications/{workshop_url}',[ApplicationsController::class, 'indexWorkshop'])->name('user.applications.list.workshop');
-  Route::get('/applications/select/{id}',[ApplicationsController::class, 'show'])->name('user.applications.select');
+Route::group(['middleware' => ['auth', 'can:isUserOrAdmin'], 'prefix' => 'admission/user'], function () {
+    Route::get('/profile', [App\Http\Controllers\Admission\UserController::class, 'profile'])->name('user.profile');
+    Route::get('/applications/{workshop_url}', [ApplicationsController::class, 'indexWorkshop'])->name('user.applications.list.workshop');
+    Route::get('/applications/select/{id}', [ApplicationsController::class, 'show'])->name('user.applications.select');
 
-  Route::get('/list/applications/inprogress',[ListController::class, 'index_inprogress_applications'])->name('user.list.applications.inprogress');
-  Route::get('/list/applications/final',[ListController::class, 'index_final_applications'])->name('user.list.applications.final');
-  Route::get('/list/users',[ListController::class, 'index_users'])->name('user.list.users');
+    Route::get('/list/applications/inprogress', [ListController::class, 'index_inprogress_applications'])->name('user.list.applications.inprogress');
+    Route::get('/list/applications/final', [ListController::class, 'index_final_applications'])->name('user.list.applications.final');
+    Route::get('/list/users', [ListController::class, 'index_users'])->name('user.list.users');
 });
 
 // Admin routes
-Route::group(['middleware' => ['auth','checkPassReset','web','can:isAdmin'], 'prefix' => 'admission/admin'], function () {
-  Route::get('/users',[AdminController::class, 'userIndex'])->name('admin.users.list');
-  Route::get('/users/{id}',[AdminController::class, 'userShow'])->name('admin.users.select');
-  Route::post('/users/{id}/update',[AdminController::class, 'userUpdate'])->name('admin.users.update');
-  Route::post('/users/permission/add',[AdminController::class, 'userPermissionsAdd'])->name('admin.user.permission.add');
-  Route::post('/users/permission/revoke',[AdminController::class, 'userPermissionsRevoke'])->name('admin.user.permission.revoke');
+Route::group(['middleware' => ['auth', 'checkPassReset', 'web', 'can:isAdmin'], 'prefix' => 'admission/admin'], function () {
+    Route::get('/users', [AdminController::class, 'userIndex'])->name('admin.users.list');
+    Route::get('/users/{id}', [AdminController::class, 'userShow'])->name('admin.users.select');
+    Route::post('/users/{id}/update', [AdminController::class, 'userUpdate'])->name('admin.users.update');
+    Route::post('/users/permission/add', [AdminController::class, 'userPermissionsAdd'])->name('admin.user.permission.add');
+    Route::post('/users/permission/revoke', [AdminController::class, 'userPermissionsRevoke'])->name('admin.user.permission.revoke');
 
-  Route::get('/applications',[AdminController::class, 'applicationIndex'])->name('admin.applications.show_all');
-  Route::get('/applications/{id}',[AdminController::class, 'applicationShow'])->name('admin.applications.select');
+    Route::get('/applications', [AdminController::class, 'applicationIndex'])->name('admin.applications.show_all');
+    Route::get('/applications/{id}', [AdminController::class, 'applicationShow'])->name('admin.applications.select');
 
-  Route::post('/application/final',[AdminController::class, 'applicationActionFinalise'])->name('admin.application.action.final');
-  Route::post('/application/unfinish',[AdminController::class, 'applicationActionUnfinilise'])->name('admin.application.action.unfinish');
-  Route::post('/application/banish',[AdminController::class, 'applicationActionBanish'])->name('admin.application.action.banish');
+    Route::post('/application/final', [AdminController::class, 'applicationActionFinalise'])->name('admin.application.action.final');
+    Route::post('/application/unfinish', [AdminController::class, 'applicationActionUnfinilise'])->name('admin.application.action.unfinish');
+    Route::post('/application/banish', [AdminController::class, 'applicationActionBanish'])->name('admin.application.action.banish');
 
-  Route::get('/register',[AdminController::class, 'registerEdit'])->name('admin.register');
-  Route::post('/register/register',[AdminController::class, 'registerRegister'])->name('admin.register.register');
+    Route::get('/register', [AdminController::class, 'registerEdit'])->name('admin.register');
+    Route::post('/register/register', [AdminController::class, 'registerRegister'])->name('admin.register.register');
 });

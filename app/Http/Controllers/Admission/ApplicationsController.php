@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admission;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Applications;
 use App\Models\Permissions;
 use App\Models\Uploads;
-use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Gate;
 
 class ApplicationsController extends Controller
@@ -29,15 +27,16 @@ class ApplicationsController extends Controller
         return $permission_workshop_accesses;
     }*/
 
-    public function indexWorkshop($workshop_url){
+    public function indexWorkshop($workshop_url)
+    {
         $workshop_code = Permissions::cast_workshop_url_to_code($workshop_url);
 
-        if(Gate::allows('hasPermission',[$workshop_code])){
-            $applications = Applications::where('status',Applications::STATUS_FINAL)->where('misc_workshops','like','%'.$workshop_code.'%')->get();
+        if (Gate::allows('hasPermission', [$workshop_code])) {
+            $applications = Applications::where('status', Applications::STATUS_FINAL)->where('misc_workshops', 'like', '%'.$workshop_code.'%')->get();
             //return ['applications' => $applications];
             return view('applications.list_end')->with(['applications' => $applications, 'workshop_name' => Permissions::WORKSHOPS[$workshop_code]['name']]);
-        } else{
-            return redirect()->back()->with('error','A szükséges engedély nincs ehez a fiókhozrendelve.');
+        } else {
+            return redirect()->back()->with('error', 'A szükséges engedély nincs ehez a fiókhozrendelve.');
         }
     }
 
@@ -50,8 +49,8 @@ class ApplicationsController extends Controller
     public function show($id)
     {
         $exeminer_user_id = auth()->user()->id;
-        $exeminer_permissions = Permissions::where('user_id',$exeminer_user_id)->get(); // string[]
-        $application = Applications::where('id',$id)->get(['status', 'misc_workshops'])[0];
+        $exeminer_permissions = Permissions::where('user_id', $exeminer_user_id)->get(); // string[]
+        $application = Applications::where('id', $id)->get(['status', 'misc_workshops'])[0];
 
         // is finalised? or has permission for view unfinished applications
         /*if( $application['status'] != Applications::STATUS_FINAL || )
@@ -60,31 +59,28 @@ class ApplicationsController extends Controller
         $possible_permissions = $application['misc_workshops']; // string
 
         $has_permission = false;
-        foreach($exeminer_permissions as $permission){
-            if( strpos($possible_permissions,$permission['permission']) !== false ){
+        foreach ($exeminer_permissions as $permission) {
+            if (strpos($possible_permissions, $permission['permission']) !== false) {
                 $has_permission = true;
                 break;
             }
         }
 
         // list permissions
-        if( $application['status'] != Applications::STATUS_FINAL && Gate::allows('hasPermission',[ Permissions::PERMISSION_LIST_FINAL_APPLICATIONS ]) ){
+        if ($application['status'] != Applications::STATUS_FINAL && Gate::allows('hasPermission', [Permissions::PERMISSION_LIST_FINAL_APPLICATIONS])) {
             $has_permission = true;
         }
-        if( $application['status'] != Applications::STATUS_UNFINAL && Gate::allows('hasPermission',[ Permissions::PERMISSION_LIST_INPROGRESS_APPLICATIONS ]) ){
+        if ($application['status'] != Applications::STATUS_UNFINAL && Gate::allows('hasPermission', [Permissions::PERMISSION_LIST_INPROGRESS_APPLICATIONS])) {
             $has_permission = true;
         }
 
-        if($has_permission){
+        if ($has_permission) {
             $application = Applications::find_id_prepare($id);
-            $uploads = Uploads::where('applications_id',$id)->get();
+            $uploads = Uploads::where('applications_id', $id)->get();
 
             return view('applications.show_end')->with(['application' => $application, 'uploads' => $uploads]);
         } else {
-            return redirect()->back()->with('error','Nincs hozzáférésed a jelentkezéshez!');
+            return redirect()->back()->with('error', 'Nincs hozzáférésed a jelentkezéshez!');
         }
     }
-
-
-
 }

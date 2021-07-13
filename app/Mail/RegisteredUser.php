@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -34,9 +33,9 @@ class RegisteredUser extends Mailable
     {
         return $this->markdown('mails.registered_user')->with([
             'user' => $this->user,
-            'new_password' => $this->new_password
+            'new_password' => $this->new_password,
         ])->subject('EJC Felvételi honlap felhasználó')->replyTo('root@eotvos.elte.hu')
-        ->from('felveteli@eotvos.elte.hu','Eotvos Collegium')
-        ->replyTo('felveteli@eotvos.elte.hu','Eotvos Collegium');
+        ->from('felveteli@eotvos.elte.hu', 'Eotvos Collegium')
+        ->replyTo('felveteli@eotvos.elte.hu', 'Eotvos Collegium');
     }
 }

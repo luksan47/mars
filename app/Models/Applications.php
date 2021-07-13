@@ -11,9 +11,9 @@ class Applications extends Model
 
     const DELIMITER = '|';
 
-    const STATUS_UNFINAL = "unfinal";
-    const STATUS_FINAL = "final";
-    const STATUS_BANISHED = "banished";
+    const STATUS_UNFINAL = 'unfinal';
+    const STATUS_FINAL = 'final';
+    const STATUS_BANISHED = 'banished';
 
     const STATUSES = [
         self::STATUS_UNFINAL,
@@ -72,7 +72,10 @@ class Applications extends Model
 
     public static function compress_data($data)
     {
-        if ($data === null) return null;
+        if ($data === null) {
+            return null;
+        }
+
         return join(
             self::DELIMITER,
             array_map(
@@ -82,7 +85,7 @@ class Applications extends Model
                 array_filter(
                     $data,
                     function (&$value) {
-                        return !is_null($value);
+                        return ! is_null($value);
                     }
                 )
             )
@@ -91,11 +94,12 @@ class Applications extends Model
 
     public static function decompress_data($data)
     {
-        if ($data === null) return null;
+        if ($data === null) {
+            return null;
+        }
+
         return explode(self::DELIMITER, $data);
     }
-
-
 
     public function user()
     {
@@ -125,18 +129,16 @@ class Applications extends Model
         return $application;
     }
 
-    public static function where_prepare( string $colum, string $value )
+    public static function where_prepare(string $colum, string $value)
     {
         $applications = Applications::where($colum, $value)->get();
 
-        foreach($applications as &$application){
+        foreach ($applications as &$application) {
             self::prepare_data($application);
         }
 
         return $applications;
     }
-
-
 
     public static function prepare_data(&$application)
     {

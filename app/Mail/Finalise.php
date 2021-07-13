@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -18,7 +17,7 @@ class Finalise extends Mailable
      *
      * @return void
      */
-    public function __construct( $recipient )
+    public function __construct($recipient)
     {
         $this->recipient = $recipient;
     }
@@ -32,9 +31,9 @@ class Finalise extends Mailable
     {
         return $this->markdown('mails.finalise')
                     ->subject('Jelentkezés véglegesítése')
-                    ->from('felveteli@eotvos.elte.hu','Eotvos Collegium')
-                    ->replyTo('felveteli@eotvos.elte.hu','Eotvos Collegium')
-                    ->bcc('felveteli@eotvos.elte.hu','Eotvos Collegium')
-                    ->with('recipient',$this->recipient);
+                    ->from('felveteli@eotvos.elte.hu', 'Eotvos Collegium')
+                    ->replyTo('felveteli@eotvos.elte.hu', 'Eotvos Collegium')
+                    ->bcc('felveteli@eotvos.elte.hu', 'Eotvos Collegium')
+                    ->with('recipient', $this->recipient);
     }
 }

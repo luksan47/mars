@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Admission;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Mail\RegisteredUser;
 use App\Models\Applications;
 use App\Models\Permissions;
 use App\Models\Uploads;
-use App\Mail\RegisteredUser;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -56,7 +56,7 @@ class AdminController extends Controller
         ]);
 
         //return $request;
-        if ( !(Permissions::id_permission_code_exist($request->input('permission'))) ) {
+        if (! (Permissions::id_permission_code_exist($request->input('permission')))) {
             //!key_exists($request->input('permission'), Permissions::PERMISSIONS_NAMES)) {
             // invalid permission
             return redirect()->back()->with('error', 'Invalid engedély kód!');
@@ -82,12 +82,12 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Engedély visszavonva');
     }
 
-
     public function applicationIndex()
     {
         $applications = Applications::all();
 
         return view('admin.application.list_end')->with(['applications' => $applications]);
+
         return $applications;
     }
 
@@ -144,7 +144,6 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'A felvételi a HLas tó, halai sorsára jutott!');
     }
 
-
     public function registerEdit()
     {
         return view('admin.register.register_end');
@@ -154,7 +153,7 @@ class AdminController extends Controller
     {
         $this->validate($request, [
             'register_data' => 'required',
-            'perimission_ids' => 'nullable'
+            'perimission_ids' => 'nullable',
         ]);
 
         // interpret register_data
@@ -172,14 +171,13 @@ class AdminController extends Controller
                         'register_data' => $request->input('register_data'),
                         'perimission_ids' => $request->input('perimission_ids'),
                     ],
-                ])->with('error', 'Hibba a sorban: "' . trim($line) . '"');
+                ])->with('error', 'Hibba a sorban: "'.trim($line).'"');
             }
         }
 
-
         $register_data_extracted = [];
         foreach ($register_data_lines as $line) {
-            $splited_line = explode(";", $line);
+            $splited_line = explode(';', $line);
             $register_data_extracted[] = [
                 'name' => trim($splited_line[0]),
                 'email' => trim($splited_line[1]),
@@ -192,7 +190,7 @@ class AdminController extends Controller
 
         foreach ($register_data_extracted as $data) {
             $user = new User;
-            $new_password = 'tmp_' . Str::random(6);
+            $new_password = 'tmp_'.Str::random(6);
 
             $user->name = $data['name'];
             $user->email = $data['email'];
@@ -228,7 +226,5 @@ class AdminController extends Controller
         return redirect()->back()->with(['success' => 'Felhasználók hozzáadásra kerültek!']);
 
         // return [$register_data_extracted, $request->input('perimission_ids'), $error_datas];
-
-
     }
 }

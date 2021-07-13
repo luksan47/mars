@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use App\Models\Permissions;
 use App\Models\Applications;
+use App\Models\Permissions;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -91,56 +91,58 @@ class AuthServiceProvider extends ServiceProvider
     {
         /**
          * Define Gate for user or admin user role
-         * Returns true if user role is set to user or admin
+         * Returns true if user role is set to user or admin.
          **/
         Gate::define('isUserOrAdmin', function ($user) {
-          return true; //$user->role == User::ROLE_ADMIN || $user->role == User::ROLE_USER;
-      });
+            return true; //$user->role == User::ROLE_ADMIN || $user->role == User::ROLE_USER;
+        });
 
-      /**
-       * Define Gate for admin user role
-       * Returns true if user role is set to admin
-       **/
-      Gate::define('isAdmin', function ($user) {
-          return $user->role == User::ROLE_ADMIN;
-      });
+        /**
+         * Define Gate for admin user role
+         * Returns true if user role is set to admin.
+         **/
+        Gate::define('isAdmin', function ($user) {
+            return $user->role == User::ROLE_ADMIN;
+        });
 
-      /**
-       * Define Gate for user user role
-       * Returns true if user role is set to user
-       **/
-      Gate::define('isUser', function ($user) {
-          return $user->role == User::ROLE_USER;
-      });
+        /**
+         * Define Gate for user user role
+         * Returns true if user role is set to user.
+         **/
+        Gate::define('isUser', function ($user) {
+            return $user->role == User::ROLE_USER;
+        });
 
-      /**
-       * Define Gate for applicant user role
-       * Returns true if user role is set to applicant
-       **/
-      Gate::define('isApplicant', function ($user) {
-          return $user->role == User::ROLE_APPLICANT;
-      });
+        /**
+         * Define Gate for applicant user role
+         * Returns true if user role is set to applicant.
+         **/
+        Gate::define('isApplicant', function ($user) {
+            return $user->role == User::ROLE_APPLICANT;
+        });
 
-      Gate::define('hasPermission', function ($user, $permission_code) {
-          return 0 < Permissions::where('user_id', $user->id)->where('permission', $permission_code)->count();
-      });
+        Gate::define('hasPermission', function ($user, $permission_code) {
+            return 0 < Permissions::where('user_id', $user->id)->where('permission', $permission_code)->count();
+        });
 
-      Gate::define('hasApplicationAndFinalised', function ($user) {
-          $application = Applications::where('user_id',$user->id)->get(['status']);
+        Gate::define('hasApplicationAndFinalised', function ($user) {
+            $application = Applications::where('user_id', $user->id)->get(['status']);
 
-          if( count($application) == 0 ) return false;
+            if (count($application) == 0) {
+                return false;
+            }
 
-          return $application[0]['status'] == Applications::STATUS_FINAL;
+            return $application[0]['status'] == Applications::STATUS_FINAL;
+        });
 
-      });
+        Gate::define('hasApplicationAndUnFinalised', function ($user) {
+            $application = Applications::where('user_id', $user->id)->get(['status']);
 
-      Gate::define('hasApplicationAndUnFinalised', function ($user) {
-          $application = Applications::where('user_id',$user->id)->get(['status']);
+            if (count($application) == 0) {
+                return false;
+            }
 
-          if( count($application) == 0 ) return false;
-
-          return $application[0]['status'] == Applications::STATUS_UNFINAL;
-
-      });
+            return $application[0]['status'] == Applications::STATUS_UNFINAL;
+        });
     }
 }

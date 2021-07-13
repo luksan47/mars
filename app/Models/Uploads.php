@@ -17,7 +17,8 @@ class Uploads extends Model
         'file_path',    // string
     ];
 
-    public function applications(){
+    public function applications()
+    {
         return $this->belongsTo('App\Applications');
     }
 }
