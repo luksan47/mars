@@ -45,6 +45,7 @@ Route::get('/setlocale/{locale}', [HomeController::class, 'setLocale'])->name('s
 Auth::routes();
 
 Route::get('/register/guest', [RegisterController::class, 'showTenantRegistrationForm'])->name('register.guest');
+Route::get('/register',       [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/secretariat/user/update_password', [UserController::class, 'updatePassword'])->name('secretariat.user.update_password');

@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Semester;
 use App\Models\User;
 use App\Models\Workshop;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -156,7 +157,7 @@ class RegisterController extends Controller
                     'year_of_graduation' => $data['year_of_graduation'],
                     'high_school' => $data['high_school'],
                     'neptun' => $data['neptun'],
-                    'year_of_acceptance' => $data['year_of_acceptance'],
+                    'year_of_acceptance' => Carbon::now()->year,
                     'email' => $data['educational_email'].'@student.elte.hu',
                 ]);
                 foreach ($data['faculty'] as $key => $faculty) {

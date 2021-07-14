@@ -3,6 +3,7 @@
 return [
     'active_members' => 'Active members',
     'add_new' => 'Add new',
+    'admission' => 'Application for admission',
     'change_email' => 'Change email',
     'change_password' => 'Change password',
     'choose_from_menu' => 'Select one of the menu options!',

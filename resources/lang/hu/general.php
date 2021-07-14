@@ -3,6 +3,7 @@
 return [
     'active_members' => 'Aktív tagok',
     'add_new' => 'Új hozzáadása',
+    'admission' => 'Felvételi jelentkezés',
     'change_email' => 'Email megváltoztatása',
     'change_password' => 'Jelszó megváltoztatása',
     'choose_from_menu' => 'Válassz egy menüpontot!',

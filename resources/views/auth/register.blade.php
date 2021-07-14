@@ -11,15 +11,18 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="card-content">
+                    @if($user_type == \App\Models\Role::COLLEGIST)
+                    <a class="right" href="https://eotvos.elte.hu/felveteli/palyazati-felhivas">Pályázati felhívás</a>
+
+                    <h5>Kedves jelentkező!</h5>
+
+                    <p>Az Urán a Collegium informatikai rendszere.</p>
+                    <p>A felvételi jelentkezéshez előbb regisztráljon, majd ezt követően el is tudja kezdeni a jelentkezéshez szükséges pályázat kitöltését.</p>
                     <blockquote>
-                        @if($user_type == \App\Models\Role::COLLEGIST)
-                        <a href="{{ route('register.guest') }}">
-                            @lang('registration.collegist_to_tenant')</a>
-                        @else
-                        <a href="{{ route('register') }}">
-                            @lang('registration.tenant_to_collegist')</a>
-                        @endif
+                        Fontos, hogy a regisztráció önmagában nem minősül jelentkezésnek, hanem a pályázat véglegesítése és beküldése után válik érvényessé a jelentkezés.
                     </blockquote>
+                    @endif
+
                     <div class="divider"></div>
                     @foreach ($errors->all() as $error)
                         <blockquote class="error">{{ $error }}</blockquote>
@@ -68,8 +71,7 @@
                         <div class="card-title">@lang('user.information_of_studies')</div>
                         <div class="row">
                             <x-input.text id='high_school' locale='user' required/>
-                            <x-input.text s=6 id='year_of_graduation' locale='user' type='number' min="1895" :max="date('Y')" required/>
-                            <x-input.text s=6 id='year_of_acceptance' locale='user' type='number' min="1895" :max="date('Y')" required/>
+                            <x-input.text id='year_of_graduation' locale='user' type='number' min="1895" :max="date('Y')" required/>
                             <x-input.text s=6 id='neptun' locale='user' required/>
                             @php $elements = \App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)->map(function ($object) {
                                 return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];});
@@ -96,7 +98,7 @@
                             </div>
                             {{--workshop--}}
                             <div class="input-field col s12">
-                                <p><label>@lang('user.workshop')</label></p>
+                                <p><label>Mely műhelyekbe kívánja beadni pályázatát?</label></p>
                                 @foreach($workshops as $workshop)
                                 <p>
                                     @php $checked = old('workshop') !== null && in_array($workshop->id, old('workshop')) @endphp
