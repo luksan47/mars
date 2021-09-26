@@ -150,12 +150,24 @@ body {
             }
         }
         a {
-            color: #fff !important;
+            color: #0ff;
         }
         .black-text {
             color: #fff !important;
         }
     }
+}
+
+body.dark a {
+  color: #0ff;
+}
+
+body.dark .nav-wrapper a {
+  color: #fff; /*this for the username in the navbar*/
+}
+
+body.dark a.btn {
+  color: #fff; /*this for buttons*/
 }
 
 //other, custom classes
