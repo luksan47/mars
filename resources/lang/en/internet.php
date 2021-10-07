@@ -12,7 +12,7 @@ return [
     'cancel' => 'Cancel',
     'comment' => 'Comment',
     'confirm_delete' => 'Are you sure you want to delete?',
-    'copy' => 'Copy to clipboard',
+    'copied' => 'Copied to clipboard',
     'created_at' => 'Created',
     'deactivate' => 'Deactivate',
     'delete' => 'Delete',

@@ -12,7 +12,7 @@ return [
     'cancel' => 'Mégsem',
     'comment' => 'Megjegyzés',
     'confirm_delete' => 'Biztosan törli?',
-    'copy' => 'Vágólapra másolás',
+    'copied' => 'Vágólapra másolva',
     'created_at' => 'Létrehozva',
     'deactivate' => 'Deaktivál',
     'delete' => 'Törlés',
