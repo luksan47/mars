@@ -11,7 +11,8 @@ class Text extends Input
 
     /**
      * Create a new text input instance.
-     * @param string $helper helper message
+     *
+     * @param  string  $helper  helper message
      * @return void
      */
     public function __construct($id, $withoutLabel = false, $locale = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false, $helper = null)

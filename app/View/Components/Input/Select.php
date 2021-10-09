@@ -14,6 +14,7 @@ class Select extends Input
 
     /**
      * Create a new select component instance with a search field.
+     *
      * @param $elements elements that can be selected. Id and name tags will be used if exists, otherwise the value itself.
      * @param $withoutPlaceholder (the default placeholder is general.choose, that can be overwritten with a placeholder attribute)
      * @param $withoutLabel
