@@ -28,9 +28,10 @@ class EpistolaNews extends Model
         'deadline_name',
         'deadline_date',
         'picture_path',
+        'date_for_sorting',
         'sent',
     ];
-    protected $dates = ['date', 'time', 'end_date', 'valid_until', 'deadline_date'];
+    protected $dates = ['date', 'time', 'end_date', 'date_for_sorting', 'valid_until', 'deadline_date'];
 
     //notifications should be sent before this date
     public function getValidUntilAttribute()
@@ -51,7 +52,7 @@ class EpistolaNews extends Model
 
         $datetime = $this->date->format('Y.m.d.');
         if ($this->time) {
-            $datetime .= $this->time->format(' h:m');
+            $datetime .= $this->time->format(' G:i');
         } elseif ($this->end_date) {
             $datetime .= $this->end_date->format(' - Y.m.d.');
         }

@@ -25,7 +25,10 @@ class EpistolaController extends Controller
         //sort by valid_until property with null values at the end
         $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function ($result) {
             if ($result->valid_until == null)
-                return PHP_INT_MAX;
+                if($result->date_for_sorting == null){
+                    return PHP_INT_MAX;
+                }
+                return $result->date_for_sorting;
             return $result->valid_until;
         });
 
@@ -89,6 +92,7 @@ class EpistolaController extends Controller
             'deadline_name' => 'nullable|string|required_with:deadline_date',
             'deadline_date' => 'nullable|date|required_with:deadline_name',
             'approved' => 'nullable|required_with:picture_upload',
+            'date_for_sorting' => 'nullable|date',
             'picture_upload' => 'nullable|image',
             'picture_path' => ['nullable', 'url', function ($attribute, $value, $fail) use ($request) {
                 if ($request->picture_upload != null && $request->picture_path != null)
