@@ -10,6 +10,7 @@ return [
     'comment' => 'Comment',
     'description' => 'Description',
     'failed' => 'An error occurred. Please contact system administrators!',
+    'filter' => 'Filter',
     'home' => 'Home',
     'i_understand' => 'I understand',
     'if_mail_not_working' => 'In some cases, this function may not work properly. In this case, please write an email to the system administrators!',
