@@ -63,11 +63,12 @@ class EpistolaNews extends Model
 
     public function getColorAttribute()
     {
-        //yiq algorithm     
+        //yiq algorithm
         $r = hexdec(substr($this->bg_color, 1, 2));
         $g = hexdec(substr($this->bg_color, 3, 2));
         $b = hexdec(substr($this->bg_color, 5, 2));
         $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
         return ($yiq >= 128) ? 'black' : 'white';
     }
 
