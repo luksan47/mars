@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Role;
 use App\Models\Semester;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,12 +9,11 @@ use Livewire\Component;
 
 class ListUsers extends Component
 {
-
     public $roles = [];
     public $workshops = [];
     public $statuses = [];
 
-    public $filter_name = "";
+    public $filter_name = '';
 
     public function getUsersProperty()
     {
@@ -39,8 +37,8 @@ class ListUsers extends Component
                 $query->where('id', Semester::current()->id);
             });
         }
-        if(isset($this->filter_name)){
-            $query->where("name", "like", "%".$this->filter_name."%");
+        if (isset($this->filter_name)) {
+            $query->where('name', 'like', '%'.$this->filter_name.'%');
         }
 
         return $query->orderBy('name')->get();

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Secretariat;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
 use App\Models\Semester;
 use App\Models\User;
 use App\Models\WorkshopBalance;
