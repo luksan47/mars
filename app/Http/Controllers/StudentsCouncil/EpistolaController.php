@@ -93,6 +93,7 @@ class EpistolaController extends Controller
             'deadline_date' => 'nullable|date|required_with:deadline_name',
             'approved' => 'nullable|required_with:picture_upload',
             'date_for_sorting' => 'nullable|date',
+            'tag' => 'nullable|max:255|string',
             'picture_upload' => 'nullable|image',
             'picture_path' => ['nullable', 'url', function ($attribute, $value, $fail) use ($request) {
                 if ($request->picture_upload != null && $request->picture_path != null)

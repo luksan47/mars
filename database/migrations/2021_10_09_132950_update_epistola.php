@@ -15,6 +15,7 @@ class UpdateEpistola extends Migration
     {
         Schema::table('epistola', function (Blueprint $table) {
             $table->date('date_for_sorting')->nullable(); //only used for creating an order between news
+            $table->text('category')->nullable();
         });
     }
 

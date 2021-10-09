@@ -61,7 +61,8 @@
                         <x-input.datepicker l=6 id="deadline_date" :value="($epistola && $epistola->deadline_date != null ? $epistola->deadline_date->format('Y-m-d') : null)" text="Határidő" />
                     </div>
                     <div class="row">
-                        <x-input.datepicker id="date_for_sorting" :value="($epistola ? $epistola->date_for_sorting : null)" text="Dátum rendezéshez"/>
+                        <x-input.datepicker l=6 id="date_for_sorting" :value="($epistola ? $epistola->date_for_sorting : null)" text="Dátum rendezéshez"/>
+                        <x-input.text l=6 id="category" :value="($epistola ? $epistola->tag : null)" text="Kategória"/>
                     </div>
                     <div class="row">
                         <div class="col l6 file-field">
