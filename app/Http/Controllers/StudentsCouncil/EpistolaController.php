@@ -95,7 +95,7 @@ class EpistolaController extends Controller
             'date_for_sorting' => 'nullable|date',
             'tag' => 'nullable|max:255|string',
             'picture_upload' => 'nullable|image',
-            'picture_path' => ['nullable', 'url', function ($attribute, $value, $fail) use ($request) {
+            'picture_path' => ['nullable', 'url', 'max:255', function ($attribute, $value, $fail) use ($request) {
                 if ($request->picture_upload != null && $request->picture_path != null)
                     $fail(__('validation.upload_with_link'));
             }]
