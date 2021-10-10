@@ -11,8 +11,6 @@
     },
     "devDependencies": {
         "axios": "^0.21",
-        "bootstrap": "^4.5.3",
-        "cross-env": "^5.1",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.21",
         "minimist": "^1.2.5",
@@ -24,9 +22,9 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "jquery": "^3.5.1",
+        "jquery": "^3.6.0",
         "@materializecss/materialize": "^1.1.0-alpha",
         "moment": "^2.29.1",
-        "tabulator-tables": "^4.8.2"
+        "tabulator-tables": "^4.9.3"
     }
 }
