@@ -5,6 +5,10 @@ php:
   - 7.4
 services:
   - mysql
+cache:
+  directories:
+    - node_modules
+    - vendor
 before_script:
   - nvm install v16.1.0
   - cp .env.travis .env
