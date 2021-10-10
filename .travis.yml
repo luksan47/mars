@@ -3,6 +3,8 @@ os:
 language: php
 php:
   - 7.4
+node:
+  - 16.1.0
 services:
   - mysql
 cache:
