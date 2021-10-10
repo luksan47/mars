@@ -6,7 +6,7 @@ php:
 services:
   - mysql
 before_script:
-  - nvm install --insecure v16.1.0
+  - nvm install v16.1.0
   - cp .env.travis .env
   - sudo mysql -e 'create database homestead;'
   - composer self-update
