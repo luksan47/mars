@@ -3,14 +3,8 @@ os:
 language: php
 php:
   - 7.4
-node:
-  - 16.1.0
 services:
   - mysql
-cache:
-  directories:
-    - node_modules
-    - vendor
 before_script:
   - cp .env.travis .env
   - sudo mysql -e 'create database homestead;'
