@@ -9,7 +9,7 @@ class MacAddressFactory extends Factory
 {
     protected $model = MacAddress::class;
 
-    public function definition()
+    public function definition()s
     {
         return [
             'mac_address' => $this->faker->macAddress,
