@@ -6,7 +6,7 @@ use App\Models\EducationalInformation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EducationalInformationFactory extends Factory
-{
+{d
     protected $model = EducationalInformation::class;
 
     public function definition()
