@@ -150,7 +150,7 @@ body {
             }
         }
         a {
-            color: #0ff;
+            color: $primary-color;
         }
         .black-text {
             color: #fff !important;
@@ -159,7 +159,7 @@ body {
 }
 
 body.dark a {
-  color: #0ff;
+  color: $secondary-color;
 }
 
 body.dark .nav-wrapper a {
