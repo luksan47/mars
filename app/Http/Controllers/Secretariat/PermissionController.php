@@ -39,15 +39,15 @@ class PermissionController extends Controller
         $roleName = Role::find($role_id)->name;
         $object_id = $request[$roleName] ?? null;
 
-
-        if (!Role::canBeAttached($role_id, $object_id)) {
-            $user = User::whereHas('roles', function (Builder $query)  use ($role_id, $object_id){
+        if (! Role::canBeAttached($role_id, $object_id)) {
+            $user = User::whereHas('roles', function (Builder $query) use ($role_id, $object_id) {
                 $query->where('id', $role_id)->where('role_users.object_id', $object_id);
             })->first();
-            if($user)
+            if ($user) {
                 return back()->with('message', __('role.role_unavailable', ['user' => $user->name]));
-            else
+            } else {
                 return back()->with('message', __('role.role_can_not_be_attached'));
+            }
         }
 
         if ($object_id) {
