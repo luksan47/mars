@@ -26,6 +26,7 @@
                 @endforeach
 
             </p>
+            <hr>
             <p>
                 @lang('user.workshops'):
                 @foreach (\App\Models\Workshop::all() as $w)
@@ -44,6 +45,7 @@
                     @endif
                 @endforeach
             </p>
+            <hr>
             <p>
                 @lang('admin.statuses'):
                 @foreach (\App\Models\Semester::STATUSES as $s)
