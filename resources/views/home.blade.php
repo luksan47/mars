@@ -16,7 +16,12 @@
                 <p>@lang('general.choose_from_menu')</p>
             </div>
         </div>
-        @if($information != '' || Auth::user()->hasRoleBase(\App\Models\Role::STUDENT_COUNCIL))
+    </div>
+</div>
+
+@if($information != '' || Auth::user()->hasRoleBase(\App\Models\Role::STUDENT_COUNCIL))
+<div class="row">
+    <div class="col s12">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('general.information')</span>
@@ -27,16 +32,26 @@
                 </form>
             </div>
         </div>
-        @endif
-        @if(Auth::user()->hasRoleBase(\App\Models\Role::STUDENT_COUNCIL))
-        <div class="fixed-action-btn">
-            <a class="btn-floating btn-large">
-              <i id="edit_btn" class="large material-icons">mode_edit</i>
-            </a>
-        </div>
-        @endif
     </div>
 </div>
+@endif
+@if(Auth::user()->hasRoleBase(\App\Models\Role::STUDENT_COUNCIL))
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large">
+        <i id="edit_btn" class="large material-icons">mode_edit</i>
+    </a>
+</div>
+@endif
+
+@if($epistola)
+<div class="cards-container">
+    @foreach ($epistola as $article)
+        @include('student-council.communication-committee.epistola', ['article'=> $article])
+    @endforeach
+</div>
+@endif
+
+
 @endsection
 
 @push('scripts')
@@ -51,5 +66,11 @@ $("#edit_btn").click(function() {
         $("#info_form").submit();
     }
 });
+function standby(id) {
+    document.getElementById(id).src = "{{ url('/img/committee-logos/kommbiz.jpg') }}"
+}
+$(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
 </script>
 @endpush

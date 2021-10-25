@@ -72,10 +72,16 @@
                                     <i class="material-icons left">attach_money</i> @lang('role.economic-committee')
                                 </a>
                             </li>
-                            <!-- economic committee -->
+                            <!-- communication committee -->
                             <li>
                                 <a class="waves-effect" href="{{ route('epistola') }}">
                                     <i class="material-icons left">campaign</i> @lang('role.communication-committee')
+                                </a>
+                            </li>
+                            <!-- community committee -->
+                            <li>
+                                <a class="waves-effect" href="{{ route('mr_and_miss.vote') }}">
+                                    <i class="material-icons left">how_to_vote</i> @lang('mr-and-miss.mr-and-miss')
                                 </a>
                             </li>
                         </ul>
@@ -83,7 +89,7 @@
                 </li>
                 @endcan
                 <!-- secretariat module -->
-                @if(Auth::user()->hasElevatedPermissions())
+                @if(Auth::user()->hasElevatedPermissions() || Auth::user()->hasRole(\App\Models\Role::STAFF))
 
                 <li><div class="divider"></div></li>
                 <li class="@yield('secretariat_module')">
@@ -141,6 +147,7 @@
                             <li>
                                 <a class="waves-effect" href="{{ route('internet.admin') }}">
                                     <i class="material-icons left">wifi</i>@lang('internet.internet')
+                                    @notification(\App\Models\WifiConnection::class)
                                 </a>
                             </li>
                             @endcan

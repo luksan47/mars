@@ -27,6 +27,7 @@ use App\Http\Controllers\Secretariat\SemesterController;
 use App\Http\Controllers\Secretariat\UserController;
 use App\Http\Controllers\StudentsCouncil\EconomicController;
 use App\Http\Controllers\StudentsCouncil\EpistolaController;
+use App\Http\Controllers\StudentsCouncil\MrAndMissController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -54,8 +55,7 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** User related routes */
     Route::get('/user', [UserController::class, 'index'])->name('user');
-    Route::post('/secretariat/user/update_email', [UserController::class, 'updateEmail'])->name('secretariat.user.update_email');
-    Route::post('/secretariat/user/update_phone', [UserController::class, 'updatePhone'])->name('secretariat.user.update_phone');
+    Route::post('/secretariat/user/update', [UserController::class, 'update'])->name('secretariat.user.update');
     Route::get('/secretariat/user/list', [UserController::class, 'list'])->name('secretariat.user.list');
     Route::get('/secretariat/user/show/{id}', [UserController::class, 'show'])->name('secretariat.user.show');
     Route::get('/secretariat/user/semesters/{id}', [UserController::class, 'semesters'])->name('secretariat.user.semesters');
@@ -174,4 +174,8 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
     Route::post('/communication_committee/epistola/delete/{epistola}', [EpistolaController::class, 'delete'])->name('epistola.delete');
     Route::get('/communication_committee/epistola/preview', [EpistolaController::class, 'preview'])->name('epistola.preview');
     Route::get('/communication_committee/epistola/send', [EpistolaController::class, 'send'])->name('epistola.send');
+
+    Route::get('/community_committee/mr_and_miss/vote', [MrAndMissController::class, 'indexVote'])->name('mr_and_miss.vote');
+    Route::post('/community_committee/mr_and_miss/vote', [MrAndMissController::class, 'saveVote'])->name('mr_and_miss.vote.save');
+    Route::post('/community_committee/mr_and_miss/vote/custom', [MrAndMissController::class, 'customVote'])->name('mr_and_miss.vote.custom');
 });

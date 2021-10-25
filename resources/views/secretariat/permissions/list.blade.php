@@ -21,10 +21,8 @@
                             <td>@include('user.roles', ['roles' => $user->roles])</td>
                             <td>
                             @can('viewPermissionFor', $user)
-                                <a href="{{ route('secretariat.permissions.show', $user->id) }}"
-                                    class="btn-floating waves-effect waves-light right">
-                                    <i class="material-icons">edit</i>
-                                </a>
+                                <x-input.button floating :href="route('secretariat.permissions.show', $user->id)"
+                                    class="right" icon="edit" />
                             @endcan
                             </td>
                         </tr>

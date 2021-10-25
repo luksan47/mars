@@ -20,7 +20,7 @@
             </div>
         </div>
         {{-- Personal information --}}
-        @include('user.personal-information', ['user' => $user, 'modifiable_email' => true, 'modifiable_phone' => true])
+        @include('user.personal-information', ['user' => $user, 'modifiable' => true])
         {{-- Educational information --}}
         @include('user.educational-information', ['user' => $user])
 
@@ -31,32 +31,14 @@
                 <div class="card-content">
                     <div class="card-title">@lang('general.change_password')</div>
                     <div class="row" style="margin-bottom: 0">
-                        <div class="input-field col s12">
-                            <input id="old_password" type="password" name="old_password" required
-                                autocomplete="password" class="validate @error('old_password') invalid @enderror">
-                            <label for="old_password">@lang('registration.old_password')</label>
-                            @error('old_password')
-                            <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="new_password" type="password" name="new_password" required 
-                                class="validate @error('new_password') invalid @enderror">
-                            <label for="new_password">@lang('registration.new_password')</label>
-                            @error('new_password')
-                            <span class="helper-text" data-error="{{ $message }}"></span>
-                            @enderror
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="new_password_confirmation" type="password" name="new_password_confirmation"
-                                required class="validate @error('new_password') invalid @enderror">
-                            <label for="new_password_confirmation">@lang('registration.confirmpwd')</label>
-                        </div>
+                        <x-input.text id='old_password' locale="registration" type='password' required autocomplete="password"/>
+                        <x-input.text s=6 id='new_password' locale="registration" type='password' required autocomplete="new-password"/>
+                        <x-input.text s=6 id='confirmpwd' locale="registration" name="new_password_confirmation" type='password' required autocomplete="new-password"/>
                     </div>
                 </div>
                 <div class="card-action">
                     <div class="row" style="margin-bottom: 0">
-                        <button class="btn waves-effect right" type="submit">@lang('general.change_password')</button>
+                        <x-input.button only_input class="right" text="general.change_password"/>
                     </div>
                 </div>
             </form>

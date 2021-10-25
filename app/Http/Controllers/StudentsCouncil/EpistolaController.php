@@ -21,11 +21,14 @@ class EpistolaController extends Controller
     public function index()
     {
         $this->authorize('view', EpistolaNews::class);
-        
+
         //sort by valid_until property with null values at the end
-        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function ($result) {
             if ($result->valid_until == null)
-                return PHP_INT_MAX;
+                if($result->date_for_sorting == null){
+                    return PHP_INT_MAX;
+                }
+                return $result->date_for_sorting;
             return $result->valid_until;
         });
 
@@ -53,14 +56,14 @@ class EpistolaController extends Controller
 
     public function restore(EpistolaNews $epistola)
     {
-        $this->authorize('edit', EpistolaNews::class);
+        $this->authorize('send', EpistolaNews::class);
         $epistola->update(['sent' => false]);
         return redirect(route('epistola'))->with('message', __('general.successful_modification'));
     }
 
     public function markAsSent(EpistolaNews $epistola)
     {
-        $this->authorize('edit', EpistolaNews::class);
+        $this->authorize('send', EpistolaNews::class);
         $epistola->update(['sent' => true]);
         return redirect(route('epistola'))->with('message', __('general.successful_modification'));
     }
@@ -82,16 +85,17 @@ class EpistolaController extends Controller
             'date' => 'nullable|date|required_with:time,end_date',
             'time' => 'nullable|date_format:H:i',
             'end_date' => 'nullable|date',
-            'further_details_url' => 'nullable|url',
-            'website_url' => 'nullable|url',
-            'facebook_event_url' => 'nullable|url|starts_with:https://www.facebook.com/events/',
-            'registration_url' => 'nullable|url|required_with:registration_deadline',
-            'registration_deadline' => 'nullable|date',
-            'fill_url' => 'nullable|url|required_with:registration_deadline',
-            'filling_deadline' => 'nullable|date',
-            'approved' => 'nullable|required_with:picture_upload|accepted', //BUG: will be required always (picture_upload always exists)
+            'details_name_1' => 'nullable|string|required_with:details_url_1',
+            'details_url_1' => 'nullable|url|required_with:details_name_1',
+            'details_name_2' => 'nullable|string|required_with:details_url_2',
+            'details_url_2' => 'nullable|url|required_with:details_name_2',
+            'deadline_name' => 'nullable|string|required_with:deadline_date',
+            'deadline_date' => 'nullable|date|required_with:deadline_name',
+            'approved' => 'nullable|required_with:picture_upload',
+            'date_for_sorting' => 'nullable|date',
+            'tag' => 'nullable|max:255|string',
             'picture_upload' => 'nullable|image',
-            'picture_path' => ['nullable', 'url', function ($attribute, $value, $fail) use ($request) {
+            'picture_path' => ['nullable', 'url', 'max:255', function ($attribute, $value, $fail) use ($request) {
                 if ($request->picture_upload != null && $request->picture_path != null)
                     $fail(__('validation.upload_with_link'));
             }]
@@ -108,7 +112,7 @@ class EpistolaController extends Controller
         }
         $values = $request->except(['picture_path', 'id']);
         $values['picture_path'] = $picture_path ?? $request->picture_path;
-        
+
         $epistola = EpistolaNews::find($request->id);
         if ($epistola) {
             $updated = true;
@@ -121,24 +125,27 @@ class EpistolaController extends Controller
         return redirect(route('epistola'))->with('message', $updated ? __('general.successful_modification') : __('general.successfully_added'));
     }
 
-    public function preview()
+    public static function getActiveNews()
     {
-        $this->authorize('send', EpistolaNews::class);
-
-        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+        return EpistolaNews::where('sent', false)->get()->sortBy(function ($result) {
             if ($result->valid_until == null)
                 return PHP_INT_MAX;
             return $result->valid_until;
         });
+    }
 
-        return (new EpistolaCollegii($unsent));
+    public function preview()
+    {
+        $this->authorize('view', EpistolaNews::class);
+
+        return (new EpistolaCollegii(self::getActiveNews()));
     }
 
     public function send()
     {
         $this->authorize('send', EpistolaNews::class);
 
-        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function($result) {
+        $unsent = EpistolaNews::where('sent', false)->get()->sortBy(function ($result) {
             if ($result->valid_until == null)
                 return PHP_INT_MAX;
             return $result->valid_until;

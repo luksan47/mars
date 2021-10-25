@@ -21,12 +21,8 @@
                                 @lang('user.workshops')
                             </th>
                             <th colspan="3">
-                                <a href="{{ route('secretariat.permissions.list') }}" class="btn waves-effect">
-                                    @lang('role.roles')
-                                    <i class="material-icons right">lock</i></a>
-                                <a href="{{ route('secretariat.user.statuses') }}" class="btn waves-effect right">
-                                    @lang('admin.statuses')
-                                    <i class="material-icons right">school</i></a>
+                                <x-input.button :href="route('secretariat.permissions.list')" text="role.roles" />
+                                <x-input.button :href="route('secretariat.user.statuses')" class="right" text="admin.statuses" />
                             </th>
                     </thead>
                     <tbody>

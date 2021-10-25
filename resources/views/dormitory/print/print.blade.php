@@ -16,50 +16,19 @@
             @csrf
             @method('PUT')
             <div class="row">
-                <div class="file-field input-field col s12 m12 l8 xl10">
-                    <div class="btn waves-effect">
-                        <span>File</span>
-                        <input type="file"id="file_to_upload" name="file_to_upload" accept=".pdf" required>
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path @error('file_to_upload') invalid @enderror" placeholder="@lang('print.select_document')" type="text" disabled>
-                        @error('file_to_upload')
-                        <span class="helper-text" data-error="{{ $message }}"></span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="input-field col s12 m12 l4 xl2">
-                    <input id="number_of_copies" name="number_of_copies" type="number" min="1" value="1" required>
-                    <label for="number_of_copies">@lang('print.number_of_copies')</label>
-                </div>
-                <div class="input-field col s8 xl4">
-                    <p>
-                        <label>
-                            <input type="checkbox" name="two_sided" id="two_sided" class="filled-in checkbox-color"  checked/>
-                            <span>@lang('print.twosided')</span>
-                        </label>
-                    </p>
-                </div>
+                <x-input.file l=8 xl=10 id="file_to_upload" accept=".pdf" required text="print.select_document"/>
+                <x-input.text l=4 xl=2  id="number_of_copies" type="number" min="1" value="1" required locale="print"/>
+                <x-input.checkbox s=8 xl=4 name="two_sided" checked text="print.twosided"/>
                 @if($free_pages>0) {{-- only show when user have active free pages --}}
-                <div class="input-field col s8 xl4">
-                    <p>
-                        <label>
-                            <input type="checkbox" name="use_free_pages" id="use_free_pages"
-                                class="filled-in checkbox-color" />
-                            <span>@lang('print.use_free_pages')</span>
-                        </label>
-                    </p>
-                </div>
-                <div class="input-field col s4">
+                    <x-input.checkbox s=8 xl=4 name="use_free_pages" text="print.use_free_pages"/>
+                    <x-input.button s=4 class="right" text="print.print"/>
                 @else
-                <div class="input-field col s4 xl8">
+                    <x-input.button s=4 xl=8 class="right" text="print.print"/>
                 @endif
-                    <button class="btn waves-effect right" type="submit">@lang('print.print')</button>
-                </div>
             </div>
         </form>
         <div class="row">
-            <div class="col s9">
+            <div class="col l9">
                 <blockquote>
                     @if(Cache::has('print.no-paper'))
                         @lang('print.no-paper-reported', ['date' => Cache::get('print.no-paper')])
@@ -69,23 +38,15 @@
                 </blockquote>
             </div>
             @if(Cache::has('print.no-paper') && Auth::user()->can('handleAny', \App\Models\PrintAccount::class))
-                <div class="input-field col s3">
-                    <form method="POST" action="{{ route('print.added_paper') }}">
-                        @csrf
-                        <div class="row">
-                            <button class="btn waves-green right coli blue" type="submit">@lang('print.added_paper')</button>
-                        </div>
-                    </form>
-                </div>
+                <form method="POST" action="{{ route('print.added_paper') }}">
+                    @csrf
+                    <x-input.button l=3 class="right coli blue" text="print.added_paper"/>
+                </form>
             @else
-                <div class="input-field col s3">
-                    <form method="POST" action="{{ route('print.no_paper') }}">
-                        @csrf
-                        <div class="row">
-                            <button class="btn waves-green right coli blue" type="submit" @if(Cache::has('print.no-paper')) disabled @endif>@lang('print.no_paper')</button>
-                        </div>
-                    </form>
-                </div>
+                <form method="POST" action="{{ route('print.no_paper') }}">
+                    @csrf
+                    <x-input.button l=3 class="right coli blue" text="print.no_paper" />
+                </form>
             @endif
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewRegistration;
 use App\Models\EducationalInformation;
 use App\Models\Faculty;
 use App\Models\PersonalInformation;
@@ -75,6 +76,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        //TODO sync with Secretartiat/UserController
         $common = [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -82,7 +84,7 @@ class RegisterController extends Controller
             'place_of_birth' => 'required|string|max:255',
             'date_of_birth' => 'required|date_format:Y-m-d',
             'mothers_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|min:16|max:18',
+            'phone_number' => 'required|string|min:8|max:18',
             'country' => 'required|string|max:255',
             'county' => 'required|string|max:255',
             'zip_code' => 'required|string|max:31',
@@ -102,7 +104,7 @@ class RegisterController extends Controller
         ];
         switch ($data['user_type']) {
             case Role::TENANT:
-                return Validator::make($data, $common);
+                return Validator::make($data, $common + ['tenant_until'=>'required|date_format:Y-m-d']);
             case Role::COLLEGIST:
                 $data['educational_email'] = $data['educational_email'].'@student.elte.hu';
 
@@ -129,6 +131,7 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'place_of_birth' => $data['place_of_birth'],
             'date_of_birth' => $data['date_of_birth'],
+            'tenant_until' => $data['tenant_until'] ?? null,
             'mothers_name' => $data['mothers_name'],
             'phone_number' => $data['phone_number'],
             'country' => $data['country'],
@@ -172,6 +175,13 @@ class RegisterController extends Controller
 
         // Send confirmation mail.
         Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
+        // Send notification about new tenant to the staff.
+        if (! $user->isCollegist()) {
+            $staff = User::role(Role::STAFF)->get();
+            foreach ($staff as $person) {
+                Mail::to($person)->send(new NewRegistration($person->name, $user));
+            }
+        }
 
         return $user;
     }
