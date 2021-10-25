@@ -3,27 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Lang;
 
 class Workshop extends Model
 {
-    const ANGOL = 'Angol-amerikai műhely';
-    const BIOLOGIA = 'Biológia-kémia műhely';
-    const BOLLOK = 'Bollók János Klasszika-filológia műhely';
-    const FILOZOFIA = 'Filozófia műhely';
-    const AURELION = 'Aurélien Sauvageot Francia műhely';
-    const GAZDALKODASTUDOMANYI = 'Gazdálkodástudományi műhely';
-    const GERMANISZTIKA = 'Germanisztika műhely';
-    const INFORMATIKA = 'Informatikai műhely';
-    const MAGYAR = 'Magyar műhely';
-    const MATEMATIKA = 'Matematika-fizika műhely';
-    const MENDOL = 'Mendöl Tibor földrajz-, föld- és környezettudományi műhely';
-    const OLASZ = 'Olasz műhely';
-    const ORIENTALISZTIKA = 'Orientalisztika műhely';
-    const SKANDINAVISZTIKA = 'Skandinavisztika műhely';
-    const SPANYOL = 'Spanyol műhely';
-    const SZLAVISZTIKA = 'Szlavisztika műhely';
-    const TARSADALOMTUDOMANYI = 'Társadalomtudományi műhely';
-    const TORTENESZ = 'Történész műhely';
+    const ANGOL = 'english-american_workshop';
+    const BIOLOGIA = 'biology-chemistry_workshop';
+    const BOLLOK = 'philology_workshop';
+    const FILOZOFIA = 'philosophy_workshop';
+    const AURELION = 'french_workshop';
+    const GAZDALKODASTUDOMANYI = 'economic_workshop';
+    const GERMANISZTIKA = 'german_workshop';
+    const INFORMATIKA = 'it_workshop';
+    const MAGYAR = 'hungarian_workshop';
+    const MATEMATIKA = 'maths-physics_workshop';
+    const MENDOL = 'geography_workshop';
+    const OLASZ = 'italian_workshop';
+    const ORIENTALISZTIKA = 'orientalistics_workshop';
+    const SKANDINAVISZTIKA = 'scandinavian_workshop';
+    const SPANYOL = 'spanish_workshop';
+    const SZLAVISZTIKA = 'slavic_workshop';
+    const TARSADALOMTUDOMANYI = 'social_studies_workshop';
+    const TORTENESZ = 'history_workshop';
 
     const ALL = [
         self::ANGOL,
@@ -45,6 +46,15 @@ class Workshop extends Model
         self::TARSADALOMTUDOMANYI,
         self::TORTENESZ,
     ];
+
+    public static function FullNames($list)
+    {
+      $fullnames=[];
+      foreach ($list as $workshop) {
+        array_push($fullnames, Lang::get('role.'.$workshop->name));
+      }
+      return $fullnames;
+    }
 
     public function users()
     {

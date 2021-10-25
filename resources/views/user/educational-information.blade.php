@@ -29,7 +29,7 @@
                         <td>
                             <ul>
                                 @include('user.workshop_tags', ['user' => $user])<br>
-                                @include('secretariat.user.add_workshop', ['user' => $user])
+                                @include('secretariat.user.add_workshop', ['user' => $user, 'full_ws_names' => \App\Models\Workshop::FullNames(\App\Models\Workshop::all()->diff($user->workshops)), 'workshops' => \App\Models\Workshop::all()->diff($user->workshops)])
                             </ul>
                         </td>
                     </tr>
@@ -51,7 +51,7 @@
                             <ul>
                                 @foreach ($user->allSemesters as $semester)
                                 <li>
-                                    <span class="new badge tooltipped {{ \App\Models\Semester::colorForStatus($user->getStatusIn($semester)) }}" 
+                                    <span class="new badge tooltipped {{ \App\Models\Semester::colorForStatus($user->getStatusIn($semester)) }}"
                                         data-badge-caption=""
                                         data-position="right"  data-tooltip="@lang('user.'.$user->getStatusIn($semester))"
                                         >
