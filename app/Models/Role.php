@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class Role extends Model
 {
@@ -123,35 +123,28 @@ class Role extends Model
         }
     }
 
-
     /**
      * Checks if the specified role can be attached to someone.
-     * Object id is required if the role can have objects. (returns -1)
-     * If a role is unique and taken, returns the user's id who is attached to that role.
-     * Returns 0 if the role can be attached.
+     * Object id is required if the role can have objects.
      * @param int $roleId
      * @param int $objectId optional
-     * @return int 0, -1, or a user id.
+     * @return bool.
      */
-    public static function canBeAttached($roleId, $objectId = null): int
+    public static function canBeAttached($roleId, $objectId = null): bool
     {
-        $roleName = self::findOrFail($roleId)->name;
-        $object = self::possibleObjectsFor($roleName)->firstWhere('id', $objectId);
-        if (self::isUnique($roleName, ($object ? $object->name : null))) {
-            if (self::canHaveObjectFor($roleName)) {
-                if ($object == null) return -1;
-                $row = DB::table('role_users')
-                    ->where('role_id', $roleId)
-                    ->where('object_id', $objectId)
-                    ->first();
-                return ($row ? $row->user_id : 0);
-            }
-            if ($objectId != null) return -1;
-
-            $row = DB::table('role_users')->where('role_id', $roleId)->first();
-            return ($row ? $row->user_id : 0);
+        $role = self::findOrFail($roleId);
+        if($role->canHaveObject())
+        {
+            if($objectId == null) return false;
+            $object = $role->possibleObjects()->firstWhere('id', $objectId)->name;
         }
-        return 0;
+
+        if (self::isUnique($role->name, ($object ?? null))) {
+            return User::whereHas('roles', function (Builder $query)  use ($roleId, $objectId){
+                $query->where('id', $roleId)->where('role_users.object_id', $objectId);
+            })->count() < 1;
+        }
+        return true;
     }
 
     /**

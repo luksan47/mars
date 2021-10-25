@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Secretariat;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -38,17 +39,21 @@ class PermissionController extends Controller
         $roleName = Role::find($role_id)->name;
         $object_id = $request[$roleName] ?? null;
 
-        $user_id = Role::canBeAttached($role_id, $object_id);
-        if ($user_id < -1) {
-            abort(500, 'The role cannot be assigned.');
+
+        if (!Role::canBeAttached($role_id, $object_id)) {
+            $user = User::whereHas('roles', function (Builder $query)  use ($role_id, $object_id){
+                $query->where('id', $role_id)->where('role_users.object_id', $object_id);
+            })->first();
+            if($user)
+                return back()->with('message', __('role.role_unavailable', ['user' => $user->name]));
+            else
+                return back()->with('message', __('role.role_can_not_be_attached'));
         }
-        if ($user_id > 0) {
-            return back()->with('message', __('role.role_unavailable', ['user' => User::find($user_id)->name]));
-        }
-        //user_id = 0 means ok:
+
         if ($object_id) {
+            //if adding a collegist role to a collegist
             if ($roleName == Role::COLLEGIST && $user->isCollegist()) {
-                //change resident/extern status - not attaching a new role.
+                //just change resident/extern status (object) - not attaching a new role.
                 $user->roles()->where('id', $role_id)->update(['object_id' => $object_id]);
             }
             if ($user->roles()->where('id', $role_id)->wherePivot('object_id', $object_id)->count() == 0) {
