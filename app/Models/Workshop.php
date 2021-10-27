@@ -47,15 +47,6 @@ class Workshop extends Model
         self::TORTENESZ,
     ];
 
-    public static function FullNames($list)
-    {
-      $fullnames=[];
-      foreach ($list as $workshop) {
-        array_push($fullnames, Lang::get('role.'.$workshop->name));
-      }
-      return $fullnames;
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class, 'workshop_users');
