@@ -29,7 +29,7 @@
                         <td>
                             <ul>
                                 @include('user.workshop_tags', ['user' => $user])<br>
-                                @include('secretariat.user.add_workshop', ['user' => $user, 'workshops' => \App\Models\Workshop::all()->diff($user->workshops)])
+                                @include('secretariat.user.add_workshop', ['user' => $user])
                             </ul>
                         </td>
                     </tr>
