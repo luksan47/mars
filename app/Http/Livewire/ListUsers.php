@@ -44,13 +44,11 @@ class ListUsers extends Component
         return $query->orderBy('name')->get();
     }
 
-
     public function addRole($role_id)
     {
         $this->roles[] = $role_id;
     }
-    
-    
+
     public function deleteRole($role_id)
     {
         $this->roles = \array_diff($this->roles, [$role_id]);
