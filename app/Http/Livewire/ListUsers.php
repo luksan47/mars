@@ -17,7 +17,6 @@ class ListUsers extends Component
 
     public function getUsersProperty()
     {
-
         $query = User::with(['roles', 'workshops', 'educationalInformation', 'allSemesters']);
 
         foreach ($this->roles as $role) {
@@ -38,13 +37,12 @@ class ListUsers extends Component
                 $query->where('id', Semester::current()->id);
             });
         }
-        if(isset($this->filter_name)){
-            $query->where("name", "like", "%".$this->filter_name."%");
+        if (isset($this->filter_name)) {
+            $query->where('name', 'like', '%'.$this->filter_name.'%');
         }
 
         return $query->orderBy('name')->get();
     }
-
 
     public function deleteRole($role_id)
     {
