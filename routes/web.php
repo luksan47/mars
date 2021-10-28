@@ -27,6 +27,7 @@ use App\Http\Controllers\Secretariat\SemesterController;
 use App\Http\Controllers\Secretariat\UserController;
 use App\Http\Controllers\StudentsCouncil\EconomicController;
 use App\Http\Controllers\StudentsCouncil\EpistolaController;
+use App\Http\Controllers\StudentsCouncil\MrAndMissController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
