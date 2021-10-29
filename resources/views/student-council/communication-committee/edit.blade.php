@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col l6 file-field">
                             <x-input.file only_input m=6 id="picture_upload" accept=".jpg,.png" text="Kép feltöltése" />
-                            <x-input.checkbox only_input m=6 id="approved" text="Nem töltök fel szerzői jog oltalma alatt álló képet." />
+                            <x-input.checkbox name="approved" only_input m=6 id="approved" text="Nem töltök fel szerzői jog oltalma alatt álló képet." />
                             @error('approved')
                                 <blockquote>{{$message}}</blockquote>
                             @enderror
