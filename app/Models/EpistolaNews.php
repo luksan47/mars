@@ -28,9 +28,11 @@ class EpistolaNews extends Model
         'deadline_name',
         'deadline_date',
         'picture_path',
+        'date_for_sorting',
+        'category',
         'sent',
     ];
-    protected $dates = ['date', 'time', 'end_date', 'valid_until', 'deadline_date'];
+    protected $dates = ['date', 'time', 'end_date', 'date_for_sorting', 'valid_until', 'deadline_date'];
 
     //notifications should be sent before this date
     public function getValidUntilAttribute()
@@ -51,12 +53,29 @@ class EpistolaNews extends Model
 
         $datetime = $this->date->format('Y.m.d.');
         if ($this->time) {
-            $datetime .= $this->time->format(' h:m');
+            $datetime .= $this->time->format(' G:i');
         } elseif ($this->end_date) {
             $datetime .= $this->end_date->format(' - Y.m.d.');
         }
 
         return $datetime;
+    }
+
+    public function getColorAttribute()
+    {
+        //yiq algorithm
+        $r = hexdec(substr($this->bg_color, 1, 2));
+        $g = hexdec(substr($this->bg_color, 3, 2));
+        $b = hexdec(substr($this->bg_color, 5, 2));
+        $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+        return ($yiq >= 128) ? 'black' : 'white';
+    }
+
+    public function getBgColorAttribute()
+    {
+        //generate color from category string
+        return substr(dechex(crc32($this->category)), 0, 6);
     }
 
     public function shouldBeSent()

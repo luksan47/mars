@@ -21,14 +21,15 @@ abstract class Input extends Component
      * PHP Variables should be written with a ':' prefix
      * eg. :message="$message"
      * See https://laravel.com/docs/8.x/blade#components for more details.
-     * @param string $id input id and default name
-     * @param string $locale if text is not provided, the label will be @lang($locale.$id)
-     * @param string $text if provided, the label will be @lang($text)
-     * @param int $s size for small displays (default: 12)
-     * @param int $m size for medium displays  (default: s)
-     * @param int $l size for large displays (default: s)
-     * @param int $xl size for xl displays (default: s)
-     * @param bool $onlyInput if provided, the content will not be wrapped in an input-field
+     *
+     * @param  string  $id  input id and default name
+     * @param  string  $locale  if text is not provided, the label will be @lang($locale.$id)
+     * @param  string  $text  if provided, the label will be @lang($text)
+     * @param  int  $s  size for small displays (default: 12)
+     * @param  int  $m  size for medium displays  (default: s)
+     * @param  int  $l  size for large displays (default: s)
+     * @param  int  $xl  size for xl displays (default: s)
+     * @param  bool  $onlyInput  if provided, the content will not be wrapped in an input-field
      * @param $attributes any other attribute given will be added to the input tag
      * @return void
      */
