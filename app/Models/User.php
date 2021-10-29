@@ -319,10 +319,7 @@ class User extends Authenticatable implements HasLocalePreference
      */
     public static function president()
     {
-        return User::whereHas('roles', function ($q) {
-            $q->where('role_id', Role::getId(Role::STUDENT_COUNCIL))
-                ->where('object_id', Role::getObjectIdByName(Role::STUDENT_COUNCIL, ROLE::PRESIDENT));
-        })->first();
+        return Role::getUsers(Role::STUDENT_COUNCIL, Role::PRESIDENT)->first();
     }
 
     /**
@@ -330,31 +327,26 @@ class User extends Authenticatable implements HasLocalePreference
      */
     public static function director()
     {
-        return User::whereHas('roles', function ($q) {
-            $q->where('role_id', Role::getId(Role::DIRECTOR));
-        })->first();
+        return Role::getUsers(Role::DIRECTOR)->first();
     }
 
     /**
-     * @param  string  $roleObjectName  the object name of a Student Council role
-     * @return User|null the director
+     * @param  string  $roleObjectName one of Role::COMMITTEE_LEADERS
+     * @return User|null the committee leader
      */
-    public static function CommitteeLeader($roleObjectName)
+    public static function committeeLeader($roleObjectName)
     {
         if (! in_array($roleObjectName, Role::COMMITTEE_LEADERS)) {
             throw new InvalidArgumentException($roleObjectName.' should be one of these: '.implode(', ', Role::COMMITTEE_LEADERS));
         }
 
-        return User::whereHas('roles', function ($q) use ($roleObjectName) {
-            $q->where('role_id', Role::getId(Role::STUDENT_COUNCIL))
-                ->where('object_id', Role::getObjectIdByName(Role::STUDENT_COUNCIL, $roleObjectName));
-        })->first();
+        return Role::getUsers(Role::STUDENT_COUNCIL, $roleObjectName)->first();
     }
 
     /**
      * @return User|null the Communication Committe's leader
      */
-    public static function CommunicationLeader()
+    public static function communicationLeader()
     {
         return self::CommitteeLeader(Role::COMMUNICATION_LEADER);
     }
@@ -362,7 +354,7 @@ class User extends Authenticatable implements HasLocalePreference
     /**
      * @return User|null the Cultural Committe's leader
      */
-    public static function CulturalLeader()
+    public static function culturalLeader()
     {
         return self::CommitteeLeader(Role::CULTURAL_LEADER);
     }
@@ -370,7 +362,7 @@ class User extends Authenticatable implements HasLocalePreference
     /**
      * @return User|null the Sport Committe's leader
      */
-    public static function SportLeader()
+    public static function sportLeader()
     {
         return self::CommitteeLeader(Role::SPORT_LEADER);
     }
@@ -378,7 +370,7 @@ class User extends Authenticatable implements HasLocalePreference
     /**
      * @return User|null the Science Committe's leader
      */
-    public static function ScienceLeader()
+    public static function scienceLeader()
     {
         return self::CommitteeLeader(Role::SCIENCE_LEADER);
     }
@@ -386,7 +378,7 @@ class User extends Authenticatable implements HasLocalePreference
     /**
      * @return User|null the Community Committe's leader
      */
-    public static function CommunityLeader()
+    public static function communityLeader()
     {
         return self::CommitteeLeader(Role::COMMUNITY_LEADER);
     }
@@ -394,7 +386,7 @@ class User extends Authenticatable implements HasLocalePreference
     /**
      * @return User|null the Communication Committe's leader
      */
-    public static function EconomicLeader()
+    public static function economicLeader()
     {
         return self::CommitteeLeader(Role::ECONOMIC_LEADER);
     }

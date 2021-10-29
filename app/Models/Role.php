@@ -22,9 +22,9 @@ class Role extends Model
     const PERMISSION_HANDLER = 'permission-handler';
     const STUDENT_COUNCIL = 'student-council';
 
-    //Student committe role's objects
+    //Students' Committe role's objects
     const PRESIDENT = 'president';
-    const VICE_PRESIDENT = 'vice_president';
+    const VICE_PRESIDENT = 'vice-president';
     const ECONOMIC_LEADER = 'economic-leader';
     const ECONOMIC_MEMBER = 'economic-member';
     const CULTURAL_LEADER = 'cultural-leader';
@@ -37,6 +37,10 @@ class Role extends Model
     const SPORT_MEMBER = 'sport-member';
     const SCIENCE_LEADER = 'science-leader';
     const SCIENCE_MEMBER = 'science-member';
+    const STUDENT_COUNCIL_LEADERS = [
+        self::PRESIDENT,
+        self::VICE_PRESIDENT
+    ];
     const COMMITTEE_LEADERS = [
         self::ECONOMIC_LEADER,
         self::CULTURAL_LEADER,
@@ -45,18 +49,13 @@ class Role extends Model
         self::SPORT_LEADER,
         self::SCIENCE_LEADER
     ];
-    const STUDENT_COUNCIL_LEADERS = [
-        self::PRESIDENT,
-        self::VICE_PRESIDENT
-    ];
-
-    const STUDENT_COUNCIL_MEMBERS = [
-        self::ECONOMIC_LEADER,
-        self::CULTURAL_LEADER,
-        self::COMMUNITY_LEADER,
-        self::COMMUNICATION_LEADER,
-        self::SPORT_LEADER,
-        self::SCIENCE_LEADER
+    const COMMITTEE_MEMBERS = [
+        self::ECONOMIC_MEMBER,
+        self::CULTURAL_MEMBER,
+        self::COMMUNITY_MEMBER,
+        self::COMMUNICATION_MEMBER,
+        self::SPORT_MEMBER,
+        self::SCIENCE_MEMBER
     ];
 
     // Module-related roles
@@ -95,7 +94,6 @@ class Role extends Model
      */
     public function name(): string
     {
-        //TODO: workshop leader / administrator roles are translated elsewhere
         return __('role.' . $this->name);
     }
 
@@ -107,19 +105,17 @@ class Role extends Model
      */
     public static function isUnique($roleName, $objectName = null): bool
     {
-        if (!self::canHaveObjectFor($roleName)) {
-            return in_array($roleName, [
-                self::DIRECTOR
-            ]);
-        } else {
-            if ($objectName == null) return false;
-            if ($roleName == self::STUDENT_COUNCIL) {
-                return in_array($objectName, array_merge(self::COMMITTEE_LEADERS, [self::PRESIDENT]));
-            }
-            return in_array($roleName, [
-                self::WORKSHOP_ADMINISTRATOR,
-                self::WORKSHOP_LEADER
-            ]);
+        switch ($roleName) {
+            case self::DIRECTOR:
+                return true;
+            case self::WORKSHOP_ADMINISTRATOR:
+                return true;
+            case self::WORKSHOP_LEADER:
+                return true;
+            case self::STUDENT_COUNCIL:
+                return in_array($objectName, array_merge(self::STUDENT_COUNCIL_LEADERS, self::COMMITTEE_LEADERS, self::COMMITTEE_MEMBERS));
+            default:
+                return false;
         }
     }
 
@@ -165,8 +161,14 @@ class Role extends Model
         return $objects->where('name', $objectName)->first()->id;
     }
 
-    public static function getUsers(string $roleName)
+    public static function getUsers(string $roleName, string $objectName = null)
     {
+        if(isset($objectName)){
+            return User::whereHas('roles', function ($q) use ($roleName, $objectName) {
+                $q->where('role_id', Role::getId($roleName))
+                    ->where('object_id', Role::getObjectIdByName($roleName, $objectName));
+            });
+        }
         return self::firstWhere('name', $roleName)->users;
     }
 
@@ -227,22 +229,7 @@ class Role extends Model
         }
 
         if ($name == self::STUDENT_COUNCIL) {
-            $student_council_members = [
-                'president',
-                'vice_president',
-                'economic-leader',
-                'communication-leader',
-                'community-leader',
-                'cultural-leader',
-                'sport-leader',
-                'science-leader',
-                'economic-member',
-                'communication-member',
-                'community-member',
-                'cultural-member',
-                'sport-member',
-                'science-member',
-            ];
+            $student_council_members = array_merge(self::STUDENT_COUNCIL_LEADERS, self::COMMITTEE_LEADERS, self::COMMITTEE_MEMBERS);
 
             return self::toSelectableCollection($student_council_members);
         }
@@ -257,6 +244,38 @@ class Role extends Model
         }
 
         return collect([]);
+    }
+
+    public function hasElevatedPermissions(): bool
+    {
+        return in_array($this->name, [self::PRINT_ADMIN, self::NETWORK_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
+    }
+
+    public function hasTranslatedName(): bool
+    {
+        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER]);
+    }
+
+    /**
+     * Create a collection with id and name of the items in an array.
+     * The ids starts at 1.
+     * @param array $items the items in the array will be the name attributes
+     * @return collection
+     */
+    private static function toSelectableCollection(array $items)
+    {
+        $objects = [];
+        $id = 1;
+        foreach ($items as $name) {
+            $objects[] = (object) ['id' => $id++, 'name' => $name];
+        }
+
+        return collect($objects);
+    }
+
+    public function isSysAdmin()
+    {
+        return in_array($this->name, [self::NETWORK_ADMIN]);
     }
 
     public function color()
@@ -293,37 +312,5 @@ class Role extends Model
             default:
                 return 'grey';
         }
-    }
-
-    public function hasElevatedPermissions(): bool
-    {
-        return in_array($this->name, [self::PRINT_ADMIN, self::NETWORK_ADMIN, self::PERMISSION_HANDLER, self::SECRETARY, self::DIRECTOR]);
-    }
-
-    public function hasTranslatedName(): bool
-    {
-        return in_array($this->name, [self::WORKSHOP_ADMINISTRATOR, self::WORKSHOP_LEADER]);
-    }
-
-    /**
-     * Create a collection with id and name of the items in an array.
-     * The ids starts at 1.
-     * @param array $items the items in the array will be the name attributes
-     * @return collection
-     */
-    private static function toSelectableCollection(array $items)
-    {
-        $objects = [];
-        $id = 1;
-        foreach ($items as $name) {
-            $objects[] = (object) ['id' => $id++, 'name' => $name];
-        }
-
-        return collect($objects);
-    }
-
-    public function isSysAdmin()
-    {
-        return in_array($this->name, [self::NETWORK_ADMIN]);
     }
 }
