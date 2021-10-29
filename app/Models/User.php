@@ -331,7 +331,7 @@ class User extends Authenticatable implements HasLocalePreference
     }
 
     /**
-     * @param  string  $roleObjectName one of Role::COMMITTEE_LEADERS
+     * @param  string  $roleObjectName  one of Role::COMMITTEE_LEADERS
      * @return User|null the committee leader
      */
     public static function committeeLeader($roleObjectName)
