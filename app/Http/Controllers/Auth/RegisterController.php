@@ -181,7 +181,7 @@ class RegisterController extends Controller
             foreach ($staff as $person) {
                 Mail::to($person)->send(new NewRegistration($person->name, $user));
             }
-	    foreach (User::role(Role::NETWORK_ADMIN)->get() as $admin) {
+            foreach (User::role(Role::NETWORK_ADMIN)->get() as $admin) {
                 Mail::to($admin)->send(new NewRegistration($admin->name, $user));
             }
         }
