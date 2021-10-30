@@ -8,14 +8,6 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col s12">
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">@lang('admin.user_management')</span>
-                @livewire('list-users')
-            </div>
-        </div>
-    </div>
-</div>
+@livewire('list-users')
+
 @endsection
