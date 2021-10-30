@@ -75,9 +75,6 @@ width: 100% !important;
 
                         @foreach ($news as $article)
                             <h2>{{ $loop->iteration }}.<span>{{$article->title }}</span></h2>
-                            <span style="float:right;border-radius:6px;font-size:0.8em;background-color:#{{$article->bg_color}};color:{{$article->color}};display:inline-block;padding:3px 6px 3px 6px;text-align:center">
-                                <nobr>{{ $article->category }}</nobr>
-                            </span>
                             <h3>{{ $article->subtitle}}</h3>
                         @endforeach
                         </ol>

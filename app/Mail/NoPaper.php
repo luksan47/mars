@@ -16,7 +16,7 @@ class NoPaper extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param  string  $userName
+     * @param string $userName
      */
     public function __construct(string $recipient, string $reporter)
     {

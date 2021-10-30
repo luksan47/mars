@@ -31,7 +31,6 @@ class PaymentType extends Model
      * STUDENTS_COUNCIL: KKT
      *
      * Uses cache.
-     *
      * @param Checkout
      * @return collection of the payment types.
      */
@@ -77,7 +76,6 @@ class PaymentType extends Model
 
     /**
      * Get the paymentType by name. Uses cache.
-     *
      * @param string payment type name
      * @return PaymentType
      */
@@ -90,7 +88,6 @@ class PaymentType extends Model
 
     /**
      * Get the paymentType by name. Uses cache.
-     *
      * @param string payment type name
      * @return PaymentType
      */

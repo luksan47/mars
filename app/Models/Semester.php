@@ -148,9 +148,8 @@ class Semester extends Model
 
     /**
      * Decides if the given user with the given status exists in the semester.
-     *
-     * @param  int  $user  user id
-     * @param  string  $status
+     * @param int $user user id
+     * @param string $status
      * @return true if the given user exists
      * @return false if the given user has another status or not attached to the semester
      */
@@ -161,9 +160,8 @@ class Semester extends Model
 
     /**
      * Decides if the given user is active in the semester.
-     *
-     * @param  int  $user  user id
-     * @param  string  $status
+     * @param int $user user id
+     * @param string $status
      * @return true if the given user is active
      * @return false if the given user is not active or not attached to the semester
      */
@@ -182,8 +180,7 @@ class Semester extends Model
 
     /**
      * Returns the transactions belonging to the checkout in the semester.
-     *
-     * @param  Checkout  $checkout
+     * @param Checkout $checkout
      */
     public function transactionsInCheckout(Checkout $checkout)
     {
@@ -281,7 +278,6 @@ class Semester extends Model
 
     /**
      * Gets or creates the semester.
-     *
      * @param int year
      * @param int part (1,2)
      * @return Semester|InvalidArgumentException

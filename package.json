@@ -2,29 +2,31 @@
     "private": true,
     "scripts": {
         "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "laravel-mix": "^6.0.6",
-        "axios": "^0.21",
+        "axios": "^0.21.1",
+        "bootstrap": "^4.5.3",
+        "cross-env": "^5.1",
+        "laravel-mix": "^5.0.7",
         "lodash": "^4.17.21",
         "minimist": "^1.2.5",
         "popper.js": "^1.12",
-        "resolve-url-loader": "^4.0.0",
+        "resolve-url-loader": "^3.1.2",
         "sass": "^1.27.0",
         "sass-loader": "7.*",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "jquery": "^3.6.0",
-        "@materializecss/materialize": "^1.1.0-alpha",
+        "jquery": "^3.5.1",
+        "materialize-css": "^1.0.0",
         "moment": "^2.29.1",
-        "tabulator-tables": "^4.9.3"
+        "tabulator-tables": "^4.8.2"
     }
 }

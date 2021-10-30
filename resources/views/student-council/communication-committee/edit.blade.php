@@ -45,7 +45,7 @@
                     </div>
                     <div class="row">
                         <x-input.datepicker l=5 id="date" :value="($epistola && $epistola->date != null ? $epistola->date->format('Y-m-d') : null)" text="Dátum (esemény kezdete)" />
-                        <x-input.timepicker l=2 id="time" :value="($epistola && $epistola->time != null ? $epistola->time->format('H:i') : null)" text="Időpont" />
+                        <x-input.timepicker l=2 id="time" :value="($epistola && $epistola->time != null ? $epistola->date->format('h:m') : null)" text="Időpont" />
                         <x-input.datepicker l=5 id="end_date" :value="($epistola && $epistola->end_date != null ? $epistola->end_date->format('Y-m-d') : null)" text="Esemény vége" />
                     </div>
                     <div class="row">
@@ -61,13 +61,9 @@
                         <x-input.datepicker l=6 id="deadline_date" :value="($epistola && $epistola->deadline_date != null ? $epistola->deadline_date->format('Y-m-d') : null)" text="Határidő" />
                     </div>
                     <div class="row">
-                        <x-input.datepicker l=6 id="date_for_sorting" :value="($epistola ? $epistola->date_for_sorting : null)" text="Dátum rendezéshez"/>
-                        <x-input.text l=6 id="category" :value="($epistola ? $epistola->tag : null)" text="Kategória"/>
-                    </div>
-                    <div class="row">
                         <div class="col l6 file-field">
                             <x-input.file only_input m=6 id="picture_upload" accept=".jpg,.png" text="Kép feltöltése" />
-                            <x-input.checkbox name="approved" only_input m=6 id="approved" text="Nem töltök fel szerzői jog oltalma alatt álló képet." />
+                            <x-input.checkbox only_input m=6 id="approved" text="Nem töltök fel szerzői jog oltalma alatt álló képet." />
                             @error('approved')
                                 <blockquote>{{$message}}</blockquote>
                             @enderror

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
-use InvalidArgumentException;
 
 class User extends Authenticatable implements HasLocalePreference
 {
@@ -198,9 +197,8 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user has any role of the given roles.
-     *
-     * @param  array  $roleNames  the roles' name
-     * @param  int  $objectId  to filter the roles. Using with multiple roles is not recommended.
+     * @param array $roleNames the roles' name
+     * @param int $objectId to filter the roles. Using with multiple roles is not recommended.
      * @return bool
      */
     public function hasAnyRole(array $roleNames, $objectId = null): bool
@@ -213,9 +211,8 @@ class User extends Authenticatable implements HasLocalePreference
     /**
      * Decides if the user has a role.
      * Object is recommended if the role has objects, otherwise use hasRoleBase function.
-     *
-     * @param  string  $roleName  the role's name
-     * @param  int  $objectId  optional object id. For object names use hasRoleWithObjectName function.
+     * @param string $roleName the role's name
+     * @param int $objectId optional object id. For object names use hasRoleWithObjectName function.
      * @return bool
      */
     public function hasRole(string $roleName, $objectId = null): bool
@@ -225,9 +222,8 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user has a role with an object.
-     *
-     * @param  string  $roleName  the role's name
-     * @param  string  $objectName  the object's name. For multiple objects use hasRoleWithObjectNames function.
+     * @param string $roleName the role's name
+     * @param string $objectName the object's name. For multiple objects use hasRoleWithObjectNames function.
      * @return bool
      */
     public function hasRoleWithObjectName(string $roleName, string $objectName): bool
@@ -240,9 +236,8 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user has a role with an object.
-     *
-     * @param  string  $roleName  the role's name
-     * @param  array  $objectNames  array of the object names
+     * @param string $roleName the role's name
+     * @param array $objectNames array of the object names
      * @return bool
      */
     public function hasRoleWithObjectNames(string $roleName, array $objectNames): bool
@@ -260,7 +255,7 @@ class User extends Authenticatable implements HasLocalePreference
      * Scope a query to only include users with the given role.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $role  the role's name
+     * @param string $role the role's name
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeRole($query, $role)
@@ -314,83 +309,6 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasRoleBase('student-council');
     }
 
-    /**
-     * @return User|null the president
-     */
-    public static function president()
-    {
-        return Role::getUsers(Role::STUDENT_COUNCIL, Role::PRESIDENT)->first();
-    }
-
-    /**
-     * @return User|null the director
-     */
-    public static function director()
-    {
-        return Role::getUsers(Role::DIRECTOR)->first();
-    }
-
-    /**
-     * @param  string  $roleObjectName  one of Role::COMMITTEE_LEADERS
-     * @return User|null the committee leader
-     */
-    public static function committeeLeader($roleObjectName)
-    {
-        if (! in_array($roleObjectName, Role::COMMITTEE_LEADERS)) {
-            throw new InvalidArgumentException($roleObjectName.' should be one of these: '.implode(', ', Role::COMMITTEE_LEADERS));
-        }
-
-        return Role::getUsers(Role::STUDENT_COUNCIL, $roleObjectName)->first();
-    }
-
-    /**
-     * @return User|null the Communication Committe's leader
-     */
-    public static function communicationLeader()
-    {
-        return self::CommitteeLeader(Role::COMMUNICATION_LEADER);
-    }
-
-    /**
-     * @return User|null the Cultural Committe's leader
-     */
-    public static function culturalLeader()
-    {
-        return self::CommitteeLeader(Role::CULTURAL_LEADER);
-    }
-
-    /**
-     * @return User|null the Sport Committe's leader
-     */
-    public static function sportLeader()
-    {
-        return self::CommitteeLeader(Role::SPORT_LEADER);
-    }
-
-    /**
-     * @return User|null the Science Committe's leader
-     */
-    public static function scienceLeader()
-    {
-        return self::CommitteeLeader(Role::SCIENCE_LEADER);
-    }
-
-    /**
-     * @return User|null the Community Committe's leader
-     */
-    public static function communityLeader()
-    {
-        return self::CommitteeLeader(Role::COMMUNITY_LEADER);
-    }
-
-    /**
-     * @return User|null the Communication Committe's leader
-     */
-    public static function economicLeader()
-    {
-        return self::CommitteeLeader(Role::ECONOMIC_LEADER);
-    }
-
     public static function printers()
     {
         return Role::getUsers(Role::PRINTER);
@@ -426,8 +344,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user has any status in the semester.
-     *
-     * @param  int  $semester  semester id
+     * @param int $semester semester id
      * @return bool
      */
     public function isInSemester($semester): bool
@@ -437,8 +354,7 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user is active in the semester.
-     *
-     * @param  int  $semester  semester id
+     * @param int $semester semester id
      * @return bool
      */
     public function isActiveIn($semester): bool
@@ -450,7 +366,7 @@ class User extends Authenticatable implements HasLocalePreference
      * Scope a query to only include active users in the given semester.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $semester_id
+     * @param int $semester_id
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActiveIn($query, $semester_id)
@@ -462,7 +378,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user is active in the current semester.
-     *
      * @return bool
      */
     public function isActive(): bool
@@ -472,7 +387,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user is a resident collegist currently.
-     *
      * @return bool
      */
     public function isResident(): bool
@@ -482,7 +396,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Decides if the user is an extern collegist currently.
-     *
      * @return bool
      */
     public function isExtern(): bool
@@ -523,7 +436,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Returns the collegist's status in the semester.
-     *
      * @param $semester semester id
      * @return string the status. Returns INACTIVE if the user does not have any status in the given semester.
      */
@@ -539,7 +451,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Returns the collegist's status in the current semester.
-     *
      * @return string the status. Returns INACTIVE if the user does not have any status.
      */
     public function getStatus(): string
@@ -549,7 +460,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Sets the collegist's status for a semester.
-     *
      * @param Semester the semester.
      * @param string the status
      * @param string optional comment
@@ -569,7 +479,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Sets the collegist's status for the current semester.
-     *
      * @param string the status
      * @param string optional comment
      * @return User the modified user
@@ -581,7 +490,6 @@ class User extends Authenticatable implements HasLocalePreference
 
     /**
      * Verify the collegist's status for the semester.
-     *
      * @param Semester the semester
      * @return User the modified user
      */
@@ -610,7 +518,7 @@ class User extends Authenticatable implements HasLocalePreference
      * Scope a query to only include users who has to pay kkt or netreg in the given semester.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $semester_id
+     * @param int $semester_id
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeHasToPayKKTNetregInSemester($query, $semester_id)

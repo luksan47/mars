@@ -16,9 +16,8 @@ trait CheckoutHandler
 {
     /**
      * Gets the transactions (collection) of the certain payment types in the checkout.
-     *
      * @param Checkout
-     * @param  array  $payment_types  payment type names
+     * @param array $payment_types payment type names
      */
     private function getTransactionsByPaymentTypes(Checkout $checkout, array $payment_types)
     {
@@ -35,9 +34,8 @@ trait CheckoutHandler
 
     /**
      * Gets the transactions of the certain payment types in the checkout.
-     *
      * @param Checkout
-     * @param  array  $payment_types  payment type ids
+     * @param array $payment_types payment type ids
      */
     private function getTransactionsGroupedBySemesters(Checkout $checkout, array $payment_types)
     {
@@ -59,8 +57,7 @@ trait CheckoutHandler
 
     /**
      * Gets the users with the transactions received which are not added to checkout yet.
-     *
-     * @param  array  $payment_typed  payment type names
+     * @param array $payment_typed payment type names
      * @param collection of the users with transactions_received attribute
      */
     public function getCollectedTransactions(array $payment_types)
@@ -79,10 +76,9 @@ trait CheckoutHandler
      * Move all the transactions received by the given user to the checkout.
      * Moving the Netreg amount from the students council to the admins is not tracked.
      * Note that the function do not filter with checkouts, only payment types.
-     *
      * @param User
      * @param Checkout
-     * @param  array  $payment_types  payment type names
+     * @param array $payment_types payment type names
      * @return void
      */
     public function toCheckout(Request $request, array $payment_types)
@@ -105,7 +101,6 @@ trait CheckoutHandler
      * Validates the request and creates a basic (income/expense) transaction in the checkout.
      * The receiver will be null.
      * The transaction will be moved to the checkout instantly.
-     *
      * @param Request
      * @param Checkout
      * @return void
@@ -148,7 +143,7 @@ trait CheckoutHandler
      * filtered by the payment types attribute.
      * Note that the checkout is not filtered (because KKT and NETREG are in diff. checkouts).
      *
-     * @param  array  $payment_types  payment type names
+     * @param array $payment_types payment type names
      */
     public function userTransactionsNotInCheckout(array $payment_types): iterable
     {
@@ -163,8 +158,7 @@ trait CheckoutHandler
 
     /**
      * Converts the paymentType names to the paymentType ids in an array.
-     *
-     * @param  array  $payment_types  array of the names
+     * @param array $payment_types array of the names
      * @return array of ints
      */
     private function paymentTypeIDs(array $payment_types): array

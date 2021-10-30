@@ -7,12 +7,12 @@ $chunks = $roles->chunkWhile(function($current, $key, $chunk) {
 @endphp
 
 @foreach($chunks as $rolegroup)
-    <span class="new badge {{ $rolegroup->first()->color() }} tag" data-badge-caption="">
+    <span class="new badge {{ $rolegroup->first()->color() }}" data-badge-caption="">
         <nobr>{{ $rolegroup->first()->name() }}</nobr>
     </span>
     @foreach($rolegroup as $role)
         @if($role->object())
-        <span class="new badge {{ $rolegroup->first()->color() }} tag" data-badge-caption="">
+        <span class="new badge {{ $rolegroup->first()->color() }}" data-badge-caption="">
             <nobr>: @lang('role.'.$role->object()->name)</nobr>
         </span>
         @endif

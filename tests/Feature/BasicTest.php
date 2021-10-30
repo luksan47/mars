@@ -75,14 +75,6 @@ class BasicTest extends TestCase
             'communication_committee/epistola/restore/{epistola}',
             'communication_committee/epistola/mark_as_sent/{epistola}',
             'communication_committee/epistola/delete/{epistola}',
-
-            //livewire routes, do not need testing
-            'livewire/message/{name}',
-            'livewire/upload-file',
-            'livewire/preview-file/{filename}',
-            'livewire/livewire.js',
-            'livewire/livewire.js.map'
-
         ];
         //$forbidden_routes = array_merge($this->protected_localization_routes);
         $routeCollection = Route::getRoutes();
@@ -111,13 +103,6 @@ class BasicTest extends TestCase
             'faults/add',
             'secretariat/users',
             'report_bug',
-
-            //livewire routes, do not need testing
-            'livewire/message/{name}',
-            'livewire/upload-file',
-            'livewire/preview-file/{filename}',
-            'livewire/livewire.js',
-            'livewire/livewire.js.map'
         ];
 
         $routeCollection = Route::getRoutes();
