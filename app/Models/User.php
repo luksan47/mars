@@ -314,6 +314,7 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasRoleBase('student-council');
     }
 
+    
     /**
      * @return User|null the president
      */
