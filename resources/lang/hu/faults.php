@@ -17,7 +17,7 @@ return [
     'new_fault' => 'Egy új hiba lett bejelentve.',
     'reopen' => 'Újranyit',
     'reopened' => 'Újranyitott',
-    'reopened_fault' => 'Egy hibát újra lett nyitva.',
+    'reopened_fault' => 'Egy hiba újra lett nyitva.',
     'reporter' => 'Bejelentő',
     'seen' => 'Látta',
     'status' => 'Állapot',

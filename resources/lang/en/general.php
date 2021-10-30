@@ -10,6 +10,7 @@ return [
     'comment' => 'Comment',
     'description' => 'Description',
     'failed' => 'An error occurred. Please contact system administrators!',
+    'filter' => 'Filter',
     'home' => 'Home',
     'i_understand' => 'I understand',
     'if_mail_not_working' => 'In some cases, this function may not work properly. In this case, please write an email to the system administrators!',
@@ -34,6 +35,7 @@ return [
     'successfully_deleted' => 'Successfully deleted',
     'toggle-dark-mode' => 'Toggle dark mode',
     'user' => 'User',
+    'users' => 'Users',
     'view_issue' => 'You can view and track your issue here.',
     'you_are_logged_in' => 'You are logged in.',
 ];

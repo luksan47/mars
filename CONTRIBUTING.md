@@ -8,7 +8,18 @@ thanks to Laravel.
 
 ## Development
 
+### Universal (using VS Code dev containers  - recommended)
+
+ 1. You need to install Docker (and WSL2 on Windows). See [requirements here](https://code.visualstudio.com/docs/remote/containers#_system-requirements).
+ 2. You need to install VS code
+ 3. You need to install the Remote Development extension pack in VS code.
+ 4. Clone Mars and open the project: `git clone git@github.com:luksan47/mars.git`.
+ 5. VS code will notice that the project is configured to use dev containers and will promt you if you want to use it. Click yes, and you're all done!
+
+### OS X
 For OS X, [Valet](https://laravel.com/docs/6.x/valet) gives a pretty smooth experience. Easy to download, easy to configure.
+
+### Windows and Linux
 
 For Windows and Linux the project has an example [Laravel Homestead](https://laravel.com/docs/homestead) configuration which can be used for local development.
 

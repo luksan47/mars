@@ -10,6 +10,7 @@ return [
     'comment' => 'Megjegyzés',
     'description' => 'Leírás',
     'failed' => 'Hiba történt. Kérlek, írj a rendszergazdáknak!',
+    'filter' => 'Szűrés',
     'home' => 'Kezdőlap',
     'i_understand' => 'Értem',
     'if_mail_not_working' => 'Néhány esetben ez a funkció nem működhet megfelelően. Ebben az esetben küldd el a hibát a rendszergazdáknak! Köszönjük!',
@@ -34,6 +35,7 @@ return [
     'successfully_deleted' => 'Sikeres törlés',
     'toggle-dark-mode' => 'Sötét/világos mód',
     'user' => 'Felhasználó',
+    'users' => 'Felhasználók',
     'view_issue' => 'Itt nézheted meg és követheted nyomon a bejelentett hibád állapotát.',
     'you_are_logged_in' => 'Sikeresen bejelentkeztél!',
 ];

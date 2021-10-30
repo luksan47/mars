@@ -1,7 +1,7 @@
 @component('mail::message')
 <h1>@lang('mail.dear') {{ $recipient }}!</h1>
 <p>
-    @if ($reopen)
+    @if ($reopen === true)
         @lang('faults.new_fault')
     @else
         @lang('faults.reopened_fault')

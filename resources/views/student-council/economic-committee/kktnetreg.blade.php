@@ -35,7 +35,8 @@
     <div class="col s12 xl6 push-xl6">
         @include('utils.checkout.gathered-transactions')
     </div>
-    <div class="col s12 xl6 pull-xl6">
+{{-- TODO    
+<div class="col s12 xl6 pull-xl6">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('checkout.users_have_to_pay') ({{ \App\Models\Semester::current()->tag }}) </span>
@@ -47,6 +48,7 @@
             </div>
         </div>
     </div>
+--}}
     <div class="col s12">
         <div class="card">
             <div class="card-content">
@@ -58,7 +60,7 @@
                         <th>@lang('checkout.amount')</th>
                     </tr>
                     @foreach($transactions as $transaction)
-                        @if($transaction->type->name == \App\Models\PaymentType::KKT)
+                        @if($transaction->type->name == \App\Models\PaymentType::KKT && $transaction->semester_id == \App\Models\Semester::current()->id)
                             <tr>
                                 <td>{{ $transaction->payer->name }}</td>
                                 <td>

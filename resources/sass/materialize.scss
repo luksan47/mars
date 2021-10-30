@@ -5,7 +5,7 @@ $coli: (
     "lightblue": #6e76e5
 );
 //import and overwrite default colors
-@import "node_modules/materialize-css/sass/components/color-variables";
+@import "node_modules/@materializecss/materialize/sass/components/color-variables";
 $colors: map-merge(
     $colors,
     (
@@ -14,7 +14,7 @@ $colors: map-merge(
 );
 
 //create color classes
-@import "node_modules/materialize-css/sass/components/color-classes";
+@import "node_modules/@materializecss/materialize/sass/components/color-classes";
 
 //set colors to use
 $primary-color: color("coli", "blue");
@@ -24,7 +24,7 @@ $link-color: color("coli", "orange");
 
 //import the remaining materialize style
 //(will include the previous ones also, but it won't overwrite those)
-@import "node_modules/materialize-css/sass/materialize.scss";
+@import "node_modules/@materializecss/materialize/sass/materialize.scss";
 
 /* overwrite some materialize classes */
 blockquote {
@@ -41,6 +41,16 @@ blockquote {
 .sidenav .divider {
     margin: 0;
 }
+
+span.badge.tag {
+    padding: 2px 6px;
+    margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    float: none;
+}
+
+
 //enable multiline buttons if the text does not fit in
 .btn,
 .btn-flat {
@@ -150,12 +160,24 @@ body {
             }
         }
         a {
-            color: #fff !important;
+            color: $primary-color;
         }
         .black-text {
             color: #fff !important;
         }
     }
+}
+
+body.dark a {
+  color: $secondary-color;
+}
+
+body.dark .nav-wrapper a {
+  color: #fff; /*this for the username in the navbar*/
+}
+
+body.dark a.btn {
+  color: #fff; /*this for buttons*/
 }
 
 //other, custom classes
