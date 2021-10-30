@@ -13,7 +13,7 @@ class Workshop extends Model
     const AURELION = 'Aurélien Sauvageot Francia műhely';
     const GAZDALKODASTUDOMANYI = 'Gazdálkodástudományi műhely';
     const GERMANISZTIKA = 'Germanisztika műhely';
-    const INFORMATIKA = 'Informatikai műhely';
+    const INFORMATIKA = 'Informatika műhely';
     const MAGYAR = 'Magyar műhely';
     const MATEMATIKA = 'Matematika-fizika műhely';
     const MENDOL = 'Mendöl Tibor földrajz-, föld- és környezettudományi műhely';
