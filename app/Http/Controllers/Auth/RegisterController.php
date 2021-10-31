@@ -175,14 +175,16 @@ class RegisterController extends Controller
 
         // Send confirmation mail.
         Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
-        // Send notification about new tenant to the staff.
+        // Send notification about new tenant to the staff and network admins.
         if (! $user->isCollegist()) {
-            $staff = User::role(Role::STAFF)->get();
-            foreach ($staff as $person) {
+            $users_to_notify = User::whereHas('roles', function ($q) {
+                $q->whereIn('role_id', [
+                    Role::getId(Role::NETWORK_ADMIN),
+                    Role::getId(Role::STAFF),
+                ]);
+            })->get();
+            foreach ($users_to_notify as $person) {
                 Mail::to($person)->send(new NewRegistration($person->name, $user));
-            }
-            foreach (User::role(Role::NETWORK_ADMIN)->get() as $admin) {
-                Mail::to($admin)->send(new NewRegistration($admin->name, $user));
             }
         }
 
