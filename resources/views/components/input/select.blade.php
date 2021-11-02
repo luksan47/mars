@@ -13,8 +13,7 @@
         <option
             value=""
             disabled="true"
-            selected="true">
-            {{ $attributes->get('placeholder') ?? __('general.choose_option') }}
+            selected="true">{{ $attributes->get('placeholder') ?? __('general.choose_option') }}
         </option>
         @endif
         @if($allowEmpty)
