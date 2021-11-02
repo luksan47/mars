@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
 
 class User extends Authenticatable implements HasLocalePreference
 {
@@ -311,6 +312,83 @@ class User extends Authenticatable implements HasLocalePreference
     public function isInStudentsCouncil(): bool
     {
         return $this->hasRoleBase('student-council');
+    }
+
+    /**
+     * @return User|null the president
+     */
+    public static function president()
+    {
+        return Role::getUsers(Role::STUDENT_COUNCIL, Role::PRESIDENT)->first();
+    }
+
+    /**
+     * @return User|null the director
+     */
+    public static function director()
+    {
+        return Role::getUsers(Role::DIRECTOR)->first();
+    }
+
+    /**
+     * @param  string  $roleObjectName  one of Role::COMMITTEE_LEADERS
+     * @return User|null the committee leader
+     */
+    public static function committeeLeader($roleObjectName)
+    {
+        if (! in_array($roleObjectName, Role::COMMITTEE_LEADERS)) {
+            throw new InvalidArgumentException($roleObjectName.' should be one of these: '.implode(', ', Role::COMMITTEE_LEADERS));
+        }
+
+        return Role::getUsers(Role::STUDENT_COUNCIL, $roleObjectName)->first();
+    }
+
+    /**
+     * @return User|null the Communication Committe's leader
+     */
+    public static function communicationLeader()
+    {
+        return self::CommitteeLeader(Role::COMMUNICATION_LEADER);
+    }
+
+    /**
+     * @return User|null the Cultural Committe's leader
+     */
+    public static function culturalLeader()
+    {
+        return self::CommitteeLeader(Role::CULTURAL_LEADER);
+    }
+
+    /**
+     * @return User|null the Sport Committe's leader
+     */
+    public static function sportLeader()
+    {
+        return self::CommitteeLeader(Role::SPORT_LEADER);
+    }
+
+    /**
+     * @return User|null the Science Committe's leader
+     */
+    public static function scienceLeader()
+    {
+        return self::CommitteeLeader(Role::SCIENCE_LEADER);
+    }
+
+    /**
+     * @return User|null the Community Committe's leader
+     */
+    public static function communityLeader()
+    {
+        return self::CommitteeLeader(Role::COMMUNITY_LEADER);
+    }
+
+    /**
+     * @return User|null the Communication Committe's leader
+     */
+    public static function economicLeader()
+    {
+        return self::CommitteeLeader(Role::ECONOMIC_LEADER);
     }
 
     public static function printers()

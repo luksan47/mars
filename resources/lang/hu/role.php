@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'admin' => 'Admin',
+    'admin' => 'Rendszergazda',
     'collegist' => 'Collegista',
     'communication-committee' => 'Kommunikációs Bizottság',
     'communication-leader' => 'Kommunikációs bizottsági elnök',
@@ -47,7 +47,8 @@ return [
     'vice_president' => 'Alelnök',
     'workshop-administrator' => 'Műhelytitkár',
     'workshop-leader' => 'Műhelyvezető',
-
+    'role_unavailable' => 'Ez a jogosultság egyedi és most :user van hozzárendelve.',
+    'role_can_not_be_attached' => 'Ezt a jogosultságot nem lehet hozzárendelni senkihez.',
     'Angol-amerikai műhely' => 'Angol-amerikai műhely',
     'Biológia-kémia műhely' => 'Biológia-kémia műhely',
     'Bollók János Klasszika-filológia műhely' => 'Bollók János Klasszika-filológia műhely',
