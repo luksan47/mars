@@ -2,9 +2,9 @@
 <h1>@lang('mail.dear') {{ $recipient }}!</h1>
 <p>
     @if ($reopen === true)
-        @lang('faults.new_fault')
-    @else
         @lang('faults.reopened_fault')
+    @else
+        @lang('faults.new_fault')
     @endif
 </p>
 @lang('faults.details'):
