@@ -17,7 +17,8 @@ class EditStatus extends Component
         $this->status = $this->user->getStatus();
     }
 
-    public function set($status){
+    public function set($status)
+    {
         $this->user->setStatusFor($this->semester, $status);
         $this->status = $status;
     }

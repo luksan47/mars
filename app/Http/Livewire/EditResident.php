@@ -15,12 +15,14 @@ class EditResident extends Component
         $this->isResident = $this->user->isResident();
     }
 
-    public function switch(){
-        if($this->isResident)
+    public function switch()
+    {
+        if ($this->isResident) {
             $this->user->setExtern();
-        else
+        } else {
             $this->user->setResident();
-        $this->isResident = !$this->isResident;
+        }
+        $this->isResident = ! $this->isResident;
     }
 
     public function render()
