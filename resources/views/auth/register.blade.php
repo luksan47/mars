@@ -73,7 +73,7 @@
                             <x-input.text s=6 id='neptun' locale='user' required/>
                             <x-input.select s=6 id="collegist_status" text="user.status"
                                 :elements="$\App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)"
-                                :formatter="(function ($object) { return __('role'.$object->name); }" />
+                                :formatter="function ($object) { return __('role'.$object->name); }" />
                             <div class="col s12">
                                 <div class="input-field s6 inline" style="margin-left:0">
                                     <x-input.text only_input id='educational_email' locale='user' required/>
