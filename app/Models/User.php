@@ -55,6 +55,20 @@ class User extends Authenticatable implements HasLocalePreference
     }
 
     /**
+     * Getter for a unique identifier (name + neptun code, if applicable and if the user has the right to view it) for the user.
+     * Usage: `$user->uniqueName`
+     * @return string
+     */
+    public function getUniqueNameAttribute(): string
+    {
+        if($this->hasEducationalInformation() && auth()->user()->can('viewEducationalInformation', $this)) {
+            return $this->name . " (" . $this->educationalInformation->neptun . ")";
+        } else {
+            return $this->name;
+        }
+    }
+
+    /**
      * Get the user's preferred locale.
      *
      * @return string

@@ -7,7 +7,7 @@
         <form method="POST" action="{{ route('print.transfer-balance') }}">
             @csrf
             <div class="row">
-                <x-input.select l=5 id="user_to_send" :elements="$users" text="print.user"/>
+                <x-input.select l=5 id="user_to_send" :formatter="function($user) { return $user->uniqueName; }" :elements="$users" text="print.user"/>
                 <x-input.text l=5 id="balance" type="number" min="1" required text="print.amount"/>
                 <x-input.button l=2 class="right" text="print.send"/>
             </div>

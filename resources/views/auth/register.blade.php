@@ -71,10 +71,9 @@
                             <x-input.text s=6 id='year_of_graduation' locale='user' type='number' min="1895" :max="date('Y')" required/>
                             <x-input.text s=6 id='year_of_acceptance' locale='user' type='number' min="1895" :max="date('Y')" required/>
                             <x-input.text s=6 id='neptun' locale='user' required/>
-                            @php $elements = \App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)->map(function ($object) {
-                                return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];});
-                            @endphp
-                            <x-input.select s=6 id="collegist_status" text="user.status" :elements="$elements"/>
+                            <x-input.select s=6 id="collegist_status" text="user.status"
+                                :elements="$\App\Models\Role::possibleObjectsFor(\App\Models\Role::COLLEGIST)"
+                                :formatter="(function ($object) { return __('role'.$object->name); }" />
                             <div class="col s12">
                                 <div class="input-field s6 inline" style="margin-left:0">
                                     <x-input.text only_input id='educational_email' locale='user' required/>
