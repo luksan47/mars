@@ -31,7 +31,9 @@ class Select extends Input
         $this->withoutLabel = $withoutLabel;
         $this->default = $default;
         $this->allowEmpty = $allowEmpty;
-        $this->formatter = isset($formatter) ? $formatter : function ($i) { return isset($i->name) ? $i->name : $i; };
+        $this->formatter = isset($formatter) ? $formatter : function ($i) {
+            return isset($i->name) ? $i->name : $i;
+        };
     }
 
     /**
