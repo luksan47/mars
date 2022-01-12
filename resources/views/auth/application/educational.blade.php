@@ -7,8 +7,6 @@
 <div class="card">
     <form method="POST" action="#">
         <div class="card-content">
-            {{-- educational information --}}
-            <div class="card-title">@lang('user.information_of_studies')</div>
             <div class="row">
                 <x-input.text s=12 m=6 id='high_school' locale='user' required />
                 <x-input.text s=12 m=6 id='year_of_graduation' locale='user' type='number' min="1895" :max="date('Y')"
@@ -25,7 +23,6 @@
                     @student.elte.hu
                 </div>
 
-                {{-- faculty --}}
                 <div class="input-field col s12 m6">
                     <p><label>@lang('user.faculty')</label></p>
                     @foreach ($faculties as $faculty)
@@ -46,33 +43,23 @@
                 <x-input.text s=12 id='graduation_avarage' locale='application' type='number' min="0" max="5"
                     text="Érettségi átlaga" :value="$user->educationalInformation?->graduation_avarage" required
                     helper='Az összes érettségi tárgy hagyományos átlaga' />
-
-                <x-input.checkbox s=3 text="Van lezárt egyetemi félévem" />
-                <div class="col s9">
-                    <div class="input-field">
-                        <x-input.text only_input id='semester_avarage_1' name="semester_avarage[]" locale='application'
-                            type='number' min="0" max="5" text="1. félév"
-                            :value="$user->educationalInformation?->semester_avarage" required
-                            helper='Hagyományos átlag' />
-                    </div>
-                    <div class="input-field">
-                        <x-input.text only_input id='semester_avarage_2' locale='application_avarage[]' type='number'
-                            min="0" max="5" text="2. félév" :value="$user->educationalInformation?->semester_avarage"
-                            required helper='Hagyományos átlag' />
-                    </div>
-                </div>
-
-                <x-input.checkbox s=12 text="Van nyelvvizsgám" />
-
-                <x-input.checkbox s=12 text="Van versenyeredményem" />
-
-                <x-input.checkbox s=12 text="Van publikációm" />
-
-                <x-input.checkbox s=12 text="Tanultam külföldön" />
-
-
-
             </div>
+            <div class="row" style="margin:0">
+                @livewire('parent-child-form', ['title' => "Van lezárt egyetemi félévem", 'name' => 'semester_avarage', 'helper' => 'Hagyományos átlag a félév(ek)ben'])
+            </div>
+            <div class="row" style="margin:0">
+                @livewire('parent-child-form', ['title' => "Van nyelvvizsgám", 'name' => 'language_exam', 'helper' => 'Nyelv, szint, tipus'])
+            </div>
+            <div class="row" style="margin:0">
+                @livewire('parent-child-form', ['title' => "Van versenyeredményem", 'name' => 'competition'])
+            </div>
+            <div class="row" style="margin:0">
+                @livewire('parent-child-form', ['title' => "Van publikációm", 'name' => 'publication'])
+            </div>
+            <div class="row" style="margin:0">
+                @livewire('parent-child-form', ['title' => "Tanultam külföldön", 'name' => 'foreign_studies'])
+            </div>
+
         </div>
         <div class="card-action">
             <div class="row" style="margin-bottom: 0">

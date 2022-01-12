@@ -36,6 +36,7 @@ return [
     'successfully_added' => 'Sikeres hozzáadás!',
     'successfully_deleted' => 'Sikeres törlés',
     'toggle-dark-mode' => 'Sötét/világos mód',
+    'upload' => 'Feltöltés',
     'user' => 'Felhasználó',
     'users' => 'Felhasználók',
     'view_issue' => 'Itt nézheted meg és követheted nyomon a bejelentett hibád állapotát.',

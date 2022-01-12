@@ -36,6 +36,7 @@ return [
     'successfully_added' => 'Successfully added!',
     'successfully_deleted' => 'Successfully deleted',
     'toggle-dark-mode' => 'Toggle dark mode',
+    'upload' => 'Upload',
     'user' => 'User',
     'users' => 'Users',
     'view_issue' => 'You can view and track your issue here.',
