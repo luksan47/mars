@@ -12,10 +12,9 @@ class ParentChildForm extends Component
     public $helper;
     public $hidden;
 
-
     public function mount($items = [''])
     {
-        if(count($items) == 0) {
+        if (count($items) == 0) {
             $items = [''];
         }
         $this->items = $items;
@@ -24,7 +23,7 @@ class ParentChildForm extends Component
 
     public function show()
     {
-        $this->hidden = !$this->hidden;
+        $this->hidden = ! $this->hidden;
     }
 
     public function addItem()
