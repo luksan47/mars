@@ -17,6 +17,7 @@ return [
     'information' => 'Information',
     'login' => 'Login',
     'logout' => 'Logout',
+    'mars_descr' => 'Eötvös József Collegium\'s unified IT system',
     'members' => 'Members',
     'note' => 'Note',
     'other' => 'Other',

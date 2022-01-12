@@ -13,14 +13,27 @@ class ApplicationController extends Controller
 
     public function showApplicationForm(Request $request)
     {
-        return view('auth.application', [
+        $data = [
             'workshops' => Workshop::all(),
             'faculties' => Faculty::all(),
             'deadline' => self::getApplicationDeadline(),
             'deadline_extended' => self::isDeadlineExtended(),
             'countries' => require base_path('countries.php'),
             'user' => $request->user()
-        ]);
+        ];
+        switch ($request->page) {
+            case 'educational':
+                return view('auth.application.educational', $data);
+            case 'questions':
+                return view('auth.application.questions', $data);
+            case 'files':
+                return view('auth.application.files', $data);
+            case 'finalize':
+                return view('auth.application.finalize', $data);
+            default:
+                return view('auth.application.personal', $data);
+        }
+
     }
 
     public static function getApplicationDeadline() : Carbon

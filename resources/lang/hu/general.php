@@ -17,6 +17,7 @@ return [
     'information' => 'Információk',
     'login' => 'Belépés',
     'logout' => 'Kijelentkezés',
+    'mars_descr' => 'Az Eötvös József Collegium informatikai rendszere',
     'members' => 'Tagok',
     'note' => 'Megjegyzés',
     'other' => 'Egyebek',
