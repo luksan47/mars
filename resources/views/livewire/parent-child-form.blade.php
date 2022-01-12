@@ -1,12 +1,18 @@
 <div>
-    <div class="input-field col s3">
+    @if($optional)
+    <div class="input-field col s3" style="padding: 0">
         <p>
             <label>
-                <input type="checkbox" class="filled-in checkbox-color" wire:click="show">
+                <input type="checkbox" class="filled-in checkbox-color" @if(!$hidden) checked @endif wire:click="show">
                 <span>{{ $title }}</span>
             </label>
         </p>
     </div>
+    @else
+    <div class="input-field col s3" style="padding-left: 25px">
+        <label style="position: inherit;">{{$title}}</label>
+    </div>
+    @endif
     @if (!$hidden)
         <div class="col s9">
             @foreach ($items as $index => $item)

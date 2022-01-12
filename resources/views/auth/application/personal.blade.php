@@ -5,7 +5,7 @@
 @section('form')
 
 <div class="card">
-    <form method="POST" action="#">
+    <form method="POST" action="{{ route('application.store', ['page' => 'personal']) }}">
         @csrf
         <div class="card-content">
             <div class="row" style="margin-bottom: 0">

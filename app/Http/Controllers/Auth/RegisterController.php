@@ -7,6 +7,7 @@ use App\Mail\NewRegistration;
 use App\Models\PersonalInformation;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -60,6 +61,24 @@ class RegisterController extends Controller
         ]);
     }
 
+    public const USER_RULES = [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+    ];
+
+    public const PERSONAL_INFORMATION_RULES = [
+        'place_of_birth' => 'required|string|max:255',
+        'date_of_birth' => 'required|date_format:Y-m-d',
+        'mothers_name' => 'required|string|max:255',
+        'phone_number' => 'required|string|min:8|max:18',
+        'country' => 'required|string|max:255',
+        'county' => 'required|string|max:255',
+        'zip_code' => 'required|string|max:31',
+        'city' => 'required|string|max:255',
+        'street_and_number' => 'required|string|max:255',
+    ];
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -69,38 +88,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         //TODO sync with Secretartiat/UserController
-        $common = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'place_of_birth' => 'required|string|max:255',
-            'date_of_birth' => 'required|date_format:Y-m-d',
-            'mothers_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|min:8|max:18',
-            'country' => 'required|string|max:255',
-            'county' => 'required|string|max:255',
-            'zip_code' => 'required|string|max:31',
-            'city' => 'required|string|max:255',
-            'street_and_number' => 'required|string|max:255',
-            'user_type' => 'required|exists:roles,name',
-        ];
-        // $informationOfStudies = [
-        //     'year_of_graduation' => 'required|integer|between:1895,'.date('Y'),
-        //     'high_school' => 'required|string|max:255',
-        //     'neptun' => 'required|string|size:6',
-        //     'year_of_acceptance' => 'required|integer|between:1895,'.date('Y'),
-        //     'faculty' => 'required|array|exists:faculties,id',
-        //     'workshop' => 'required|array|exists:workshops,id',
-        //     'collegist_status' => 'required|integer|between:1,2',
-        //     'educational_email' => 'required|string|email|max:255|unique:educational_information,email',
-        // ];
+        $common = self::USER_RULES + self::PERSONAL_INFORMATION_RULES + ['user_type' => 'required|exists:roles,name'];
+
         switch ($data['user_type']) {
             case Role::TENANT:
                 return Validator::make($data, $common + ['tenant_until'=>'required|date_format:Y-m-d']);
             case Role::COLLEGIST:
-                //$data['educational_email'] = $data['educational_email'].'@student.elte.hu';
-
-                return Validator::make($data, $common); //array_merge($common, $informationOfStudies));
+                return Validator::make($data, $common);
             default:
                 throw new AuthorizationException();
         }

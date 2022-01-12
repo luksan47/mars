@@ -10,16 +10,17 @@ class ParentChildForm extends Component
     public $name;
     public $title;
     public $helper;
-    public $hidden;
+    public $hidden; //if $optional is true, the form is hidden by default
+    public $optional;
 
-
-    public function mount($items = [''])
+    public function mount($items = [''], $optional = false)
     {
-        if(count($items) == 0) {
+        if(count($items ?? []) == 0) {
             $items = [''];
         }
         $this->items = $items;
-        $this->hidden = count($items) == 1;
+        $this->hidden = $optional ? count($items) == 1 && $items[0] == '' : false;
+        $this->optional = $optional;
     }
 
     public function show()

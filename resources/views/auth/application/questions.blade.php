@@ -6,10 +6,10 @@
 
 
     <div class="card">
-        <form method="POST" action="#">
+        <form method="POST" action="{{ route('application.store', ['page' => 'questions']) }}">
+            @csrf
             <div class="card-content">
                 <div class="row">
-                    {{-- workshop --}}
                     <div class="input-field col s12 m6">
                         <p><label>Megpályázni kívánt műhely</label></p>
                         @foreach ($workshops as $workshop)
@@ -39,15 +39,13 @@
                             <blockquote class="error">TODO</blockquote>
                         @enderror
                     </div>
-                    <x-input.textarea id="question_1" locale='application' text="Honnan hallott a Collegiumról?" required />
-                    <x-input.textarea id="question_2" locale='application' text="Miért kíván a Collegium tagja lenni?"
-                        required helper="≈300-500 karakter" />
+                    <x-input.textarea id="question_1" locale='application' text="Honnan hallott a Collegiumról?" />
+                    <x-input.textarea id="question_2" locale='application' text="Miért kíván a Collegium tagja lenni?" helper="≈300-500 karakter" />
                     <x-input.textarea id="question_3" locale='application'
-                        text="Tervez-e tovább tanulni a diplomája megszerzése után? Milyen tervei vannak az egyetem után?"
-                        required />
+                        text="Tervez-e tovább tanulni a diplomája megszerzése után? Milyen tervei vannak az egyetem után?"/>
                     <x-input.textarea id="question_4" locale='application'
                         text="Részt vett-e közéleti tevékenységben? Ha igen, röviden jellemezze!"
-                        helper="Pl. diákönkormányztai tevékenység, önkéntesség, szervezeti tagság. (nem kötelező)" />
+                        helper="Pl. diákönkormányzati tevékenység, önkéntesség, szervezeti tagság. (nem kötelező)" />
                 </div>
 
             </div>

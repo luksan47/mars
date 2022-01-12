@@ -174,6 +174,11 @@ class User extends Authenticatable implements HasLocalePreference
         return isset($this->educationalInformation);
     }
 
+    public function application()
+    {
+        return $this->hasOne('App\Models\ApplicationForm');
+    }
+
     public function workshops()
     {
         return $this->belongsToMany(Workshop::class, 'workshop_users');

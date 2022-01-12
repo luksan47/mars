@@ -18,10 +18,41 @@ class EducationalInformation extends Model
         'neptun',
         'year_of_acceptance',
         'email',
+        'program'
     ];
+
+    protected const DELIMETER = '|';
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function getProgramAttribute($value)
+    {
+        return self::decompressData($value);
+    }
+
+    public function setProgramAttribute($value)
+    {
+        $this->attributes['program'] = self::compressData($value);
+    }
+
+    private static function compressData($array)
+    {
+        if($array === null) return null;
+        return join(
+            self::DELIMETER,
+            array_map(
+                function($item) { return str_replace(self::DELIMETER, ' ', $item); },
+                array_filter($array, function($item) { return $item !== null; })
+            )
+        );
+    }
+
+    private static function decompressData($string)
+    {
+        if($string === null) return null;
+        return explode(self::DELIMETER, $string);
     }
 }

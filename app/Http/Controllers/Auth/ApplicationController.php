@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApplicationForm;
+use App\Models\EducationalInformation;
 use App\Models\Faculty;
+use App\Models\PersonalInformation;
 use App\Models\Workshop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,6 +37,100 @@ class ApplicationController extends Controller
                 return view('auth.application.personal', $data);
         }
 
+    }
+
+    public function storeApplicationForm(Request $request)
+    {
+        $user = $request->user();
+        switch ($request->page) {
+            case 'personal':
+                $request->validate(RegisterController::PERSONAL_INFORMATION_RULES + ['name' => 'required|string|max:255']);
+                $user->update(['name' => $request->name]);
+                $user->personalInformation()->update($request->only([
+                    'place_of_birth',
+                    'date_of_birth',
+                    'mothers_name',
+                    'phone_number',
+                    'country',
+                    'county',
+                    'zip_code',
+                    'city',
+                    'street_and_number'])
+                );
+                break;
+            case 'educational':
+                $request->validate([
+                    'year_of_graduation' => 'required|integer|between:1895,'.date('Y'),
+                    'high_school' => 'required|string|max:255',
+                    'neptun' => 'required|string|size:6',
+                    'faculty' => 'required|array',
+                    'faculty.*' => 'exists:faculties,id',
+                    'educational_email' => 'required|string|email|max:255',
+                    'high_school_address' => 'required|string',
+                    'programs' => 'required|array',
+                    'programs.*' => 'nullable|string'
+                ]);
+                EducationalInformation::updateOrCreate(['user_id' => $user->id],[
+                    'year_of_graduation' => $request->year_of_graduation,
+                    'high_school' => $request->high_school,
+                    'neptun' => $request->neptun,
+                    'year_of_acceptance' => date('Y'),
+                    'email' => $request->educational_email,
+                    'program' => $request->programs,
+                ]);
+                ApplicationForm::updateOrCreate(['user_id' => $user->id],[
+                    'high_school_address' => $request->high_school_address,
+                    'graduation_avarage' => $request->graduation_avarage,
+                    'semester_avarage' => $request->semester_avarage,
+                    'language_exam' => $request->language_exam,
+                    'competition' => $request->competition,
+                    'publication' => $request->publication,
+                    'foreign_studies' => $request->foreign_studies
+                ]);
+                foreach ($request->faculty as $faculty) {
+                    $user->faculties()->attach($faculty);
+                }
+                break;
+            case 'questions':
+                break;
+            case 'files':
+                break;
+            case 'files.profile':
+                break;
+            case 'finalize':
+                break;
+            default:
+                break;
+        }
+        return redirect()->back()->with('message', __('general.successful_modification'));
+    }
+
+
+    const DELIMETER = '|';
+
+    /**
+     * Creates strings from arrays with DELIMETER.
+     * @author hamaren2517
+     */
+    public static function compressData($array)
+    {
+        if($array === null) return null;
+        return join(
+            self::DELIMETER,
+            array_map(
+                function($item) { return str_replace(self::DELIMETER, ' ', $item); },
+                array_filter($array, function($item) { return $item !== null; })
+            )
+        );
+    }
+
+    /**
+     * Creates an array from a string splitted with DELIMETERs.
+     */
+    public static function decompressData($string)
+    {
+        if($string === null) return null;
+        return explode(self::DELIMETER, $string);
     }
 
     public static function getApplicationDeadline() : Carbon

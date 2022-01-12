@@ -27,6 +27,9 @@
                     probléma adódna, kérjük, jelezze felénk a <a href="mailto:root@eotvos.elte.hu">root@eotvos.elte.hu</a>
                     e-mail címen.</p>
             </blockquote>
+            @foreach ($errors->all() as $error)
+                <blockquote class="error">{{ $error }}</blockquote>
+            @endforeach
         </div>
     </div>
     <nav class="nav-extended">

@@ -13,11 +13,13 @@
             <div class="card-content">
                 <div class="card-title">Profilkép</div>
             </div>
-            <div class="card-action valign-center">
-                <x-input.file s="12" xl="8" id="file" style="margin-top:auto" accept=".jpg,.png,.jpeg" text="Böngészés"
-                    required />
-                <x-input.button only_input class="right" style="margin-top: 20px" text="general.upload" />
-            </div>
+            <form action="{{ route('application.store', ['page' => 'files.profile']) }}" method="POST" enctype="multipart/form-data">
+                <div class="card-action valign-center">
+                    <x-input.file s="12" xl="8" id="file" style="margin-top:auto" accept=".jpg,.png,.jpeg" text="Böngészés"
+                        required />
+                    <x-input.button only_input class="right" style="margin-top: 20px" text="general.upload" />
+                </div>
+            </form>
         </div>
     </div>
     {{-- mobile profile pic --}}
@@ -29,9 +31,12 @@
             <div class="card-content">
                 <div class="card-title">Profilkép</div>
                 <div class="row">
-                    <x-input.file s="12" xl="8" id="file" style="margin-top:auto" accept=".jpg,.png,.jpeg" text="Böngészés"
-                        required />
-                    <x-input.button only_input class="right" style="margin-top: 20px" text="general.upload" />
+                    <form action="{{ route('application.store', ['page' => 'files.profile']) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <x-input.file s="12" xl="8" id="file" style="margin-top:auto" accept=".jpg,.png,.jpeg" text="Böngészés"
+                            required />
+                        <x-input.button only_input class="right" style="margin-top: 20px" text="general.upload" />
+                    </form>
                 </div>
 
             </div>
@@ -59,7 +64,8 @@
     </div>
     {{-- upload --}}
     <div class="card">
-        <form method="POST" action="#" enctype='multipart/form-data'>
+        <form method="POST" action="{{ route('application.store', ['page' => 'files']) }}" enctype='multipart/form-data'>
+            @csrf
             <div class="card-content">
                 <div class="card-title">Feltöltés</div>
 
