@@ -281,6 +281,9 @@ class User extends Authenticatable implements HasLocalePreference
                 return true;
             }
         }
+        if($this->hasRole($roleName)){
+            return true;
+        }
 
         return false;
     }

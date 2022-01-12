@@ -18,9 +18,12 @@ class Verify
     {
         if (! $request->user() ||
             ($request->user() && ! $request->user()->verified)) {
-            return $request->expectsJson()
-                    ? abort(403, __('admin.verification_needed'))
-                    : Redirect::route('verification');
+            if($request->user()->isCollegist()){
+                return Redirect::route('application');
+            } else {
+                return Redirect::route('verification');
+            }
+
         }
 
         return $next($request);

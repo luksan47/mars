@@ -110,6 +110,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Custom values
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'application_deadline' => env('APPLICATION_DEADLINE'), //registration deadline for new collegists
+    'application_extended' => env('APPLICATION_EXTENDED'), //is the registration deadline extended?
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |

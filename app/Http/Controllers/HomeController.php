@@ -58,7 +58,7 @@ class HomeController extends Controller
         abort(403);
     }
 
-    public function verification()
+    public function verification(Request $request)
     {
         return view('auth.verification');
     }

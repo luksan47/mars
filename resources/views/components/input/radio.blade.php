@@ -3,10 +3,8 @@
 @endif
 <label>
     <input
-        type="checkbox"
-        {{$attributes->merge([
-            'class' => "filled-in checkbox-color"
-        ])}}
+        type="radio"
+        {{$attributes}}
     >
     <span>{{$label}}</span>
 </label>

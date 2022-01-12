@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\Auth\ApplicationController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dormitory\FaultController;
 use App\Http\Controllers\Dormitory\PrintController;
@@ -40,6 +41,10 @@ Route::get('/setlocale/{locale}', [HomeController::class, 'setLocale'])->name('s
 Auth::routes();
 
 Route::get('/register/guest', [RegisterController::class, 'showTenantRegistrationForm'])->name('register.guest');
+
+Route::middleware(['auth'])->group(function() {
+    Route::get('/application', [ApplicationController::class, 'showApplicationForm'])->name('application');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/secretariat/user/update_password', [UserController::class, 'updatePassword'])->name('secretariat.user.update_password');
