@@ -18,12 +18,11 @@ class Verify
     {
         if (! $request->user() ||
             ($request->user() && ! $request->user()->verified)) {
-            if($request->user()->isCollegist()){
+            if ($request->user()->isCollegist()) {
                 return Redirect::route('application');
             } else {
                 return Redirect::route('verification');
             }
-
         }
 
         return $next($request);
