@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationForm;
 use App\Models\EducationalInformation;
@@ -10,12 +11,14 @@ use App\Models\PersonalInformation;
 use App\Models\Workshop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Storage;
 
 class ApplicationController extends Controller
 {
 
     public function showApplicationForm(Request $request)
     {
+        App::setLocale('hu');
         $data = [
             'workshops' => Workshop::all(),
             'faculties' => Faculty::all(),
@@ -80,26 +83,71 @@ class ApplicationController extends Controller
                 ]);
                 ApplicationForm::updateOrCreate(['user_id' => $user->id],[
                     'high_school_address' => $request->high_school_address,
-                    'graduation_avarage' => $request->graduation_avarage,
-                    'semester_avarage' => $request->semester_avarage,
+                    'graduation_average' => $request->graduation_average,
+                    'semester_average' => $request->semester_average,
                     'language_exam' => $request->language_exam,
                     'competition' => $request->competition,
                     'publication' => $request->publication,
                     'foreign_studies' => $request->foreign_studies
                 ]);
-                foreach ($request->faculty as $faculty) {
-                    $user->faculties()->attach($faculty);
-                }
+                $user->faculties()->sync($request->faculty);
                 break;
             case 'questions':
+                $request->validate([
+                    'status' => 'nullable|in:extern,resident',
+                    'workshop' => 'array',
+                    'workshop.*' => 'exists:workshops,id',
+                ]);
+                if($request->status == 'resident') {
+                    $user->setResident();
+                }
+                if($request->status == 'extern') {
+                    $user->setExtern();
+                }
+                $user->workshops()->sync($request->workshop);
+                ApplicationForm::updateOrCreate(['user_id' => $user->id],[
+                    'question_1' => $request->question_1,
+                    'question_2' => $request->question_2,
+                    'question_3' => $request->question_3,
+                    'question_4' => $request->question_4,
+                ]);
                 break;
             case 'files':
+                $request->validate([
+                    'file' => 'required|file|mimes:pdf,jpg,jpeg,png,gif,svg|max:2048',
+                    'name' => 'required|string|max:255',
+                ]);
+                $path = $request->file('file')->store('uploads');
+                $user->application()->firstOrCreate()->files()->create(['path' => $path, 'name' => $request->name]);
+                break;
+            case 'files.delete':
+                $request->validate([
+                    'id' => 'required|exists:files',
+                ]);
+
+                $file = $user->application->files()->find($request->id);
+                if($file){
+                    Storage::delete($file->path);
+                    $file->delete();
+                }
                 break;
             case 'files.profile':
+                $request->validate([
+                    'picture' => 'required|mimes:jpg,jpeg,png,gif,svg',
+                ]);
+                $path = $request->file('picture')->store('avatars');
+                $old_profile = $user->profilePicture;
+                if($old_profile){
+                    Storage::delete($old_profile->path);
+                    $old_profile->update(['path' => $path]);
+                } else {
+                    $user->profilePicture()->create(['path' => $path, 'name' => 'profile_picture']);
+                }
                 break;
             case 'finalize':
                 break;
             default:
+                abort(404);
                 break;
         }
         return redirect()->back()->with('message', __('general.successful_modification'));

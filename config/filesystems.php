@@ -81,4 +81,13 @@ return [
 
     ],
 
+    /*
+    * Symbolic links
+    */
+
+    'links' => [
+        public_path('avatars') => storage_path('app/avatars'),
+        public_path('uploads') => storage_path('app/uploads'),
+    ]
+
 ];

@@ -60,6 +60,9 @@ class HomeController extends Controller
 
     public function verification(Request $request)
     {
+        if($request->user()->isCollegist()) {
+            return redirect('application');
+        }
         return view('auth.verification');
     }
 

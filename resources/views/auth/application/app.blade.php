@@ -8,7 +8,7 @@
 @section('content')
     <div class="card">
         <div class="card-content">
-            <h6>Jelentkezés státusza: <i>Folyamatban</i></h6>
+            <h6>Jelentkezés státusza: <i class="coli-text text-orange">Folyamatban</i></h6>
             <h6>Jelentkezési határidő:
                 <i>{{ $deadline->format('Y-m-d H:i') }}</i>
                 @if ($deadline_extended)

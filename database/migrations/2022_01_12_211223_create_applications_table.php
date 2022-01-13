@@ -17,8 +17,8 @@ class CreateApplicationsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->text('high_school_address')->nullable();
-            $table->string('graduation_avarage')->nullable();
-            $table->text('semester_avarage')->nullable();
+            $table->string('graduation_average')->nullable();
+            $table->text('semester_average')->nullable();
             $table->text('language_exam')->nullable();
             $table->text('competition')->nullable();
             $table->text('publication')->nullable();
@@ -30,13 +30,6 @@ class CreateApplicationsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('application_files', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('application_form_id')->constrained();
-            $table->string('name');
-            $table->string('path');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -47,6 +40,5 @@ class CreateApplicationsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('application_forms');
-        Schema::dropIfExists('application_files');
     }
 }

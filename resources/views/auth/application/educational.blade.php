@@ -21,7 +21,7 @@
                         required helper="lehetőleg @student.elte.hu-s" />
 
                     <div class="input-field col s12 m6">
-                        <p><label>@lang('user.faculty')</label></p>
+                        <p style="margin-bottom:10px"><label style="font-size: 1em">@lang('user.faculty')</label></p>
                         @foreach ($faculties as $faculty)
                             <p>
                                 @php $checked = old('faculty') !== null && in_array($faculty->id, old('faculty')) || in_array($faculty->id, $user->faculties->pluck('id')->toArray()) @endphp
@@ -33,8 +33,8 @@
                             <blockquote class="error">@lang('user.faculty_must_be_filled')</blockquote>
                         @enderror
                     </div>
-                    <x-input.text s=12 id='graduation_avarage' locale='application' type='number' step="0.01" min="0"
-                        max="5" text="Érettségi átlaga" :value="$user->application?->graduation_avarage" required
+                    <x-input.text s=12 id='graduation_average' locale='application' type='number' step="0.01" min="0"
+                        max="5" text="Érettségi átlaga" :value="$user->application?->graduation_average" required
                         helper='Az összes érettségi tárgy hagyományos átlaga' />
                 </div>
                 <div class="row" style="margin:0">
@@ -43,10 +43,10 @@
                 <div class="row" style="margin:0">
                     @livewire('parent-child-form', [
                         'title' => "Van lezárt egyetemi félévem",
-                        'name' => 'semester_avarage',
+                        'name' => 'semester_average',
                         'helper' => 'Hagyományos átlag a félév(ek)ben',
                         'optional' => true,
-                        'items' => $user->application?->semester_avarage])
+                        'items' => $user->application?->semester_average])
                 </div>
                 <div class="row" style="margin:0">
                     @livewire('parent-child-form', [

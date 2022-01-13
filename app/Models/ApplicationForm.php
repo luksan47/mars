@@ -12,8 +12,8 @@ class ApplicationForm extends Model
     protected $fillable = [
         'user_id',
         'high_school_address',
-        'graduation_avarage',
-        'semester_avarage',
+        'graduation_average',
+        'semester_average',
         'language_exam',
         'competition',
         'publication',
@@ -33,17 +33,17 @@ class ApplicationForm extends Model
 
     public function files()
     {
-        return $this->hasMany('App\Models\AplicationFile');
+        return $this->hasMany('App\Models\File');
     }
 
-    public function getSemesterAvarageAttribute($value)
+    public function getSemesterAverageAttribute($value)
     {
         return self::decompressData($value);
     }
 
-    public function setSemesterAvarageAttribute($value)
+    public function setSemesterAverageAttribute($value)
     {
-        $this->attributes['semester_avarage'] = self::compressData($value);
+        $this->attributes['semester_average'] = self::compressData($value);
     }
 
     public function getLanguageExamAttribute($value)

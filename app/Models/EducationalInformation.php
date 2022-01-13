@@ -33,6 +33,11 @@ class EducationalInformation extends Model
         return self::decompressData($value);
     }
 
+    public function getProgramsAttribute() : string
+    {
+        return join(', ', $this->program);
+    }
+
     public function setProgramAttribute($value)
     {
         $this->attributes['program'] = self::compressData($value);

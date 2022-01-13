@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ApplicationFile extends Model
+class File extends Model
 {
-    protected $table = 'application_files';
+    protected $table = 'files';
 
     protected $fillable = [
-        'application_form_id',
+        'user_id',
+        'application_form_id', //if belongs to an application
         'name',
         'path',
     ];
