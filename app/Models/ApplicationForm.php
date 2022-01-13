@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApplicationForm extends Model
 {
-
     protected $table = 'application_forms';
 
     protected $fillable = [
@@ -88,19 +87,29 @@ class ApplicationForm extends Model
 
     private static function compressData($array)
     {
-        if($array === null) return null;
+        if ($array === null) {
+            return null;
+        }
+
         return join(
             self::DELIMETER,
             array_map(
-                function($item) { return str_replace(self::DELIMETER, ' ', $item); },
-                array_filter($array, function($item) { return $item !== null; })
+                function ($item) {
+                    return str_replace(self::DELIMETER, ' ', $item);
+                },
+                array_filter($array, function ($item) {
+                    return $item !== null;
+                })
             )
         );
     }
 
     private static function decompressData($string)
     {
-        if($string === null) return null;
+        if ($string === null) {
+            return null;
+        }
+
         return explode(self::DELIMETER, $string);
     }
 }

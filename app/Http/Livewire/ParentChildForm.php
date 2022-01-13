@@ -15,7 +15,7 @@ class ParentChildForm extends Component
 
     public function mount($items = [''], $optional = false)
     {
-        if(count($items ?? []) == 0) {
+        if (count($items ?? []) == 0) {
             $items = [''];
         }
         $this->items = $items;
