@@ -35,6 +35,7 @@ class EducationalInformation extends Model
 
     public function getProgramsAttribute(): string
     {
+        if($this->program === null) return '';
         return join(', ', $this->program);
     }
 

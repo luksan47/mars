@@ -56,6 +56,7 @@ return [
     'phone_number' => 'Phone number',
     'place_and_date_of_birth' => 'Place and date of birth',
     'place_of_birth' => 'Place of birth',
+    'program' => 'Programme',
     'reject' => 'Reject',
     'save' => 'Save',
     'semesters' => 'Semesters',

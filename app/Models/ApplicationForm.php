@@ -10,6 +10,7 @@ class ApplicationForm extends Model
 
     protected $fillable = [
         'user_id',
+        'status',
         'high_school_address',
         'graduation_average',
         'semester_average',
@@ -25,6 +26,23 @@ class ApplicationForm extends Model
 
     protected const DELIMETER = '|';
 
+    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_SUBMITTED = 'submitted';
+    public const STATUS_BANISHED = 'banished';
+
+    public const STATUSES = [
+        self::STATUS_IN_PROGRESS,
+        self::STATUS_SUBMITTED,
+        self::STATUS_BANISHED,
+    ];
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relations
+    |--------------------------------------------------------------------------
+    */
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
@@ -34,6 +52,12 @@ class ApplicationForm extends Model
     {
         return $this->hasMany('App\Models\File');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors & Mutators
+    |--------------------------------------------------------------------------
+    */
 
     public function getSemesterAverageAttribute($value)
     {
@@ -84,6 +108,48 @@ class ApplicationForm extends Model
     {
         $this->attributes['foreign_studies'] = self::compressData($value);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Public functions
+    |--------------------------------------------------------------------------
+    */
+
+    public function isReadyToSubmit()
+    {
+        $educationalInformation = $this->user->educationalInformation;
+
+        if(!isset($educationalInformation)) return false;
+
+        if(!isset($this->user->profilePicture)) return false;
+        if(count($this->files) < 2) return false;
+
+        if($this->user->workshops->count() == 0) return false;
+        if($this->user->faculties->count() == 0) return false;
+
+        if(!$this->user->isResident() && !$this->user->isExtern()) return false;
+
+        if(!isset($educationalInformation->year_of_graduation)) return false;
+        if(!isset($educationalInformation->high_school)) return false;
+        if(!isset($educationalInformation->neptun)) return false;
+        if(!isset($educationalInformation->year_of_acceptance)) return false;
+        if(!isset($educationalInformation->email)) return false;
+        if(!isset($educationalInformation->program)) return false;
+
+        if(!isset($this->high_school_address)) return false;
+        if(!isset($this->graduation_average)) return false;
+        if(!isset($this->question_1)) return false;
+        if(!isset($this->question_2)) return false;
+        if(!isset($this->question_3)) return false;
+
+        return true;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Private functions
+    |--------------------------------------------------------------------------
+    */
 
     private static function compressData($array)
     {

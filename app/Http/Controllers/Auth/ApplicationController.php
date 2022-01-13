@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\ApplicationForm;
 use App\Models\EducationalInformation;
 use App\Models\Faculty;
-use App\Models\PersonalInformation;
 use App\Models\Workshop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,8 +33,8 @@ class ApplicationController extends Controller
                 return view('auth.application.questions', $data);
             case 'files':
                 return view('auth.application.files', $data);
-            case 'finalize':
-                return view('auth.application.finalize', $data);
+            case 'submit':
+                return view('auth.application.submit', $data);
             default:
                 return view('auth.application.personal', $data);
         }
@@ -45,6 +44,11 @@ class ApplicationController extends Controller
     public function storeApplicationForm(Request $request)
     {
         $user = $request->user();
+
+        if($user->application && $user->application->status == ApplicationForm::STATUS_SUBMITTED) {
+            return redirect()->route('application')->with('error', 'Már véglegesítette a jelentkezését!');
+        }
+
         switch ($request->page) {
             case 'personal':
                 $request->validate(RegisterController::PERSONAL_INFORMATION_RULES + ['name' => 'required|string|max:255']);
@@ -144,7 +148,12 @@ class ApplicationController extends Controller
                     $user->profilePicture()->create(['path' => $path, 'name' => 'profile_picture']);
                 }
                 break;
-            case 'finalize':
+            case 'submit':
+                if($user->application->isReadyToSubmit()){
+                    $user->application->update(['status' => ApplicationForm::STATUS_SUBMITTED]);
+                } else {
+                    return redirect()->back()->with('error', 'Hiányzó adatok');
+                }
                 break;
             default:
                 abort(404);
@@ -155,31 +164,6 @@ class ApplicationController extends Controller
 
 
     const DELIMETER = '|';
-
-    /**
-     * Creates strings from arrays with DELIMETER.
-     * @author hamaren2517
-     */
-    public static function compressData($array)
-    {
-        if($array === null) return null;
-        return join(
-            self::DELIMETER,
-            array_map(
-                function($item) { return str_replace(self::DELIMETER, ' ', $item); },
-                array_filter($array, function($item) { return $item !== null; })
-            )
-        );
-    }
-
-    /**
-     * Creates an array from a string splitted with DELIMETERs.
-     */
-    public static function decompressData($string)
-    {
-        if($string === null) return null;
-        return explode(self::DELIMETER, $string);
-    }
 
     public static function getApplicationDeadline() : Carbon
     {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\ApplicationForm;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +17,7 @@ class CreateApplicationsTable extends Migration
         Schema::create('application_forms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->string('status')->default('unfinal');
             $table->text('high_school_address')->nullable();
             $table->string('graduation_average')->nullable();
             $table->text('semester_average')->nullable();

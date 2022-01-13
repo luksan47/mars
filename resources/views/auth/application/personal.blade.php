@@ -19,8 +19,8 @@
                 <x-input.text id='phone_number' type='tel' required pattern="[+][0-9]{1,4}[-\s()0-9]*" minlength="8"
                     maxlength="18" locale='user' helper='+36 (20) 123-4567'
                     :value="$user->personalInformation->phone_number" />
-                <x-input.select id="country" :elements="$countries" default="Hungary" locale="user"
-                    :value="$user->personalInformation->country" />
+                <x-input.select id="country" :elements="$countries" locale="user"
+                    :default="$user->personalInformation->country" />
                 <x-input.text l=6 id='county' locale='user' required :value="$user->personalInformation->county" />
                 <x-input.text l=6 id='zip_code' locale='user' type='number' required
                     :value="$user->personalInformation->zip_code" />

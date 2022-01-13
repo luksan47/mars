@@ -45,7 +45,6 @@ Route::get('/register/guest', [RegisterController::class, 'showTenantRegistratio
 Route::middleware(['auth'])->group(function () {
     Route::get('/application', [ApplicationController::class, 'showApplicationForm'])->name('application');
     Route::post('/application', [ApplicationController::class, 'storeApplicationForm'])->name('application.store');
-    Route::post('/application/finalize', [ApplicationController::class, 'finalizeApplication'])->name('application.finalize');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -6,21 +6,26 @@
                 @if ($user->profilePicture)
                     <img src="{{ url($user->profilePicture?->path) }}" style="max-width:300px">
                 @else
-                    TODO
+                    <span style="font-style:italic;color:red">hiányzó profilkép</span>
                 @endif
             </div>
             <div class="col s12 xl8">
                 <div class="card-title">{{ $user->name }}</div>
                 <p style="margin-bottom: 5px"><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
                 <p style="margin-bottom: 5px">{{ $user->personalInformation->phone_number }}</p>
-                <p style="margin-bottom: 5px">{{ $user->educationalInformation?->programs }}</p>
                 <p style="margin-bottom: 5px">
-                    @foreach ($user->workshops as $workshop)
+                    {{ $user->educationalInformation?->programs }}
+                    @if(!$user->educationalInformation?->programs)<span style="font-style:italic;color:red">hiányzó szak</span> @endif
+                </p>
+                <p style="margin-bottom: 5px">
+                    @forelse ($user->workshops as $workshop)
                         <span class="new badge {{ $workshop->color() }} scale-transition tag"
                             style="float:none;padding:4px;margin:0 10px 0px 2px;" data-badge-caption="">
                             <nobr>@lang('role.'.$workshop->name) </nobr>
                         </span>
-                    @endforeach
+                    @empty
+                        <span style="font-style:italic;color:red">hiányzó műhely</span>
+                    @endforelse
                 </p>
                 <p>
                     @if ($user->isResident())
@@ -34,6 +39,9 @@
                             data-badge-caption="">
                             @lang('role.extern')
                         </span>
+                    @endif
+                    @if(!$user->isResident() && !$user->isExtern())
+                        <span style="font-style:italic;color:red">hiányzó státusz</span>
                     @endif
                 </p>
 
@@ -66,114 +74,159 @@
                         </tr>
                         <tr>
                             <th scope="row">@lang('user.high_school')</th>
-                            <td>{{ $user->educationalInformation?->high_school }}<br>
+                            <td>
+                                {{ $user->educationalInformation?->high_school }}<br>
                                 <small>{{ $user->application?->high_school_address }}</small>
+                                @if(!isset($user->educationalInformation?->high_school) || !isset($user->application?->high_school_address)) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">@lang('user.neptun')</th>
-                            <td>{{ $user->educationalInformation?->neptun }}</td>
+                            <td>
+                                {{ $user->educationalInformation?->neptun }}
+                                @if(!$user->educationalInformation?->neptun) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">@lang('user.educational-email')</th>
-                            <td>{{ $user->educationalInformation?->email }}</td>
+                            <td>
+                                {{ $user->educationalInformation?->email }}
+                                @if(!$user->educationalInformation?->email) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">@lang('user.faculty')</th>
                             <td>
-                                <ul>
-                                    @foreach ($user->faculties as $faculty)
-                                        <li>{{ $faculty->name }}</li>
-                                    @endforeach
-                                </ul>
+                                @forelse ($user->faculties ?? [] as $faculty)
+                                    {{ $faculty->name }}<br>
+                                @empty
+                                <span style="font-style:italic;color:red">hiányzó adat</span>
+                                @endforelse
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">@lang('user.year_of_graduation')</th>
-                            <td>{{ $user->educationalInformation?->year_of_graduation }}</td>
+                            <td>
+                                {{ $user->educationalInformation?->year_of_graduation }}
+                                @if(!$user->educationalInformation?->year_of_graduation) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">Érettségi átlaga</th>
-                            <td>{{ $user->application?->graduation_average }}</td>
+                            <td>
+                                {{ $user->application?->graduation_average }}
+                                @if(!$user->application?->graduation_average) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
+                            </td>
                         </tr>
-                        @if ($user->application?->semester_average)
-                            <tr>
-                                <th scope="row">Előző szemeszterek átlaga</th>
-                                <td>
-                                    @foreach ($user->application?->semester_average as $key => $avg)
-                                        {{ $key + 1 }}. félév: {{ $avg }}<br>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endif
-                        @if ($user->application?->language_exam)
-                            <tr>
-                                <th scope="row">Nyelvvizsga</th>
-                                <td>
-                                    @foreach ($user->application?->language_exam as $item)
-                                        {{ $item }}<br>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endif
-                        @if ($user->application?->competition)
-                            <tr>
-                                <th scope="row">Versenyeredmények</th>
-                                <td>
-                                    @foreach ($user->application?->competition as $item)
-                                        {{ $item }}<br>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endif
-                        @if ($user->application?->publication)
-                            <tr>
-                                <th scope="row">Publikációk</th>
-                                <td>
-                                    @foreach ($user->application?->publication as $item)
-                                        {{ $item }}<br>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endif
-                        @if ($user->application?->foreign_studies)
-                            <tr>
-                                <th scope="row">Külföldi tanulmányok</th>
-                                <td>
-                                    @foreach ($user->application?->foreign_studies as $item)
-                                        {{ $item }}<br>
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endif
+                        <tr>
+                            <th scope="row">Előző szemeszterek átlaga</th>
+                            <td>
+                                @forelse ($user->application?->semester_average ?? [] as $key => $avg)
+                                    {{ $key + 1 }}. félév: {{ $avg }}<br>
+                                @empty
+                                    -
+                                @endforelse
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Nyelvvizsga</th>
+                            <td>
+                                @forelse ($user->application?->language_exam ?? [] as $item)
+                                    {{ $item }}<br>
+                                @empty
+                                    -
+                                @endforelse
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Versenyeredmények</th>
+                            <td>
+                                @forelse ($user->application?->competition ?? [] as $item)
+                                    {{ $item }}<br>
+                                @empty
+                                    -
+                                @endforelse
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Publikációk</th>
+                            <td>
+                                @forelse ($user->application?->publication ?? [] as $item)
+                                    {{ $item }}<br>
+                                @empty
+                                    -
+                                @endforelse
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Külföldi tanulmányok</th>
+                            <td>
+                                @forelse ($user->application?->foreign_studies ?? [] as $item)
+                                    {{ $item }}<br>
+                                @empty
+                                    -
+                                @endforelse
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="font-weight: bold;">Honnan hallott a Collegiumról?</p>
+                                <p>
+                                    {{ $user->application?->question_1 }}
+                                    @if(!$user->application?->question_1) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="font-weight: bold;">Miért kíván a Collegium tagja lenni?</p>
+                                <p>
+                                    {{ $user->application?->question_2 }}
+                                    @if(!$user->application?->question_2) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="font-weight: bold;">Tervez-e tovább tanulni a diplomája
+                                    megszerzése
+                                    után?
+                                    Milyen tervei vannak az egyetem után?</p>
+                                <p>
+                                    {{ $user->application?->question_3}}
+                                    @if(!$user->application?->question_3) <span style="font-style:italic;color:red">hiányzó adat</span> @endif
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="font-weight: bold;">Részt vett-e közéleti tevékenységben? Ha
+                                    igen, röviden jellemezze!</p>
+                                <p>{{ $user->application?->question_4 ?? "-" }}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Csatolmányok</th>
+                            <td>
+                                @forelse ($user->application?->files ?? [] as $file)
+                                    @if (!$loop->first)<div class="divider"></div>@endif
+                                    <div class="row" style="margin-bottom: 0; padding: 10px">
+                                        <div class="col" style="margin-top: 5px">
+                                            <a href="{{ url($file->path) }}">{{ $file->name }}</a>
+                                        </div>
+                                        </form>
+                                    </div>
+                                @empty
+                                    <span style="font-style:italic;color:red">hiányzó adat</span>
+                                @endforelse
+                                @if(count($user->application?->files ?? []) > 0 && count($user->application?->files ?? []) < 2)
+                                    <span style="font-style:italic;color:red">legalább 2 fájlt fel kell tölteni</span>
+                                @endif
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-                <div style="padding:5px">
-                    <p style="font-weight: bold;margin-top:20px">Honnan hallott a Collegiumról?</p>
-                    <p>{{ $user->application?->question_1 }}</p>
-                    <p style="font-weight: bold;margin-top:20px">Miért kíván a Collegium tagja lenni?</p>
-                    <p>{{ $user->application?->question_2 }}</p>
-                    <p style="font-weight: bold;margin-top:20px">Tervez-e tovább tanulni a diplomája megszerzése után?
-                        Milyen tervei vannak az egyetem után?</p>
-                    <p>{{ $user->application?->question_3 }}</p>
-                    <p style="font-weight: bold;margin-top:20px">Részt vett-e közéleti tevékenységben? Ha igen, röviden
-                        jellemezze!</p>
-                    <p>{{ $user->application?->question_4 }}</p>
-                    <p style="font-weight: bold;margin-top:20px">Csatolmányok</p>
-                    <div style="margin-left:30px">
-                        @forelse ($user->application?->files ?? [] as $file)
-                            @if (!$loop->first)<div class="divider"></div>@endif
-                            <div class="row" style="margin-bottom: 0; padding: 10px">
-                                <div class="col" style="margin-top: 5px">
-                                    <a href="{{ url($file->path) }}">{{ $file->name }}</a>
-                                </div>
-                                </form>
-                            </div>
-                        @empty
-                            <p>Még nem töltött fel egy fájlt sem.</p>
-                        @endforelse
-                    </div>
-                </div>
             </div>
         </div>
     </div>

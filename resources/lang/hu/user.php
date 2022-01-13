@@ -56,6 +56,7 @@ return [
     'phone_number' => 'Telefonszám',
     'place_and_date_of_birth' => 'Születési hely, idő',
     'place_of_birth' => 'Születési hely',
+    'program' => 'Szak',
     'reject' => 'Elutasít',
     'save' => 'Mentés',
     'semesters' => 'Szemeszterek',
