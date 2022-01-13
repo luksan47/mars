@@ -36,7 +36,6 @@ class ApplicationForm extends Model
         self::STATUS_BANISHED,
     ];
 
-
     /*
     |--------------------------------------------------------------------------
     | Relations
@@ -119,28 +118,62 @@ class ApplicationForm extends Model
     {
         $educationalInformation = $this->user->educationalInformation;
 
-        if(!isset($educationalInformation)) return false;
+        if (! isset($educationalInformation)) {
+            return false;
+        }
 
-        if(!isset($this->user->profilePicture)) return false;
-        if(count($this->files) < 2) return false;
+        if (! isset($this->user->profilePicture)) {
+            return false;
+        }
+        if (count($this->files) < 2) {
+            return false;
+        }
 
-        if($this->user->workshops->count() == 0) return false;
-        if($this->user->faculties->count() == 0) return false;
+        if ($this->user->workshops->count() == 0) {
+            return false;
+        }
+        if ($this->user->faculties->count() == 0) {
+            return false;
+        }
 
-        if(!$this->user->isResident() && !$this->user->isExtern()) return false;
+        if (! $this->user->isResident() && ! $this->user->isExtern()) {
+            return false;
+        }
 
-        if(!isset($educationalInformation->year_of_graduation)) return false;
-        if(!isset($educationalInformation->high_school)) return false;
-        if(!isset($educationalInformation->neptun)) return false;
-        if(!isset($educationalInformation->year_of_acceptance)) return false;
-        if(!isset($educationalInformation->email)) return false;
-        if(!isset($educationalInformation->program)) return false;
+        if (! isset($educationalInformation->year_of_graduation)) {
+            return false;
+        }
+        if (! isset($educationalInformation->high_school)) {
+            return false;
+        }
+        if (! isset($educationalInformation->neptun)) {
+            return false;
+        }
+        if (! isset($educationalInformation->year_of_acceptance)) {
+            return false;
+        }
+        if (! isset($educationalInformation->email)) {
+            return false;
+        }
+        if (! isset($educationalInformation->program)) {
+            return false;
+        }
 
-        if(!isset($this->high_school_address)) return false;
-        if(!isset($this->graduation_average)) return false;
-        if(!isset($this->question_1)) return false;
-        if(!isset($this->question_2)) return false;
-        if(!isset($this->question_3)) return false;
+        if (! isset($this->high_school_address)) {
+            return false;
+        }
+        if (! isset($this->graduation_average)) {
+            return false;
+        }
+        if (! isset($this->question_1)) {
+            return false;
+        }
+        if (! isset($this->question_2)) {
+            return false;
+        }
+        if (! isset($this->question_3)) {
+            return false;
+        }
 
         return true;
     }
