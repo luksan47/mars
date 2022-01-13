@@ -29,7 +29,6 @@ class CreateApplicationsTable extends Migration
             $table->text('question_4')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**

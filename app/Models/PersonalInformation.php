@@ -23,7 +23,7 @@ class PersonalInformation extends Model
         'city',
         'street_and_number',
         'tenant_until',
-        'profile_picture_id'
+        'profile_picture_id',
     ];
 
     public function user()

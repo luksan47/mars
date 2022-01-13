@@ -199,7 +199,6 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->hasOne('App\Models\File');
     }
 
-
     /* Role related getters */
 
     public function roles()
