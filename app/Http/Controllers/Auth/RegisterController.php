@@ -132,22 +132,6 @@ class RegisterController extends Controller
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $user->roles()->attach(Role::getId($data['user_type']));
 
-        // EducationalInformation::create([
-        //     'user_id' => $user->id,
-        //     'year_of_graduation' => $data['year_of_graduation'],
-        //     'high_school' => $data['high_school'],
-        //     'neptun' => $data['neptun'],
-        //     'year_of_acceptance' => $data['year_of_acceptance'],
-        //     'email' => $data['educational_email'].'@student.elte.hu',
-        // ]);
-        // foreach ($data['faculty'] as $key => $faculty) {
-        //     $user->faculties()->attach($faculty);
-        // }
-        // foreach ($data['workshop'] as $key => $workshop) {
-        //     $user->workshops()->attach($workshop);
-        // }
-        //$user->setStatus(Semester::ACTIVE, 'Activated through registration');
-
         $user->internetAccess->setWifiUsername();
 
         if ($data['user_type'] == Role::TENANT) {
