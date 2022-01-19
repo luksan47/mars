@@ -3,8 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Role;
-use App\Models\User;
 use App\Models\Router;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RouterPolicy
