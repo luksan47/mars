@@ -75,6 +75,9 @@ class BasicTest extends TestCase
             'communication_committee/epistola/restore/{epistola}',
             'communication_committee/epistola/mark_as_sent/{epistola}',
             'communication_committee/epistola/delete/{epistola}',
+            'routers/{ip}',
+            'routers/{ip}/edit',
+            'routers/{ip}/delete',
 
             //livewire routes, do not need testing
             'livewire/message/{name}',
