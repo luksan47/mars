@@ -27,9 +27,9 @@
                     </div>
                     <div><p>@lang('internet.mac_address')</p></div>
                     <div class="row">
-                        <x-input.text s="4" type="text" text="WAN" id="mac_wan" value="{{ $router->mac_WAN }}"/>
-                        <x-input.text s="4" type="text" text="2G/LAN" id="mac_2g_lan" value="{{ $router->mac_2G_LAN }}"/>
-                        <x-input.text s="4" type="text" text="5G" id="mac_5g" value="{{ $router->mac_5G }}"/>
+                        <x-input.text s="4" type="text" text="WAN" id="mac_WAN" value="{{ $router->mac_WAN }}"/>
+                        <x-input.text s="4" type="text" text="2G/LAN" id="mac_2G_LAN" value="{{ $router->mac_2G_LAN }}"/>
+                        <x-input.text s="4" type="text" text="5G" id="mac_5G" value="{{ $router->mac_5G }}"/>
                     </div>
                     <div class="row">
                         <x-input.text type="text" id="comment" text="internet.comment" value="{{ $router->comment }}" maxlength="255"/>

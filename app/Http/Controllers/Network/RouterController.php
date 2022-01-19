@@ -43,10 +43,10 @@ class RouterController extends Controller
 
         Validator::make($request->all(), [
             'ip' => 'required|max:15|ip',
-            'room' => 'required',
-            'mac_wan' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
-            'mac_2g_lan' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
-            'mac_5g' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
+            'room' => 'required|integer',
+            'mac_WAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
+            'mac_2G_LAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
+            'mac_5G' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
             'comment' => 'max:255',
         ])->validate();
 
@@ -68,10 +68,10 @@ class RouterController extends Controller
 
         Validator::make($request->all(), [
             'ip' => 'required|max:15|ip',
-            'room' => 'required',
-            'mac_wan' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
-            'mac_2g_lan' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
-            'mac_5g' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
+            'room' => 'required|integer',
+            'mac_WAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
+            'mac_2G_LAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
+            'mac_5G' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
             'comment' => 'max:255',
         ])->validate();
 
