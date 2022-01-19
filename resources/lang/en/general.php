@@ -24,6 +24,7 @@ return [
     'register_collegist' => 'For collegists',
     'register_guest' => 'For tenants',
     'report_bug' => 'Report a bug',
+    'save' => 'Save',
     'search' => 'Search...',
     'secretariat' => 'Secretariat',
     'semester' => 'Semester',

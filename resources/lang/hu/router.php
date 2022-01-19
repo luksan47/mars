@@ -17,6 +17,4 @@ return [
     'up' => 'Elérhető',
     'new' => 'Új router',
     'edit' => 'Router szerkesztése',
-    'save' => 'Mentés',
-    'cancel' => 'Mégse',
 ];

@@ -39,9 +39,10 @@
                         <x-input.text s="6" type="date" id="date_of_deployment" text="router.date_of_deployment" value="{{ $router->date_of_deployment }}"/>
                     </div>
                 </div>
-                <div class="card-action right-align">
-                    <a href="{{ route('routers.view', $router->ip) }}" class="waves-effect btn">@lang('router.cancel')</a>
-                    <button type="submit" class="waves-effect btn">@lang('router.save')</button>
+                <div class="card-action">
+                    <div class="row" style="margin:0">
+                        <x-input.button text="general.save" class="right"/>
+                    </div>
                 </div>
             </form>
         </div>

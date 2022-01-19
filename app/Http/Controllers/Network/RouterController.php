@@ -20,16 +20,14 @@ class RouterController extends Controller
 
         $routers = Router::all()->sortBy('room');
 
-        return view('network.routers.list')->with('routers', $routers);
+        return view('network.routers.list', ['routers' => $routers]);
     }
 
-    public function view($ip)
+    public function view(Router $ip)
     {
-        $router = Router::findOrFail($ip);
-        
-        $this->authorize('view', $router);
-        
-        return view('network.routers.view')->with('router', $router);
+        $this->authorize('view', $ip);
+
+        return view('network.routers.view', ['router' => $ip]);
     }
 
     public function create()
@@ -44,7 +42,7 @@ class RouterController extends Controller
         $this->authorize('create', Router::class);
 
         Validator::make($request->all(), [
-            'ip' => 'max:15|ip',
+            'ip' => 'required|max:15|ip',
             'room' => 'required',
             'mac_wan' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
             'mac_2g_lan' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
@@ -52,34 +50,19 @@ class RouterController extends Controller
             'comment' => 'max:255',
         ])->validate();
 
-        $router = Router::create([
-            'ip' => $request->ip,
-            'room' => $request->room,
-            'port' => $request->port,
-            'type' => $request->type,
-            'serial_number' => $request->serial_number,
-            'mac_WAN' => $request->mac_wan,
-            'mac_2G_LAN' => $request->mac_2g_lan,
-            'mac_5G' => $request->mac_5g,
-            'comment' => $request->comment,
-            'date_of_acquisition' => $request->date_of_acquisition,
-            'date_of_deployment' => $request->date_of_deployment,
-            'failed_for' => 0,
-        ]);
+        Router::create($request->all());
 
-        return redirect('/routers/' . $router->ip)->with('router', $router);
+        return redirect(route('routers'));
     }
 
-    public function edit($ip)
+    public function edit(Router $ip)
     {
         $this->authorize('update', Router::class);
 
-        $router = Router::findOrFail($ip);
-
-        return view('network.routers.edit')->with('router', $router);
+        return view('network.routers.edit', ['router' => $ip]);
     }
 
-    public function update(Request $request, $ip)
+    public function update(Request $request, Router $ip)
     {
         $this->authorize('update', Router::class);
 
@@ -92,33 +75,17 @@ class RouterController extends Controller
             'comment' => 'max:255',
         ])->validate();
 
-        $router = Router::findOrFail($ip);
-        $router->update([
-            'ip' => $request->ip,
-            'room' => $request->room,
-            'port' => $request->port,
-            'type' => $request->type,
-            'serial_number' => $request->serial_number,
-            'mac_WAN' => $request->mac_wan,
-            'mac_2G_LAN' => $request->mac_2g_lan,
-            'mac_5G' => $request->mac_5g,
-            'comment' => $request->comment,
-            'date_of_acquisition' => $request->date_of_acquisition,
-            'date_of_deployment' => $request->date_of_deployment
-        ]);
+        $ip->update($request->all());
 
-        return redirect('/routers/' . $router->ip)->with('router', $router);
+        return view('network.routers.view', ['router' => $ip]);
     }
 
-    public function delete(Request $request, $ip)
+    public function delete(Router $ip)
     {
         $this->authorize('delete', Router::class);
 
-        $router = Router::findOrFail($ip);
-        $router->delete();
+        $ip->delete();
 
-        $routers = Router::all()->sortBy('room');
-
-        return redirect('/routers')->with('routers', $routers);
+        return redirect(route('routers'));
     }
 }
