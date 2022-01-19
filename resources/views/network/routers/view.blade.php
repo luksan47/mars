@@ -14,10 +14,17 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">@lang('router.router')
-                    <!-- TODO -->
-                    <a href="" class="btn-floating waves-effect waves-light right" disabled>
-                        <i class="material-icons">edit</i>
-                    </a>
+                    @can('update', $router)
+                        <a href="{{ route('routers.edit', $router->ip) }}" class="btn-floating waves-effect waves-light right">
+                            <i class="material-icons">edit</i>
+                        </a>
+                    @endcan
+                    @can('delete', $router)
+                        <form action="{{ route('routers.delete', $router->ip) }}" method="POST" class="right" style="margin-right:10px">
+                            @csrf
+                            <button type="submit" class="btn-floating waves-effect waves-light material-icons">delete</button>
+                        </form>
+                    @endcan
                 </span>
                 <table>
                     <tbody>
@@ -28,6 +35,10 @@
                         <tr>
                             <th scope="row">@lang('router.room')</th>
                             <td>{{ $router->room }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">@lang('router.port')</th>
+                            <td>{{ $router->port }}</td>
                         </tr>
                         <tr>
                             <th scope="row">@lang('router.type')</th>

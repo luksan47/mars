@@ -21,7 +21,9 @@ class Router extends Model
     const WARNING_THRESHOLD = 2;
 
     protected $fillable = [
-        'ip', 'room', 'failed_for', // TODO: add more properties
+        'ip', 'room', 'failed_for', 'port', 'type', 'serial_number',
+        'mac_WAN', 'mac_2G_LAN', 'mac_5G', 'comment',
+        'date_of_acquisiton', 'date_of_deployment'
     ];
 
     public function isDown()

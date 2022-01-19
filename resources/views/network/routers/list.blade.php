@@ -21,6 +21,13 @@
                             <th>@lang('router.room')</th>
                             <th>@lang('router.state')</th>
                             <th>@lang('router.failing_since')</th>
+                            @can('create', \App\Models\Router::class)
+                                <th>
+                                    <a href="{{ route('routers.create') }}" class="btn-floating waves-effect waves-light right">
+                                        <i class="material-icons">add</i>
+                                    </a>
+                                </th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -47,11 +54,13 @@
                                 {{ $router->getFailStartDate() }}
                                 @endif
                             </td>
-                            <td>
-                                <a href="{{ route('routers.view', $router->ip) }}" class="btn-floating waves-effect waves-light right">
-                                    <i class="material-icons">remove_red_eye</i>
-                                </a>
-                            </td>
+                            @can('view', $router)
+                                <td>
+                                    <a href="{{ route('routers.view', $router->ip) }}" class="btn-floating waves-effect waves-light right">
+                                        <i class="material-icons">remove_red_eye</i>
+                                    </a>
+                                </td>
+                            @endcan
                         </tr>
                         @endforeach
                     </tbody>
