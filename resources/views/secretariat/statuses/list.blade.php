@@ -25,26 +25,10 @@
                                 @endif
                             </td>
                             <td>
-                                <span class="new badge {{ \App\Models\Semester::colorForStatus($user->getStatus()) }}" data-badge-caption="">
-                                    @lang("user." . $user->getStatus())
-                                </span>
+                                @livewire('edit-resident', ['user' => $user])
                             </td>
                             <td>
-                                <div class="switch">
-                                    <label>
-                                    @lang('role.extern')
-                                    <input type="checkbox" name="resident" onchange="setStatus({{$user->id}}, this.checked)"
-                                        @if($user->isResident()) checked @endif
-                                        @can('viewPermissionFor', $user) @else disabled @endcan>
-                                    <span class="lever"></span>
-                                    @lang('role.resident')
-                                    </label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="">
-                                    @include('secretariat.statuses.edit_buttons', ['user' => $user, 'semester' => App\Models\Semester::current()])
-                                </div>
+                                @livewire('edit-status', ['user' => $user, 'semester' => \App\Models\Semester::current()])
                             </td>
                             <td>
                                 <x-input.button :href="route('secretariat.user.semesters', ['id' => $user->id])" class="coli blue right" icon="event_note" floating />
@@ -62,24 +46,5 @@
         $(document).ready(function(){
             $('.tooltipped').tooltip();
         });
-
-        function setStatus(id, isResident){
-            console.log(id, isResident)
-            $.ajax({
-                url: "{{ route('secretariat.user.set_collegist_type') }}",
-                data: {
-                    user_id: id,
-                    resident: isResident
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function(data) {
-                    M.toast({html: "@lang('general.successful_modification')"});
-                },
-                error: function(xhr, textStatus, error) {
-                    window.alert('Something went wrong. Please try again later.');
-                }
-            });
-        }
     </script>
 @endpush
