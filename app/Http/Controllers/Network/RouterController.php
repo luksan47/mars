@@ -42,7 +42,7 @@ class RouterController extends Controller
         $this->authorize('create', Router::class);
 
         Validator::make($request->all(), [
-            'ip' => 'required|max:15|ip|unique:ip',
+            'ip' => 'required|max:15|ip|unique:routers,ip',
             'room' => 'required|integer',
             'mac_WAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
             'mac_2G_LAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
@@ -67,7 +67,7 @@ class RouterController extends Controller
         $this->authorize('update', Router::class);
 
         Validator::make($request->all(), [
-            'ip' => 'required|max:15|ip|unique:ip',
+            'ip' => 'required|max:15|ip|unique:routers,ip',
             'room' => 'required|integer',
             'mac_WAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
             'mac_2G_LAN' => ['nullable', 'regex:/^(([a-f0-9]{2}[-:]){5}([a-f0-9]{2}))$/i'],
