@@ -25,5 +25,5 @@ return [
     'serial_number' => 'Sorozatszám (számítógépeknél)',
     'status-cert' => 'Tagsági igazolás',
     'successful_request' => 'Sikeres igénylés. Az igazolást hamarosan megtalálhatod a titkárságon.',
-    'document.personal_computer' => 'Számítógépek, laptopok'
+    'document.personal_computer' => 'Számítógépek, laptopok',
 ];

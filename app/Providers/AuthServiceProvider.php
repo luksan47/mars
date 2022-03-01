@@ -50,7 +50,6 @@ class AuthServiceProvider extends ServiceProvider
         });
     }
 
-
     public function registerDocumentPolicies()
     {
         Gate::define('document.status-certificate.viewAny', function ($user) {
