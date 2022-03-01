@@ -112,7 +112,7 @@ class Role extends Model
             case self::WORKSHOP_LEADER:
                 return true;
             case self::STUDENT_COUNCIL:
-                return in_array($objectName, array_merge(self::STUDENT_COUNCIL_LEADERS, self::COMMITTEE_LEADERS/*, self::COMMITTEE_MEMBERS*/));
+                return in_array($objectName, array_merge(self::STUDENT_COUNCIL_LEADERS, self::COMMITTEE_LEADERS));
             default:
                 return false;
         }
