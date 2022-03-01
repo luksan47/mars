@@ -6,13 +6,13 @@ return [
     'computer' => 'személyi számítógép',
     'documents' => 'Dokumentumok',
     'download' => 'Letöltés',
-    'electronic_devices' => 'egyéb nem említett elektronikai eszközök (kenyérpirító, vízforraló)',
+    'electronic_devices' => 'Egyéb nem említett elektronikai eszközök (kenyérpirító, vízforraló)',
     'fill_out' => 'Kitöltés',
-    'furnitures' => 'egyéb bútorzat, irodai eszköz (szék, asztal, tábla stb.)',
-    'hair_dryer' => 'hajszárító, hajsütő',
+    'furnitures' => 'Egyéb bútorzat, irodai eszköz (szék, asztal, tábla stb.)',
+    'hair_dryer' => 'Hajszárító, hajsütő',
     'import' => 'Behozatali engedély',
     'item' => 'Eszköz',
-    'kitchen' => 'konyhai eszközök (pl. edények)',
+    'kitchen' => 'Konyhai eszközök (pl. edények)',
     'left' => 'maradt',
     'missing_educational_info' => 'A tanulmányi adataid hiányoznak a dokumentum kitöltéséhez. Kérj segítséget egy rendszergazdától.',
     'missing_items' => 'Még nem adtad meg a tárgyakat, amiket behoznál.',
@@ -25,4 +25,5 @@ return [
     'serial_number' => 'Sorozatszám (számítógépeknél)',
     'status-cert' => 'Tagsági igazolás',
     'successful_request' => 'Sikeres igénylés. Az igazolást hamarosan megtalálhatod a titkárságon.',
+    'document.personal_computer' => 'Számítógépek, laptopok'
 ];

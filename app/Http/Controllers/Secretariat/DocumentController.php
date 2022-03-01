@@ -30,7 +30,7 @@ class DocumentController extends Controller
 
     public function printRegisterStatement()
     {
-        Gate::authorize('document.status-certificate');
+        Gate::authorize('document.register-statement');
 
         $result = $this->generateRegisterStatement();
         return $this->printDocument($result, __('document.register-statement'));
@@ -38,7 +38,7 @@ class DocumentController extends Controller
 
     public function downloadRegisterStatement()
     {
-        Gate::authorize('document.status-certificate');
+        Gate::authorize('document.register-statement');
 
         $result = $this->generateRegisterStatement();
         return $this->downloadDocument($result);
