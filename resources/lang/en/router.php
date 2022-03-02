@@ -15,4 +15,6 @@ return [
     'state' => 'State',
     'type' => 'Type',
     'up' => 'Up',
+    'new' => 'New router',
+    'edit' => 'Edit router',
 ];
