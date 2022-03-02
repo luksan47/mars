@@ -234,6 +234,7 @@ class DocumentController extends Controller
               'until' => Semester::current()->getEndDate()->format('Y.m.d.'), // TODO: check active semesters
               // TODO: add status
         ]);
+
         return ['success' => true, 'pdf' => $pdf];
     }
 }
