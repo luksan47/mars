@@ -2,7 +2,7 @@
     @foreach ($user->workshops as $workshop)
         <span class="new badge {{ $workshop->color() }} scale-transition tag" id="user-workshop-{{ $user->id }}-{{ $workshop->id }}" data-badge-caption="">
             <nobr>@lang('role.'.$workshop->name)
-                @can('view', $user) <!-- delete button -->
+                @can('viewAny', $user) <!-- delete button TODO -->
                     <span style="cursor: pointer;" onclick="deleteWorkshop({{ $user->id }}, {{ $workshop->id }})">&cross;</span>
                 @endcan
             </nobr>
