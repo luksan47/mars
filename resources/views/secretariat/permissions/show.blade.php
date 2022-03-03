@@ -47,10 +47,7 @@
                         <form action="{{ route('secretariat.permissions.edit', ['id' => $user->id, 'role_id' => $role->id]) }}" method="post">
                             @csrf
                             @if($role->canHaveObject())
-                                @php $elements = $role->possibleObjects()->map(function ($object) {
-                                    return (object)['id' => $object->id, 'name' => __('role.'.$object->name)];});
-                                @endphp
-                                <x-input.select s=11 without_label :elements="$elements" :id="$role->name" :placeholder="__('role.'.$role->name)"/>
+                                <x-input.select s=11 without_label :elements="$role->possibleObjects()" :formatter="function($o) { return __('role.'.$o->name); }" :id="$role->name" :placeholder="__('role.'.$role->name)"/>
                             @else
                                 <x-input.text s=11 without_label id="blank" :value="__('role.'.$role->name)" disabled/>
                             @endif
