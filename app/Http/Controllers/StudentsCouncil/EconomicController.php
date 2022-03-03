@@ -55,7 +55,7 @@ class EconomicController extends Controller
         ];
 
         return view('student-council.economic-committee.kktnetreg', [
-            'users_not_payed' => User::collegists(),
+            'users_not_payed' => User::hasToPayKKTNetregInSemester(Semester::current()->id)->get(),
             'transactions' => $this->getTransactionsByPaymentTypes($checkout, $payment_types),
             'user_transactions_not_in_checkout' => $this->userTransactionsNotInCheckout($payment_types),
             'collected_transactions' => $this->getCollectedTransactions($payment_types),
