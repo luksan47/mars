@@ -1,19 +1,17 @@
-@can('viewEducationalInformation', $user)
-    @if($user->hasEducationalInformation())
-        @foreach ($user->workshops as $workshop)
-            <span class="new badge {{ $workshop->color() }} scale-transition tag" id="user-workshop-{{ $user->id }}-{{ $workshop->id }}" data-badge-caption="">
-                <nobr>@lang('role.'.$workshop->name)
-                    @can('view', $user) <!-- delete button -->
-                        <span style="cursor: pointer;" onclick="deleteWorkshop({{ $user->id }}, {{ $workshop->id }})">&cross;</span>
-                    @endcan
-                </nobr>
-            </span>
-            @if($newline ?? false)
-                <br id="br-user-workshop-{{ $user->id }}-{{ $workshop->id }}">
-            @endif
-        @endforeach
-    @endif
-@endcan
+@if($user->hasEducationalInformation())
+    @foreach ($user->workshops as $workshop)
+        <span class="new badge {{ $workshop->color() }} scale-transition tag" id="user-workshop-{{ $user->id }}-{{ $workshop->id }}" data-badge-caption="">
+            <nobr>@lang('role.'.$workshop->name)
+                @can('viewAny', $user) <!-- delete button TODO -->
+                    <span style="cursor: pointer;" onclick="deleteWorkshop({{ $user->id }}, {{ $workshop->id }})">&cross;</span>
+                @endcan
+            </nobr>
+        </span>
+        @if($newline ?? false)
+            <br id="br-user-workshop-{{ $user->id }}-{{ $workshop->id }}">
+        @endif
+    @endforeach
+@endif
 
 @once
     @push('scripts')
