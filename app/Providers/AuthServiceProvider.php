@@ -43,6 +43,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPermissionHandlingPolicies();
     }
 
+    public function registerPrintingPermissionHandlingPolicies()
+    {
+        Gate::define('print.print', function ($user) {
+            return $user->hasRole(Role::PRINTER);
+        });
+    }
+
     public function registerDocumentPolicies()
     {
         Gate::define('document.status-certificate.viewAny', function ($user) {
