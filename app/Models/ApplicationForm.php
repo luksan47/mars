@@ -176,5 +176,4 @@ class ApplicationForm extends Model
 
         return true;
     }
-
 }

@@ -47,5 +47,4 @@ class EducationalInformation extends Model
     {
         $this->attributes['program'] = DataCompresser::compressData($value);
     }
-
 }
