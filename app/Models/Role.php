@@ -38,7 +38,7 @@ class Role extends Model
     const SCIENCE_LEADER = 'science-leader';
     const SCIENCE_MEMBER = 'science-member';
     const STUDENT_COUNCIL_LEADERS = [
-        self::PRESIDENT,
+        self::PRESIDENT
         self::VICE_PRESIDENT
     ];
     const COMMITTEE_LEADERS = [
@@ -113,7 +113,7 @@ class Role extends Model
             case self::WORKSHOP_LEADER:
                 return true;
             case self::STUDENT_COUNCIL:
-                return in_array($objectName, array_merge(self::STUDENT_COUNCIL_LEADERS, self::COMMITTEE_LEADERS, self::COMMITTEE_MEMBERS));
+                return in_array($objectName, array_merge(self::PRESIDENT, self::COMMITTEE_LEADERS));
             default:
                 return false;
         }

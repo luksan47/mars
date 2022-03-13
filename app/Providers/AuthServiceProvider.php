@@ -25,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\Transaction::class => \App\Policies\TransactionPolicy::class,
         \App\Models\Fault::class => \App\Policies\FaultPolicy::class,
         \App\Models\EpistolaNews::class => \App\Policies\EpistolaPolicy::class,
+        \App\Models\Router::class => \App\Policies\RouterPolicy::class,
     ];
 
     /**
@@ -40,6 +41,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerDocumentPolicies();
         $this->registerVerificationPolicies();
         $this->registerPermissionHandlingPolicies();
+    }
+
+    public function registerPrintingPermissionHandlingPolicies()
+    {
+        Gate::define('print.print', function ($user) {
+            return $user->hasRole(Role::PRINTER);
+        });
     }
 
     public function registerDocumentPolicies()

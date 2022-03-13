@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col s12">
                             <blockquote>@lang('checkout.pay_kkt_descr')</blockquote>
-                            <x-input.select l=4 :elements="$users_not_payed" id="user_id" text="general.user" />
+                            <x-input.select l=4 :elements="$users_not_payed" id="user_id" text="general.user" :formatter="function($user) { return $user->uniqueName; }" />
                             <x-input.text  m=6 l=4 id="kkt" type="number" required min="0" :value="config('custom.kkt')" />
                             <x-input.text  m=6 l=4 id="netreg" type="number" required min="0" :value="config('custom.netreg')" />
                         </div>
@@ -35,7 +35,7 @@
     <div class="col s12 xl6 push-xl6">
         @include('utils.checkout.gathered-transactions')
     </div>
-{{-- TODO    
+{{-- TODO
 <div class="col s12 xl6 pull-xl6">
         <div class="card">
             <div class="card-content">

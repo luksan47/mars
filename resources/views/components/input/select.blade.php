@@ -23,7 +23,7 @@
             <option
                 value="{{ $element->id ?? $element }}"
                 @if($default != null && (($element->id ?? $element) == $default || ($element->name ?? $element) == $default)) selected="true" @endif
-                >@lang($element->name ?? $element)</option>
+                >{{$formatter($element)}}</option>
         @endforeach
     </select>
     @if(!$withoutLabel)

@@ -122,7 +122,12 @@ Route::middleware(['auth', 'log', 'verified'])->group(function () {
 
     /** Routers */
     Route::get('/routers', [RouterController::class, 'index'])->name('routers');
+    Route::get('/routers/create', [RouterController::class, 'create'])->name('routers.create');
+    Route::post('/routers/create', [RouterController::class, 'store'])->name('routers.store');
     Route::get('/routers/{ip}', [RouterController::class, 'view'])->name('routers.view');
+    Route::get('/routers/{ip}/edit', [RouterController::class, 'edit'])->name('routers.edit');
+    Route::post('/routers/{ip}/edit', [RouterController::class, 'update'])->name('routers.update');
+    Route::post('/routers/{ip}/delete', [RouterController::class, 'delete'])->name('routers.delete');
 
     /** Registration handling */
     Route::middleware(['can:registration.handle'])->group(function () {
