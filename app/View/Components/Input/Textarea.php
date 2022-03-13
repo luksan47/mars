@@ -8,6 +8,12 @@ class Textarea extends Input
 {
     public $helper;
 
+    /**
+     * Create a new textarea input instance.
+     *
+     * @param  string  $helper  helper message
+     * @return void
+     */
     public function __construct($id, $locale = null, $helper = null, $text = null, $s = 12, $m = null, $l = null, $xl = null, $onlyInput = false)
     {
         parent::__construct($id, $locale, $text, $s, $m, $l, $xl, $onlyInput);

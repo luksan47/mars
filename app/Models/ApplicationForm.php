@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\DataCompresser;
 use Illuminate\Database\Eloquent\Model;
 
 class ApplicationForm extends Model
@@ -23,8 +24,6 @@ class ApplicationForm extends Model
         'question_3',
         'question_4',
     ];
-
-    protected const DELIMETER = '|';
 
     public const STATUS_IN_PROGRESS = 'in_progress';
     public const STATUS_SUBMITTED = 'submitted';
@@ -60,52 +59,52 @@ class ApplicationForm extends Model
 
     public function getSemesterAverageAttribute($value)
     {
-        return self::decompressData($value);
+        return DataCompresser::decompressData($value);
     }
 
     public function setSemesterAverageAttribute($value)
     {
-        $this->attributes['semester_average'] = self::compressData($value);
+        $this->attributes['semester_average'] = DataCompresser::compressData($value);
     }
 
     public function getLanguageExamAttribute($value)
     {
-        return self::decompressData($value);
+        return DataCompresser::decompressData($value);
     }
 
     public function setLanguageExamAttribute($value)
     {
-        $this->attributes['language_exam'] = self::compressData($value);
+        $this->attributes['language_exam'] = DataCompresser::compressData($value);
     }
 
     public function getCompetitionAttribute($value)
     {
-        return self::decompressData($value);
+        return DataCompresser::decompressData($value);
     }
 
     public function setCompetitionAttribute($value)
     {
-        $this->attributes['competition'] = self::compressData($value);
+        $this->attributes['competition'] = DataCompresser::compressData($value);
     }
 
     public function getPublicationAttribute($value)
     {
-        return self::decompressData($value);
+        return DataCompresser::decompressData($value);
     }
 
     public function setPublicationAttribute($value)
     {
-        $this->attributes['publication'] = self::compressData($value);
+        $this->attributes['publication'] = DataCompresser::compressData($value);
     }
 
     public function getForeignStudiesAttribute($value)
     {
-        return self::decompressData($value);
+        return DataCompresser::decompressData($value);
     }
 
     public function setForeignStudiesAttribute($value)
     {
-        $this->attributes['foreign_studies'] = self::compressData($value);
+        $this->attributes['foreign_studies'] = DataCompresser::compressData($value);
     }
 
     /*
@@ -178,37 +177,4 @@ class ApplicationForm extends Model
         return true;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Private functions
-    |--------------------------------------------------------------------------
-    */
-
-    private static function compressData($array)
-    {
-        if ($array === null) {
-            return null;
-        }
-
-        return join(
-            self::DELIMETER,
-            array_map(
-                function ($item) {
-                    return str_replace(self::DELIMETER, ' ', $item);
-                },
-                array_filter($array, function ($item) {
-                    return $item !== null;
-                })
-            )
-        );
-    }
-
-    private static function decompressData($string)
-    {
-        if ($string === null) {
-            return null;
-        }
-
-        return explode(self::DELIMETER, $string);
-    }
 }

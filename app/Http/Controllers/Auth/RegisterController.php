@@ -106,7 +106,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    public function create(array $data)
     {
         $user = User::create([
             'name' => $data['name'],
@@ -132,9 +132,8 @@ class RegisterController extends Controller
         $user->roles()->attach(Role::getId(Role::INTERNET_USER));
         $user->roles()->attach(Role::getId($data['user_type']));
 
-        $user->internetAccess->setWifiUsername();
-
         if ($data['user_type'] == Role::TENANT) {
+            $user->internetAccess->setWifiUsername();
             // Send confirmation mail.
             Mail::to($user)->queue(new \App\Mail\Confirmation($user->name));
             // Send notification about new tenant to the staff and network admins.
@@ -149,6 +148,8 @@ class RegisterController extends Controller
                     Mail::to($person)->send(new NewRegistration($person->name, $user));
                 }
             }
+        } else {
+            $user->application()->create();
         }
 
         return $user;

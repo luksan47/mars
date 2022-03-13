@@ -12,11 +12,19 @@
     <div class="card">
         <div class="card-content">
                 <h6>Jelentkezés státusza:
-                @if($user->application?->status == App\Models\ApplicationForm::STATUS_IN_PROGRESS)
-                    <i class="coli-text text-orange">Folyamatban</i>
-                @else
-                    <i class="green-text">Véglegesítve</i>
-                @endif
+                @switch($user->application->status)
+                    @case(App\Models\ApplicationForm::STATUS_IN_PROGRESS)
+                        <i class="coli-text text-orange">Folyamatban</i>
+                        @break
+                    @case(App\Models\ApplicationForm::STATUS_SUBMITTED)
+                        <i class="green-text">Véglegesítve</i>
+                        @break
+                    @case(App\Models\ApplicationForm::STATUS_BANISHED)
+                        <i class="green-text">Véglegesítve</i>
+                        @break
+                    @default
+                        <i>Ismeretlen</i>
+                @endswitch
             </h6>
 
             <h6>Jelentkezési határidő:
@@ -28,7 +36,7 @@
             Hátra van: <i>{{ \Carbon\Carbon::now()->diffInDays($deadline, false) }}</i> nap.
 
             <blockquote>
-                @if($user->application?->status == App\Models\ApplicationForm::STATUS_IN_PROGRESS)
+                @if($user->application->status == App\Models\ApplicationForm::STATUS_IN_PROGRESS)
                     <p>A jelentkezése jelen állapotában még nem látható a felvételiztető bizottság számára! </p>
                     <p>A jelentkezése bármikor félbe szakítható, a regisztrációnál megadott e-mail címmel és jelszóval
                         belépve bármikor visszatérhet erre az oldalra, és folytathatja az űrlap kitöltését.</p>

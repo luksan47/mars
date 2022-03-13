@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\DataCompresser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,7 +31,7 @@ class EducationalInformation extends Model
 
     public function getProgramAttribute($value)
     {
-        return self::decompressData($value);
+        return DataCompresser::decompressData($value);
     }
 
     public function getProgramsAttribute(): string
@@ -44,34 +45,7 @@ class EducationalInformation extends Model
 
     public function setProgramAttribute($value)
     {
-        $this->attributes['program'] = self::compressData($value);
+        $this->attributes['program'] = DataCompresser::compressData($value);
     }
 
-    private static function compressData($array)
-    {
-        if ($array === null) {
-            return null;
-        }
-
-        return join(
-            self::DELIMETER,
-            array_map(
-                function ($item) {
-                    return str_replace(self::DELIMETER, ' ', $item);
-                },
-                array_filter($array, function ($item) {
-                    return $item !== null;
-                })
-            )
-        );
-    }
-
-    private static function decompressData($string)
-    {
-        if ($string === null) {
-            return null;
-        }
-
-        return explode(self::DELIMETER, $string);
-    }
 }

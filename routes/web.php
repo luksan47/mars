@@ -42,7 +42,7 @@ Auth::routes();
 
 Route::get('/register/guest', [RegisterController::class, 'showTenantRegistrationForm'])->name('register.guest');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'only_hungarian'])->group(function () {
     Route::get('/application', [ApplicationController::class, 'showApplicationForm'])->name('application');
     Route::post('/application', [ApplicationController::class, 'storeApplicationForm'])->name('application.store');
 });

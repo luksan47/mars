@@ -291,6 +291,7 @@ class User extends Authenticatable implements HasLocalePreference
                 return true;
             }
         }
+        // If an applicant has not yet set the extern/resident status, the collegist role does not have an object. This should be the only exception.
         if ($this->hasRole($roleName)) {
             return true;
         }

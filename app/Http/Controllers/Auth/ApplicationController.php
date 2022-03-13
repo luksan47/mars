@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App;
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationForm;
 use App\Models\EducationalInformation;
@@ -14,10 +13,17 @@ use Storage;
 
 class ApplicationController extends Controller
 {
+    const EDUCATIONAL_ROUTE = 'educational';
+    const QUESTIONS_ROUTE = 'questions';
+    const FILES_ROUTE = 'files';
+    const DELETE_FILE_ROUTE = 'files.delete';
+    const ADD_PROFILE_PIC_ROUTE = 'files.profile';
+    const SUBMIT_ROUTE = 'submit';
+    const PERSONAL_ROUTE = 'personal';
+
 
     public function showApplicationForm(Request $request)
     {
-        App::setLocale('hu');
         $data = [
             'workshops' => Workshop::all(),
             'faculties' => Faculty::all(),
@@ -27,13 +33,13 @@ class ApplicationController extends Controller
             'user' => $request->user()
         ];
         switch ($request->page) {
-            case 'educational':
+            case self::EDUCATIONAL_ROUTE:
                 return view('auth.application.educational', $data);
-            case 'questions':
+            case self::QUESTIONS_ROUTE:
                 return view('auth.application.questions', $data);
-            case 'files':
+            case self::FILES_ROUTE:
                 return view('auth.application.files', $data);
-            case 'submit':
+            case self::SUBMIT_ROUTE:
                 return view('auth.application.submit', $data);
             default:
                 return view('auth.application.personal', $data);
@@ -50,7 +56,7 @@ class ApplicationController extends Controller
         }
 
         switch ($request->page) {
-            case 'personal':
+            case self::PERSONAL_ROUTE:
                 $request->validate(RegisterController::PERSONAL_INFORMATION_RULES + ['name' => 'required|string|max:255']);
                 $user->update(['name' => $request->name]);
                 $user->personalInformation()->update($request->only([
@@ -65,7 +71,7 @@ class ApplicationController extends Controller
                     'street_and_number'])
                 );
                 break;
-            case 'educational':
+            case self::EDUCATIONAL_ROUTE:
                 $request->validate([
                     'year_of_graduation' => 'required|integer|between:1895,'.date('Y'),
                     'high_school' => 'required|string|max:255',
@@ -96,7 +102,7 @@ class ApplicationController extends Controller
                 ]);
                 $user->faculties()->sync($request->faculty);
                 break;
-            case 'questions':
+            case self::EDUCATIONAL_ROUTE:
                 $request->validate([
                     'status' => 'nullable|in:extern,resident',
                     'workshop' => 'array',
@@ -104,8 +110,7 @@ class ApplicationController extends Controller
                 ]);
                 if($request->status == 'resident') {
                     $user->setResident();
-                }
-                if($request->status == 'extern') {
+                }else if($request->status == 'extern') {
                     $user->setExtern();
                 }
                 $user->workshops()->sync($request->workshop);
@@ -116,7 +121,7 @@ class ApplicationController extends Controller
                     'question_4' => $request->question_4,
                 ]);
                 break;
-            case 'files':
+            case self::FILES_ROUTE:
                 $request->validate([
                     'file' => 'required|file|mimes:pdf,jpg,jpeg,png,gif,svg|max:2048',
                     'name' => 'required|string|max:255',
@@ -124,18 +129,18 @@ class ApplicationController extends Controller
                 $path = $request->file('file')->store('uploads');
                 $user->application()->firstOrCreate()->files()->create(['path' => $path, 'name' => $request->name]);
                 break;
-            case 'files.delete':
+            case self::DELETE_FILE_ROUTE:
                 $request->validate([
                     'id' => 'required|exists:files',
                 ]);
 
-                $file = $user->application->files()->find($request->id);
-                if($file){
-                    Storage::delete($file->path);
-                    $file->delete();
-                }
+                $file = $user->application->files()->findOrFail($request->id);
+
+                Storage::delete($file->path);
+                $file->delete();
+
                 break;
-            case 'files.profile':
+            case self::ADD_PROFILE_PIC_ROUTE:
                 $request->validate([
                     'picture' => 'required|mimes:jpg,jpeg,png,gif,svg',
                 ]);
@@ -148,7 +153,7 @@ class ApplicationController extends Controller
                     $user->profilePicture()->create(['path' => $path, 'name' => 'profile_picture']);
                 }
                 break;
-            case 'submit':
+            case self::SUBMIT_ROUTE:
                 if($user->application->isReadyToSubmit()){
                     $user->application->update(['status' => ApplicationForm::STATUS_SUBMITTED]);
                 } else {
@@ -161,9 +166,6 @@ class ApplicationController extends Controller
         }
         return redirect()->back()->with('message', __('general.successful_modification'));
     }
-
-
-    const DELIMETER = '|';
 
     public static function getApplicationDeadline() : Carbon
     {

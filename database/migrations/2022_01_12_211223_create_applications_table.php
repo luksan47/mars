@@ -16,7 +16,7 @@ class CreateApplicationsTable extends Migration
         Schema::create('application_forms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->string('status')->default('unfinal');
+            $table->string('status')->default('in_progress');
             $table->text('high_school_address')->nullable();
             $table->string('graduation_average')->nullable();
             $table->text('semester_average')->nullable();
