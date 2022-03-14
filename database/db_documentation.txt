@@ -1,0 +1,459 @@
+//Generated with dbdiagram.io from sql dump, not yet revised
+//Just paste it to dbdiagram.io
+
+Enum "faults_status_enum" {
+  "UNSEEN"
+  "SEEN"
+  "DONE"
+  "WONT_FIX"
+}
+
+Enum "mac_addresses_state_enum" {
+  "APPROVED"
+  "REJECTED"
+  "REQUESTED"
+}
+
+Table "checkouts" {
+  "id" bigint(20) [pk, not null, increment]
+  "name" varchar(255) [not null]
+  "password" varchar(255) [not null]
+}
+
+Table "dhcp" {
+  "ip" varchar(15) [default: NULL]
+  "username" text
+  "mac_address" varchar(17) [default: NULL]
+}
+
+Table "educational_information" {
+  "id" bigint(20) [pk, not null, increment]
+  "user_id" bigint(20) [not null]
+  "year_of_graduation" int(10) [default: NULL]
+  "high_school" text
+  "neptun" char(6) [default: NULL]
+  "year_of_acceptance" int(10) [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+  "email" varchar(255) [default: NULL]
+
+Indexes {
+  email [unique, name: "educational_information_email_unique"]
+}
+}
+
+Table "epistola" {
+  "id" bigint(20) [pk, not null, increment]
+  "uploader_id" bigint(20) [default: NULL]
+  "title" varchar(255) [not null]
+  "subtitle" varchar(255) [default: NULL]
+  "description" longtext
+  "date" datetime [default: NULL]
+  "time" datetime [default: NULL]
+  "end_date" datetime [default: NULL]
+  "picture_path" varchar(255) [default: NULL]
+  "sent" tinyint(1) [not null, default: "0"]
+  "details_name_1" varchar(255) [default: NULL]
+  "details_url_1" varchar(255) [default: NULL]
+  "details_name_2" varchar(255) [default: NULL]
+  "details_url_2" varchar(255) [default: NULL]
+  "deadline_name" varchar(255) [default: NULL]
+  "deadline_date" datetime [default: NULL]
+}
+
+Table "event_triggers" {
+  "name" text [not null]
+  "data" text
+  "date" timestamp [not null]
+  "signal" int(11) [pk, not null]
+  "comment" text
+}
+
+Table "faculties" {
+  "id" tinyint(3) [pk, not null, increment]
+  "name" text [not null]
+}
+
+Table "faculty_users" {
+  "user_id" bigint(20) [not null]
+  "faculty_id" tinyint(3) [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+
+Indexes {
+  user_id [name: "faculty_users_user_id_foreign"]
+  faculty_id [name: "faculty_users_faculty_id_foreign"]
+}
+}
+
+Table "failed_jobs" {
+  "id" bigint(20) [pk, not null, increment]
+  "uuid" varchar(255) [default: NULL]
+  "connection" text [not null]
+  "queue" text [not null]
+  "payload" longtext [not null]
+  "exception" longtext [not null]
+  "failed_at" timestamp [not null, default: `CURRENT_TIMESTAMP`]
+
+Indexes {
+  uuid [unique, name: "failed_jobs_uuid_unique"]
+}
+}
+
+Table "faults" {
+  "id" bigint(20) [pk, not null, increment]
+  "reporter_id" bigint(20) [not null]
+  "location" varchar(255) [not null]
+  "description" varchar(255) [not null]
+  "status" faults_status_enum [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "home_page_news" {
+  "id" bigint(20) [pk, not null, increment]
+  "text" longtext [not null]
+  "user_id" int(11) [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "import_items" {
+  "id" bigint(20) [pk, not null, increment]
+  "user_id" bigint(20) [not null]
+  "name" varchar(255) [not null]
+  "serial_number" varchar(255) [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "internet_accesses" {
+  "user_id" bigint(20) [not null]
+  "auto_approved_mac_slots" int(11) [not null, default: "1"]
+  "has_internet_until" datetime [default: NULL]
+  "wifi_password" varchar(64) [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+  "wifi_username" varchar(255) [default: NULL]
+  "wifi_connection_limit" smallint(6) [not null, default: "2"]
+
+Indexes {
+  user_id [unique, name: "internet_accesses_user_id_unique"]
+  wifi_username [unique, name: "internet_accesses_wifi_username_unique"]
+}
+}
+
+Table "localization_contributions" {
+  "id" bigint(20) [pk, not null, increment]
+  "language" varchar(255) [not null]
+  "key" varchar(255) [not null]
+  "value" text [not null]
+  "contributor_id" int(11) [default: NULL]
+  "approved" tinyint(1) [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "mac_addresses" {
+  "id" bigint(20) [pk, not null, increment]
+  "user_id" bigint(20) [not null]
+  "mac_address" varchar(17) [not null]
+  "comment" text [not null]
+  "state" mac_addresses_state_enum [not null, default: "REQUESTED"]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+  "ip" varchar(15) [default: NULL]
+
+Indexes {
+  user_id [name: "mac_addresses_user_id_foreign"]
+}
+}
+
+Table "migrations" {
+  "id" int(10) [pk, not null, increment]
+  "migration" varchar(255) [not null]
+  "batch" int(11) [not null]
+}
+
+Table "mr_and_miss_categories" {
+  "id" bigint(20) [pk, not null, increment]
+  "title" varchar(255) [not null]
+  "mr" tinyint(1) [not null]
+  "created_by" bigint(20) [default: NULL]
+  "hidden" tinyint(1) [not null, default: "0"]
+  "public" tinyint(1) [not null, default: "1"]
+  "custom" tinyint(1) [not null, default: "0"]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "mr_and_miss_votes" {
+  "id" bigint(20) [pk, not null, increment]
+  "voter" bigint(20) [not null]
+  "category" bigint(20) [not null]
+  "votee_id" bigint(20) [default: NULL]
+  "votee_name" varchar(255) [default: NULL]
+  "semester" smallint(5) [not null]
+
+Indexes {
+  voter [name: "mr_and_miss_votes_voter_foreign"]
+  category [name: "mr_and_miss_votes_category_foreign"]
+  votee_id [name: "mr_and_miss_votes_votee_id_foreign"]
+  semester [name: "mr_and_miss_votes_semester_foreign"]
+}
+}
+
+Table "password_resets" {
+  "email" varchar(255) [not null]
+  "token" varchar(255) [not null]
+  "created_at" timestamp [default: NULL]
+
+Indexes {
+  email [name: "password_resets_email_index"]
+}
+}
+
+Table "payment_types" {
+  "id" bigint(20) [pk, not null, increment]
+  "name" varchar(255) [not null]
+}
+
+Table "personal_information" {
+  "id" bigint(20) [pk, not null, increment]
+  "user_id" bigint(20) [not null]
+  "place_of_birth" text [not null]
+  "date_of_birth" date [not null]
+  "mothers_name" text [not null]
+  "phone_number" text [not null]
+  "country" text [not null]
+  "county" text [not null]
+  "zip_code" text [not null]
+  "city" text [not null]
+  "street_and_number" text [not null]
+  "tenant_until" date [default: NULL]
+
+Indexes {
+  user_id [name: "personal_information_user_id_foreign"]
+}
+}
+
+Table "print_account_history" {
+  "id" bigint(20) [pk, not null, increment]
+  "user_id" bigint(20) [not null]
+  "balance_change" int(11) [not null]
+  "free_page_change" int(11) [not null]
+  "deadline_change" date [default: NULL]
+  "modified_by" bigint(20) [not null]
+  "modified_at" timestamp [not null]
+}
+
+Table "print_accounts" {
+  "user_id" bigint(20) [not null]
+  "balance" int(11) [not null, default: "0"]
+  "last_modified_by" bigint(20) [default: NULL]
+  "modified_at" timestamp [default: NULL]
+
+Indexes {
+  user_id [name: "print_accounts_user_id_foreign"]
+}
+}
+
+Table "print_jobs" {
+  "id" bigint(20) [pk, not null, increment]
+  "filename" text [not null]
+  "filepath" text [not null]
+  "user_id" bigint(20) [default: NULL]
+  "state" set('QUEUED','ERROR','CANCELLED','SUCCESS') [not null]
+  "cost" int(10) [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+  "job_id" text [not null]
+
+Indexes {
+  user_id [name: "print_jobs_user_id_foreign"]
+}
+}
+
+Table "printing_free_pages" {
+  "id" bigint(20) [pk, not null, increment]
+  "user_id" bigint(20) [not null]
+  "amount" int(11) [not null]
+  "deadline" date [not null]
+  "last_modified_by" bigint(20) [not null]
+  "comment" text
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+
+Indexes {
+  user_id [name: "printing_free_pages_user_id_foreign"]
+}
+}
+
+Table "role_users" {
+  "user_id" bigint(20) [not null]
+  "role_id" int(10) [not null]
+  "object_id" bigint(20) [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+
+Indexes {
+  user_id [name: "role_users_user_id_foreign"]
+  role_id [name: "role_users_role_id_foreign"]
+}
+}
+
+Table "roles" {
+  "id" int(10) [pk, not null, increment]
+  "name" varchar(255) [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+
+Indexes {
+  name [unique, name: "roles_name_unique"]
+}
+}
+
+Table "routers" {
+  "ip" varchar(15) [pk, not null]
+  "room" smallint(6) [not null]
+  "failed_for" int(11) [not null]
+  "port" varchar(255) [default: NULL]
+  "type" varchar(255) [default: NULL]
+  "serial_number" varchar(255) [default: NULL]
+  "mac_5G" varchar(17) [default: NULL]
+  "mac_2G_LAN" varchar(17) [default: NULL]
+  "mac_WAN" varchar(17) [default: NULL]
+  "comment" varchar(255) [default: NULL]
+  "date_of_acquisition" date [default: NULL]
+  "date_of_deployment" date [default: NULL]
+}
+
+Table "semester_status" {
+  "user_id" bigint(20) [not null]
+  "semester_id" smallint(5) [not null]
+  "status" set('ACTIVE','INACTIVE','DEACTIVATED','PASSIVE','PENDING') [default: NULL]
+  "comment" text
+  "verified" tinyint(1) [not null, default: "0"]
+
+Indexes {
+  user_id [name: "semester_status_user_id_foreign"]
+  semester_id [name: "semester_status_semester_id_foreign"]
+}
+}
+
+Table "semesters" {
+  "id" smallint(5) [pk, not null, increment]
+  "year" int(10) [not null]
+  "part" set('1','2') [not null]
+  "verified" tinyint(1) [not null, default: "0"]
+}
+
+Table "tmp" {
+  "email" text
+  "ws_id" int(11) [default: NULL]
+  "fac_id" int(11) [default: NULL]
+}
+
+Table "transactions" {
+  "id" bigint(20) [pk, not null, increment]
+  "checkout_id" bigint(20) [not null]
+  "receiver_id" bigint(20) [default: NULL]
+  "payer_id" bigint(20) [default: NULL]
+  "semester_id" smallint(5) [not null]
+  "amount" int(11) [not null]
+  "payment_type_id" varchar(255) [not null]
+  "comment" varchar(255) [default: NULL]
+  "moved_to_checkout" timestamp [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+  "deleted_at" timestamp [default: NULL]
+}
+
+Table "users" {
+  "id" bigint(20) [pk, not null, increment]
+  "name" varchar(255) [not null]
+  "email" varchar(255) [not null]
+  "email_verified_at" timestamp [default: NULL]
+  "password" varchar(255) [not null]
+  "remember_token" varchar(100) [default: NULL]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+  "verified" tinyint(1) [not null, default: "0"]
+
+Indexes {
+  email [unique, name: "users_email_unique"]
+}
+}
+
+Table "wifi_connections" {
+  "id" bigint(20) [pk, not null, increment]
+  "ip" varchar(15) [not null]
+  "mac_address" varchar(17) [not null]
+  "wifi_username" varchar(255) [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+}
+
+Table "workshop_balances" {
+  "id" bigint(20) [pk, not null, increment]
+  "semester_id" smallint(5) [not null]
+  "workshop_id" smallint(5) [not null]
+  "allocated_balance" int(11) [not null, default: "0"]
+  "used_balance" int(11) [not null, default: "0"]
+  "resident" int(11) [not null, default: "0"]
+  "extern" int(11) [not null, default: "0"]
+  "not_yet_paid" int(11) [not null, default: "0"]
+}
+
+Table "workshop_users" {
+  "user_id" bigint(20) [not null]
+  "workshop_id" tinyint(3) [not null]
+  "created_at" timestamp [default: NULL]
+  "updated_at" timestamp [default: NULL]
+
+Indexes {
+  user_id [name: "workshop_users_user_id_foreign"]
+  workshop_id [name: "workshop_users_workshop_id_foreign"]
+}
+}
+
+Table "workshops" {
+  "id" tinyint(3) [pk, not null, increment]
+  "name" text [not null]
+}
+
+Ref:"users"."id" < "faculty_users"."user_id" [delete: cascade]
+
+Ref:"faculties"."id" < "faculty_users"."faculty_id" [delete: cascade]
+
+Ref:"users"."id" < "internet_accesses"."user_id" [update: cascade, delete: cascade]
+
+Ref:"users"."id" < "mac_addresses"."user_id" [update: cascade, delete: cascade]
+
+Ref:"users"."id" < "mr_and_miss_votes"."voter"
+
+Ref:"mr_and_miss_categories"."id" < "mr_and_miss_votes"."category"
+
+Ref:"users"."id" < "mr_and_miss_votes"."votee_id"
+
+Ref:"semesters"."id" < "mr_and_miss_votes"."semester"
+
+Ref:"users"."id" < "personal_information"."user_id" [delete: cascade]
+
+Ref:"users"."id" < "print_accounts"."user_id" [update: cascade, delete: cascade]
+
+Ref:"users"."id" < "print_jobs"."user_id" [update: cascade, delete: set null]
+
+Ref:"users"."id" < "printing_free_pages"."user_id" [delete: cascade]
+
+Ref:"users"."id" < "role_users"."user_id" [delete: cascade]
+
+Ref:"roles"."id" < "role_users"."role_id" [delete: cascade]
+
+Ref:"users"."id" < "semester_status"."user_id" [delete: cascade]
+
+Ref:"semesters"."id" < "semester_status"."semester_id" [delete: cascade]
+
+Ref:"users"."id" < "workshop_users"."user_id" [delete: cascade]
+
+Ref:"workshops"."id" < "workshop_users"."workshop_id" [delete: cascade]
