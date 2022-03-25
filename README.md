@@ -6,7 +6,7 @@
 Mars is the next evolution of [Urán](https://github.com/kovacsur10/uran) unified information system for Eötvös Collegium. It's a complete 
 rewrite, therefore comes under a new name and repository. Only a few resources are migrated from the Urán system.
 
-## Important notice
+## Important notice
 
 This project is continued on [EotvosCollegium/mars](https://github.com/EotvosCollegium/mars)
 
